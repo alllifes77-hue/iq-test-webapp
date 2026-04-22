@@ -482,6 +482,11 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
 
 <!-- ══ RESULTS ══ -->
 <div id="screen-results" class="screen">
+  <!-- 공유 링크로 접속한 경우 표시되는 배너 -->
+  <div id="shared-banner-iq" style="display:none;background:linear-gradient(135deg,#fef3c7,#fde68a);border-bottom:2px solid #f59e0b;padding:14px 20px;text-align:center;">
+    <p style="margin:0 0 10px;font-size:15px;font-weight:700;color:#92400e;">👀 친구의 IQ 테스트 결과를 보고 계십니다</p>
+    <button class="btn btn-primary" onclick="restartAll()" style="font-size:15px;padding:11px 28px;">🧠 나도 무료로 IQ 테스트 해보기 →</button>
+  </div>
   <div class="results-hero">
     <div class="container">
       <div class="eyebrow" id="res-test-label">단기 IQ 테스트 결과</div>
@@ -567,6 +572,11 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
 
 <!-- ══ EXTENDED RESULTS ══ -->
 <div id="screen-ext-results" class="screen">
+  <!-- 공유 링크로 접속한 경우 표시되는 배너 -->
+  <div id="shared-banner-ext" style="display:none;background:linear-gradient(135deg,#fef3c7,#fde68a);border-bottom:2px solid #f59e0b;padding:14px 20px;text-align:center;">
+    <p style="margin:0 0 10px;font-size:15px;font-weight:700;color:#92400e;">👀 친구의 인지 능력 검사 결과를 보고 계십니다</p>
+    <button class="btn btn-primary" onclick="restartAll()" style="font-size:15px;padding:11px 28px;">🧠 나도 무료로 IQ 테스트 해보기 →</button>
+  </div>
   <div class="ext-results-hero">
     <div class="container">
       <div class="eyebrow" id="ext-res-label">감성 지수 결과</div>

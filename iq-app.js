@@ -11,7 +11,8 @@ window.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[id^="native-btn"]').forEach(b => b.style.display = '');
   }
   animateReliabilityBars();
-  toggleFAQ(null); // no-op init
+  toggleFAQ(null);
+  checkShareParams();
 });
 
 // ── Utility ──
@@ -39,6 +40,7 @@ function buildLongSet(){return shuffle([...sample(seqPool,10),...sample(matPool,
 let currentMode='short',questions=[],curQ=0,answers=[],timer=null,timeLeft=0,testStart=0;
 let extTest=null,extQuestions=[],extCurQ=0,extAnswers=[],extTimer=null;
 let savedIQ=100,savedTopPct=50;
+let savedResultData=null,isSharedView=false;
 
 // ── Navigation ──
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+id).classList.add('active');window.scrollTo(0,0);}
@@ -150,6 +152,7 @@ function computeResults(){
   const cat=getIQCat(iq);
   const elapsed=Math.round((Date.now()-testStart)/1000);
   savedIQ=iq;savedTopPct=topPct;
+  savedResultData={iq,cat:cat.label,topPct,mode:currentMode,correct,total};
 
   document.getElementById('res-test-label').textContent=currentMode==='short'?'단기 IQ 테스트 결과':'정밀 IQ 테스트 결과';
   document.getElementById('res-iq').textContent=iq;
@@ -447,7 +450,108 @@ function getShareText(isExt=false){
   return `[무료 IQ 테스트] 나의 IQ: ${iq}점 (${cat}) | 상위 ${top}%\n너는 몇 점이야? 바로 테스트해봐!`;
 }
 
-function getShareURL(){return window.location.href;}
+function getShareURL(){return window.location.href.split('?')[0];}
+
+function getResultShareURL(isExt=false){
+  const base=window.location.href.split('?')[0];
+  if(isExt&&extTest){
+    const score=document.getElementById('ext-score').textContent;
+    const cat=document.getElementById('ext-res-cat').textContent;
+    const top=document.getElementById('ext-top-pct').textContent;
+    return `${base}?r=ext&tid=${extTest.id}&s=${score}&cat=${encodeURIComponent(cat)}&top=${top}`;
+  }
+  if(savedResultData){
+    const d=savedResultData;
+    return `${base}?r=iq&iq=${d.iq}&cat=${encodeURIComponent(d.cat)}&top=${d.topPct}&mode=${d.mode}`;
+  }
+  return base;
+}
+
+// ── URL 공유 결과 복원 ──
+function checkShareParams(){
+  const p=new URLSearchParams(window.location.search);
+  const r=p.get('r');
+  if(r==='iq'){
+    const iq=parseInt(p.get('iq'))||100;
+    const catLabel=p.get('cat')||'평균';
+    const topPct=parseInt(p.get('top'))||50;
+    const mode=p.get('mode')||'short';
+    isSharedView=true;
+    restoreIQResults(iq,catLabel,topPct,mode);
+  } else if(r==='ext'){
+    const tid=p.get('tid');
+    const score=parseInt(p.get('s'))||70;
+    const cat=p.get('cat')||'';
+    const top=parseInt(p.get('top'))||50;
+    isSharedView=true;
+    restoreExtResults(tid,score,cat,top);
+  }
+}
+
+function restoreIQResults(iq,catLabel,topPct,mode){
+  const pctile=100-topPct;
+  savedIQ=iq;savedTopPct=topPct;
+  currentMode=mode;
+  document.getElementById('shared-banner-iq').style.display='block';
+  document.getElementById('res-test-label').textContent=mode==='short'?'단기 IQ 테스트 결과':'정밀 IQ 테스트 결과';
+  document.getElementById('res-iq').textContent=iq;
+  document.getElementById('res-cat').textContent=catLabel;
+  const cat=getIQCat(iq);
+  document.getElementById('res-cat').style.color=cat.color;
+  document.getElementById('res-desc').textContent=cat.desc;
+  document.getElementById('res-pct-label').textContent=`상위 ${topPct}%`;
+  document.getElementById('pct-text').textContent=`상위 ${topPct}%`;
+  document.getElementById('r-correct').textContent='--';
+  document.getElementById('r-acc').textContent='--';
+  document.getElementById('r-time').textContent='--';
+  document.getElementById('r-top').textContent=topPct;
+  document.getElementById('sc-iq').textContent=iq;
+  document.getElementById('sc-cat').textContent=catLabel.split(' ')[0];
+  document.getElementById('sc-pct').textContent=`상위 ${topPct}%`;
+  document.getElementById('switch-btn').style.display='none';
+  setTimeout(()=>{document.getElementById('pct-fill').style.width=pctile+'%';},300);
+  setTimeout(()=>{drawBellCurve('bellChart',iq,'#4f46e5');},400);
+  showScreen('results');
+}
+
+function restoreExtResults(tid,score,cat,topPct){
+  extTest=extendedTests[tid];
+  if(!extTest)return;
+  const pctile=100-topPct;
+  document.getElementById('shared-banner-ext').style.display='block';
+  document.getElementById('ext-res-label').textContent=extTest.title+' 결과';
+  document.getElementById('ext-score').textContent=score;
+  document.getElementById('ext-top-pct').textContent=topPct;
+  document.getElementById('ext-res-cat').textContent=cat;
+  document.getElementById('ext-res-desc').textContent='';
+  document.getElementById('ext-stat-score').textContent=score+'점';
+  document.getElementById('ext-stat-pct').textContent='상위 '+topPct+'%';
+  const levelRange=extTest.scoreRanges.find(r=>score>=r.min)||extTest.scoreRanges[extTest.scoreRanges.length-1];
+  document.getElementById('ext-stat-level').textContent=levelRange.label;
+  document.getElementById('ext-stat-level').style.color=levelRange.color;
+  document.getElementById('ext-sc-score').textContent=score+'점';
+  document.getElementById('ext-sc-cat').textContent=cat;
+  document.getElementById('ext-sc-pct').textContent='상위 '+topPct+'%';
+  const circ=2*Math.PI*60;
+  const pct=Math.round(((score-62)/38)*100);
+  const offset=circ*(1-pct/100);
+  const ring=document.getElementById('ring-fill');
+  ring.style.stroke=extTest.color;
+  ring.setAttribute('stroke-dasharray',circ.toFixed(1));
+  setTimeout(()=>{ring.style.strokeDashoffset=offset;},200);
+  showScreen('ext-results');
+  setTimeout(()=>{
+    document.getElementById('ext-bell-title').textContent=`📊 ${extTest.title} 점수 분포에서의 위치`;
+    drawBellCurve('ext-bell-chart',score,extTest.color,extTest.mean||76,extTest.sd||8);
+    document.getElementById('ext-chart-title').textContent=`🔍 ${extTest.title} 세부 영역 분석`;
+    drawExtRadar(score);
+    renderInterpTable(score,extTest.scoreRanges,pctile);
+    renderExtBreakdown(score);
+    const tips=extTest.getTips(score);
+    document.getElementById('tips-title').textContent=`💡 ${extTest.title} 개선 가이드`;
+    document.getElementById('tips-list').innerHTML=tips.map(t=>`<div class="tip-item"><div class="tip-dot"></div><div>${t}</div></div>`).join('');
+  },400);
+}
 
 function shareKakao(isExt=false){
   const text=getShareText(isExt);
@@ -491,7 +595,7 @@ function shareNative(isExt=false){
 }
 
 function copyLink(isExt=false){
-  const text=getShareText(isExt)+'\n\n🔗 '+getShareURL();
+  const text=getShareText(isExt)+'\n\n🔗 '+getResultShareURL(isExt);
   const btnId=isExt?'copy-btn-ext':'copy-btn-iq';
   const btn=document.getElementById(btnId);
   const copy=()=>{

@@ -43,7 +43,15 @@ let savedIQ=100,savedTopPct=50;
 let savedResultData=null,isSharedView=false;
 
 // ── Navigation ──
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+id).classList.add('active');window.scrollTo(0,0);}
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+  window.scrollTo(0,0);
+  setTimeout(()=>{
+    const h=document.body.scrollHeight;
+    window.parent.postMessage({type:'iq-resize',height:h},'*');
+  },150);
+}
 function scrollToExt(){showScreen('results');setTimeout(()=>{const el=document.getElementById('ext-grid');if(el)el.scrollIntoView({behavior:'smooth'});},300);}
 function restartAll(){showScreen('home');}
 function switchMode(){startTest(currentMode==='short'?'long':'short');}

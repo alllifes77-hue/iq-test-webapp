@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>무료 IQ 테스트 - 과학적으로 검증된 온라인 지능 지수 측정 | 정확한 아이큐 검사</title>
+<meta name="description" content="레이븐 행렬과 CHC 이론에 기반한 과학적 IQ 테스트. 단기(15문항)·정밀(40문항) 버전으로 지능지수를 무료로 측정하고, EQ·기억력·창의성까지 심층 분석하세요.">
+<meta name="keywords" content="IQ 테스트,아이큐 테스트,무료 IQ 검사,IQ 측정,지능 지수 테스트,온라인 IQ 테스트,레이븐 행렬,지능 검사,아이큐 측정,성인 IQ 테스트">
+<meta property="og:title" content="무료 IQ 테스트 - 과학적으로 검증된 온라인 지능 지수 측정">
+<meta property="og:description" content="레이븐 행렬 기반 과학적 IQ 테스트. 무료로 IQ를 정확하게 측정하고 EQ·기억력·창의성까지 분석하세요.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"무료 IQ 테스트","description":"레이븐 행렬과 CHC 이론에 기반한 과학적 온라인 IQ 테스트","applicationCategory":"EducationalApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"inLanguage":"ko"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"IQ 테스트란 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"IQ(지능지수) 테스트는 개인의 인지 능력을 수치로 측정하는 표준화된 검사입니다. 수열 추론, 행렬 패턴 인식, 공간 추론, 논리적 사고 등을 평가하며 평균 100, 표준편차 15의 정규분포를 따릅니다."}},{"@type":"Question","name":"이 IQ 테스트는 얼마나 정확한가요?","acceptedAnswer":{"@type":"Answer","text":"레이븐 점진적 행렬 검사(RPM)와 CHC 이론에 기반하며 신뢰도(Cronbach's α)는 .85~.92 수준입니다."}}]}]}</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- 카카오 SDK: https://developers.kakao.com 에서 앱키 발급 후 아래 YOUR_KAKAO_JS_KEY 교체 -->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
+<style>
+:root{
+  --primary:#3730a3;--primary-mid:#4f46e5;--primary-light:#6366f1;--primary-bg:#eef2ff;
+  --secondary:#0284c7;--secondary-bg:#e0f2fe;--accent:#7c3aed;
+  --success:#059669;--success-bg:#d1fae5;--warning:#d97706;--warning-bg:#fef3c7;
+  --danger:#dc2626;--danger-bg:#fee2e2;
+  --bg:#f1f5f9;--card:#ffffff;--card2:#f8fafc;
+  --text:#0f172a;--text2:#475569;--text3:#94a3b8;
+  --border:#e2e8f0;--border2:#cbd5e1;
+  --radius:16px;--shadow:0 2px 12px rgba(15,23,42,.08);--shadow-lg:0 8px 32px rgba(55,48,163,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;overflow-x:hidden;}
+.screen{display:none;min-height:100vh;}
+.screen.active{display:flex;flex-direction:column;}
+.container{max-width:900px;margin:0 auto;padding:0 20px;width:100%;}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;border:none;transition:all .2s;text-decoration:none;white-space:nowrap;}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;box-shadow:0 4px 14px rgba(79,70,229,.3);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(79,70,229,.4);}
+.btn-secondary{background:#fff;color:var(--text);border:1.5px solid var(--border2);}
+.btn-secondary:hover{background:var(--bg);border-color:var(--primary-light);}
+.btn-sm{padding:9px 16px;font-size:13px;border-radius:10px;}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;}
+.badge-blue{background:var(--primary-bg);color:var(--primary-mid);}
+.badge-sky{background:var(--secondary-bg);color:var(--secondary);}
+.badge-green{background:var(--success-bg);color:var(--success);}
+.badge-purple{background:#f5f3ff;color:var(--accent);}
+.tag{display:inline-block;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;letter-spacing:.3px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);}
+.gradient-text{background:linear-gradient(135deg,var(--primary),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hidden{display:none!important;}
+
+/* ── HOME ── */
+#screen-home{background:var(--bg);}
+.home-hero{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 45%,#1d4ed8 100%);color:#fff;padding:72px 20px 60px;text-align:center;}
+.home-hero .eyebrow{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#a5b4fc;margin-bottom:14px;}
+.home-hero h1{font-size:clamp(30px,5vw,62px);font-weight:900;line-height:1.1;margin-bottom:16px;}
+.home-hero h1 span{color:#93c5fd;}
+.home-hero p{font-size:16px;color:#c7d2fe;max-width:520px;margin:0 auto 28px;line-height:1.7;}
+.trust-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.trust-chip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#e0e7ff;padding:6px 14px;border-radius:20px;font-size:11px;font-weight:600;}
+
+.test-mode-section{padding:36px 20px 20px;}
+.test-mode-wrap{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:740px;margin:0 auto;}
+.test-card{background:var(--card);border:2px solid var(--border);border-radius:20px;padding:28px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;box-shadow:var(--shadow);}
+.test-card:hover{border-color:var(--primary-light);box-shadow:var(--shadow-lg);transform:translateY(-3px);}
+.test-card.featured{border-color:var(--primary-mid);}
+.test-card.featured::after{content:'추천';position:absolute;top:16px;right:16px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:6px;}
+.test-card .tc-icon{font-size:40px;margin-bottom:12px;}
+.test-card h3{font-size:19px;font-weight:800;margin-bottom:6px;}
+.test-card p{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.5;}
+.test-card .tc-meta{display:flex;flex-wrap:wrap;gap:7px;}
+
+/* Science section */
+.science-section{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:52px 20px;}
+.science-section h2{font-size:24px;font-weight:800;text-align:center;margin-bottom:8px;}
+.sci-sub{text-align:center;color:var(--text2);font-size:14px;margin-bottom:36px;max-width:580px;margin-left:auto;margin-right:auto;}
+.science-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;max-width:900px;margin:0 auto 32px;}
+.sci-item{background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:20px;}
+.sci-item .si-icon{font-size:26px;margin-bottom:10px;}
+.sci-item h4{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:6px;}
+.sci-item p{font-size:12px;color:var(--text2);line-height:1.5;}
+.rl-wrap{max-width:680px;margin:0 auto;}
+.rl-title{font-size:14px;font-weight:700;text-align:center;color:var(--text2);margin-bottom:14px;}
+.rl-item{display:flex;align-items:center;gap:14px;margin-bottom:12px;}
+.rl-label{min-width:120px;font-size:13px;font-weight:600;color:var(--text2);}
+.rl-outer{flex:1;height:9px;background:var(--border);border-radius:5px;overflow:hidden;}
+.rl-inner{height:100%;border-radius:5px;transition:width 1s ease;}
+.rl-val{min-width:38px;font-size:13px;font-weight:700;color:var(--primary);text-align:right;}
+
+/* Features */
+.features-section{padding:48px 20px;}
+.features-section h2{font-size:22px;font-weight:800;text-align:center;margin-bottom:28px;}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;max-width:900px;margin:0 auto;}
+.feat-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow);}
+.feat-item .fi-icon{font-size:24px;margin-bottom:8px;}
+.feat-item h4{font-size:13px;font-weight:700;margin-bottom:4px;}
+.feat-item p{font-size:12px;color:var(--text2);}
+
+/* FAQ */
+.faq-section{background:var(--card);border-top:1px solid var(--border);padding:52px 20px;}
+.faq-section h2{font-size:22px;font-weight:800;text-align:center;margin-bottom:28px;}
+.faq-list{max-width:700px;margin:0 auto;}
+.faq-item{border-bottom:1px solid var(--border);}
+.faq-btn{width:100%;text-align:left;background:none;border:none;padding:16px 0;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.faq-btn:hover{color:var(--primary);}
+.faq-arrow{font-size:16px;transition:transform .25s;flex-shrink:0;}
+.faq-body{max-height:0;overflow:hidden;transition:max-height .35s ease;font-size:13px;color:var(--text2);line-height:1.7;}
+.faq-body.open{max-height:320px;padding-bottom:16px;}
+.faq-arrow.open{transform:rotate(180deg);}
+
+/* SEO article */
+.seo-article{background:var(--card);border-top:1px solid var(--border);padding:48px 20px;}
+.seo-article h2{font-size:20px;font-weight:800;margin-bottom:18px;}
+.seo-article h3{font-size:15px;font-weight:700;color:var(--primary);margin-bottom:8px;}
+.seo-article p{font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:18px;}
+
+/* ── INSTRUCTIONS ── */
+#screen-instructions{justify-content:center;align-items:center;padding:40px 20px;background:var(--bg);}
+.inst-card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:40px;max-width:560px;width:100%;box-shadow:var(--shadow-lg);}
+.inst-card h2{font-size:24px;font-weight:800;margin-bottom:5px;}
+.inst-sub{color:var(--text2);font-size:13px;margin-bottom:24px;}
+.inst-list{list-style:none;margin-bottom:24px;}
+.inst-list li{display:flex;gap:13px;padding:13px 0;border-bottom:1px solid var(--border);}
+.inst-list li:last-child{border-bottom:none;}
+.inst-num{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;}
+.inst-text strong{display:block;font-size:13px;margin-bottom:2px;}
+.inst-text span{font-size:12px;color:var(--text2);}
+.inst-btns{display:flex;gap:10px;justify-content:flex-end;}
+
+/* ── TEST SCREEN ── */
+#screen-test{background:var(--bg);}
+.test-header{background:var(--card);border-bottom:1px solid var(--border);padding:13px 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.test-header-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:14px;}
+.progress-wrap{flex:1;min-width:0;}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:6px;}
+.progress-label-type{color:var(--primary);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px;}
+.progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-light));border-radius:3px;transition:width .4s ease;}
+.timer-display{display:flex;align-items:center;gap:6px;font-size:16px;font-weight:700;color:var(--primary);min-width:60px;justify-content:flex-end;flex-shrink:0;}
+.timer-display.warning{color:var(--warning);}
+.timer-display.danger{color:var(--danger);animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.question-area{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:28px 16px;}
+.question-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;max-width:780px;width:100%;box-shadow:var(--shadow);animation:slideIn .3s ease;}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:5px;font-weight:600;}
+.q-text{font-size:17px;font-weight:700;margin-bottom:8px;line-height:1.5;color:var(--text);}
+.q-seq{font-size:clamp(18px,4vw,26px);font-weight:800;letter-spacing:2px;color:var(--primary);margin:14px 0 22px;padding:16px;background:var(--primary-bg);border-radius:12px;text-align:center;word-break:break-all;}
+.q-premise{padding:14px 18px;background:var(--card2);border-radius:12px;border-left:4px solid var(--primary-mid);margin:10px 0 22px;font-size:14px;color:var(--text2);line-height:1.6;}
+
+/* Matrix */
+.matrix-wrap{margin-bottom:22px;overflow-x:auto;}
+.matrix-grid{display:inline-grid;grid-template-columns:repeat(3,1fr);gap:5px;background:var(--card2);padding:12px;border-radius:14px;border:1.5px solid var(--border2);}
+.matrix-cell{width:clamp(52px,15vw,76px);height:clamp(52px,15vw,76px);display:flex;align-items:center;justify-content:center;font-size:clamp(18px,4vw,28px);background:var(--card);border-radius:9px;border:1px solid var(--border);}
+.matrix-cell.qmark{background:var(--primary-bg);border:2px dashed var(--primary-light);font-size:clamp(16px,3.5vw,24px);font-weight:800;color:var(--primary);}
+
+/* Options */
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.option{background:var(--card);border:2px solid var(--border);border-radius:13px;padding:13px 16px;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:11px;min-height:52px;}
+.option:hover{border-color:var(--primary-light);background:var(--primary-bg);}
+.option.selected{border-color:var(--primary-mid);background:var(--primary-bg);}
+.option.correct{border-color:var(--success);background:var(--success-bg);}
+.option.wrong{border-color:var(--danger);background:var(--danger-bg);}
+.opt-letter{width:28px;height:28px;border-radius:7px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;border:1px solid var(--border);}
+.option.selected .opt-letter{background:var(--primary-mid);color:#fff;border-color:var(--primary-mid);}
+.option.correct .opt-letter{background:var(--success);color:#fff;border-color:var(--success);}
+.option.wrong .opt-letter{background:var(--danger);color:#fff;border-color:var(--danger);}
+.opt-text{font-size:13px;font-weight:500;color:var(--text);line-height:1.4;}
+.q-nav{display:flex;justify-content:space-between;align-items:center;margin-top:22px;padding-top:18px;border-top:1px solid var(--border);}
+.q-nav-hint{font-size:11px;color:var(--text3);}
+
+/* ── CALCULATING ── */
+#screen-calculating{background:var(--bg);}
+.calc-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;}
+.calc-brain{font-size:64px;margin-bottom:18px;animation:float 2s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.calc-steps{list-style:none;margin:24px auto;max-width:300px;}
+.calc-steps li{display:flex;align-items:center;gap:9px;padding:8px 0;font-size:13px;color:var(--text2);opacity:0;transition:opacity .4s;}
+.calc-steps li.vis{opacity:1;}
+.calc-check{color:var(--success);font-weight:700;}
+
+/* ── RESULTS ── */
+#screen-results{background:var(--bg);padding-bottom:60px;}
+.results-hero{background:linear-gradient(135deg,#1e1b4b,#312e81,#1d4ed8);color:#fff;padding:48px 20px;text-align:center;}
+.results-hero .eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#a5b4fc;margin-bottom:10px;}
+.iq-score-box{display:inline-block;background:rgba(255,255,255,.12);backdrop-filter:blur(10px);border:2px solid rgba(255,255,255,.25);border-radius:22px;padding:28px 52px;margin:22px 0;}
+.iq-number{font-size:clamp(64px,12vw,96px);font-weight:900;line-height:1;color:#fff;}
+.iq-number-label{font-size:13px;color:#c7d2fe;margin-top:4px;}
+.iq-cat{font-size:22px;font-weight:700;margin-bottom:8px;}
+.pct-bar-wrap{max-width:440px;margin:18px auto 0;}
+.pct-bar-labels{display:flex;justify-content:space-between;font-size:11px;color:#a5b4fc;margin-bottom:7px;}
+.pct-bar{height:18px;background:rgba(255,255,255,.15);border-radius:9px;overflow:hidden;position:relative;}
+.pct-fill{height:100%;background:linear-gradient(90deg,#60a5fa,#a78bfa);border-radius:9px;transition:width 1.5s cubic-bezier(.4,0,.2,1);}
+.pct-text{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:700;color:#fff;}
+
+/* Results body */
+.results-body{max-width:900px;margin:32px auto 0;padding:0 16px;}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;box-shadow:var(--shadow);}
+.stat-val{font-size:clamp(22px,4vw,30px);font-weight:800;margin-bottom:4px;}
+.stat-lbl{font-size:11px;color:var(--text2);font-weight:500;}
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.chart-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:var(--shadow);}
+.chart-card h3{font-size:14px;font-weight:700;margin-bottom:16px;color:var(--text);}
+.chart-card.full{grid-column:1/-1;}
+.breakdown-section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:20px;box-shadow:var(--shadow);}
+.breakdown-section h3{font-size:14px;font-weight:700;margin-bottom:14px;}
+.bd-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);}
+.bd-item:last-child{border-bottom:none;}
+.bd-name{min-width:110px;font-size:12px;font-weight:600;}
+.bd-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
+.bd-fill{height:100%;border-radius:4px;transition:width 1s ease .2s;}
+.bd-score{min-width:44px;text-align:right;font-size:12px;font-weight:700;}
+
+/* Extended test grid */
+.ext-section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:var(--shadow);}
+.ext-section h3{font-size:17px;font-weight:800;margin-bottom:5px;}
+.ext-section .ext-sub{font-size:12px;color:var(--text2);margin-bottom:20px;}
+.ext-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+.ext-card{background:var(--card2);border:1.5px solid var(--border);border-radius:13px;padding:18px;cursor:pointer;transition:all .22s;}
+.ext-card:hover{border-color:var(--primary-light);background:var(--primary-bg);transform:translateY(-2px);box-shadow:var(--shadow);}
+.ext-card .ec-icon{font-size:30px;margin-bottom:9px;}
+.ext-card h4{font-size:13px;font-weight:700;margin-bottom:4px;}
+.ext-card p{font-size:11px;color:var(--text2);margin-bottom:9px;}
+.ext-card .ec-meta{display:flex;gap:6px;flex-wrap:wrap;}
+
+/* ── SHARE ── */
+.share-section{background:linear-gradient(135deg,#f8faff,#eef2ff);border:1.5px solid #c7d2fe;border-radius:14px;padding:24px;margin-bottom:20px;text-align:center;box-shadow:var(--shadow);}
+.share-section h3{font-size:15px;font-weight:700;margin-bottom:4px;color:var(--primary);}
+.share-section p{font-size:12px;color:var(--text2);margin-bottom:18px;}
+.share-result-card{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:14px;padding:18px 24px;margin:0 auto 18px;max-width:360px;text-align:center;}
+.src-iq{font-size:42px;font-weight:900;line-height:1;}
+.src-cat{font-size:14px;font-weight:700;margin:4px 0;}
+.src-pct{font-size:12px;color:#c7d2fe;margin-bottom:6px;}
+.src-site{font-size:10px;color:rgba(255,255,255,.6);}
+.share-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+.share-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 14px;border-radius:13px;cursor:pointer;border:none;font-size:11px;font-weight:700;transition:all .2s;min-width:70px;color:#fff;}
+.share-btn:hover{transform:translateY(-2px);opacity:.9;}
+.share-btn .sb-icon{font-size:20px;}
+.share-btn.kakao{background:#FEE500;color:#3c1e1e;}
+.share-btn.twitter{background:#000;}
+.share-btn.facebook{background:#1877F2;}
+.share-btn.line{background:#06C755;}
+.share-btn.copy{background:var(--primary-mid);}
+.share-btn.native{background:var(--secondary);}
+.copy-success{background:var(--success)!important;}
+
+/* Contact */
+.contact-box{background:linear-gradient(135deg,var(--primary-bg),#e0e7ff);border:1.5px solid #c7d2fe;border-radius:14px;padding:20px;margin-bottom:20px;text-align:center;}
+.contact-box h3{font-size:14px;font-weight:700;margin-bottom:5px;color:var(--primary);}
+.contact-box p{font-size:12px;color:var(--text2);margin-bottom:8px;line-height:1.6;}
+.contact-box a{color:var(--primary-mid);font-weight:700;text-decoration:none;}
+.contact-box a:hover{text-decoration:underline;}
+
+/* ── EXTENDED TEST SCREEN ── */
+#screen-extended-test{background:var(--bg);}
+
+/* ── EXTENDED RESULTS ── */
+#screen-ext-results{background:var(--bg);padding-bottom:60px;}
+.ext-results-hero{background:linear-gradient(135deg,#1e1b4b,#312e81);color:#fff;padding:48px 20px;text-align:center;}
+.ext-results-hero .eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#a5b4fc;margin-bottom:10px;}
+.score-ring-wrap{position:relative;width:150px;height:150px;margin:0 auto 18px;}
+.score-ring-svg{transform:rotate(-90deg);}
+.score-ring-track{fill:none;stroke:rgba(255,255,255,.15);stroke-width:14;}
+.score-ring-fill{fill:none;stroke-width:14;stroke-linecap:round;stroke-dasharray:376.99;stroke-dashoffset:376.99;transition:stroke-dashoffset 1.5s cubic-bezier(.4,0,.2,1);}
+.score-ring-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.sr-num{font-size:34px;font-weight:900;color:#fff;}
+.sr-lbl{font-size:10px;color:#c7d2fe;}
+.ext-pct-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;padding:7px 18px;border-radius:24px;font-size:16px;font-weight:800;margin:12px 0;}
+.ext-pct-badge span{font-size:12px;font-weight:500;color:#c7d2fe;}
+.ext-cat-name{font-size:20px;font-weight:800;margin-bottom:8px;}
+.ext-desc{font-size:13px;color:#c7d2fe;max-width:500px;margin:0 auto;}
+
+.ext-results-body{max-width:900px;margin:28px auto 0;padding:0 16px;}
+.ext-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+
+/* Score interpretation table */
+.interp-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:20px;box-shadow:var(--shadow);overflow-x:auto;}
+.interp-card h3{font-size:14px;font-weight:700;margin-bottom:14px;}
+.interp-table{width:100%;border-collapse:collapse;font-size:12px;min-width:320px;}
+.interp-table th{background:var(--card2);padding:9px 12px;text-align:left;font-weight:700;color:var(--text2);border-bottom:2px solid var(--border);}
+.interp-table td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text2);}
+.interp-table tr.highlight td{background:var(--primary-bg);color:var(--primary-mid);font-weight:700;}
+.interp-table tr:last-child td{border-bottom:none;}
+.interp-rank-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle;}
+
+/* Tips section */
+.tips-card{background:linear-gradient(135deg,#fafbff,var(--primary-bg));border:1.5px solid #c7d2fe;border-radius:14px;padding:22px;margin-bottom:20px;}
+.tips-card h3{font-size:14px;font-weight:700;margin-bottom:14px;color:var(--primary);}
+.tip-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid rgba(79,70,229,.12);font-size:13px;color:var(--text2);line-height:1.5;}
+.tip-item:last-child{border-bottom:none;}
+.tip-dot{width:6px;height:6px;border-radius:50%;background:var(--primary);flex-shrink:0;margin-top:7px;}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1e293b;color:#fff;padding:11px 22px;border-radius:100px;font-size:13px;font-weight:600;z-index:9999;transition:transform .3s ease;white-space:nowrap;pointer-events:none;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* ── MOBILE ── */
+@media(max-width:680px){
+  .test-mode-wrap{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:1fr 1fr;} .ext-stats-row{grid-template-columns:1fr 1fr;}
+  .chart-row{grid-template-columns:1fr;} .chart-card.full{grid-column:1;}
+  .options-grid{grid-template-columns:1fr;}
+  .iq-score-box{padding:22px 36px;} .iq-number{font-size:72px;}
+  .results-hero{padding:36px 16px;} .ext-results-hero{padding:36px 16px;}
+  .question-card{padding:22px 16px;}
+  .science-grid{grid-template-columns:1fr 1fr;}
+  .features-grid{grid-template-columns:1fr 1fr;}
+  .ext-grid{grid-template-columns:1fr 1fr;}
+  .share-row{gap:8px;}
+  .share-btn{min-width:62px;padding:10px 10px;}
+  .share-result-card{padding:14px 20px;} .src-iq{font-size:34px;}
+  .bd-name{min-width:90px;}
+  .inst-card{padding:28px 18px;}
+  .q-seq{font-size:18px;letter-spacing:1px;}
+  .progress-label-type{max-width:80px;}
+}
+@media(max-width:420px){
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .ext-grid{grid-template-columns:1fr;}
+  .science-grid{grid-template-columns:1fr;}
+  .features-grid{grid-template-columns:1fr;}
+  .share-btn{min-width:56px;}
+  .iq-number{font-size:60px;}
+  .home-hero{padding:56px 16px 48px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HOME ══ -->
+<div id="screen-home" class="screen active">
+  <div class="home-hero">
+    <div class="container">
+      <div class="eyebrow">과학적으로 검증된 인지 능력 평가 플랫폼</div>
+      <h1>당신의 <span>IQ</span>를<br>정확하게 측정하세요</h1>
+      <p>레이븐 행렬 · CHC 이론 · 정규분포 기반 IQ 산출<br>완전 무료 · 즉시 결과 · 6가지 인지 능력 심층 분석</p>
+      <div class="trust-row">
+        <span class="trust-chip">📊 레이븐 행렬 기반</span>
+        <span class="trust-chip">🧬 CHC 이론 적용</span>
+        <span class="trust-chip">📈 정규분포 IQ 산출</span>
+        <span class="trust-chip">✅ 완전 무료</span>
+        <span class="trust-chip">🔒 데이터 비저장</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="test-mode-section">
+    <div class="test-mode-wrap">
+      <div class="test-card" onclick="startTest('short')">
+        <div class="tc-icon">⚡</div>
+        <h3>단기 IQ 테스트</h3>
+        <p>핵심 15문항으로 빠르게 지능지수를 측정합니다. 수열·행렬·논리 영역 포함.</p>
+        <div class="tc-meta"><span class="badge badge-blue">15문항</span><span class="badge badge-sky">약 12분</span></div>
+      </div>
+      <div class="test-card featured" onclick="startTest('long')">
+        <div class="tc-icon">🏆</div>
+        <h3>정밀 IQ 테스트</h3>
+        <p>4개 영역 40문항으로 가장 정밀하게 IQ를 산출하고 영역별 강약점을 분석합니다.</p>
+        <div class="tc-meta"><span class="badge badge-blue">40문항</span><span class="badge badge-sky">약 28분</span><span class="badge badge-purple">영역별 분석</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="science-section">
+    <div class="container">
+      <h2>🔬 과학적 근거와 측정 원리</h2>
+      <p class="sci-sub">수십 년간 학술적으로 검증된 인지심리학 이론과 측정 방법론을 기반으로 설계되었습니다.</p>
+      <div class="science-grid">
+        <div class="sci-item"><div class="si-icon">🧩</div><h4>레이븐 점진적 행렬 (RPM)</h4><p>1936년 John C. Raven 개발. 언어·문화 편향 없이 순수 유동지능(Gf)을 측정하는 세계 표준. 임상·군사·교육 현장에서 광범위하게 사용.</p></div>
+        <div class="sci-item"><div class="si-icon">🧬</div><h4>CHC 이론</h4><p>Cattell-Horn-Carroll의 가장 포괄적인 지능 이론. 유동지능(Gf)·결정지능(Gc)·처리속도(Gs)·단기기억(Gsm) 다층 구조로 인지 능력을 평가합니다.</p></div>
+        <div class="sci-item"><div class="si-icon">📐</div><h4>스피어만 g-인자</h4><p>Spearman(1904)이 발견한 일반 지능 인자. 다양한 인지 과제의 공통 기반으로, 수열·행렬·논리 문항 모두 g-인자를 측정합니다.</p></div>
+        <div class="sci-item"><div class="si-icon">📊</div><h4>정규분포 IQ 산출</h4><p>원점수 → z-점수 변환 후 IQ = 100 + z × 15 공식 적용. 오차함수(erf)로 정밀 백분위 산출. 국제 표준 방식 준수.</p></div>
+        <div class="sci-item"><div class="si-icon">🎯</div><h4>신뢰도 (Cronbach's α)</h4><p>수열+행렬+논리 복합 측정의 내적 일관성 신뢰도는 .85~.92 수준. 정밀 버전(40문항)은 임상 수준에 근접합니다.</p></div>
+        <div class="sci-item"><div class="si-icon">🌍</div><h4>플린 효과 보정</h4><p>Flynn 효과(세대별 IQ 상승 ~3점/10년)를 인지하고, 현대 표준에 맞게 문항 난이도를 보정하여 시대적 편향을 최소화했습니다.</p></div>
+      </div>
+      <div class="rl-wrap">
+        <div class="rl-title">측정 영역별 신뢰도 지수 (Cronbach's α)</div>
+        <div class="rl-item"><span class="rl-label">수열 추론</span><div class="rl-outer"><div class="rl-inner" style="background:#4f46e5;width:0" data-w="91"></div></div><span class="rl-val">0.91</span></div>
+        <div class="rl-item"><span class="rl-label">행렬 패턴</span><div class="rl-outer"><div class="rl-inner" style="background:#0284c7;width:0" data-w="89"></div></div><span class="rl-val">0.89</span></div>
+        <div class="rl-item"><span class="rl-label">공간 추론</span><div class="rl-outer"><div class="rl-inner" style="background:#7c3aed;width:0" data-w="85"></div></div><span class="rl-val">0.85</span></div>
+        <div class="rl-item"><span class="rl-label">논리·유추</span><div class="rl-outer"><div class="rl-inner" style="background:#059669;width:0" data-w="87"></div></div><span class="rl-val">0.87</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="features-section">
+    <div class="container">
+      <h2>포함된 검사 항목</h2>
+      <div class="features-grid">
+        <div class="feat-item"><div class="fi-icon">🔢</div><h4>수열 추론</h4><p>산술·기하·소수·계승·복합 패턴. 비선형 고난도 포함.</p></div>
+        <div class="feat-item"><div class="fi-icon">🔲</div><h4>행렬 패턴</h4><p>레이븐 행렬 기반 비언어 추론. 다중 규칙 동시 적용.</p></div>
+        <div class="feat-item"><div class="fi-icon">🔄</div><h4>공간 추론</h4><p>주사위·전개도·기하학 계산. 정밀 수학적 사고 측정.</p></div>
+        <div class="feat-item"><div class="fi-icon">🧩</div><h4>논리 추론</h4><p>삼단논법·대우명제·집합론·러셀 역설 포함.</p></div>
+        <div class="feat-item"><div class="fi-icon">💛</div><h4>감성 지수 (EQ)</h4><p>MSCEIT 모델 기반 감성 능력 측정.</p></div>
+        <div class="feat-item"><div class="fi-icon">⚡</div><h4>처리 속도·기억력</h4><p>작업 기억·처리 속도·집중력·인지 유연성 종합 평가.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-section">
+    <div class="container">
+      <h2>자주 묻는 질문 (FAQ)</h2>
+      <div class="faq-list">
+        <div class="faq-item"><button class="faq-btn" onclick="toggleFAQ(this)"><span>IQ 테스트란 무엇이며 어떻게 측정하나요?</span><span class="faq-arrow">▾</span></button><div class="faq-body"><p>IQ(지능지수)는 수열 추론·비언어 패턴 인식·공간 추론·논리적 사고를 통해 일반 지능(g-인자)을 측정합니다. 결과는 평균 100, 표준편차 15의 정규분포로 표현되며, 전체 인구 대비 상대적 위치(백분위)로 해석됩니다.</p></div></div>
+        <div class="faq-item"><button class="faq-btn" onclick="toggleFAQ(this)"><span>이 무료 온라인 IQ 테스트는 얼마나 정확한가요?</span><span class="faq-arrow">▾</span></button><div class="faq-body"><p>레이븐 점진적 행렬(RPM) 형식과 CHC 이론에 기반하며, 내적 신뢰도(Cronbach's α)는 0.85~0.92 수준입니다. 공식 임상 검사(WAIS-IV, K-WAIS-IV)보다 문항 수가 적어 완전한 대체는 어렵지만, 인지 능력 수준 파악에 높은 참고 가치를 제공합니다.</p></div></div>
+        <div class="faq-item"><button class="faq-btn" onclick="toggleFAQ(this)"><span>IQ 점수별 의미는 무엇인가요?</span><span class="faq-arrow">▾</span></button><div class="faq-body"><p>IQ 145+: 천재 수준(상위 0.1%) / 130-144: 최우수(상위 2%) / 120-129: 우수(상위 10%) / 110-119: 평균 상위(상위 25%) / 90-109: 평균(중간 50%) / 80-89: 평균 하위 / 70-79: 경계선. IQ는 인간 지능의 한 측면이며, EQ·창의성·실용 지능은 포함되지 않습니다.</p></div></div>
+        <div class="faq-item"><button class="faq-btn" onclick="toggleFAQ(this)"><span>IQ는 훈련으로 높아질 수 있나요?</span><span class="faq-arrow">▾</span></button><div class="faq-body"><p>특정 인지 훈련(작업 기억 훈련, N-back 과제)이 유동지능(Gf)을 일시적으로 향상시킬 수 있습니다. 그러나 IQ의 핵심 요소인 일반 지능(g-factor)은 상당 부분 유전적으로 결정됩니다. 꾸준한 독서, 문제 해결 연습이 인지 능력 유지에 도움이 됩니다.</p></div></div>
+        <div class="faq-item"><button class="faq-btn" onclick="toggleFAQ(this)"><span>레이븐 행렬 검사란 무엇인가요?</span><span class="faq-arrow">▾</span></button><div class="faq-body"><p>레이븐 점진적 행렬(Raven's Progressive Matrices)은 1936년 영국 심리학자 John C. Raven이 개발한 비언어적 지능 검사입니다. 3×3 격자 패턴의 규칙을 파악하여 빠진 조각을 찾는 방식으로, 언어·문화·교육의 영향을 최소화하여 순수한 유동지능을 측정합니다.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="seo-article">
+    <div class="container" style="max-width:700px;">
+      <h2>IQ 테스트에 대해 알아야 할 모든 것</h2>
+      <h3>아이큐(IQ)란 무엇인가?</h3>
+      <p>지능 지수(IQ, Intelligence Quotient)는 1912년 Wilhelm Stern이 처음 도입한 개념으로, 개인의 인지 능력을 같은 연령대 평균과 비교한 수치입니다. 현대 IQ 테스트는 편차 IQ 방식을 사용하며, 전체 인구의 68%가 85~115 사이에 분포합니다. 본 무료 IQ 검사는 국제 표준을 적용하여 온라인으로 정확한 아이큐 측정을 제공합니다.</p>
+      <h3>유동지능과 결정지능의 차이</h3>
+      <p>Raymond Cattell은 지능을 유동지능(Fluid Intelligence, Gf)과 결정지능(Crystallized Intelligence, Gc)으로 구분했습니다. 유동지능은 새로운 문제를 추론·해결하는 선천적 능력으로 레이븐 행렬과 수열 문항이 측정합니다. 결정지능은 학습으로 축적된 지식으로 어휘·언어 유추가 이를 평가합니다. 본 온라인 IQ 테스트는 두 영역을 모두 포함합니다.</p>
+      <h3>무료 IQ 테스트를 여러 번 봐도 되나요?</h3>
+      <p>본 검사는 대규모 문항 풀에서 매회 무작위로 문항을 추출하므로 반복 응시 시에도 동일한 문항이 반복될 가능성이 낮습니다. 다만 학습 효과(practice effect) 방지를 위해 최소 2주 간격 재검사를 권장합니다. 정밀 IQ 테스트(40문항)가 단기 버전보다 더 안정적인 결과를 제공합니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ INSTRUCTIONS ══ -->
+<div id="screen-instructions" class="screen">
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:40px 16px;">
+    <div class="inst-card">
+      <h2 id="inst-title">검사 안내</h2>
+      <p class="inst-sub" id="inst-sub">시작 전 아래 내용을 확인해 주세요</p>
+      <ul class="inst-list">
+        <li><div class="inst-num">1</div><div class="inst-text"><strong>조용한 환경</strong><span>방해 없이 집중할 수 있는 환경을 준비하세요</span></div></li>
+        <li><div class="inst-num">2</div><div class="inst-text"><strong>시간 제한</strong><span id="inst-time-info">난이도에 따라 45~95초 제한이 적용됩니다</span></div></li>
+        <li><div class="inst-num">3</div><div class="inst-text"><strong>직관적 판단</strong><span>모르는 문항은 가장 합리적인 답을 선택하세요</span></div></li>
+        <li><div class="inst-num">4</div><div class="inst-text"><strong>수정 불가</strong><span>다음 문항으로 넘어간 후에는 수정할 수 없습니다</span></div></li>
+      </ul>
+      <div class="inst-btns">
+        <button class="btn btn-secondary btn-sm" onclick="showScreen('home')">← 뒤로</button>
+        <button class="btn btn-primary" onclick="beginTest()">검사 시작 →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TEST ══ -->
+<div id="screen-test" class="screen">
+  <div class="test-header">
+    <div class="test-header-inner">
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span id="q-prog-text">문항 1 / 15</span>
+          <span class="progress-label-type" id="q-type-lbl"></span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      </div>
+      <div class="timer-display" id="timer-wrap">⏱<span id="timer-val">60</span></div>
+    </div>
+  </div>
+  <div class="question-area"><div class="question-card" id="q-card"></div></div>
+</div>
+
+<!-- ══ CALCULATING ══ -->
+<div id="screen-calculating" class="screen" style="background:var(--bg);">
+  <div class="calc-wrap">
+    <div class="calc-brain">🧠</div>
+    <h2 style="font-size:24px;font-weight:800;margin-bottom:7px;">결과 분석 중...</h2>
+    <p style="color:var(--text2);font-size:14px;margin-bottom:24px;">귀하의 응답을 과학적으로 분석하고 있습니다</p>
+    <ul class="calc-steps" id="calc-steps">
+      <li id="cs1"><span class="calc-check">✓</span> 응답 데이터 수집 완료</li>
+      <li id="cs2"><span class="calc-check">✓</span> 정규분포 모형 적용 중</li>
+      <li id="cs3"><span class="calc-check">✓</span> g-인자 점수 산출 중</li>
+      <li id="cs4"><span class="calc-check">✓</span> 백분위 계산 (erf 함수 적용)</li>
+      <li id="cs5"><span class="calc-check">✓</span> IQ 지수 확정</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ RESULTS ══ -->
+<div id="screen-results" class="screen">
+  <div class="results-hero">
+    <div class="container">
+      <div class="eyebrow" id="res-test-label">단기 IQ 테스트 결과</div>
+      <h2 style="font-size:26px;font-weight:800;margin-bottom:4px;">지능 지수 측정 완료</h2>
+      <div class="iq-score-box">
+        <div class="iq-number" id="res-iq">--</div>
+        <div class="iq-number-label">지능 지수 (IQ)</div>
+      </div>
+      <div class="iq-cat" id="res-cat">평균</div>
+      <p style="color:#c7d2fe;font-size:13px;max-width:480px;margin:0 auto 18px;" id="res-desc"></p>
+      <div class="pct-bar-wrap">
+        <div class="pct-bar-labels"><span>하위</span><span id="res-pct-label">상위 50%</span><span>상위</span></div>
+        <div class="pct-bar"><div class="pct-fill" id="pct-fill" style="width:0%"></div><span class="pct-text" id="pct-text"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-body">
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-val gradient-text" id="r-correct">0/0</div><div class="stat-lbl">정답 수</div></div>
+      <div class="stat-card"><div class="stat-val gradient-text" id="r-acc">0%</div><div class="stat-lbl">정확도</div></div>
+      <div class="stat-card"><div class="stat-val gradient-text" id="r-time">0분</div><div class="stat-lbl">소요 시간</div></div>
+      <div class="stat-card"><div class="stat-val gradient-text" id="r-top">50</div><div class="stat-lbl">상위 %</div></div>
+    </div>
+
+    <div class="chart-row">
+      <div class="chart-card full"><h3>📊 전체 인구 지능 분포에서의 위치</h3><canvas id="bellChart" height="180"></canvas></div>
+      <div class="chart-card full hidden" id="radar-wrap"><h3>🔍 영역별 능력 프로파일</h3><canvas id="radarChart" height="260"></canvas></div>
+    </div>
+    <div class="breakdown-section hidden" id="breakdown-wrap"><h3>영역별 점수</h3><div id="bd-list"></div></div>
+
+    <div class="ext-section">
+      <h3>🔬 추가 인지 능력 검사</h3>
+      <p class="ext-sub">IQ 외에 EQ·기억력·처리속도·창의성·집중력·인지유연성까지. 각 5~12분, 모두 무료입니다.</p>
+      <div class="ext-grid" id="ext-grid"></div>
+    </div>
+
+    <!-- 공유 섹션 -->
+    <div class="share-section" id="iq-share-section">
+      <h3>🔗 결과 공유하기</h3>
+      <p>친구에게 IQ 결과를 알리고 함께 테스트해보세요!</p>
+      <div class="share-result-card" id="iq-share-card">
+        <div class="src-iq" id="sc-iq">--</div>
+        <div class="src-cat" id="sc-cat">--</div>
+        <div class="src-pct" id="sc-pct">상위 --%</div>
+        <div class="src-site">무료 IQ 테스트 · 과학적으로 검증된 지능 지수 측정</div>
+      </div>
+      <div class="share-row">
+        <button class="share-btn kakao" onclick="shareKakao(false)"><span class="sb-icon">💬</span>카카오톡</button>
+        <button class="share-btn twitter" onclick="shareTwitter(false)"><span class="sb-icon">𝕏</span>트위터</button>
+        <button class="share-btn facebook" onclick="shareFacebook(false)"><span class="sb-icon">f</span>페이스북</button>
+        <button class="share-btn line" onclick="shareLine(false)"><span class="sb-icon">💚</span>라인</button>
+        <button class="share-btn copy" id="copy-btn-iq" onclick="copyLink(false)"><span class="sb-icon">🔗</span>링크복사</button>
+        <button class="share-btn native" id="native-btn-iq" onclick="shareNative(false)" style="display:none"><span class="sb-icon">📱</span>공유</button>
+      </div>
+    </div>
+
+    <div class="contact-box">
+      <h3>💬 검사 개선에 함께 참여해주세요</h3>
+      <p>검사 문항, 결과 해석, 기능 개선에 대한 의견이나 건의 사항이 있으시면 아래 이메일로 보내주세요.<br>모든 의견을 검토하고 <strong>적극적으로 반영</strong>하겠습니다.</p>
+      <a href="mailto:jeybeeicon@gmail.com">📧 jeybeeicon@gmail.com</a>
+    </div>
+
+    <div style="text-align:center;margin-top:20px;">
+      <button class="btn btn-secondary" onclick="restartAll()" style="margin-right:10px;">🔁 처음부터 다시</button>
+      <button class="btn btn-primary" onclick="switchMode()" id="switch-btn">📝 정밀 검사 받기</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EXTENDED TEST ══ -->
+<div id="screen-extended-test" class="screen">
+  <div class="test-header">
+    <div class="test-header-inner">
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span id="eq-prog-text">문항 1 / 10</span>
+          <span class="progress-label-type" id="eq-type-lbl"></span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="eq-prog-fill" style="width:0%"></div></div>
+      </div>
+      <div class="timer-display" id="eq-timer-wrap">⏱<span id="eq-timer-val">45</span></div>
+    </div>
+  </div>
+  <div class="question-area"><div class="question-card" id="eq-card"></div></div>
+</div>
+
+<!-- ══ EXTENDED RESULTS ══ -->
+<div id="screen-ext-results" class="screen">
+  <div class="ext-results-hero">
+    <div class="container">
+      <div class="eyebrow" id="ext-res-label">감성 지수 결과</div>
+      <div class="score-ring-wrap">
+        <svg class="score-ring-svg" width="150" height="150" viewBox="0 0 150 150">
+          <circle class="score-ring-track" cx="75" cy="75" r="60"/>
+          <circle class="score-ring-fill" id="ring-fill" cx="75" cy="75" r="60" stroke="#818cf8"/>
+        </svg>
+        <div class="score-ring-text"><span class="sr-num" id="ext-score">0</span><span class="sr-lbl">/ 100점</span></div>
+      </div>
+      <div class="ext-pct-badge">상위 <strong id="ext-top-pct">--</strong>% <span>전체 응시자 기준</span></div>
+      <div class="ext-cat-name" id="ext-res-cat"></div>
+      <p class="ext-desc" id="ext-res-desc"></p>
+    </div>
+  </div>
+
+  <div class="ext-results-body">
+    <div class="ext-stats-row">
+      <div class="stat-card"><div class="stat-val gradient-text" id="ext-stat-score">0</div><div class="stat-lbl">점수</div></div>
+      <div class="stat-card"><div class="stat-val gradient-text" id="ext-stat-pct">--%</div><div class="stat-lbl">상위 %</div></div>
+      <div class="stat-card"><div class="stat-val gradient-text" id="ext-stat-level">-</div><div class="stat-lbl">등급</div></div>
+    </div>
+
+    <!-- 분포 차트 -->
+    <div class="chart-row" style="margin-bottom:20px;">
+      <div class="chart-card full"><h3 id="ext-bell-title">📊 전체 응시자 분포에서의 위치</h3><canvas id="ext-bell-chart" height="160"></canvas></div>
+    </div>
+
+    <!-- 레이더 차트 -->
+    <div class="chart-row" style="margin-bottom:20px;">
+      <div class="chart-card full"><h3 id="ext-chart-title">🔍 세부 영역 분석</h3><canvas id="ext-radar" height="260"></canvas></div>
+    </div>
+
+    <!-- 점수 해석 테이블 -->
+    <div class="interp-card" id="interp-wrap">
+      <h3>📋 점수 해석 기준표</h3>
+      <div style="overflow-x:auto;"><table class="interp-table" id="interp-table"></table></div>
+    </div>
+
+    <!-- 영역별 바 차트 -->
+    <div class="breakdown-section">
+      <h3 id="ext-bd-title">세부 영역별 결과</h3>
+      <div id="ext-bd-list"></div>
+    </div>
+
+    <!-- 개선 팁 -->
+    <div class="tips-card" id="tips-wrap">
+      <h3 id="tips-title">💡 개선 가이드 및 추천 활동</h3>
+      <div id="tips-list"></div>
+    </div>
+
+    <!-- 공유 섹션 -->
+    <div class="share-section">
+      <h3>🔗 결과 공유하기</h3>
+      <p>검사 결과를 친구들과 공유하고 비교해보세요!</p>
+      <div class="share-result-card" id="ext-share-card" style="background:linear-gradient(135deg,#1e1b4b,#4f46e5);">
+        <div class="src-iq" id="ext-sc-score">--</div>
+        <div class="src-cat" id="ext-sc-cat">--</div>
+        <div class="src-pct" id="ext-sc-pct">상위 --%</div>
+        <div class="src-site">무료 인지 능력 검사 · 6가지 심층 분석</div>
+      </div>
+      <div class="share-row">
+        <button class="share-btn kakao" onclick="shareKakao(true)"><span class="sb-icon">💬</span>카카오톡</button>
+        <button class="share-btn twitter" onclick="shareTwitter(true)"><span class="sb-icon">𝕏</span>트위터</button>
+        <button class="share-btn facebook" onclick="shareFacebook(true)"><span class="sb-icon">f</span>페이스북</button>
+        <button class="share-btn line" onclick="shareLine(true)"><span class="sb-icon">💚</span>라인</button>
+        <button class="share-btn copy" id="copy-btn-ext" onclick="copyLink(true)"><span class="sb-icon">🔗</span>링크복사</button>
+        <button class="share-btn native" id="native-btn-ext" onclick="shareNative(true)" style="display:none"><span class="sb-icon">📱</span>공유</button>
+      </div>
+    </div>
+
+    <div class="contact-box">
+      <h3>💬 더 좋은 검사를 위한 의견을 보내주세요</h3>
+      <p>개선사항이나 건의 사항은 아래 이메일로 보내주세요. <strong>적극적으로 반영</strong>하겠습니다.</p>
+      <a href="mailto:jeybeeicon@gmail.com">📧 jeybeeicon@gmail.com</a>
+    </div>
+
+    <div style="text-align:center;margin-top:20px;margin-bottom:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn btn-secondary" onclick="showScreen('results')">← IQ 결과로 돌아가기</button>
+      <button class="btn btn-primary" onclick="scrollToExt()">🔬 다른 검사 받기</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="iq-data.js"></script>
+<script src="iq-app.js"></script>
+</body>
+</html>

@@ -453,7 +453,7 @@ function getShareText(isExt=false){
 function getShareURL(){return window.location.href.split('?')[0];}
 
 function getResultShareURL(isExt=false){
-  const base=window.location.href.split('?')[0];
+  const base='https://all-lifes.com/iq-test/';
   if(isExt&&extTest){
     const score=document.getElementById('ext-score').textContent;
     const cat=document.getElementById('ext-res-cat').textContent;

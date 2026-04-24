@@ -32,7 +32,27 @@ const seqPool=[
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'4, 8, 24, 48, 144, 288, ?',opts:['576','720','864','1024'],correct:2,difficulty:4},
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'1, 2, 9, 12, 25, 30, ?',opts:['43','47','49','53'],correct:2,difficulty:5},
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'2, 12, 36, 80, 150, ?',opts:['240','252','280','300'],correct:1,difficulty:5},
-  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'5, 10, 20, 35, 55, ?',opts:['75','80','85','90'],correct:1,difficulty:3}
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'5, 10, 20, 35, 55, ?',opts:['75','80','85','90'],correct:1,difficulty:3},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'10, 13, 16, 19, 22, ?',opts:['23','24','25','26'],correct:2,difficulty:1},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'0, 1, 3, 6, 10, 15, ?',opts:['18','20','21','25'],correct:2,difficulty:2},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'10, 14, 19, 25, 32, ?',opts:['36','38','40','42'],correct:2,difficulty:2},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'7, 14, 28, 56, 112, ?',opts:['168','192','224','248'],correct:2,difficulty:2},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'9, 16, 25, 36, 49, 64, ?',opts:['72','78','81','84'],correct:2,difficulty:2},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'4, 12, 36, 108, 324, ?',opts:['648','972','1000','1296'],correct:1,difficulty:2},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'50, 48, 44, 38, 30, ?',opts:['18','20','22','24'],correct:1,difficulty:3},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'2, 5, 10, 17, 26, ?',opts:['33','35','37','39'],correct:2,difficulty:3},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'2, 3, 7, 8, 12, 13, ?',opts:['15','16','17','18'],correct:2,difficulty:3},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'2, 5, 9, 14, 20, 27, ?',opts:['32','33','35','38'],correct:2,difficulty:3},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'5, 11, 23, 47, 95, ?',opts:['181','183','190','191'],correct:3,difficulty:3},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'3, 7, 15, 31, 63, ?',opts:['105','121','127','131'],correct:2,difficulty:3},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'1, 3, 9, 3, 1, 3, 9, ?',opts:['1','3','9','27'],correct:1,difficulty:3},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'2, 3, 5, 9, 17, 33, ?',opts:['60','63','65','67'],correct:2,difficulty:4},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'2, 8, 18, 32, 50, ?',opts:['68','72','74','78'],correct:1,difficulty:4},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'3, 8, 15, 24, 35, ?',opts:['44','46','48','50'],correct:2,difficulty:4},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'1, 2, 2, 4, 8, 32, ?',opts:['128','256','512','1024'],correct:1,difficulty:4},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'1, 4, 5, 10, 11, 22, ?',opts:['22','23','44','46'],correct:1,difficulty:4},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'1, 3, 4, 7, 11, 18, 29, ?',opts:['40','43','47','50'],correct:2,difficulty:4},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'1, 6, 15, 28, 45, ?',opts:['60','64','66','70'],correct:2,difficulty:5}
 ];
 
 const matPool=[
@@ -57,7 +77,24 @@ const matPool=[
   {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['4','2','1'],['9','3','1'],['25','5','?']],opts:['0','1','5','25'],correct:1,difficulty:4},
   {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['1','3','9'],['2','8','32'],['3','15','?']],opts:['45','63','75','81'],correct:1,difficulty:5},
   {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['1','0','1'],['0','1','0'],['1','0','?']],opts:['0','1','2','3'],correct:1,difficulty:2},
-  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['◐','◑','◒'],['◑','◒','◓'],['◒','◓','?']],opts:['◐','◑','◒','◔'],correct:3,difficulty:4}
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['◐','◑','◒'],['◑','◒','◓'],['◒','◓','?']],opts:['◐','◑','◒','◔'],correct:3,difficulty:4},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['2','4','6'],['8','10','12'],['14','16','?']],opts:['17','18','19','20'],correct:1,difficulty:1},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['○','○○','○○○'],['□','□□','□□□'],['△','△△','?']],opts:['△','△△△','△△△△','□□□'],correct:1,difficulty:1},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['A','B','C'],['D','E','F'],['G','H','?']],opts:['I','J','K','L'],correct:0,difficulty:1},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['1','4','9'],['16','25','36'],['49','64','?']],opts:['72','78','81','90'],correct:2,difficulty:2},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['5','10','20'],['3','6','12'],['4','8','?']],opts:['12','14','16','18'],correct:2,difficulty:2},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['1','2','3'],['3','6','9'],['5','10','?']],opts:['12','14','15','18'],correct:2,difficulty:2},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['A','C','E'],['G','I','K'],['M','O','?']],opts:['P','Q','R','S'],correct:1,difficulty:2},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['2','4','8'],['16','32','64'],['128','256','?']],opts:['384','512','612','1024'],correct:1,difficulty:2},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['6','3','1'],['12','6','2'],['18','9','?']],opts:['3','4','6','9'],correct:0,difficulty:3},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['3','5','8'],['4','6','10'],['5','7','?']],opts:['10','11','12','13'],correct:2,difficulty:3},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['Z','X','V'],['T','R','P'],['N','L','?']],opts:['I','J','K','L'],correct:1,difficulty:3},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['1','3','5'],['9','7','5'],['1','3','?']],opts:['5','7','9','11'],correct:0,difficulty:3},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['3','6','9'],['7','14','?'],['5','10','15']],opts:['18','20','21','28'],correct:2,difficulty:3},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['2','5','11'],['3','7','15'],['4','9','?']],opts:['17','18','19','20'],correct:2,difficulty:4},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['●○●','○●○','●○●'],['○●○','●○●','○●○'],['●○●','○●○','?']],opts:['●○●','○●○','●●●','○○○'],correct:0,difficulty:3},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['1','2','4'],['3','6','12'],['2','4','?']],opts:['6','8','10','12'],correct:1,difficulty:2},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['2','6','18'],['1','5','25'],['3','9','?']],opts:['18','27','36','81'],correct:1,difficulty:4}
 ];
 
 const spatPool=[
@@ -76,7 +113,27 @@ const spatPool=[
   {type:'spatial',typeLabel:'공간 추론',q:'n개의 직선이 서로 다른 최대 교점 수는?',opts:['n-1','n(n-1)','n(n-1)/2','n²'],correct:2,difficulty:4},
   {type:'spatial',typeLabel:'공간 추론',q:'정팔면체의 면의 수는?',opts:['4','6','8','12'],correct:2,difficulty:3},
   {type:'spatial',typeLabel:'공간 추론',q:'한 변의 길이가 a인 정육면체의 대각선 길이는?',opts:['a√2','a√3','2a','a√6'],correct:1,difficulty:4},
-  {type:'spatial',typeLabel:'공간 추론',q:'정삼각형을 4개의 합동 정삼각형으로 나눌 때, 각 작은 삼각형의 한 변은 원래의?',opts:['1/2','1/3','1/4','√3/2'],correct:0,difficulty:3}
+  {type:'spatial',typeLabel:'공간 추론',q:'정삼각형을 4개의 합동 정삼각형으로 나눌 때, 각 작은 삼각형의 한 변은 원래의?',opts:['1/2','1/3','1/4','√3/2'],correct:0,difficulty:3},
+  {type:'spatial',typeLabel:'공간 추론',q:'시계가 2시 정각일 때 시침과 분침이 이루는 각도(작은 쪽)는?',opts:['30°','45°','60°','90°'],correct:2,difficulty:2},
+  {type:'spatial',typeLabel:'공간 추론',q:'9시 정각일 때 시침과 분침이 이루는 각도(작은 쪽)는?',opts:['90°','120°','180°','270°'],correct:0,difficulty:2},
+  {type:'spatial',typeLabel:'공간 추론',q:'4시 20분을 가리킬 때 시침과 분침이 이루는 각도(작은 쪽)는?',opts:['5°','10°','15°','20°'],correct:1,difficulty:4},
+  {type:'spatial',typeLabel:'공간 추론',q:'정사각형 종이를 두 번 반으로 접은 뒤 펼치면 총 몇 개의 구역으로 나뉘는가?',opts:['2개','3개','4개','8개'],correct:2,difficulty:2},
+  {type:'spatial',typeLabel:'공간 추론',q:'직사각형을 대각선으로 자를 때 생기는 두 삼각형의 관계는?',opts:['서로 합동이다','넓이만 같다','모양만 같다','관계없다'],correct:0,difficulty:2},
+  {type:'spatial',typeLabel:'공간 추론',q:'정오각형의 한 꼭짓점에서 그을 수 있는 대각선의 수는?',opts:['1개','2개','3개','4개'],correct:1,difficulty:2},
+  {type:'spatial',typeLabel:'공간 추론',q:'사각형의 한 꼭짓점에서 그을 수 있는 대각선의 수는?',opts:['0개','1개','2개','3개'],correct:1,difficulty:2},
+  {type:'spatial',typeLabel:'공간 추론',q:'주사위에서 1·2·3이 보이는 면의 반대쪽 숫자의 합은?',opts:['12','15','18','21'],correct:1,difficulty:2},
+  {type:'spatial',typeLabel:'공간 추론',q:'삼각형의 내각의 합은?',opts:['90°','120°','180°','360°'],correct:2,difficulty:1},
+  {type:'spatial',typeLabel:'공간 추론',q:'정n각형의 외각의 합은?',opts:['180°','270°','360°','540°'],correct:2,difficulty:3},
+  {type:'spatial',typeLabel:'공간 추론',q:'∠B=90°, AB=3, BC=4인 직각삼각형의 빗변 AC의 길이는?',opts:['5','6','7','8'],correct:0,difficulty:3},
+  {type:'spatial',typeLabel:'공간 추론',q:'직선 위에 5개의 점이 있을 때 만들 수 있는 선분의 수는?',opts:['8개','10개','12개','15개'],correct:1,difficulty:3},
+  {type:'spatial',typeLabel:'공간 추론',q:'원 위에 5개의 점이 있을 때 이을 수 있는 현(chord)의 최대 개수는?',opts:['8개','10개','12개','15개'],correct:1,difficulty:3},
+  {type:'spatial',typeLabel:'공간 추론',q:'육각형의 대각선의 총 개수는?',opts:['6개','8개','9개','10개'],correct:2,difficulty:3},
+  {type:'spatial',typeLabel:'공간 추론',q:'정육면체를 한 평면으로 자를 때 만들 수 없는 단면 모양은?',opts:['삼각형','오각형','원','육각형'],correct:2,difficulty:4},
+  {type:'spatial',typeLabel:'공간 추론',q:'10×10 격자에서 선분이 만나는 교점의 수는?',opts:['81개','100개','121개','144개'],correct:2,difficulty:2},
+  {type:'spatial',typeLabel:'공간 추론',q:'4개의 직선으로 평면을 최대 몇 개의 영역으로 나눌 수 있는가?',opts:['8개','9개','10개','11개'],correct:3,difficulty:4},
+  {type:'spatial',typeLabel:'공간 추론',q:'3×3 격자(4×4 격자점)에서 만들 수 있는 직사각형(정사각형 포함)의 총 개수는?',opts:['16개','24개','36개','64개'],correct:2,difficulty:5},
+  {type:'spatial',typeLabel:'공간 추론',q:'정육면체의 한 꼭짓점에서 만나는 면의 수는?',opts:['2개','3개','4개','6개'],correct:1,difficulty:2},
+  {type:'spatial',typeLabel:'공간 추론',q:'원뿔을 꼭짓점을 지나는 평면으로 자른 단면의 모양은?',opts:['원','타원','삼각형','이등변삼각형'],correct:3,difficulty:3}
 ];
 
 const anaPool=[
@@ -97,7 +154,20 @@ const anaPool=[
   {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'책 : 도서관 = 작품 : ?',opts:['창고','화랑(갤러리)','극장','공방'],correct:1,difficulty:2},
   {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'삼각형 내각합 : 180° = 오각형 내각합 : ?',opts:['360°','450°','540°','720°'],correct:2,difficulty:3},
   {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'심리학 : 행동 = 경제학 : ?',opts:['화폐','자원 배분','금융','무역'],correct:1,difficulty:4},
-  {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'바이러스 : 백신 = 버그 : ?',opts:['컴파일러','디버거','에디터','IDE'],correct:1,difficulty:3}
+  {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'바이러스 : 백신 = 버그 : ?',opts:['컴파일러','디버거','에디터','IDE'],correct:1,difficulty:3},
+  {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'씨앗 : 열매 = 질문 : ?',opts:['답','퀴즈','의문','생각'],correct:0,difficulty:2},
+  {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'시작 : 끝 = 탄생 : ?',opts:['성장','인생','죽음','시간'],correct:2,difficulty:1},
+  {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'물고기 : 비늘 = 새 : ?',opts:['날개','깃털','부리','발톱'],correct:1,difficulty:1},
+  {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'배고픔 : 음식 = 피곤함 : ?',opts:['운동','잠','커피','음료'],correct:1,difficulty:1},
+  {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'조각가 : 조각 = 화가 : ?',opts:['미술관','캔버스','그림','붓'],correct:2,difficulty:1},
+  {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'얼음 : 물 = 구름 : ?',opts:['하늘','바람','비','눈'],correct:2,difficulty:2},
+  {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'신발 : 발 = 장갑 : ?',opts:['팔','손','손가락','발'],correct:1,difficulty:1},
+  {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'어두움 : 빛 = 침묵 : ?',opts:['소리','음악','목소리','소음'],correct:0,difficulty:2},
+  {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'망원경 : 멀리 = 현미경 : ?',opts:['넓게','빠르게','작게','깊게'],correct:2,difficulty:2},
+  {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'기억 : 과거 = 계획 : ?',opts:['현재','미래','목표','꿈'],correct:1,difficulty:2},
+  {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'씨앗 : 꽃 = 코드 : ?',opts:['컴퓨터','프로그램','데이터','버그'],correct:1,difficulty:2},
+  {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'학생 : 배움 = 선수 : ?',opts:['경기','훈련','우승','팀'],correct:1,difficulty:2},
+  {type:'analogy',typeLabel:'언어 유추',q:'다음 유추를 완성하세요.',analogy:'지도 : 영토 = 청사진 : ?',opts:['그림','건물','공장','설계'],correct:1,difficulty:3}
 ];
 
 const logPool=[
@@ -116,7 +186,19 @@ const logPool=[
   {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'카드 4장 [E, K, 4, 7]: "모음이면 짝수" 규칙 검증 시 뒤집어야 할 카드는?',opts:['E만','E와 4','E와 7','E, 4, 7 모두'],correct:2,difficulty:5},
   {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'6명이 서로 한 번씩 악수하면 총 몇 번인가?',opts:['12번','15번','18번','30번'],correct:1,difficulty:3},
   {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'"모든 의사는 대학 졸업자다. 홍길동은 대학 졸업자다." 이때 반드시 참인 것은?',opts:['홍길동은 의사다','홍길동은 의사가 아닐 수도 있다','홍길동은 반드시 의사다','결론을 내릴 수 없다'],correct:1,difficulty:4},
-  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'"A이면 B이다. B이면 C가 거짓이다." C가 참일 때, A는?',opts:['반드시 참','반드시 거짓','알 수 없다','참일 수도 거짓일 수도 있다'],correct:1,difficulty:5}
+  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'"A이면 B이다. B이면 C가 거짓이다." C가 참일 때, A는?',opts:['반드시 참','반드시 거짓','알 수 없다','참일 수도 거짓일 수도 있다'],correct:1,difficulty:5},
+  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'명수는 철수보다 나이가 많고, 영희는 철수보다 많지만 명수보다는 적다. 나이 많은 순서는?',opts:['명수-영희-철수','영희-명수-철수','철수-명수-영희','명수-철수-영희'],correct:0,difficulty:2},
+  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'모든 사과는 과일이다. 일부 과일은 달다. 따라서?',opts:['모든 사과는 달다','일부 사과는 달 수 있다','사과는 달지 않다','판단할 수 없다'],correct:1,difficulty:3},
+  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'15명 중 9명은 수학을, 8명은 과학을 좋아한다. 둘 다 좋아하는 학생의 최솟값은?',opts:['1명','2명','3명','4명'],correct:1,difficulty:3},
+  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'"비가 오지 않으면 소풍을 간다. 소풍을 가지 않았다." 따라서?',opts:['비가 왔다','비가 오지 않았다','알 수 없다','소풍이 취소됐다'],correct:0,difficulty:3},
+  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'10명 중 7명이 A를, 6명이 B 프로젝트를 담당한다. 두 프로젝트 모두 담당하는 최솟값은?',opts:['1명','2명','3명','4명'],correct:2,difficulty:3},
+  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'5명이 줄을 선다. 갑은 3번째, 을은 갑 바로 뒤, 병은 맨 앞, 정은 을 바로 뒤이다. 5번째는?',opts:['갑','을','병','정'],correct:3,difficulty:2},
+  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'"철수가 오면 영희도 온다." "영희가 오면 수지도 온다." 철수가 왔을 때 반드시 참인 것은?',opts:['영희만 온다','수지만 온다','영희와 수지가 온다','알 수 없다'],correct:2,difficulty:3},
+  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'"어떤 동물은 날 수 있다. 펭귄은 동물이다." 따라서?',opts:['펭귄은 날 수 있다','펭귄은 날 수 없다','펭귄은 날 수도 있고 없을 수도 있다','동물은 모두 날 수 있다'],correct:2,difficulty:3},
+  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'갑·을·병 중 한 명만 거짓말을 한다. 갑:"나는 진실을 말한다", 을:"갑이 거짓말쟁이다", 병:"을이 거짓말쟁이다". 거짓말쟁이는?',opts:['갑','을','병','알 수 없다'],correct:1,difficulty:5},
+  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'30명의 학생이 있다. "최소 두 명이 같은 날 생일"이 항상 참이 되려면 생일이 될 수 있는 최대 날 수는?',opts:['29일','30일','365일','무제한'],correct:0,difficulty:5},
+  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'A, B, C, D 네 색깔을 이웃하지 않게 칠해야 한다. 원형으로 나열된 4칸에 4가지 색을 모두 쓸 때 칠할 수 있는 방법은?',opts:['3가지','6가지','12가지','24가지'],correct:0,difficulty:5},
+  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'"키가 크면 농구를 잘한다. 민준이는 농구를 잘하지 못한다." 따라서?',opts:['민준이는 키가 작다','민준이는 키가 크지 않다','민준이는 운동을 못한다','판단할 수 없다'],correct:1,difficulty:4}
 ];
 
 // ═══════════════════════════════════════════════════════════

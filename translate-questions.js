@@ -14,6 +14,17 @@ const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemi
 const LANGS = ['de','ja','fr','es','pt','it','id'];
 const LANG_NAMES = {de:'German',ja:'Japanese',fr:'French',es:'Spanish',pt:'Portuguese',it:'Italian',id:'Indonesian'};
 
+// Hardcoded prompt translations (avoid extra API call for 4 simple sentences)
+const PROMPTS = {
+  de: {qSeqPrompt:'Finde die fehlende Zahl in der Folge:',qMatPrompt:'Finde die Regel in der 3×3-Matrix und wähle das fehlende Element (?):',qAnaPrompt:'Vervollständige die Analogie:',qLogPrompt:'Löse das Logikproblem.'},
+  ja: {qSeqPrompt:'数列の空欄に入る数を見つけてください：',qMatPrompt:'3×3行列のルールを見つけ、欠けている項目（?）を選んでください：',qAnaPrompt:'類推を完成させてください：',qLogPrompt:'次の論理問題を解いてください。'},
+  fr: {qSeqPrompt:'Trouvez le nombre manquant dans la suite :',qMatPrompt:'Trouvez la règle dans cette matrice 3×3 et sélectionnez l\'élément manquant (?) :',qAnaPrompt:'Complétez l\'analogie :',qLogPrompt:'Résolvez ce problème logique.'},
+  es: {qSeqPrompt:'Encuentra el número que falta en la secuencia:',qMatPrompt:'Encuentra la regla en esta matriz 3×3 y selecciona el elemento faltante (?):',qAnaPrompt:'Completa la analogía:',qLogPrompt:'Resuelve el problema lógico.'},
+  pt: {qSeqPrompt:'Encontre o número que falta na sequência:',qMatPrompt:'Encontre a regra nesta matriz 3×3 e selecione o item ausente (?):',qAnaPrompt:'Complete a analogia:',qLogPrompt:'Resolva o problema lógico.'},
+  it: {qSeqPrompt:'Trova il numero mancante nella sequenza:',qMatPrompt:'Trova la regola in questa matrice 3×3 e seleziona l\'elemento mancante (?):',qAnaPrompt:'Completa l\'analogia:',qLogPrompt:'Risolvi il problema logico.'},
+  id: {qSeqPrompt:'Temukan angka yang hilang dalam urutan:',qMatPrompt:'Temukan aturan dalam matriks 3×3 ini dan pilih item yang hilang (?):',qAnaPrompt:'Lengkapi analogi:',qLogPrompt:'Selesaikan masalah logika.'},
+};
+
 // Load English question data (q-en.js uses window.IQ_Q = {...})
 let IQ_Q_EN;
 try {
@@ -22,6 +33,7 @@ try {
   new Function('window', enContent)(fakeWindow);
   IQ_Q_EN = fakeWindow.IQ_Q;
   if (!IQ_Q_EN) throw new Error('IQ_Q is null after evaluation');
+  console.log(`✅ Loaded q-en.js: ${IQ_Q_EN.anaPool.length} analogies, ${IQ_Q_EN.logPool.length} logic, ${IQ_Q_EN.spatPool.length} spatial\n`);
 } catch(e) {
   console.error('Failed to load q-en.js:', e.message);
   process.exit(1);
@@ -42,8 +54,13 @@ function geminiRequest(prompt) {
       res.on('end', () => {
         try {
           const j = JSON.parse(data);
-          resolve(j.candidates?.[0]?.content?.parts?.[0]?.text || '');
-        } catch(e) { reject(e); }
+          if (j.error) {
+            reject(new Error(`Gemini API error ${j.error.code}: ${j.error.message}`));
+            return;
+          }
+          const text = j.candidates?.[0]?.content?.parts?.[0]?.text || '';
+          resolve(text);
+        } catch(e) { reject(new Error('Failed to parse Gemini response: ' + data.slice(0, 200))); }
       });
     });
     req.on('error', reject);
@@ -52,58 +69,53 @@ function geminiRequest(prompt) {
   });
 }
 
+function extractJSON(text, type) {
+  // Strip markdown code fences if present
+  const cleaned = text.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+  if (type === 'array') {
+    const m = cleaned.match(/\[[\s\S]*\]/);
+    if (!m) throw new Error('No JSON array found. Response: ' + text.slice(0, 300));
+    return JSON.parse(m[0]);
+  } else {
+    const m = cleaned.match(/\{[\s\S]*\}/);
+    if (!m) throw new Error('No JSON object found. Response: ' + text.slice(0, 300));
+    return JSON.parse(m[0]);
+  }
+}
+
 async function translatePool(poolName, items, targetLang) {
   const isAna = poolName === 'anaPool';
   const isLog = poolName === 'logPool';
-  const isSpa = poolName === 'spatPool';
 
   let inputLines;
   if (isAna) {
-    inputLines = items.map((q, i) => `${i}: analogy="${q.analogy}" | opts=${JSON.stringify(q.opts)}`);
+    inputLines = items.map((q, i) => `${i}|${q.analogy}|${q.opts.join('||')}`);
   } else if (isLog) {
-    inputLines = items.map((q, i) => `${i}: premise="${q.premise}" | opts=${JSON.stringify(q.opts)}`);
+    inputLines = items.map((q, i) => `${i}|${q.premise}|${q.opts.join('||')}`);
   } else {
-    inputLines = items.map((q, i) => `${i}: q="${q.q}" | opts=${JSON.stringify(q.opts)}`);
+    inputLines = items.map((q, i) => `${i}|${q.q}|${q.opts.join('||')}`);
   }
 
-  const prompt = `Translate the following IQ test question data from English to ${LANG_NAMES[targetLang]}.
-Rules:
-- Translate accurately and naturally for an IQ test context
-- Keep the logical meaning exactly the same — this is important for correct answers
-- Keep symbols, numbers, letters (A, B, C...), math operators, and arrows exactly as-is
-- Keep the | separator and JSON array format exactly as-is
-- Return ONLY a JSON array of objects, one per line, no markdown, no explanation
-- Each object: ${isAna ? '{"analogy":"...","opts":["...","...","...","..."]}' : isLog ? '{"premise":"...","opts":["...","...","...","..."]}' : '{"q":"...","opts":["...","...","...","..."]}'}
-- Maintain the exact same index order
+  const fieldName = isAna ? 'analogy' : isLog ? 'premise' : 'q';
 
-Input:
+  const prompt = `Translate the following IQ test questions from English to ${LANG_NAMES[targetLang]}.
+Each line format: index|${fieldName}|opt0||opt1||opt2||opt3
+
+Rules:
+- Preserve the exact logical meaning (this affects correct answers)
+- Keep numbers, letters (A B C), symbols, math operators exactly as-is
+- Keep arrows (→, ←), degree symbols (°), multiplication signs (×) as-is
+- Return a JSON array of objects, one per question, in the same order
+- Each object: {"${fieldName}":"...","opts":["...","...","...","..."]}
+- No markdown, no extra text, just the JSON array
+
+Input (${items.length} questions):
 ${inputLines.join('\n')}
 
-JSON array output:`;
+JSON array:`;
 
-  const result = await geminiRequest(prompt);
-  const jsonMatch = result.match(/\[[\s\S]*\]/);
-  if (!jsonMatch) throw new Error(`No JSON array in response for ${targetLang} ${poolName}: ${result.slice(0, 200)}`);
-  return JSON.parse(jsonMatch[0]);
-}
-
-async function translatePrompts(targetLang) {
-  const prompt = `Translate these 4 short IQ test prompt strings from English to ${LANG_NAMES[targetLang]}.
-Return ONLY a JSON object, no markdown.
-
-{
-  "qSeqPrompt": "${IQ_Q_EN.qSeqPrompt}",
-  "qMatPrompt": "${IQ_Q_EN.qMatPrompt}",
-  "qAnaPrompt": "${IQ_Q_EN.qAnaPrompt}",
-  "qLogPrompt": "${IQ_Q_EN.qLogPrompt}"
-}
-
-JSON output:`;
-
-  const result = await geminiRequest(prompt);
-  const jsonMatch = result.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) throw new Error(`No JSON in prompts response for ${targetLang}`);
-  return JSON.parse(jsonMatch[0]);
+  const text = await geminiRequest(prompt);
+  return extractJSON(text, 'array');
 }
 
 function buildQFile(lang, prompts, anaPool, logPool, spatPool) {
@@ -115,13 +127,13 @@ function buildQFile(lang, prompts, anaPool, logPool, spatPool) {
     `qAnaPrompt:${JSON.stringify(prompts.qAnaPrompt)},`,
     `qLogPrompt:${JSON.stringify(prompts.qLogPrompt)},`,
     `anaPool:[`,
-    anaPool.map(q => `  {analogy:${JSON.stringify(q.analogy)},opts:${JSON.stringify(q.opts)}}`).join(',\n'),
+    anaPool.map(q => `  {analogy:${JSON.stringify(q.analogy||'')},opts:${JSON.stringify(q.opts||[])}}`).join(',\n'),
     `],`,
     `logPool:[`,
-    logPool.map(q => `  {premise:${JSON.stringify(q.premise)},opts:${JSON.stringify(q.opts)}}`).join(',\n'),
+    logPool.map(q => `  {premise:${JSON.stringify(q.premise||'')},opts:${JSON.stringify(q.opts||[])}}`).join(',\n'),
     `],`,
     `spatPool:[`,
-    spatPool.map(q => `  {q:${JSON.stringify(q.q)},opts:${JSON.stringify(q.opts)}}`).join(',\n'),
+    spatPool.map(q => `  {q:${JSON.stringify(q.q||'')},opts:${JSON.stringify(q.opts||[])}}`).join(',\n'),
     `]`,
     `};`,
     ``
@@ -135,11 +147,10 @@ async function run() {
   for (const lang of LANGS) {
     const filePath = path.join(__dirname, 'lang', `q-${lang}.js`);
 
-    // Skip if file already exists and has content
     if (fs.existsSync(filePath)) {
-      const existing = fs.readFileSync(filePath, 'utf8');
-      if (existing.trim().length > 100) {
-        console.log(`  ✅ q-${lang}.js already exists, skipping`);
+      const existing = fs.readFileSync(filePath, 'utf8').trim();
+      if (existing.length > 200) {
+        console.log(`✅ q-${lang}.js already exists, skipping`);
         continue;
       }
     }
@@ -147,25 +158,23 @@ async function run() {
     console.log(`\n📝 Translating questions to ${LANG_NAMES[lang]} (${lang})...`);
 
     try {
-      console.log(`  Translating prompts...`);
-      const prompts = await translatePrompts(lang);
-      await new Promise(r => setTimeout(r, 500));
+      const prompts = PROMPTS[lang];
 
       console.log(`  Translating anaPool (${IQ_Q_EN.anaPool.length} items)...`);
       const anaPool = await translatePool('anaPool', IQ_Q_EN.anaPool, lang);
-      await new Promise(r => setTimeout(r, 800));
+      await new Promise(r => setTimeout(r, 1000));
 
       console.log(`  Translating logPool (${IQ_Q_EN.logPool.length} items)...`);
       const logPool = await translatePool('logPool', IQ_Q_EN.logPool, lang);
-      await new Promise(r => setTimeout(r, 800));
+      await new Promise(r => setTimeout(r, 1000));
 
       console.log(`  Translating spatPool (${IQ_Q_EN.spatPool.length} items)...`);
       const spatPool = await translatePool('spatPool', IQ_Q_EN.spatPool, lang);
-      await new Promise(r => setTimeout(r, 800));
+      await new Promise(r => setTimeout(r, 1000));
 
       const content = buildQFile(lang, prompts, anaPool, logPool, spatPool);
       fs.writeFileSync(filePath, content, 'utf8');
-      console.log(`  ✅ Wrote lang/q-${lang}.js`);
+      console.log(`  ✅ Wrote lang/q-${lang}.js (${anaPool.length}+${logPool.length}+${spatPool.length} questions)`);
 
     } catch (err) {
       console.error(`  ❌ Error for ${lang}:`, err.message);

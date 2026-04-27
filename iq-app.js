@@ -99,6 +99,15 @@ function applyLang(){
   if(L.featTitle){const ft=document.querySelector('.features-section h2');if(ft)ft.textContent=L.featTitle;}
   if(L.faqTitle){const fq=document.querySelector('.faq-section h2');if(fq)fq.textContent=L.faqTitle;}
   if(L.seoTitle){const st=document.querySelector('.seo-article h2');if(st)st.textContent=L.seoTitle;}
+  // Copy button labels
+  if(L.copyBtn){
+    const cl1=document.getElementById('copy-lbl-iq');if(cl1)cl1.textContent=L.copyBtn;
+    const cl2=document.getElementById('copy-lbl-ext');if(cl2)cl2.textContent=L.copyBtn;
+  }
+  // Contact section
+  if(L.contactTitle){['contact-title-iq','contact-title-ext'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=L.contactTitle;});}
+  if(L.contactDesc){['contact-desc-iq','contact-desc-ext'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=L.contactDesc;});}
+  if(L.contactLink){['contact-link-iq','contact-link-ext'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=L.contactLink;});}
 }
 
 // ── Mobile share button visibility ──
@@ -329,8 +338,8 @@ function drawBellCurve(canvasId,score,color='#4f46e5',mean=100,sd=15){
   new Chart(ctx,{
     type:'line',
     data:{labels,datasets:[
-      {label:'전체 분포',data:normal,borderColor:'rgba(79,70,229,.35)',backgroundColor:'rgba(79,70,229,.07)',fill:true,tension:.4,pointRadius:0,borderWidth:2},
-      {label:'나의 위치',data:filled,borderColor:color,backgroundColor:color+'28',fill:true,tension:.4,pointRadius:0,borderWidth:2.5}
+      {label:t('bellLabelAll')||'전체 분포',data:normal,borderColor:'rgba(79,70,229,.35)',backgroundColor:'rgba(79,70,229,.07)',fill:true,tension:.4,pointRadius:0,borderWidth:2},
+      {label:t('bellLabelMe')||'나의 위치',data:filled,borderColor:color,backgroundColor:color+'28',fill:true,tension:.4,pointRadius:0,borderWidth:2.5}
     ]},
     options:{responsive:true,plugins:{legend:{labels:{color:'#475569',font:{size:11}}}},scales:{x:{ticks:{color:'#94a3b8',maxTicksLimit:10},grid:{color:'rgba(0,0,0,.05)'}},y:{display:false}}}
   });
@@ -693,18 +702,8 @@ function restoreExtResults(tid,score,cat,topPct){
   },400);
 }
 
-function shareKakao(isExt=false){
-  const text=getShareText(isExt);
-  const url=getShareURL();
-  if(window.Kakao&&Kakao.isInitialized()){
-    try{
-      Kakao.Share.sendDefault({objectType:'text',text,link:{mobileWebUrl:url,webUrl:url}});
-      return;
-    }catch(e){}
-  }
-  // Fallback: copy
-  copyLink(isExt);
-  showToast('💬 카카오 앱키 설정 후 이용 가능합니다. 텍스트가 복사되었습니다!');
+function shareTelegram(){
+  window.open('https://t.me/all_lifes_community','_blank','noopener');
 }
 
 function shareTwitter(isExt=false){

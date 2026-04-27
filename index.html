@@ -22,8 +22,6 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"무료 IQ 테스트","description":"레이븐 행렬과 CHC 이론에 기반한 과학적 온라인 IQ 테스트","applicationCategory":"EducationalApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"inLanguage":"ko"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"IQ 테스트란 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"IQ(지능지수) 테스트는 개인의 인지 능력을 수치로 측정하는 표준화된 검사입니다. 수열 추론, 행렬 패턴 인식, 공간 추론, 논리적 사고 등을 평가하며 평균 100, 표준편차 15의 정규분포를 따릅니다."}},{"@type":"Question","name":"이 IQ 테스트는 얼마나 정확한가요?","acceptedAnswer":{"@type":"Answer","text":"레이븐 점진적 행렬 검사(RPM)와 CHC 이론에 기반하며 신뢰도(Cronbach's α)는 .85~.92 수준입니다."}}]}]}</script>
 <script>(function(){var l=(new URLSearchParams(location.search).get('lang')||'ko').toLowerCase();if(!/^[a-z]{2}$/.test(l))l='ko';window.IQ_CURRENT_LANG=l;if(l!=='ko'){document.write('<script src="lang/'+l+'.js"><\/script>');document.write('<script src="lang/q-'+l+'.js"><\/script>');}})();</script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- 카카오 SDK: https://developers.kakao.com 에서 앱키 발급 후 아래 YOUR_KAKAO_JS_KEY 교체 -->
-<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
 <style>
 :root{
   --primary:#3730a3;--primary-mid:#4f46e5;--primary-light:#6366f1;--primary-bg:#eef2ff;
@@ -249,7 +247,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
 .share-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 24px;border-radius:13px;cursor:pointer;border:none;font-size:13px;font-weight:700;transition:all .2s;min-width:120px;color:#fff;text-decoration:none;}
 .share-btn:hover{transform:translateY(-2px);opacity:.9;}
 .share-btn .sb-icon{font-size:24px;}
-.share-btn.kakao{background:#FEE500;color:#3c1e1e;}
+.share-btn.telegram{background:#229ED9;color:#fff;}
 .share-btn.copy{background:var(--primary-mid);}
 .copy-success{background:var(--success)!important;}
 
@@ -540,15 +538,15 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
         <div class="src-site">무료 IQ 테스트 · 과학적으로 검증된 지능 지수 측정</div>
       </div>
       <div class="share-row">
-        <button class="share-btn copy" id="copy-btn-iq" onclick="copyLink(false)"><span class="sb-icon">🔗</span>링크복사</button>
-        <a class="share-btn kakao" href="https://open.kakao.com/o/pRtPpCri" target="_blank" rel="noopener"><span class="sb-icon">💬</span>카카오톡</a>
+        <button class="share-btn copy" id="copy-btn-iq" onclick="copyLink(false)"><span class="sb-icon">🔗</span><span id="copy-lbl-iq">링크복사</span></button>
+        <a class="share-btn telegram" href="https://t.me/all_lifes_community" target="_blank" rel="noopener"><span class="sb-icon">✈️</span><span class="tg-lbl">Telegram</span></a>
       </div>
     </div>
 
     <div class="contact-box">
-      <h3>💬 문의 · 건의사항</h3>
-      <p>검사 문항, 결과 해석, 기능 개선에 대한 의견이나 건의 사항은<br>카카오톡 오픈채팅 커뮤니티에 남겨주세요. <strong>적극적으로 반영</strong>하겠습니다.</p>
-      <a href="https://open.kakao.com/o/pRtPpCri" target="_blank" rel="noopener">💬 카카오톡 오픈채팅 커뮤니티 바로가기</a>
+      <h3 id="contact-title-iq">💬 문의 · 건의사항</h3>
+      <p id="contact-desc-iq">검사 문항, 결과 해석, 기능 개선에 대한 의견이나 건의 사항은<br>텔레그램 커뮤니티에 남겨주세요. <strong>적극적으로 반영</strong>하겠습니다.</p>
+      <a href="https://t.me/all_lifes_community" target="_blank" rel="noopener" id="contact-link-iq">✈️ Telegram 커뮤니티 바로가기</a>
     </div>
 
     <div style="text-align:center;margin-top:20px;">
@@ -644,15 +642,15 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
         <div class="src-site">무료 인지 능력 검사 · 6가지 심층 분석</div>
       </div>
       <div class="share-row">
-        <button class="share-btn copy" id="copy-btn-ext" onclick="copyLink(true)"><span class="sb-icon">🔗</span>링크복사</button>
-        <a class="share-btn kakao" href="https://open.kakao.com/o/pRtPpCri" target="_blank" rel="noopener"><span class="sb-icon">💬</span>카카오톡</a>
+        <button class="share-btn copy" id="copy-btn-ext" onclick="copyLink(true)"><span class="sb-icon">🔗</span><span id="copy-lbl-ext">링크복사</span></button>
+        <a class="share-btn telegram" href="https://t.me/all_lifes_community" target="_blank" rel="noopener"><span class="sb-icon">✈️</span><span class="tg-lbl">Telegram</span></a>
       </div>
     </div>
 
     <div class="contact-box">
-      <h3>💬 문의 · 건의사항</h3>
-      <p>검사 문항, 결과 해석, 기능 개선에 대한 의견이나 건의 사항은<br>카카오톡 오픈채팅 커뮤니티에 남겨주세요. <strong>적극적으로 반영</strong>하겠습니다.</p>
-      <a href="https://open.kakao.com/o/pRtPpCri" target="_blank" rel="noopener">💬 카카오톡 오픈채팅 커뮤니티 바로가기</a>
+      <h3 id="contact-title-ext">💬 문의 · 건의사항</h3>
+      <p id="contact-desc-ext">검사 문항, 결과 해석, 기능 개선에 대한 의견이나 건의 사항은<br>텔레그램 커뮤니티에 남겨주세요. <strong>적극적으로 반영</strong>하겠습니다.</p>
+      <a href="https://t.me/all_lifes_community" target="_blank" rel="noopener" id="contact-link-ext">✈️ Telegram 커뮤니티 바로가기</a>
     </div>
 
     <div style="text-align:center;margin-top:20px;margin-bottom:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">

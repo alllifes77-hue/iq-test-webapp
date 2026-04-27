@@ -45,9 +45,10 @@ function applyLang(){
   // Instructions static items
   if(L.inst1Title){
     const items=document.querySelectorAll('.inst-list li');
-    [[L.inst1Title,L.inst1Desc],[L.inst2Title,''],[L.inst3Title,L.inst3Desc],[L.inst4Title,L.inst4Desc]].forEach(([ti,de],i)=>{
+    [[L.inst1Title,L.inst1Desc],[L.inst2Title,null],[L.inst3Title,L.inst3Desc],[L.inst4Title,L.inst4Desc]].forEach(([ti,de],i)=>{
       if(!items[i])return;
       const strong=items[i].querySelector('strong');if(strong&&ti)strong.textContent=ti;
+      if(de!=null){const sp=items[i].querySelector('span:not([id])');if(sp)sp.textContent=de;}
     });
   }
   const instBtns=document.querySelectorAll('.inst-btns button');

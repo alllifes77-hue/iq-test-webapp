@@ -130,8 +130,9 @@ function getExtPercentile(score,mean=76,sd=8){
 }
 
 // ── Build question sets ──
-function buildShortSet(){return shuffle([...sample(seqPool,5),...sample(matPool,5),...sample(logPool,3),...sample(anaPool,2)]);}
-function buildLongSet(){return shuffle([...sample(seqPool,10),...sample(matPool,10),...sample(spatPool,10),...sample(logPool,5),...sample(anaPool,5)]);}
+function tagPool(pool,name){return pool.map((q,i)=>Object.assign({},q,{_pool:name,_poolIdx:i}));}
+function buildShortSet(){return shuffle([...sample(tagPool(seqPool,'seqPool'),5),...sample(tagPool(matPool,'matPool'),5),...sample(tagPool(logPool,'logPool'),3),...sample(tagPool(anaPool,'anaPool'),2)]);}
+function buildLongSet(){return shuffle([...sample(tagPool(seqPool,'seqPool'),10),...sample(tagPool(matPool,'matPool'),10),...sample(tagPool(spatPool,'spatPool'),10),...sample(tagPool(logPool,'logPool'),5),...sample(tagPool(anaPool,'anaPool'),5)]);}
 
 // ── State ──
 let currentMode='short',questions=[],curQ=0,answers=[],timer=null,timeLeft=0,testStart=0;
@@ -181,7 +182,7 @@ function renderQ(){
   clearInterval(timer);
   const q=questions[curQ],tot=questions.length;
   document.getElementById('q-prog-text').textContent=tp('qProg',{n:curQ+1,tot})||`문항 ${curQ+1} / ${tot}`;
-  document.getElementById('q-type-lbl').textContent=q.typeLabel;
+  document.getElementById('q-type-lbl').textContent=tl(q.typeLabel);
   document.getElementById('progress-fill').style.width=(curQ/tot*100)+'%';
   timeLeft=getTimeLimit(q);
   updateTimerUI(timeLeft);
@@ -191,17 +192,33 @@ function renderQ(){
   card.style.animation='none';void card.offsetHeight;card.style.animation='slideIn .3s ease';
 }
 
+function getTranslatedQ(q){
+  const IQ=window.IQ_Q;if(!IQ)return q;
+  const r=Object.assign({},q);
+  if(q.type==='sequence'){if(IQ.qSeqPrompt)r.q=IQ.qSeqPrompt;return r;}
+  if(q.type==='matrix'){if(IQ.qMatPrompt)r.q=IQ.qMatPrompt;return r;}
+  const pool=IQ[q._pool];
+  if(pool&&pool[q._poolIdx]){
+    const tq=pool[q._poolIdx];
+    if(q.type==='analogy'){if(IQ.qAnaPrompt)r.q=IQ.qAnaPrompt;if(tq.analogy)r.analogy=tq.analogy;if(tq.opts)r.opts=tq.opts;}
+    else if(q.type==='logic'){if(IQ.qLogPrompt)r.q=IQ.qLogPrompt;if(tq.premise)r.premise=tq.premise;if(tq.opts)r.opts=tq.opts;}
+    else if(q.type==='spatial'){if(tq.q)r.q=tq.q;if(tq.opts)r.opts=tq.opts;}
+  }
+  return r;
+}
+
 function buildQHTML(q,idx){
+  const tq=getTranslatedQ(q);
   const typeLabel=tl(q.typeLabel);
   const qNum=tp('qNum',{n:idx+1})||`문항 ${idx+1}`;
   let html=`<div class="q-num">${qNum} &nbsp;·&nbsp;<span class="tag" style="background:var(--primary-bg);color:var(--primary-mid)">${typeLabel}</span></div>
-    <div class="q-text">${q.q}</div>`;
-  if(q.type==='sequence') html+=`<div class="q-seq">${q.seq}</div>`;
-  else if(q.type==='matrix') html+=buildMatrixHTML(q.matrix);
-  else if(q.type==='analogy') html+=`<div class="q-sub" style="font-size:18px;font-weight:700;color:var(--text);padding:14px;background:var(--primary-bg);border-radius:12px;margin:10px 0 20px;">${q.analogy}</div>`;
-  else if(q.type==='logic') html+=`<div class="q-premise">${q.premise}</div>`;
+    <div class="q-text">${tq.q}</div>`;
+  if(tq.type==='sequence') html+=`<div class="q-seq">${tq.seq}</div>`;
+  else if(tq.type==='matrix') html+=buildMatrixHTML(tq.matrix);
+  else if(tq.type==='analogy') html+=`<div class="q-sub" style="font-size:18px;font-weight:700;color:var(--text);padding:14px;background:var(--primary-bg);border-radius:12px;margin:10px 0 20px;">${tq.analogy}</div>`;
+  else if(tq.type==='logic') html+=`<div class="q-premise">${tq.premise}</div>`;
   html+=`<div class="options-grid">`;
-  ['A','B','C','D'].forEach((L,i)=>{html+=`<div class="option" id="opt${i}" onclick="selectAns(${i})"><div class="opt-letter">${L}</div><div class="opt-text">${q.opts[i]}</div></div>`;});
+  ['A','B','C','D'].forEach((L,i)=>{html+=`<div class="option" id="opt${i}" onclick="selectAns(${i})"><div class="opt-letter">${L}</div><div class="opt-text">${tq.opts[i]}</div></div>`;});
   html+=`</div><div class="q-nav"><span class="q-nav-hint">${t('qAutoNext')||'선택 후 자동으로 다음 문항으로 넘어갑니다'}</span><button class="btn btn-secondary btn-sm" onclick="skipQ()">${t('qSkip')||'건너뛰기 →'}</button></div>`;
   return html;
 }

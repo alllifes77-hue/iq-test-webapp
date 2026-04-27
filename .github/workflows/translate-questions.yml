@@ -1,0 +1,32 @@
+name: Auto-translate question files (Gemini)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run question translator
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node translate-questions.js
+
+      - name: Commit updated question files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add lang/q-*.js
+          git diff --cached --quiet && echo "No changes to commit" || git commit -m "Auto-translate: update question lang files via Gemini"
+          git push

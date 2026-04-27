@@ -22,6 +22,9 @@ function applyLang(){
     const p=hero.querySelector('p');if(p&&L.heroP)p.innerHTML=L.heroP;
     if(L.trustChips){const chips=hero.querySelectorAll('.trust-chip');L.trustChips.forEach((tx,i)=>{if(chips[i])chips[i].textContent=tx;});}
   }
+  // Recommended badge (CSS custom property)
+  const featCard=document.querySelector('.test-card.featured');
+  if(featCard&&L.longRec)featCard.style.setProperty('--rec-label',`"${L.longRec}"`);
   // Test cards
   const cards=document.querySelectorAll('.test-card');
   if(cards[0]&&L.shortCardTitle){

@@ -75,7 +75,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
 .test-card{background:var(--card);border:2px solid var(--border);border-radius:20px;padding:28px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;box-shadow:var(--shadow);}
 .test-card:hover{border-color:var(--primary-light);box-shadow:var(--shadow-lg);transform:translateY(-3px);}
 .test-card.featured{border-color:var(--primary-mid);}
-.test-card.featured::after{content:'추천';position:absolute;top:16px;right:16px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:6px;}
+.test-card.featured::after{content:var(--rec-label,'추천');position:absolute;top:16px;right:16px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:6px;}
 .test-card .tc-icon{font-size:40px;margin-bottom:12px;}
 .test-card h3{font-size:19px;font-weight:800;margin-bottom:6px;}
 .test-card p{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.5;}

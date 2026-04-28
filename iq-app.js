@@ -118,6 +118,11 @@ function applyLang(){
   if(L.contactLink){['contact-link-iq','contact-link-ext'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=L.contactLink;});}
 }
 
+function sendResize(){
+  const h=document.body.scrollHeight;
+  window.parent.postMessage({type:'iq-resize',height:h},'*');
+}
+
 // ── Mobile share button visibility ──
 window.addEventListener('DOMContentLoaded', () => {
   applyLang();
@@ -127,6 +132,15 @@ window.addEventListener('DOMContentLoaded', () => {
   animateReliabilityBars();
   toggleFAQ(null);
   checkShareParams();
+  // Report initial height to parent (Cloudflare Worker iframe wrapper)
+  setTimeout(sendResize, 200);
+  setTimeout(sendResize, 800);
+  // Keep updating as fonts/images finish loading
+  window.addEventListener('load', () => setTimeout(sendResize, 300));
+  // Watch for DOM size changes
+  if(window.ResizeObserver){
+    new ResizeObserver(sendResize).observe(document.body);
+  }
 });
 
 // ── Utility ──
@@ -162,10 +176,7 @@ function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+id).classList.add('active');
   window.scrollTo(0,0);
-  setTimeout(()=>{
-    const h=document.body.scrollHeight;
-    window.parent.postMessage({type:'iq-resize',height:h},'*');
-  },150);
+  setTimeout(sendResize,150);
 }
 function scrollToExt(){showScreen('results');setTimeout(()=>{const el=document.getElementById('ext-grid');if(el)el.scrollIntoView({behavior:'smooth'});},300);}
 function restartAll(){showScreen('home');}

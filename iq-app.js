@@ -617,7 +617,8 @@ function getShareText(isExt=false){
 function getShareURL(){return window.location.href.split('?')[0];}
 
 function getResultShareURL(isExt=false){
-  const base='https://all-lifes.com/iq-test/';
+  const lang=(new URLSearchParams(window.location.search)).get('lang')||'ko';
+  const base=lang==='ko'?'https://all-lifes.com/iq-test/':`https://all-lifes.com/${lang}/iq-test/`;
   if(isExt&&extTest){
     const score=document.getElementById('ext-score').textContent;
     const cat=document.getElementById('ext-res-cat').textContent;

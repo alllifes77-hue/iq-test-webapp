@@ -110,5 +110,34 @@ sciSub:'Designed on cognitive psychology theories and methodologies validated ov
 featTitle:"What's Included",faqTitle:'Frequently Asked Questions (FAQ)',
 seoTitle:'Everything You Need to Know About IQ Tests',
 rlTitle:'Reliability Index by Domain (Cronbach\'s α)',
-rlSeq:'Sequence Reasoning',rlMat:'Matrix Patterns',rlSpat:'Spatial Reasoning',rlLog:'Logic & Analogies'
+rlSeq:'Sequence Reasoning',rlMat:'Matrix Patterns',rlSpat:'Spatial Reasoning',rlLog:'Logic & Analogies',
+sciItems:[
+  {icon:'🧩',title:"Raven's Progressive Matrices (RPM)",desc:'Developed by John C. Raven in 1936. World standard for measuring pure fluid intelligence (Gf) without language or cultural bias. Widely used in clinical, military, and educational settings.'},
+  {icon:'🧬',title:'CHC Theory',desc:'The most comprehensive intelligence theory by Cattell-Horn-Carroll. Assesses cognitive ability through a multi-layer structure of Fluid (Gf), Crystallized (Gc), Processing Speed (Gs), and Short-Term Memory (Gsm).'},
+  {icon:'📐',title:"Spearman's g-Factor",desc:'The general intelligence factor discovered by Spearman (1904). The common foundation of diverse cognitive tasks — sequences, matrices, and logic items all measure the g-factor.'},
+  {icon:'📊',title:'Normal Distribution IQ',desc:'Raw score → z-score, then IQ = 100 + z × 15. Precise percentile via error function (erf). Compliant with international standards.'},
+  {icon:'🎯',title:"Reliability (Cronbach's α)",desc:'Internal consistency for composite measurement is .85–.92. The Precision version (40 items) approaches clinical-grade reliability.'},
+  {icon:'🌍',title:'Flynn Effect Correction',desc:'Accounting for the Flynn Effect (~3 IQ points per decade), item difficulty is calibrated to modern norms to minimize temporal bias.'}
+],
+featItems:[
+  {icon:'🔢',title:'Sequence Reasoning',desc:'Arithmetic, geometric, prime, factorial, and composite patterns including nonlinear high-difficulty items.'},
+  {icon:'🔲',title:'Matrix Patterns',desc:"Non-verbal reasoning based on Raven's Matrices with multiple rules applied simultaneously."},
+  {icon:'🔄',title:'Spatial Reasoning',desc:'Dice, nets, and geometric calculations measuring precise mathematical thinking.'},
+  {icon:'🧩',title:'Logical Reasoning',desc:"Syllogisms, contrapositive propositions, set theory, and Russell's paradox."},
+  {icon:'💛',title:'Emotional Quotient (EQ)',desc:'Emotional ability measurement based on the MSCEIT model.'},
+  {icon:'⚡',title:'Processing Speed & Memory',desc:'Comprehensive assessment of working memory, processing speed, focus, and cognitive flexibility.'}
+],
+faqItems:[
+  {q:'What is an IQ test and how does it measure intelligence?',a:'IQ (Intelligence Quotient) measures general intelligence (g-factor) through sequence reasoning, non-verbal pattern recognition, spatial reasoning, and logical thinking. Results follow a normal distribution with mean 100 and standard deviation 15.'},
+  {q:'How accurate is this free online IQ test?',a:"Based on Raven's Progressive Matrices and CHC theory, with internal reliability (Cronbach's α) of 0.85–0.92. While not a full replacement for clinical tests (WAIS-IV), it provides high reference value for assessing cognitive ability."},
+  {q:'What do different IQ scores mean?',a:'IQ 145+: Genius (top 0.1%) / 130–144: Very Superior (top 2%) / 120–129: Superior (top 10%) / 110–119: High Average / 90–109: Average / 80–89: Low Average / 70–79: Borderline. IQ measures one dimension of human intelligence.'},
+  {q:'Can IQ be improved through training?',a:'Certain cognitive training (working memory tasks, N-back) can temporarily boost fluid intelligence (Gf). Core general intelligence (g-factor) is substantially genetic. Consistent reading and problem-solving helps maintain cognitive ability.'},
+  {q:"What is Raven's Matrix test?",a:"Raven's Progressive Matrices (1936) is a non-verbal intelligence test involving missing-piece identification in 3×3 grid patterns. It minimizes linguistic and cultural influence to measure pure fluid intelligence."}
+],
+seoH2:'Everything You Need to Know About IQ Tests',
+seoSections:[
+  {h3:'What is IQ?',p:"The Intelligence Quotient (IQ), introduced by Wilhelm Stern in 1912, compares an individual's cognitive ability against their age-group average. Modern tests use the deviation IQ method, with 68% of the population scoring between 85 and 115. This free IQ test applies international standards for accurate online intelligence measurement."},
+  {h3:'Fluid vs. Crystallized Intelligence',p:"Raymond Cattell split intelligence into Fluid (Gf) and Crystallized (Gc) intelligence. Fluid intelligence — the innate ability to reason and solve novel problems — is measured by Raven's matrices and sequence items. Crystallized intelligence — accumulated knowledge — is assessed by vocabulary and verbal analogies. This test covers both."},
+  {h3:'Can I retake the free IQ test?',p:'Items are randomly drawn from a large pool each session, so repetition is unlikely. To avoid practice effects, we recommend waiting at least two weeks between retests. The Precision IQ Test (40 items) yields more stable results than the quick version.'}
+]
 };

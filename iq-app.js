@@ -99,6 +99,14 @@ function applyLang(){
   if(L.featTitle){const ft=document.querySelector('.features-section h2');if(ft)ft.textContent=L.featTitle;}
   if(L.faqTitle){const fq=document.querySelector('.faq-section h2');if(fq)fq.textContent=L.faqTitle;}
   if(L.seoTitle){const st=document.querySelector('.seo-article h2');if(st)st.textContent=L.seoTitle;}
+  // Science items
+  if(L.sciItems){const sg=document.querySelector('.science-grid');if(sg)sg.innerHTML=L.sciItems.map(i=>`<div class="sci-item"><div class="si-icon">${i.icon}</div><h4>${i.title}</h4><p>${i.desc}</p></div>`).join('');}
+  // Feature items
+  if(L.featItems){const fg=document.querySelector('.features-grid');if(fg)fg.innerHTML=L.featItems.map(i=>`<div class="feat-item"><div class="fi-icon">${i.icon}</div><h4>${i.title}</h4><p>${i.desc}</p></div>`).join('');}
+  // FAQ items
+  if(L.faqItems){const fl=document.querySelector('.faq-list');if(fl)fl.innerHTML=L.faqItems.map(i=>`<div class="faq-item"><button class="faq-btn" onclick="toggleFAQ(this)"><span>${i.q}</span><span class="faq-arrow">▾</span></button><div class="faq-body"><p>${i.a}</p></div></div>`).join('');}
+  // SEO article
+  if(L.seoH2&&L.seoSections){const sa=document.querySelector('.seo-article .container');if(sa)sa.innerHTML='<h2>'+L.seoH2+'</h2>'+L.seoSections.map(s=>'<h3>'+s.h3+'</h3><p>'+s.p+'</p>').join('');}
   // Copy button labels
   if(L.copyBtn){
     const cl1=document.getElementById('copy-lbl-iq');if(cl1)cl1.textContent=L.copyBtn;

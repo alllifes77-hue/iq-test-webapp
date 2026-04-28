@@ -80,5 +80,34 @@ extStatScoreLabel:'Skor',extStatPctLabel:'Top %',extStatLevelLabel:'Tingkat',
 sciTitle:'🔬 Dasar Ilmiah & Prinsip Pengukuran',sciSub:'Dirancang berdasarkan teori psikologi kognitif yang telah divalidasi selama beberapa dekade.',
 featTitle:'Yang Termasuk',faqTitle:'Pertanyaan Umum (FAQ)',seoTitle:'Semua yang Perlu Anda Ketahui tentang Tes IQ',
 rlTitle:'Indeks Keandalan per Domain (Cronbach\'s α)',
-rlSeq:'Penalaran Deret',rlMat:'Pola Matriks',rlSpat:'Penalaran Spasial',rlLog:'Logika & Analogi'
+rlSeq:'Penalaran Deret',rlMat:'Pola Matriks',rlSpat:'Penalaran Spasial',rlLog:'Logika & Analogi',
+sciItems:[
+  {icon:'🧩',title:'Matriks Progresif Raven (MPR)',desc:'Dikembangkan oleh John C. Raven pada tahun 1936. Standar dunia untuk mengukur kecerdasan fluida murni (Gf) tanpa bias linguistik atau budaya. Banyak digunakan di lingkungan klinis, militer, dan pendidikan.'},
+  {icon:'🧬',title:'Teori CHC',desc:'Teori kecerdasan paling komprehensif oleh Cattell-Horn-Carroll. Menilai kemampuan kognitif melalui struktur berlapis: kecerdasan fluida (Gf), kristal (Gc), kecepatan pemrosesan (Gs), dan memori jangka pendek (Gsm).'},
+  {icon:'📐',title:'Faktor g Spearman',desc:'Faktor kecerdasan umum yang ditemukan oleh Spearman (1904). Fondasi bersama dari berbagai tugas kognitif — deret, matriks, dan logika semuanya mengukur faktor g.'},
+  {icon:'📊',title:'Perhitungan IQ Distribusi Normal',desc:'Skor mentah → skor z, lalu IQ = 100 + z × 15. Persentil tepat melalui fungsi kesalahan (erf). Sesuai dengan standar internasional.'},
+  {icon:'🎯',title:"Reliabilitas (Cronbach's α)",desc:'Reliabilitas konsistensi internal untuk pengukuran komposit adalah ,85–,92. Versi Presisi (40 item) mendekati reliabilitas klinis.'},
+  {icon:'🌍',title:'Koreksi Efek Flynn',desc:'Menyadari Efek Flynn (~3 poin IQ per dekade), tingkat kesulitan item dikalibrasi ke norma modern untuk meminimalkan bias temporal.'}
+],
+featItems:[
+  {icon:'🔢',title:'Penalaran Deret',desc:'Pola aritmetika, geometri, bilangan prima, faktorial, dan komposit, termasuk item kesulitan tinggi non-linear.'},
+  {icon:'🔲',title:'Pola Matriks',desc:'Penalaran non-verbal berdasarkan Matriks Raven dengan beberapa aturan diterapkan secara bersamaan.'},
+  {icon:'🔄',title:'Penalaran Spasial',desc:'Dadu, jaring-jaring, dan perhitungan geometri untuk mengukur pemikiran matematis yang tepat.'},
+  {icon:'🧩',title:'Penalaran Logis',desc:'Silogisme, kontraposisi, teori himpunan, dan paradoks Russell.'},
+  {icon:'💛',title:'Kecerdasan Emosional (EQ)',desc:'Pengukuran kemampuan emosional berdasarkan model MSCEIT.'},
+  {icon:'⚡',title:'Kecepatan Pemrosesan & Memori',desc:'Penilaian komprehensif memori kerja, kecepatan pemrosesan, konsentrasi, dan fleksibilitas kognitif.'}
+],
+faqItems:[
+  {q:'Apa itu tes IQ dan bagaimana cara mengukur kecerdasan?',a:'IQ (Intelligence Quotient) mengukur kecerdasan umum (faktor g) melalui penalaran deret, pengenalan pola non-verbal, penalaran spasial, dan pemikiran logis. Hasil mengikuti distribusi normal dengan rata-rata 100 dan deviasi standar 15.'},
+  {q:'Seberapa akurat tes IQ online gratis ini?',a:"Berdasarkan Matriks Progresif Raven dan teori CHC, dengan reliabilitas internal (Cronbach's α) sebesar 0,85–0,92. Tidak sepenuhnya menggantikan tes klinis resmi (WAIS-IV), tetapi memberikan nilai referensi tinggi untuk menilai tingkat kemampuan kognitif."},
+  {q:'Apa arti skor IQ yang berbeda?',a:'IQ 145+: Level Jenius (top 0,1 %) / 130–144: Sangat Superior (top 2 %) / 120–129: Superior (top 10 %) / 110–119: Di Atas Rata-rata / 90–109: Rata-rata / 80–89: Di Bawah Rata-rata / 70–79: Batas. IQ mengukur satu dimensi kecerdasan manusia.'},
+  {q:'Bisakah IQ ditingkatkan melalui pelatihan?',a:'Pelatihan kognitif tertentu (pelatihan memori kerja, tugas N-back) dapat meningkatkan kecerdasan fluida (Gf) untuk sementara. Kecerdasan umum (faktor g) sebagian besar ditentukan secara genetik. Membaca secara konsisten dan berlatih memecahkan masalah membantu mempertahankan kemampuan kognitif.'},
+  {q:'Apa itu tes Matriks Raven?',a:"Matriks Progresif Raven (1936) adalah tes kecerdasan non-verbal yang melibatkan identifikasi bagian yang hilang dalam pola grid 3×3. Meminimalkan pengaruh linguistik dan budaya untuk mengukur kecerdasan fluida murni."}
+],
+seoH2:'Semua yang Perlu Anda Ketahui tentang Tes IQ',
+seoSections:[
+  {h3:'Apa itu IQ?',p:'Intelligence Quotient (IQ), diperkenalkan oleh Wilhelm Stern pada tahun 1912, membandingkan kemampuan kognitif seseorang dengan rata-rata kelompok usianya. Tes modern menggunakan metode deviasi IQ, dengan 68% populasi berada antara 85 dan 115. Tes IQ gratis ini menerapkan standar internasional untuk pengukuran kecerdasan online yang akurat.'},
+  {h3:'Kecerdasan Fluida vs. Kristal',p:'Raymond Cattell membedakan antara kecerdasan fluida (Gf) dan kecerdasan kristal (Gc). Kecerdasan fluida — kemampuan bawaan untuk bernalar dan memecahkan masalah baru — diukur oleh matriks Raven dan item deret. Kecerdasan kristal — pengetahuan yang dikumpulkan — dinilai oleh kosakata dan analogi verbal. Tes ini mencakup kedua domain.'},
+  {h3:'Bisakah saya mengulang tes IQ gratis?',p:'Item dipilih secara acak dari kumpulan besar setiap sesi, sehingga pengulangan tidak mungkin terjadi. Untuk menghindari efek latihan, kami merekomendasikan menunggu setidaknya dua minggu di antara tes ulang. Tes IQ Presisi (40 item) memberikan hasil lebih stabil daripada versi singkat.'}
+]
 };

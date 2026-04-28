@@ -80,5 +80,34 @@ extStatScoreLabel:'Puntuación',extStatPctLabel:'Top %',extStatLevelLabel:'Nivel
 sciTitle:'🔬 Base Científica & Principios de Medición',sciSub:'Diseñado sobre teorías de psicología cognitiva validadas durante décadas.',
 featTitle:'Qué incluye',faqTitle:'Preguntas Frecuentes (FAQ)',seoTitle:'Todo lo que necesitas saber sobre los tests de CI',
 rlTitle:'Índice de fiabilidad por área (Cronbach\'s α)',
-rlSeq:'Razonamiento numérico',rlMat:'Patrones de matrices',rlSpat:'Razonamiento espacial',rlLog:'Lógica & Analogías'
+rlSeq:'Razonamiento numérico',rlMat:'Patrones de matrices',rlSpat:'Razonamiento espacial',rlLog:'Lógica & Analogías',
+sciItems:[
+  {icon:'🧩',title:'Matrices Progresivas de Raven (MPR)',desc:'Desarrollado por John C. Raven en 1936. Estándar mundial para medir la inteligencia fluida pura (Gf) sin sesgo lingüístico o cultural. Ampliamente utilizado en entornos clínicos, militares y educativos.'},
+  {icon:'🧬',title:'Teoría CHC',desc:'La teoría de inteligencia más completa de Cattell-Horn-Carroll. Evalúa la capacidad cognitiva mediante una estructura multicapa de inteligencia fluida (Gf), cristalizada (Gc), velocidad de procesamiento (Gs) y memoria a corto plazo (Gsm).'},
+  {icon:'📐',title:'Factor g de Spearman',desc:'El factor de inteligencia general descubierto por Spearman (1904). Base común de diversas tareas cognitivas: secuencias, matrices y lógica miden todas el factor g.'},
+  {icon:'📊',title:'Cálculo del CI en distribución normal',desc:'Puntuación bruta → puntuación z, luego CI = 100 + z × 15. Percentil preciso mediante la función de error (erf). Cumple con los estándares internacionales.'},
+  {icon:'🎯',title:'Fiabilidad (alpha de Cronbach)',desc:'La fiabilidad de consistencia interna de la medición compuesta es de ,85–,92. La versión Precisión (40 ítems) se acerca a la fiabilidad clínica.'},
+  {icon:'🌍',title:'Corrección del efecto Flynn',desc:'Teniendo en cuenta el efecto Flynn (~3 puntos de CI por década), la dificultad de los ítems se calibra a las normas modernas para minimizar el sesgo temporal.'}
+],
+featItems:[
+  {icon:'🔢',title:'Razonamiento secuencial',desc:'Patrones aritméticos, geométricos, de números primos, factoriales y compuestos, incluyendo ítems de alta dificultad no lineal.'},
+  {icon:'🔲',title:'Matrices',desc:'Razonamiento no verbal basado en las Matrices de Raven con múltiples reglas aplicadas simultáneamente.'},
+  {icon:'🔄',title:'Razonamiento espacial',desc:'Dados, redes y cálculos geométricos para medir el pensamiento matemático preciso.'},
+  {icon:'🧩',title:'Razonamiento lógico',desc:"Silogismos, contrapuestas, teoría de conjuntos y paradoja de Russell."},
+  {icon:'💛',title:'Cociente emocional (CE)',desc:'Medición de habilidades emocionales basada en el modelo MSCEIT.'},
+  {icon:'⚡',title:'Velocidad de procesamiento y memoria',desc:'Evaluación integral de memoria de trabajo, velocidad de procesamiento, concentración y flexibilidad cognitiva.'}
+],
+faqItems:[
+  {q:'¿Qué es un test de CI y cómo mide la inteligencia?',a:'El CI (Cociente Intelectual) mide la inteligencia general (factor g) mediante razonamiento secuencial, reconocimiento de patrones no verbales, razonamiento espacial y pensamiento lógico. Los resultados siguen una distribución normal con media 100 y desviación estándar 15.'},
+  {q:'¿Qué tan preciso es este test de CI gratuito en línea?',a:"Basado en las Matrices Progresivas de Raven y la teoría CHC, con fiabilidad interna (alpha de Cronbach) de 0,85–0,92. No sustituye completamente las pruebas clínicas oficiales (WAIS-IV), pero proporciona un alto valor de referencia para evaluar el nivel cognitivo."},
+  {q:'¿Qué significan las diferentes puntuaciones de CI?',a:'CI 145+: Genio (top 0,1 %) / 130–144: Muy superior (top 2 %) / 120–129: Superior (top 10 %) / 110–119: Por encima de la media / 90–109: Media / 80–89: Por debajo de la media / 70–79: Límite. El CI mide una dimensión de la inteligencia humana.'},
+  {q:'¿Se puede mejorar el CI con entrenamiento?',a:'Cierto entrenamiento cognitivo (entrenamiento de memoria de trabajo, tareas N-back) puede mejorar temporalmente la inteligencia fluida (Gf). La inteligencia general (factor g) es en gran parte determinada genéticamente. La lectura constante y la resolución de problemas ayudan a mantener la capacidad cognitiva.'},
+  {q:'¿Qué es el test de Matrices de Raven?',a:'Las Matrices Progresivas de Raven (1936) son un test de inteligencia no verbal que consiste en encontrar la pieza faltante en cuadrículas de 3×3. Minimiza la influencia lingüística y cultural para medir la inteligencia fluida pura.'}
+],
+seoH2:'Todo lo que necesitas saber sobre los tests de CI',
+seoSections:[
+  {h3:'¿Qué es el CI?',p:'El Cociente Intelectual (CI), introducido por Wilhelm Stern en 1912, compara la capacidad cognitiva de un individuo con el promedio de su grupo de edad. Las pruebas modernas utilizan el método de CI de desviación, con el 68 % de la población entre 85 y 115. Este test de CI gratuito aplica estándares internacionales para una medición precisa de la inteligencia en línea.'},
+  {h3:'Inteligencia fluida vs. cristalizada',p:'Raymond Cattell distinguió entre inteligencia fluida (Gf) e inteligencia cristalizada (Gc). La inteligencia fluida — la capacidad innata para razonar y resolver nuevos problemas — se mide con matrices de Raven e ítems de secuencias. La inteligencia cristalizada — el conocimiento acumulado — se evalúa con vocabulario y analogías verbales. Este test cubre ambos dominios.'},
+  {h3:'¿Puedo repetir el test de CI gratuito?',p:'Los ítems se seleccionan aleatoriamente de un gran banco cada sesión, por lo que es improbable que se repitan. Para evitar efectos de práctica, recomendamos esperar al menos dos semanas entre pruebas. El Test de CI Precisión (40 ítems) proporciona resultados más estables que la versión corta.'}
+]
 };

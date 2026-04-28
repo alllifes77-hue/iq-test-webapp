@@ -80,5 +80,34 @@ extStatScoreLabel:'Punteggio',extStatPctLabel:'Top %',extStatLevelLabel:'Livello
 sciTitle:'🔬 Base Scientifica & Principi di Misurazione',sciSub:'Progettato su teorie di psicologia cognitiva validate in decenni di ricerca.',
 featTitle:'Cosa è incluso',faqTitle:'Domande Frequenti (FAQ)',seoTitle:'Tutto ciò che devi sapere sui test del QI',
 rlTitle:'Indice di affidabilità per area (Cronbach\'s α)',
-rlSeq:'Ragionamento numerico',rlMat:'Pattern matriciali',rlSpat:'Ragionamento spaziale',rlLog:'Logica & Analogie'
+rlSeq:'Ragionamento numerico',rlMat:'Pattern matriciali',rlSpat:'Ragionamento spaziale',rlLog:'Logica & Analogie',
+sciItems:[
+  {icon:'🧩',title:'Matrici Progressive di Raven (MPR)',desc:"Sviluppato da John C. Raven nel 1936. Standard mondiale per misurare l'intelligenza fluida pura (Gf) senza bias linguistico o culturale. Ampiamente utilizzato in contesti clinici, militari ed educativi."},
+  {icon:'🧬',title:'Teoria CHC',desc:"La teoria dell'intelligenza più completa di Cattell-Horn-Carroll. Valuta le capacità cognitive attraverso una struttura a più livelli: intelligenza fluida (Gf), cristallizzata (Gc), velocità di elaborazione (Gs) e memoria a breve termine (Gsm)."},
+  {icon:'📐',title:'Fattore g di Spearman',desc:'Il fattore di intelligenza generale scoperto da Spearman (1904). Base comune di diversi compiti cognitivi: sequenze, matrici e logica misurano tutti il fattore g.'},
+  {icon:'📊',title:'Calcolo del QI in distribuzione normale',desc:'Punteggio grezzo → punteggio z, poi QI = 100 + z × 15. Percentile preciso tramite la funzione di errore (erf). Conforme agli standard internazionali.'},
+  {icon:'🎯',title:"Affidabilità (Cronbach's α)",desc:"L'affidabilità di coerenza interna per la misurazione composita è di ,85–,92. La versione Precisione (40 item) si avvicina all'affidabilità clinica."},
+  {icon:'🌍',title:"Correzione dell'effetto Flynn",desc:"Tenendo conto dell'effetto Flynn (~3 punti QI per decennio), la difficoltà degli item è calibrata sulle norme moderne per minimizzare il bias temporale."}
+],
+featItems:[
+  {icon:'🔢',title:'Ragionamento sequenziale',desc:'Schemi aritmetici, geometrici, di numeri primi, fattoriali e composti, inclusi item di alta difficoltà non lineare.'},
+  {icon:'🔲',title:'Matrici',desc:'Ragionamento non verbale basato sulle Matrici di Raven con più regole applicate simultaneamente.'},
+  {icon:'🔄',title:'Ragionamento spaziale',desc:'Dadi, sviluppi piani e calcoli geometrici per misurare il pensiero matematico preciso.'},
+  {icon:'🧩',title:'Ragionamento logico',desc:"Sillogismi, contrapposizioni, teoria degli insiemi e paradosso di Russell."},
+  {icon:'💛',title:'Quoziente emotivo (QE)',desc:'Misurazione delle capacità emotive basata sul modello MSCEIT.'},
+  {icon:'⚡',title:'Velocità di elaborazione e memoria',desc:'Valutazione completa di memoria di lavoro, velocità di elaborazione, concentrazione e flessibilità cognitiva.'}
+],
+faqItems:[
+  {q:"Cos'è un test del QI e come misura l'intelligenza?",a:"Il QI (Quoziente Intellettivo) misura l'intelligenza generale (fattore g) tramite ragionamento sequenziale, riconoscimento di schemi non verbali, ragionamento spaziale e pensiero logico. I risultati seguono una distribuzione normale con media 100 e deviazione standard 15."},
+  {q:'Quanto è accurato questo test del QI gratuito online?',a:"Basato sulle Matrici Progressive di Raven e sulla teoria CHC, con affidabilità interna (Cronbach's α) di 0,85–0,92. Non sostituisce completamente i test clinici ufficiali (WAIS-IV), ma offre un alto valore di riferimento per valutare il livello cognitivo."},
+  {q:'Cosa significano i diversi punteggi QI?',a:"QI 145+: Genio (top 0,1 %) / 130–144: Molto superiore (top 2 %) / 120–129: Superiore (top 10 %) / 110–119: Al di sopra della media / 90–109: Nella media / 80–89: Al di sotto della media / 70–79: Borderline. Il QI misura una dimensione dell'intelligenza umana."},
+  {q:"È possibile migliorare il QI con l'allenamento?",a:"Certo allenamento cognitivo (allenamento della memoria di lavoro, compiti N-back) può migliorare temporaneamente l'intelligenza fluida (Gf). L'intelligenza generale (fattore g) è in gran parte determinata geneticamente. Lettura costante e risoluzione di problemi aiutano a mantenere le capacità cognitive."},
+  {q:"Cos'è il test delle Matrici di Raven?",a:"Le Matrici Progressive di Raven (1936) sono un test di intelligenza non verbale che consiste nel trovare il pezzo mancante in griglie 3×3. Minimizza l'influenza linguistica e culturale per misurare l'intelligenza fluida pura."}
+],
+seoH2:'Tutto quello che devi sapere sui test del QI',
+seoSections:[
+  {h3:"Cos'è il QI?",p:"Il Quoziente Intellettivo (QI), introdotto da Wilhelm Stern nel 1912, confronta la capacità cognitiva di un individuo con la media del suo gruppo d'età. I test moderni utilizzano il metodo del QI di deviazione, con il 68 % della popolazione tra 85 e 115. Questo test del QI gratuito applica gli standard internazionali per una misurazione precisa dell'intelligenza online."},
+  {h3:'Intelligenza fluida vs. cristallizzata',p:"Raymond Cattell distinse l'intelligenza in fluida (Gf) e cristallizzata (Gc). L'intelligenza fluida — la capacità innata di ragionare e risolvere nuovi problemi — è misurata dalle Matrici di Raven e dagli item di sequenze. L'intelligenza cristallizzata — la conoscenza accumulata — è valutata dal vocabolario e dalle analogie verbali. Questo test copre entrambi i domini."},
+  {h3:'Posso ripetere il test del QI gratuito?',p:"Gli item vengono selezionati casualmente da un ampio pool ad ogni sessione, rendendo improbabile la ripetizione. Per evitare effetti di pratica, raccomandiamo di attendere almeno due settimane tra i test. Il Test del QI di Precisione (40 item) fornisce risultati più stabili rispetto alla versione breve."}
+]
 };

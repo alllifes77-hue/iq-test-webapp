@@ -80,5 +80,34 @@ extStatScoreLabel:'Punkte',extStatPctLabel:'Top %',extStatLevelLabel:'Stufe',
 sciTitle:'🔬 Wissenschaftliche Grundlage',sciSub:'Basiert auf jahrzehntelang validierten kognitionspsychologischen Theorien.',
 featTitle:'Enthaltene Tests',faqTitle:'Häufig gestellte Fragen (FAQ)',seoTitle:'Alles über IQ-Tests',
 rlTitle:'Zuverlässigkeitsindex nach Bereich (Cronbach\'s α)',
-rlSeq:'Zahlenfolgen',rlMat:'Matrizenmuster',rlSpat:'Räumliches Denken',rlLog:'Logik & Analogien'
+rlSeq:'Zahlenfolgen',rlMat:'Matrizenmuster',rlSpat:'Räumliches Denken',rlLog:'Logik & Analogien',
+sciItems:[
+  {icon:'🧩',title:'Raven Progressive Matrizen (RPM)',desc:'1936 von John C. Raven entwickelt. Weltstandard zur Messung reiner fluider Intelligenz (Gf) ohne sprachliche oder kulturelle Verzerrung. Weit verbreitet in klinischen, militärischen und pädagogischen Bereichen.'},
+  {icon:'🧬',title:'CHC-Theorie',desc:'Die umfassendste Intelligenztheorie von Cattell-Horn-Carroll. Bewertet kognitive Fähigkeiten durch fluide Intelligenz (Gf), kristalline Intelligenz (Gc), Verarbeitungsgeschwindigkeit (Gs) und Kurzzeitgedächtnis (Gsm).'},
+  {icon:'📐',title:'Spearmans g-Faktor',desc:'Der allgemeine Intelligenzfaktor, entdeckt von Spearman (1904). Gemeinsame Basis vielfältiger kognitiver Aufgaben – Sequenzen, Matrizen und Logikaufgaben messen alle den g-Faktor.'},
+  {icon:'📊',title:'Normalverteilung IQ-Berechnung',desc:'Rohwert → z-Wert, dann IQ = 100 + z × 15. Präzises Perzentil via Fehlerfunktion (erf). Entspricht internationalen Standards.'},
+  {icon:'🎯',title:"Reliabilität (Cronbach's α)",desc:'Interne Konsistenzreliabilität der kombinierten Messung beträgt .85–.92. Die Präzisionsversion (40 Items) nähert sich klinischer Reliabilität an.'},
+  {icon:'🌍',title:'Flynn-Effekt-Korrektur',desc:'In Kenntnis des Flynn-Effekts (~3 IQ-Punkte pro Jahrzehnt) wird die Aufgabenschwierigkeit an moderne Normen angepasst, um zeitliche Verzerrungen zu minimieren.'}
+],
+featItems:[
+  {icon:'🔢',title:'Zahlenfolgen',desc:'Arithmetische, geometrische, Primzahl-, Fakultäts- und zusammengesetzte Muster, inkl. nichtlinearer Hochschwierigkeit.'},
+  {icon:'🔲',title:'Matrizenmuster',desc:'Nichtverbales Schlussfolgern auf Basis der Raven-Matrizen. Mehrere Regeln gleichzeitig angewendet.'},
+  {icon:'🔄',title:'Räumliches Denken',desc:'Würfel, Netze und geometrische Berechnungen. Misst präzises mathematisches Denken.'},
+  {icon:'🧩',title:'Logisches Denken',desc:"Syllogismen, Kontrapositionen, Mengenlehre und Russells Paradoxon."},
+  {icon:'💛',title:'Emotionaler Quotient (EQ)',desc:'Messung emotionaler Fähigkeiten auf Basis des MSCEIT-Modells.'},
+  {icon:'⚡',title:'Verarbeitungsgeschwindigkeit & Gedächtnis',desc:'Umfassende Bewertung von Arbeitsgedächtnis, Verarbeitungsgeschwindigkeit, Konzentration und kognitiver Flexibilität.'}
+],
+faqItems:[
+  {q:'Was ist ein IQ-Test und wie misst er Intelligenz?',a:'IQ (Intelligenzquotient) misst allgemeine Intelligenz (g-Faktor) durch Zahlenfolgen, nichtverbale Mustererkennung, räumliches Denken und logisches Schlussfolgern. Ergebnisse folgen einer Normalverteilung mit Mittelwert 100 und Standardabweichung 15.'},
+  {q:'Wie genau ist dieser kostenlose Online-IQ-Test?',a:"Basierend auf Raven Progressive Matrizen und CHC-Theorie mit interner Reliabilität (Cronbach's α) von 0,85–0,92. Kein vollständiger Ersatz für klinische Tests (WAIS-IV), bietet aber hohen Referenzwert zur Einschätzung kognitiver Fähigkeiten."},
+  {q:'Was bedeuten verschiedene IQ-Werte?',a:'IQ 145+: Genie (Top 0,1 %) / 130–144: Sehr überdurchschnittlich (Top 2 %) / 120–129: Überdurchschnittlich (Top 10 %) / 110–119: Hoch durchschnittlich / 90–109: Durchschnittlich / 80–89: Niedrig durchschnittlich / 70–79: Grenzwertig. IQ misst eine Dimension menschlicher Intelligenz.'},
+  {q:'Kann man den IQ durch Training verbessern?',a:'Bestimmtes kognitives Training (Arbeitsgedächtnisaufgaben, N-back) kann die fluide Intelligenz (Gf) vorübergehend steigern. Die allgemeine Intelligenz (g-Faktor) ist zu einem erheblichen Teil genetisch bestimmt. Regelmäßiges Lesen und Problemlösen helfen, die kognitive Leistungsfähigkeit zu erhalten.'},
+  {q:'Was ist der Raven-Matrizentest?',a:"Die Raven Progressive Matrizen (1936) sind ein nichtverbaler Intelligenztest, bei dem fehlende Teile in 3×3-Gittermuster gefunden werden müssen. Minimiert sprachliche und kulturelle Einflüsse zur Messung reiner fluider Intelligenz."}
+],
+seoH2:'Alles, was Sie über IQ-Tests wissen müssen',
+seoSections:[
+  {h3:'Was ist der IQ?',p:'Der Intelligenzquotient (IQ), eingeführt von Wilhelm Stern im Jahr 1912, vergleicht die kognitive Fähigkeit einer Person mit dem Durchschnitt ihrer Altersgruppe. Moderne Tests verwenden die Abweichungs-IQ-Methode, wobei 68 % der Bevölkerung zwischen 85 und 115 liegen. Dieser kostenlose IQ-Test wendet internationale Standards für eine genaue Online-Intelligenzmessung an.'},
+  {h3:'Fluide vs. kristalline Intelligenz',p:'Raymond Cattell unterschied Intelligenz in fluide Intelligenz (Gf) und kristalline Intelligenz (Gc). Fluide Intelligenz – die angeborene Fähigkeit zu schlussfolgern und neue Probleme zu lösen – wird durch Raven-Matrizen und Sequenzaufgaben gemessen. Kristalline Intelligenz – angehäuftes Wissen – wird durch Wortschatz und verbale Analogien bewertet. Dieser Test deckt beide Bereiche ab.'},
+  {h3:'Kann ich den kostenlosen IQ-Test mehrmals machen?',p:'Aufgaben werden jede Sitzung zufällig aus einem großen Pool ausgewählt, sodass Wiederholungen unwahrscheinlich sind. Um Übungseffekte zu vermeiden, empfehlen wir mindestens zwei Wochen zwischen Wiederholungstests. Der Präzisions-IQ-Test (40 Items) liefert stabilere Ergebnisse als die Kurzversion.'}
+]
 };

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e1b4b"/>
+      <stop offset="50%" style="stop-color:#3730a3"/>
+      <stop offset="100%" style="stop-color:#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.12"/>
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.04"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a5b4fc"/>
+      <stop offset="100%" style="stop-color:#818cf8"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="980" cy="80" r="200" fill="#6366f1" opacity="0.12"/>
+  <circle cx="150" cy="550" r="160" fill="#4f46e5" opacity="0.15"/>
+  <circle cx="1150" cy="580" r="120" fill="#818cf8" opacity="0.1"/>
+  <g opacity="0.15">
+    <circle cx="60" cy="60" r="3" fill="#a5b4fc"/><circle cx="120" cy="60" r="3" fill="#a5b4fc"/><circle cx="180" cy="60" r="3" fill="#a5b4fc"/>
+    <circle cx="60" cy="120" r="3" fill="#a5b4fc"/><circle cx="120" cy="120" r="3" fill="#a5b4fc"/><circle cx="180" cy="120" r="3" fill="#a5b4fc"/>
+    <circle cx="60" cy="180" r="3" fill="#a5b4fc"/><circle cx="120" cy="180" r="3" fill="#a5b4fc"/><circle cx="180" cy="180" r="3" fill="#a5b4fc"/>
+  </g>
+
+  <rect x="60" y="120" width="240" height="36" rx="18" fill="#ffffff" opacity="0.15"/>
+  <text x="180" y="143" font-family="Arial,'&#x30E1;&#x30A4;&#x30EA;&#x30AA;',sans-serif" font-size="14" font-weight="700" fill="#c7d2fe" text-anchor="middle" letter-spacing="1">&#x1F9E0; &#x79D1;&#x5B66;&#x7684;&#x306B;&#x691C;&#x8A3C;&#x6E08;&#x307F;</text>
+
+  <text x="60" y="220" font-family="Arial,'&#x30E1;&#x30A4;&#x30EA;&#x30AA;',sans-serif" font-size="68" font-weight="900" fill="#ffffff" letter-spacing="-1">&#x7121;&#x6599;IQ&#x30C6;&#x30B9;&#x30C8;</text>
+
+  <text x="60" y="278" font-family="Arial,'&#x30E1;&#x30A4;&#x30EA;&#x30AA;',sans-serif" font-size="24" fill="#a5b4fc" font-weight="400">&#x30AA;&#x30F3;&#x30E9;&#x30A4;&#x30F3;&#x77E5;&#x80FD;&#x6E2C;&#x5B9A;&#x30FB;&#x8A73;&#x7D30;&#x5206;&#x6790;</text>
+
+  <rect x="60" y="305" width="80" height="4" rx="2" fill="#6366f1"/>
+
+  <g font-family="Arial,'&#x30E1;&#x30A4;&#x30EA;&#x30AA;',sans-serif" font-size="18" fill="#c7d2fe">
+    <text x="60" y="350">&#x2713;  &#x30EC;&#x30FC;&#x30F4;&#x30A1;&#x30F3;&#x884C;&#x5217; · CHC&#x7406;&#x8AD6;</text>
+    <text x="60" y="385">&#x2713;  &#x30AF;&#x30A4;&#x30C3;&#x30AF;(15&#x554F;) · &#x7CBE;&#x5BC6;(40&#x554F;)</text>
+    <text x="60" y="420">&#x2713;  EQ · &#x8A18;&#x61B6;&#x529B; · &#x5275;&#x9020;&#x6027;&#x30C6;&#x30B9;&#x30C8;</text>
+    <text x="60" y="455">&#x2713;  &#x767B;&#x9332;&#x4E0D;&#x8981;&#x30FB;&#x5373;&#x6642;&#x7121;&#x6599;&#x7D50;&#x679C;</text>
+  </g>
+
+  <rect x="60" y="490" width="320" height="44" rx="22" fill="#4f46e5" opacity="0.7"/>
+  <text x="220" y="517" font-family="Arial,monospace" font-size="15" fill="#e0e7ff" text-anchor="middle" font-weight="600">all-lifes.com · IQ&#x30C6;&#x30B9;&#x30C8;</text>
+
+  <rect x="680" y="90" width="460" height="450" rx="32" fill="url(#card)" stroke="#ffffff" stroke-opacity="0.2" stroke-width="1.5" filter="url(#shadow)"/>
+
+  <text x="910" y="145" font-family="Arial,'&#x30E1;&#x30A4;&#x30EA;&#x30AA;',sans-serif" font-size="15" fill="#a5b4fc" text-anchor="middle" font-weight="600" letter-spacing="2">&#x691C;&#x67FB;&#x7D50;&#x679C;</text>
+
+  <circle cx="910" cy="275" r="100" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="16"/>
+  <circle cx="910" cy="275" r="100" fill="none" stroke="url(#ring)" stroke-width="16" stroke-linecap="round"
+    stroke-dasharray="565" stroke-dashoffset="113"
+    transform="rotate(-90 910 275)" filter="url(#glow)"/>
+
+  <text x="910" y="258" font-family="Arial,sans-serif" font-size="62" font-weight="900" fill="#ffffff" text-anchor="middle">128</text>
+  <text x="910" y="290" font-family="Arial,sans-serif" font-size="14" fill="#a5b4fc" text-anchor="middle" font-weight="600" letter-spacing="1">IQ SCORE</text>
+
+  <rect x="810" y="308" width="200" height="32" rx="16" fill="#6366f1" opacity="0.6"/>
+  <text x="910" y="329" font-family="Arial,'&#x30E1;&#x30A4;&#x30EA;&#x30AA;',sans-serif" font-size="14" fill="#e0e7ff" text-anchor="middle" font-weight="700">&#x512A;&#x79C0; · &#x4E0A;&#x4F593%</text>
+
+  <g font-family="Arial,'&#x30E1;&#x30A4;&#x30EA;&#x30AA;',sans-serif">
+    <rect x="700" y="420" width="130" height="80" rx="16" fill="#ffffff" opacity="0.08"/>
+    <text x="765" y="452" font-size="28" font-weight="900" fill="#ffffff" text-anchor="middle">93%</text>
+    <text x="765" y="472" font-size="12" fill="#a5b4fc" text-anchor="middle">&#x6B63;&#x7B54;&#x7387;</text>
+
+    <rect x="845" y="420" width="130" height="80" rx="16" fill="#ffffff" opacity="0.08"/>
+    <text x="910" y="452" font-size="28" font-weight="900" fill="#ffffff" text-anchor="middle">18&#x5206;</text>
+    <text x="910" y="472" font-size="12" fill="#a5b4fc" text-anchor="middle">&#x6240;&#x8981;&#x6642;&#x9593;</text>
+
+    <rect x="990" y="420" width="130" height="80" rx="16" fill="#ffffff" opacity="0.08"/>
+    <text x="1055" y="452" font-size="28" font-weight="900" fill="#ffffff" text-anchor="middle">40&#x554F;</text>
+    <text x="1055" y="472" font-size="12" fill="#a5b4fc" text-anchor="middle">&#x7CBE;&#x5BC6;&#x7248;</text>
+  </g>
+
+  <text x="600" y="610" font-family="Arial,sans-serif" font-size="13" fill="#6366f1" text-anchor="middle" opacity="0.7">Raven&apos;s Progressive Matrices · CHC Theory · Cronbach&apos;s &#x3B1; .85~.92</text>
+</svg>

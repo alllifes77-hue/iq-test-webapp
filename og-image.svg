@@ -70,7 +70,7 @@
 
   <!-- 하단 URL 배지 -->
   <rect x="60" y="490" width="320" height="44" rx="22" fill="#4f46e5" opacity="0.7"/>
-  <text x="220" y="517" font-family="Arial,monospace" font-size="15" fill="#e0e7ff" text-anchor="middle" font-weight="600">jeybeeicon.com · IQ 테스트</text>
+  <text x="220" y="517" font-family="Arial,monospace" font-size="15" fill="#e0e7ff" text-anchor="middle" font-weight="600">all-lifes.com · IQ 테스트</text>
 
   <!-- 오른쪽 결과 카드 -->
   <rect x="680" y="90" width="460" height="450" rx="32" fill="url(#card)" stroke="#ffffff" stroke-opacity="0.2" stroke-width="1.5" filter="url(#shadow)"/>

@@ -412,7 +412,7 @@ export default {
     } else {
       ogTitle = L.title;
       ogDesc  = L.desc;
-      ogImage = `${APP_URL}/og-image.png`;
+      ogImage = `${APP_URL}/og-${lang}.svg`;
     }
 
     // iframe src — pass all query params through to the app

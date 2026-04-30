@@ -364,6 +364,46 @@ export default {
     const url  = new URL(request.url);
     const path = url.pathname;
 
+    // ── Route 0: Sitemap (/iq-test-sitemap.xml) ────────────
+    if (path === '/iq-test-sitemap.xml') {
+      const lastmod = '2026-04-30';
+      const langs = [
+        { lang: 'ko', loc: `${SITE_URL}/iq-test/` },
+        { lang: 'en', loc: `${SITE_URL}/en/iq-test/` },
+        { lang: 'de', loc: `${SITE_URL}/de/iq-test/` },
+        { lang: 'ja', loc: `${SITE_URL}/ja/iq-test/` },
+        { lang: 'fr', loc: `${SITE_URL}/fr/iq-test/` },
+        { lang: 'es', loc: `${SITE_URL}/es/iq-test/` },
+        { lang: 'pt', loc: `${SITE_URL}/pt/iq-test/` },
+        { lang: 'it', loc: `${SITE_URL}/it/iq-test/` },
+        { lang: 'id', loc: `${SITE_URL}/id/iq-test/` },
+      ];
+      const alternates = langs.map(l =>
+        `    <xhtml:link rel="alternate" hreflang="${l.lang}" href="${l.loc}"/>`
+      ).join('\n') +
+      `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/en/iq-test/"/>`;
+
+      const urls = langs.map((l, i) => `  <url>
+    <loc>${l.loc}</loc>
+${alternates}
+    <changefreq>weekly</changefreq>
+    <priority>${i === 0 ? '1.0' : '0.9'}</priority>
+    <lastmod>${lastmod}</lastmod>
+  </url>`).join('\n');
+
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${urls}
+</urlset>`;
+      return new Response(xml, {
+        headers: {
+          'Content-Type': 'application/xml;charset=UTF-8',
+          'Cache-Control': 'public, max-age=86400'
+        }
+      });
+    }
+
     // ── Route 1: OG Image (/og-image) ──────────────────────
     if (path === '/og-image' || path === '/og-image/') {
       const p   = url.searchParams;

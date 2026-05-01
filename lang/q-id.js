@@ -53,7 +53,7 @@ logPool:[
   {premise:"6 orang masing-masing berjabat tangan sekali dengan setiap orang lainnya. Total jabat tangan?",opts:["12","15","18","30"]},
   {premise:"\"Semua dokter adalah lulusan perguruan tinggi. Alex adalah lulusan perguruan tinggi.\" Apa yang harus benar?",opts:["Alex adalah seorang dokter","Alex mungkin bukan seorang dokter","Alex pasti seorang dokter","Tidak dapat disimpulkan"]},
   {premise:"\"Jika A maka B. Jika B maka bukan-C.\" C adalah benar. Apa itu A?",opts:["Pasti benar","Pasti salah","Tidak diketahui","Keduanya"]},
-  {premise:"Myeongsu lebih tua dari Cheolsu. Yeonghi lebih tua dari Cheolsu tetapi lebih muda dari Myeongsu. Dari tertua ke termuda?",opts:["Myeongsu–Yeonghi–Cheolsu","Yeonghi–Myeongsu–Cheolsu","Cheolsu–Myeongsu–Yeonghi","Myeongsu–Cheolsu–Yeonghi"]},
+  {premise:"Budi lebih tua dari Dodi. Sari lebih tua dari Dodi tetapi lebih muda dari Budi. Dari tertua ke termuda?",opts:["Budi–Sari–Dodi","Sari–Budi–Dodi","Dodi–Budi–Sari","Budi–Dodi–Sari"]},
   {premise:"Semua apel adalah buah. Beberapa buah manis. Maka?",opts:["Semua apel manis","Beberapa apel mungkin manis","Apel tidak manis","Tidak dapat ditentukan"]},
   {premise:"Dari 15 siswa, 9 menyukai matematika dan 8 menyukai sains. Minimal berapa siswa yang menyukai keduanya?",opts:["1","2","3","4"]},
   {premise:"\"Jika tidak hujan, kita pergi piknik. Kita tidak pergi piknik.\" Maka?",opts:["Hujan turun","Tidak hujan turun","Tidak diketahui","Piknik dibatalkan"]},
@@ -64,7 +64,7 @@ logPool:[
   {premise:"Dari A, B, C, hanya satu yang berbohong. A: \"Saya berkata jujur.\" B: \"A berbohong.\" C: \"B berbohong.\" Siapa pembohongnya?",opts:["A","B","C","Tidak diketahui"]},
   {premise:"30 siswa. \"Setidaknya 2 berbagi tanggal lahir\" selalu dijamin. Maksimal berapa tanggal lahir yang berbeda yang mungkin?",opts:["29","30","365","Tidak terbatas"]},
   {premise:"Warnai 4 bagian melingkar dengan 4 warna sehingga tidak ada bagian yang bersebelahan berbagi warna. Berapa banyak pewarnaan berbeda?",opts:["3","6","12","24"]},
-  {premise:"\"Jika tinggi, maka pandai bermain basket. Minjun tidak pandai bermain basket.\" Maka?",opts:["Minjun pendek","Minjun tidak tinggi","Minjun buruk dalam olahraga","Tidak dapat ditentukan"]}
+  {premise:"\"Jika tinggi, maka pandai bermain basket. Riko tidak pandai bermain basket.\" Maka?",opts:["Riko pendek","Riko tidak tinggi","Riko buruk dalam olahraga","Tidak dapat ditentukan"]}
 ],
 spatPool:[
   {q:"Pada dadu standar, sisi-sisi yang berlawanan berjumlah 7. Angka berapa yang berlawanan dengan 1?",opts:["4","5","6","7"]},

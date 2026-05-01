@@ -53,7 +53,7 @@ logPool:[
   {premise:'6 people each shake hands once with every other person. Total handshakes?',opts:['12','15','18','30']},
   {premise:'"All doctors are college graduates. Alex is a college graduate." What must be true?',opts:['Alex is a doctor','Alex may not be a doctor','Alex is definitely a doctor','Cannot conclude']},
   {premise:'"If A then B. If B then not-C." C is true. What is A?',opts:['Definitely true','Definitely false','Unknown','Either']},
-  {premise:'Myeongsu is older than Cheolsu. Yeonghi is older than Cheolsu but younger than Myeongsu. Oldest to youngest?',opts:['Myeongsu–Yeonghi–Cheolsu','Yeonghi–Myeongsu–Cheolsu','Cheolsu–Myeongsu–Yeonghi','Myeongsu–Cheolsu–Yeonghi']},
+  {premise:'James is older than Tom. Emma is older than Tom but younger than James. Oldest to youngest?',opts:['James–Emma–Tom','Emma–James–Tom','Tom–James–Emma','James–Tom–Emma']},
   {premise:'All apples are fruit. Some fruit is sweet. Therefore?',opts:['All apples are sweet','Some apples may be sweet','Apples are not sweet','Cannot determine']},
   {premise:'Of 15 students, 9 like math and 8 like science. Minimum who like both?',opts:['1','2','3','4']},
   {premise:'"If no rain, we go on a picnic. We did not go on a picnic." Therefore?',opts:['It rained','It did not rain','Unknown','Picnic was cancelled']},
@@ -64,7 +64,7 @@ logPool:[
   {premise:'Of A, B, C, only one lies. A: "I tell the truth." B: "A lies." C: "B lies." Who is the liar?',opts:['A','B','C','Unknown']},
   {premise:'30 students. "At least 2 share a birthday" is always guaranteed. Maximum possible distinct birthday dates?',opts:['29','30','365','Unlimited']},
   {premise:'Color 4 circular sections with 4 colors so no adjacent sections share a color. How many distinct colorings?',opts:['3','6','12','24']},
-  {premise:'"If tall, then good at basketball. Minjun is not good at basketball." Therefore?',opts:['Minjun is short','Minjun is not tall','Minjun is bad at sports','Cannot determine']}
+  {premise:'"If tall, then good at basketball. Alex is not good at basketball." Therefore?',opts:['Alex is short','Alex is not tall','Alex is bad at sports','Cannot determine']}
 ],
 spatPool:[
   {q:'On a standard dice, opposite faces sum to 7. What number is opposite to 1?',opts:['4','5','6','7']},

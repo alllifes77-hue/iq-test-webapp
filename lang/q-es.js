@@ -53,7 +53,7 @@ logPool:[
   {premise:"6 personas se dan la mano una vez con cada otra persona. ¿Total de apretones de manos?",opts:["12","15","18","30"]},
   {premise:"\"Todos los médicos son graduados universitarios. Alex es un graduado universitario.\" ¿Qué debe ser verdadero?",opts:["Alex es médico","Alex puede no ser médico","Alex es definitivamente médico","No se puede concluir"]},
   {premise:"\"Si A entonces B. Si B entonces no-C.\" C es verdadero. ¿Qué es A?",opts:["Definitivamente verdadero","Definitivamente falso","Desconocido","Cualquiera"]},
-  {premise:"Myeongsu es mayor que Cheolsu. Yeonghi es mayor que Cheolsu pero menor que Myeongsu. ¿De mayor a menor?",opts:["Myeongsu–Yeonghi–Cheolsu","Yeonghi–Myeongsu–Cheolsu","Cheolsu–Myeongsu–Yeonghi","Myeongsu–Cheolsu–Yeonghi"]},
+  {premise:"Carlos es mayor que Juan. María es mayor que Juan pero menor que Carlos. ¿De mayor a menor?",opts:["Carlos–María–Juan","María–Carlos–Juan","Juan–Carlos–María","Carlos–Juan–María"]},
   {premise:"Todas las manzanas son fruta. Algunas frutas son dulces. ¿Por lo tanto?",opts:["Todas las manzanas son dulces","Algunas manzanas pueden ser dulces","Las manzanas no son dulces","No se puede determinar"]},
   {premise:"De 15 estudiantes, a 9 les gustan las matemáticas y a 8 les gusta la ciencia. ¿Mínimo de los que les gustan ambos?",opts:["1","2","3","4"]},
   {premise:"\"Si no llueve, vamos de picnic. No fuimos de picnic.\" ¿Por lo tanto?",opts:["Llovió","No llovió","Desconocido","El picnic fue cancelado"]},
@@ -64,7 +64,7 @@ logPool:[
   {premise:"De A, B, C, solo uno miente. A: \"Digo la verdad.\" B: \"A miente.\" C: \"B miente.\" ¿Quién es el mentiroso?",opts:["A","B","C","Desconocido"]},
   {premise:"30 estudiantes. \"Al menos 2 comparten un cumpleaños\" siempre está garantizado. ¿Máximo de fechas de cumpleaños distintas posibles?",opts:["29","30","365","Ilimitado"]},
   {premise:"Colorear 4 secciones circulares con 4 colores para que ninguna sección adyacente comparta un color. ¿Cuántas coloraciones distintas?",opts:["3","6","12","24"]},
-  {premise:"\"Si es alto, entonces es bueno en baloncesto. Minjun no es bueno en baloncesto.\" ¿Por lo tanto?",opts:["Minjun es bajo","Minjun no es alto","Minjun es malo en deportes","No se puede determinar"]}
+  {premise:"\"Si es alto, entonces es bueno en baloncesto. Miguel no es bueno en baloncesto.\" ¿Por lo tanto?",opts:["Miguel es bajo","Miguel no es alto","Miguel es malo en deportes","No se puede determinar"]}
 ],
 spatPool:[
   {q:"En un dado estándar, las caras opuestas suman 7. ¿Qué número es opuesto a 1?",opts:["4","5","6","7"]},

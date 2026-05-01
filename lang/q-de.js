@@ -53,7 +53,7 @@ logPool:[
   {premise:"6 Personen schütteln sich jeweils einmal die Hände mit jeder anderen Person. Gesamtzahl der Händedrücke?",opts:["12","15","18","30"]},
   {premise:"\"Alle Ärzte sind Hochschulabsolventen. Alex ist ein Hochschulabsolvent.\" Was muss wahr sein?",opts:["Alex ist ein Arzt","Alex ist möglicherweise kein Arzt","Alex ist definitiv ein Arzt","Kann nicht geschlussfolgert werden"]},
   {premise:"\"Wenn A, dann B. Wenn B, dann nicht-C.\" C ist wahr. Was ist A?",opts:["Definitiv wahr","Definitiv falsch","Unbekannt","Entweder"]},
-  {premise:"Myeongsu ist älter als Cheolsu. Yeonghi ist älter als Cheolsu, aber jünger als Myeongsu. Vom Ältesten zum Jüngsten geordnet?",opts:["Myeongsu–Yeonghi–Cheolsu","Yeonghi–Myeongsu–Cheolsu","Cheolsu–Myeongsu–Yeonghi","Myeongsu–Cheolsu–Yeonghi"]},
+  {premise:"Hans ist älter als Klaus. Lena ist älter als Klaus, aber jünger als Hans. Vom Ältesten zum Jüngsten geordnet?",opts:["Hans–Lena–Klaus","Lena–Hans–Klaus","Klaus–Hans–Lena","Hans–Klaus–Lena"]},
   {premise:"Alle Äpfel sind Obst. Einige Früchte sind süß. Daher?",opts:["Alle Äpfel sind süß","Einige Äpfel könnten süß sein","Äpfel sind nicht süß","Kann nicht bestimmt werden"]},
   {premise:"Von 15 Schülern mögen 9 Mathematik und 8 Naturwissenschaften. Mindestanzahl, die beides mögen?",opts:["1","2","3","4"]},
   {premise:"\"Wenn es nicht regnet, gehen wir picknicken. Wir sind nicht picknicken gegangen.\" Daher?",opts:["Es hat geregnet","Es hat nicht geregnet","Unbekannt","Picknick wurde abgesagt"]},
@@ -64,7 +64,7 @@ logPool:[
   {premise:"Von A, B, C lügt nur einer. A: \"Ich sage die Wahrheit.\" B: \"A lügt.\" C: \"B lügt.\" Wer ist der Lügner?",opts:["A","B","C","Unbekannt"]},
   {premise:"30 Studenten. \"Mindestens 2 teilen sich einen Geburtstag\" ist immer garantiert. Maximale Anzahl möglicher unterschiedlicher Geburtstagsdaten?",opts:["29","30","365","Unbegrenzt"]},
   {premise:"Färbe 4 kreisförmige Abschnitte mit 4 Farben, sodass keine benachbarten Abschnitte eine Farbe teilen. Wie viele unterschiedliche Färbungen?",opts:["3","6","12","24"]},
-  {premise:"\"Wenn groß, dann gut im Basketball. Minjun ist nicht gut im Basketball.\" Daher?",opts:["Minjun ist klein","Minjun ist nicht groß","Minjun ist schlecht im Sport","Kann nicht bestimmt werden"]}
+  {premise:"\"Wenn groß, dann gut im Basketball. Felix ist nicht gut im Basketball.\" Daher?",opts:["Felix ist klein","Felix ist nicht groß","Felix ist schlecht im Sport","Kann nicht bestimmt werden"]}
 ],
 spatPool:[
   {q:"Auf einem Standardwürfel ergeben gegenüberliegende Seiten zusammen 7. Welche Zahl liegt 1 gegenüber?",opts:["4","5","6","7"]},

@@ -306,7 +306,7 @@ function computeResults(){
   savedIQ=iq;savedTopPct=topPct;
   savedResultData={iq,cat:cat.label,topPct,mode:currentMode,correct,total};
 
-  document.getElementById('res-test-label').textContent=t(currentMode==='short'?'resTestLabel_short':'resTestLabel_long')||(currentMode==='short'?'단기 IQ 테스트 결과':'정밀 IQ 테스트 결과');
+  document.getElementById('res-test-label').textContent=t(currentMode==='short'?'resTestLabel_short':'resTestLabel_long')||(currentMode==='short'?'Short IQ Test Result':'Full IQ Test Result');
   document.getElementById('res-iq').textContent=iq;
   const catLang=window.IQ_LANG&&window.IQ_LANG.iqCats?window.IQ_LANG.iqCats.find(c=>iq>=c.min)||window.IQ_LANG.iqCats[window.IQ_LANG.iqCats.length-1]:null;
   const catLabel=catLang?catLang.label:cat.label;
@@ -317,26 +317,27 @@ function computeResults(){
   document.getElementById('r-correct').textContent=`${correct}/${total}`;
   document.getElementById('r-acc').textContent=Math.round(correct/total*100)+'%';
   const timeT=t('timeStr');
-  document.getElementById('r-time').textContent=timeT?timeT.replace('{m}',Math.floor(elapsed/60)).replace('{s}',elapsed%60):(Math.floor(elapsed/60)+'분 '+(elapsed%60)+'초');
+  document.getElementById('r-time').textContent=timeT?timeT.replace('{m}',Math.floor(elapsed/60)).replace('{s}',elapsed%60):(Math.floor(elapsed/60)+'m '+(elapsed%60)+'s');
   document.getElementById('r-top').textContent=topPct;
-  document.getElementById('res-pct-label').textContent=tp('topPctStr',{n:topPct})||`상위 ${topPct}%`;
-  document.getElementById('pct-text').textContent=tp('topPctStr',{n:topPct})||`상위 ${topPct}%`;
-  document.getElementById('switch-btn').textContent=currentMode==='short'?(t('switchToLong')||'📝 정밀 검사 받기'):(t('switchToShort')||'⚡ 단기 검사 받기');
+  document.getElementById('res-pct-label').textContent=tp('topPctStr',{n:topPct})||`Top ${topPct}%`;
+  document.getElementById('pct-text').textContent=tp('topPctStr',{n:topPct})||`Top ${topPct}%`;
+  document.getElementById('switch-btn').textContent=currentMode==='short'?(t('switchToLong')||'📝 Full Test'):(t('switchToShort')||'⚡ Short Test');
+  const retakeBtn=document.getElementById('retake-btn');if(retakeBtn)retakeBtn.textContent=t('retake')||'🔁 Restart';
 
   // Share card update
   document.getElementById('sc-iq').textContent=iq;
   document.getElementById('sc-cat').textContent=catLabel.split(' ')[0];
-  document.getElementById('sc-pct').textContent=tp('topPctStr',{n:topPct})||`상위 ${topPct}%`;
+  document.getElementById('sc-pct').textContent=tp('topPctStr',{n:topPct})||`Top ${topPct}%`;
 
   setTimeout(()=>{document.getElementById('pct-fill').style.width=pctile+'%';},300);
   setTimeout(()=>{
-    const bellCard=document.querySelector('.chart-card.full h3');if(bellCard)bellCard.textContent=t('bellTitle')||'📊 전체 인구 지능 분포에서의 위치';
+    const bellCard=document.querySelector('.chart-card.full h3');if(bellCard)bellCard.textContent=t('bellTitle')||'📊 IQ Distribution in General Population';
     drawBellCurve('bellChart',iq,'#4f46e5');
     if(currentMode==='long'){
       const radarWrap=document.getElementById('radar-wrap');const bdWrap=document.getElementById('breakdown-wrap');
       radarWrap.classList.remove('hidden');bdWrap.classList.remove('hidden');
-      const radarH3=radarWrap.querySelector('h3');if(radarH3)radarH3.textContent=t('radarTitle')||'🔍 영역별 능력 프로파일';
-      const bdH3=bdWrap.querySelector('h3');if(bdH3)bdH3.textContent=t('areaTitle')||'영역별 점수';
+      const radarH3=radarWrap.querySelector('h3');if(radarH3)radarH3.textContent=t('radarTitle')||'🔍 Cognitive Profile by Domain';
+      const bdH3=bdWrap.querySelector('h3');if(bdH3)bdH3.textContent=t('areaTitle')||'Score by Domain';
       drawRadarChart();renderBreakdown();
     }
   },400);
@@ -380,7 +381,7 @@ function drawRadarChart(){
   const labels=Object.keys(areas).filter(k=>areas[k].total>0);
   const data=labels.map(k=>Math.round(areas[k].correct/areas[k].total*100));
   const ctx=document.getElementById('radarChart').getContext('2d');
-  new Chart(ctx,{type:'radar',data:{labels,datasets:[{label:'영역별 정답률 (%)',data,borderColor:'#4f46e5',backgroundColor:'rgba(79,70,229,.15)',pointBackgroundColor:'#4f46e5',pointBorderColor:'#fff',borderWidth:2}]},options:{responsive:true,scales:{r:{min:0,max:100,ticks:{color:'#94a3b8',backdropColor:'transparent',stepSize:25},grid:{color:'rgba(0,0,0,.07)'},pointLabels:{color:'#475569',font:{size:11}}}},plugins:{legend:{labels:{color:'#475569',font:{size:11}}}}}});
+  new Chart(ctx,{type:'radar',data:{labels,datasets:[{label:t('radarAccLabel')||'Domain Accuracy (%)',data,borderColor:'#4f46e5',backgroundColor:'rgba(79,70,229,.15)',pointBackgroundColor:'#4f46e5',pointBorderColor:'#fff',borderWidth:2}]},options:{responsive:true,scales:{r:{min:0,max:100,ticks:{color:'#94a3b8',backdropColor:'transparent',stepSize:25},grid:{color:'rgba(0,0,0,.07)'},pointLabels:{color:'#475569',font:{size:11}}}},plugins:{legend:{labels:{color:'#475569',font:{size:11}}}}}});
 }
 function renderBreakdown(){
   const areas=getAreaScores();
@@ -497,15 +498,15 @@ function showExtResults(result){
   // Stats row
   const scoreUnit=t('extStatScoreLabel')||'점';
   document.getElementById('ext-stat-score').textContent=score+(scoreUnit==='Score'?'':scoreUnit);
-  document.getElementById('ext-stat-pct').textContent=tp('topPctStr',{n:topPct})||('상위 '+topPct+'%');
+  document.getElementById('ext-stat-pct').textContent=tp('topPctStr',{n:topPct})||('Top '+topPct+'%');
   const levelRange=extTest.scoreRanges.find(r=>score>=r.min)||extTest.scoreRanges[extTest.scoreRanges.length-1];
   document.getElementById('ext-stat-level').textContent=levelRange.label;
   document.getElementById('ext-stat-level').style.color=levelRange.color;
 
   // Share card
-  document.getElementById('ext-sc-score').textContent=score+'점';
+  document.getElementById('ext-sc-score').textContent=window.IQ_LANG?score:(score+'점');
   document.getElementById('ext-sc-cat').textContent=result.cat;
-  document.getElementById('ext-sc-pct').textContent='상위 '+topPct+'%';
+  document.getElementById('ext-sc-pct').textContent=tp('topPctStr',{n:topPct})||('Top '+topPct+'%');
 
   // Ring animation
   const circ=2*Math.PI*60;
@@ -573,7 +574,7 @@ function drawExtRadar(score){
   const base=(score-62)/38;
   const data=cats.map(()=>Math.max(10,Math.min(100,Math.round((base+(Math.random()*.24-.12))*100))));
   const ctx=document.getElementById('ext-radar').getContext('2d');
-  new Chart(ctx,{type:'radar',data:{labels:cats,datasets:[{label:'세부 영역 점수',data,borderColor:extTest.color,backgroundColor:extTest.color+'22',pointBackgroundColor:extTest.color,pointBorderColor:'#fff',borderWidth:2}]},options:{responsive:true,scales:{r:{min:0,max:100,ticks:{color:'#94a3b8',backdropColor:'transparent',stepSize:25},grid:{color:'rgba(0,0,0,.07)'},pointLabels:{color:'#475569',font:{size:11}}}},plugins:{legend:{labels:{color:'#475569',font:{size:11}}}}}});
+  new Chart(ctx,{type:'radar',data:{labels:cats,datasets:[{label:t('extRadarLabel')||'Domain Scores',data,borderColor:extTest.color,backgroundColor:extTest.color+'22',pointBackgroundColor:extTest.color,pointBorderColor:'#fff',borderWidth:2}]},options:{responsive:true,scales:{r:{min:0,max:100,ticks:{color:'#94a3b8',backdropColor:'transparent',stepSize:25},grid:{color:'rgba(0,0,0,.07)'},pointLabels:{color:'#475569',font:{size:11}}}},plugins:{legend:{labels:{color:'#475569',font:{size:11}}}}}});
 }
 
 function renderExtBreakdown(score){
@@ -591,7 +592,7 @@ function renderExtBreakdown(score){
   let html='';
   cats.forEach(cat=>{
     const pct=Math.max(10,Math.min(100,Math.round((base+(Math.random()*.24-.12))*100)));
-    html+=`<div class="bd-item"><div class="bd-name">${cat}</div><div class="bd-bar"><div class="bd-fill" style="width:0%;background:${extTest.color}" data-w="${pct}"></div></div><div class="bd-score" style="color:${extTest.color}">${pct}점</div></div>`;
+    html+=`<div class="bd-item"><div class="bd-name">${cat}</div><div class="bd-bar"><div class="bd-fill" style="width:0%;background:${extTest.color}" data-w="${pct}"></div></div><div class="bd-score" style="color:${extTest.color}">${pct}${window.IQ_LANG?'':'점'}</div></div>`;
   });
   document.getElementById('ext-bd-list').innerHTML=html;
   setTimeout(()=>{document.querySelectorAll('#ext-bd-list .bd-fill').forEach(el=>{el.style.width=el.dataset.w+'%';});},300);
@@ -660,7 +661,7 @@ function restoreIQResults(iq,catLabel,topPct,mode){
   document.getElementById('shared-banner-iq').style.display='block';
   const bannerP=document.querySelector('#shared-banner-iq p');if(bannerP)bannerP.textContent=t('sharedBannerIQ')||bannerP.textContent;
   const bannerBtn=document.querySelector('#shared-banner-iq button');if(bannerBtn)bannerBtn.textContent=t('sharedBannerBtn')||bannerBtn.textContent;
-  document.getElementById('res-test-label').textContent=t(mode==='short'?'resTestLabel_short':'resTestLabel_long')||(mode==='short'?'단기 IQ 테스트 결과':'정밀 IQ 테스트 결과');
+  document.getElementById('res-test-label').textContent=t(mode==='short'?'resTestLabel_short':'resTestLabel_long')||(mode==='short'?'Short IQ Test Result':'Full IQ Test Result');
   document.getElementById('res-iq').textContent=iq;
   const cat=getIQCat(iq);
   const catLang=window.IQ_LANG&&window.IQ_LANG.iqCats?window.IQ_LANG.iqCats.find(c=>iq>=c.min)||window.IQ_LANG.iqCats[window.IQ_LANG.iqCats.length-1]:null;
@@ -668,15 +669,15 @@ function restoreIQResults(iq,catLabel,topPct,mode){
   document.getElementById('res-cat').textContent=displayLabel;
   document.getElementById('res-cat').style.color=cat.color;
   document.getElementById('res-desc').textContent=catLang?catLang.desc:cat.desc;
-  document.getElementById('res-pct-label').textContent=tp('topPctStr',{n:topPct})||`상위 ${topPct}%`;
-  document.getElementById('pct-text').textContent=tp('topPctStr',{n:topPct})||`상위 ${topPct}%`;
+  document.getElementById('res-pct-label').textContent=tp('topPctStr',{n:topPct})||`Top ${topPct}%`;
+  document.getElementById('pct-text').textContent=tp('topPctStr',{n:topPct})||`Top ${topPct}%`;
   document.getElementById('r-correct').textContent='--';
   document.getElementById('r-acc').textContent='--';
   document.getElementById('r-time').textContent='--';
   document.getElementById('r-top').textContent=topPct;
   document.getElementById('sc-iq').textContent=iq;
   document.getElementById('sc-cat').textContent=displayLabel.split(' ')[0];
-  document.getElementById('sc-pct').textContent=tp('topPctStr',{n:topPct})||`상위 ${topPct}%`;
+  document.getElementById('sc-pct').textContent=tp('topPctStr',{n:topPct})||`Top ${topPct}%`;
   document.getElementById('switch-btn').style.display='none';
   setTimeout(()=>{document.getElementById('pct-fill').style.width=pctile+'%';},300);
   setTimeout(()=>{drawBellCurve('bellChart',iq,'#4f46e5');},400);
@@ -688,19 +689,19 @@ function restoreExtResults(tid,score,cat,topPct){
   if(!extTest)return;
   const pctile=100-topPct;
   document.getElementById('shared-banner-ext').style.display='block';
-  document.getElementById('ext-res-label').textContent=extTest.title+' 결과';
+  document.getElementById('ext-res-label').textContent=tp('extResLabel',{title:extTest.title})||(extTest.title+' Result');
   document.getElementById('ext-score').textContent=score;
   document.getElementById('ext-top-pct').textContent=topPct;
   document.getElementById('ext-res-cat').textContent=cat;
   document.getElementById('ext-res-desc').textContent='';
-  document.getElementById('ext-stat-score').textContent=score+'점';
-  document.getElementById('ext-stat-pct').textContent='상위 '+topPct+'%';
+  document.getElementById('ext-stat-score').textContent=window.IQ_LANG?score:(score+'점');
+  document.getElementById('ext-stat-pct').textContent=tp('topPctStr',{n:topPct})||('Top '+topPct+'%');
   const levelRange=extTest.scoreRanges.find(r=>score>=r.min)||extTest.scoreRanges[extTest.scoreRanges.length-1];
   document.getElementById('ext-stat-level').textContent=levelRange.label;
   document.getElementById('ext-stat-level').style.color=levelRange.color;
-  document.getElementById('ext-sc-score').textContent=score+'점';
+  document.getElementById('ext-sc-score').textContent=window.IQ_LANG?score:(score+'점');
   document.getElementById('ext-sc-cat').textContent=cat;
-  document.getElementById('ext-sc-pct').textContent='상위 '+topPct+'%';
+  document.getElementById('ext-sc-pct').textContent=tp('topPctStr',{n:topPct})||('Top '+topPct+'%');
   const circ=2*Math.PI*60;
   const pct=Math.round(((score-62)/38)*100);
   const offset=circ*(1-pct/100);
@@ -710,14 +711,14 @@ function restoreExtResults(tid,score,cat,topPct){
   setTimeout(()=>{ring.style.strokeDashoffset=offset;},200);
   showScreen('ext-results');
   setTimeout(()=>{
-    document.getElementById('ext-bell-title').textContent=`📊 ${extTest.title} 점수 분포에서의 위치`;
+    document.getElementById('ext-bell-title').textContent=tp('extBellTitle',{title:extTest.title})||`📊 ${extTest.title} Score Distribution`;
     drawBellCurve('ext-bell-chart',score,extTest.color,extTest.mean||76,extTest.sd||8);
-    document.getElementById('ext-chart-title').textContent=`🔍 ${extTest.title} 세부 영역 분석`;
+    document.getElementById('ext-chart-title').textContent=tp('extChartTitle',{title:extTest.title})||`🔍 ${extTest.title} Detailed Analysis`;
     drawExtRadar(score);
     renderInterpTable(score,extTest.scoreRanges,pctile);
     renderExtBreakdown(score);
     const tips=extTest.getTips(score);
-    document.getElementById('tips-title').textContent=`💡 ${extTest.title} 개선 가이드`;
+    document.getElementById('tips-title').textContent=tp('tipsTitle',{title:extTest.title})||`💡 ${extTest.title} Improvement Guide`;
     document.getElementById('tips-list').innerHTML=tips.map(t=>`<div class="tip-item"><div class="tip-dot"></div><div>${t}</div></div>`).join('');
   },400);
 }
@@ -747,7 +748,7 @@ function shareNative(isExt=false){
   const text=getShareText(isExt);
   const url=getShareURL();
   if(navigator.share){
-    navigator.share({title:'IQ 테스트 결과',text,url}).catch(()=>copyLink(isExt));
+    navigator.share({title:t('shareTitle')||'IQ Test Result',text,url}).catch(()=>copyLink(isExt));
   } else {
     copyLink(isExt);
   }
@@ -759,7 +760,7 @@ function copyLink(isExt=false){
   const btn=document.getElementById(btnId);
   const copy=()=>{
     if(btn){btn.classList.add('copy-success');btn.querySelector('.sb-icon').textContent='✓';setTimeout(()=>{btn.classList.remove('copy-success');btn.querySelector('.sb-icon').textContent='🔗';},2000);}
-    showToast('📋 결과가 클립보드에 복사되었습니다!');
+    showToast(t('copiedToast')||'📋 Copied to clipboard!');
   };
   if(navigator.clipboard){
     navigator.clipboard.writeText(text).then(copy).catch(()=>{legacyCopy(text);copy();});

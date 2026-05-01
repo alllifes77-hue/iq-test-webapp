@@ -53,7 +53,7 @@ logPool:[
   {premise:"6 personnes se serrent la main une fois avec chaque autre personne. Nombre total de poignées de main ?",opts:["12","15","18","30"]},
   {premise:"\"Tous les médecins sont diplômés de l'université. Alex est diplômé de l'université.\" Qu'est-ce qui doit être vrai ?",opts:["Alex est un médecin","Alex pourrait ne pas être un médecin","Alex est certainement un médecin","Impossible de conclure"]},
   {premise:"\"Si A alors B. Si B alors non-C.\" C est vrai. Qu'est-ce que A ?",opts:["Certainement vrai","Certainement faux","Inconnu","L'un ou l'autre"]},
-  {premise:"Myeongsu est plus âgé que Cheolsu. Yeonghi est plus âgée que Cheolsu mais plus jeune que Myeongsu. Du plus âgé au plus jeune ?",opts:["Myeongsu–Yeonghi–Cheolsu","Yeonghi–Myeongsu–Cheolsu","Cheolsu–Myeongsu–Yeonghi","Myeongsu–Cheolsu–Yeonghi"]},
+  {premise:"Pierre est plus âgé que Paul. Marie est plus âgée que Paul mais plus jeune que Pierre. Du plus âgé au plus jeune ?",opts:["Pierre–Marie–Paul","Marie–Pierre–Paul","Paul–Pierre–Marie","Pierre–Paul–Marie"]},
   {premise:"Toutes les pommes sont des fruits. Certains fruits sont sucrés. Donc ?",opts:["Toutes les pommes sont sucrées","Certaines pommes peuvent être sucrées","Les pommes ne sont pas sucrées","Impossible de déterminer"]},
   {premise:"Sur 15 étudiants, 9 aiment les maths et 8 aiment les sciences. Minimum qui aiment les deux ?",opts:["1","2","3","4"]},
   {premise:"\"S'il ne pleut pas, nous allons pique-niquer. Nous ne sommes pas allés pique-niquer.\" Donc ?",opts:["Il a plu","Il n'a pas plu","Inconnu","Le pique-nique a été annulé"]},
@@ -64,7 +64,7 @@ logPool:[
   {premise:"Parmi A, B, C, un seul ment. A : \"Je dis la vérité.\" B : \"A ment.\" C : \"B ment.\" Qui est le menteur ?",opts:["A","B","C","Inconnu"]},
   {premise:"30 étudiants. \"Au moins 2 partagent un anniversaire\" est toujours garanti. Nombre maximum de dates d'anniversaire distinctes possibles ?",opts:["29","30","365","Illimité"]},
   {premise:"Colorier 4 sections circulaires avec 4 couleurs de sorte qu'aucune section adjacente ne partage une couleur. Combien de colorations distinctes ?",opts:["3","6","12","24"]},
-  {premise:"\"Si grand, alors bon au basketball. Minjun n'est pas bon au basketball.\" Donc ?",opts:["Minjun est petit","Minjun n'est pas grand","Minjun est mauvais en sport","Impossible de déterminer"]}
+  {premise:"\"Si grand, alors bon au basketball. Julien n'est pas bon au basketball.\" Donc ?",opts:["Julien est petit","Julien n'est pas grand","Julien est mauvais en sport","Impossible de déterminer"]}
 ],
 spatPool:[
   {q:"Sur un dé standard, les faces opposées totalisent 7. Quel nombre est opposé à 1 ?",opts:["4","5","6","7"]},

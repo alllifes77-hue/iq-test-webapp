@@ -53,7 +53,7 @@ logPool:[
   {premise:"6 pessoas apertam as mãos uma vez com todas as outras. Total de apertos de mão?",opts:["12","15","18","30"]},
   {premise:"\"Todos os médicos são graduados universitários. Alex é um graduado universitário.\" O que deve ser verdadeiro?",opts:["Alex é um médico","Alex pode não ser um médico","Alex é definitivamente um médico","Não é possível concluir"]},
   {premise:"\"Se A então B. Se B então n��o-C.\" C é verdadeiro. O que é A?",opts:["Definitivamente verdadeiro","Definitivamente falso","Desconhecido","Qualquer um"]},
-  {premise:"Myeongsu é mais velho que Cheolsu. Yeonghi é mais velha que Cheolsu mas mais jovem que Myeongsu. Do mais velho para o mais jovem?",opts:["Myeongsu–Yeonghi–Cheolsu","Yeonghi–Myeongsu–Cheolsu","Cheolsu–Myeongsu–Yeonghi","Myeongsu–Cheolsu–Yeonghi"]},
+  {premise:"Carlos é mais velho que João. Maria é mais velha que João mas mais jovem que Carlos. Do mais velho para o mais jovem?",opts:["Carlos–Maria–João","Maria–Carlos–João","João–Carlos–Maria","Carlos–João–Maria"]},
   {premise:"Todas as maçãs são frutas. Algumas frutas são doces. Portanto?",opts:["Todas as maçãs são doces","Algumas maçãs podem ser doces","Maçãs não são doces","Não é possível determinar"]},
   {premise:"De 15 alunos, 9 gostam de matemática e 8 gostam de ciências. Mínimo de alunos que gostam de ambos?",opts:["1","2","3","4"]},
   {premise:"\"Se não chover, vamos fazer um piquenique. Não fomos fazer um piquenique.\" Portanto?",opts:["Choveu","Não choveu","Desconhecido","O piquenique foi cancelado"]},
@@ -64,7 +64,7 @@ logPool:[
   {premise:"De A, B, C, apenas um mente. A: \"Eu digo a verdade.\" B: \"A mente.\" C: \"B mente.\" Quem é o mentiroso?",opts:["A","B","C","Desconhecido"]},
   {premise:"30 alunos. \"Pelo menos 2 compartilham um aniversário\" é sempre garantido. Máximo de datas de aniversário distintas possíveis?",opts:["29","30","365","Ilimitado"]},
   {premise:"Colorir 4 seções circulares com 4 cores de modo que nenhuma seção adjacente compartilhe uma cor. Quantas colorações distintas?",opts:["3","6","12","24"]},
-  {premise:"\"Se alto, então bom em basquete. Minjun não é bom em basquete.\" Portanto?",opts:["Minjun é baixo","Minjun não é alto","Minjun é ruim em esportes","Não é possível determinar"]}
+  {premise:"\"Se alto, então bom em basquete. Pedro não é bom em basquete.\" Portanto?",opts:["Pedro é baixo","Pedro não é alto","Pedro é ruim em esportes","Não é possível determinar"]}
 ],
 spatPool:[
   {q:"Num dado padrão, faces opostas somam 7. Qual número é oposto a 1?",opts:["4","5","6","7"]},

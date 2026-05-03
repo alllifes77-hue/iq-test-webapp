@@ -201,6 +201,18 @@ const logPool=[
   {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'"키가 크면 농구를 잘한다. 민준이는 농구를 잘하지 못한다." 따라서?',opts:['민준이는 키가 작다','민준이는 키가 크지 않다','민준이는 운동을 못한다','판단할 수 없다'],correct:1,difficulty:4}
 ];
 
+// ── Guaranteed hard questions (difficulty 5) ──
+const hardPool=[
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'1, 3, 8, 21, 55, ?',opts:['89','121','134','144'],correct:3,difficulty:5},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['2','3','5'],['7','11','13'],['17','19','?']],opts:['23','29','21','22'],correct:0,difficulty:5}
+];
+
+const veryHardPool=[
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'3, 11, 31, 69, 131, 223, ?',opts:['315','343','349','351'],correct:3,difficulty:5},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['1','2','4'],['2','4','16'],['3','6','?']],opts:['12','18','24','36'],correct:1,difficulty:5},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'1, 3, 13, 63, 313, ?',opts:['1563','1560','1553','1500'],correct:0,difficulty:5}
+];
+
 // ═══════════════════════════════════════════════════════════
 // EXTENDED TESTS
 // ═══════════════════════════════════════════════════════════

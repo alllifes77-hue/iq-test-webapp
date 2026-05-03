@@ -162,8 +162,8 @@ function getExtPercentile(score,mean=76,sd=8){
 
 // ── Build question sets ──
 function tagPool(pool,name){return pool.map((q,i)=>Object.assign({},q,{_pool:name,_poolIdx:i}));}
-function buildShortSet(){return shuffle([...sample(tagPool(seqPool,'seqPool'),5),...sample(tagPool(matPool,'matPool'),5),...sample(tagPool(logPool,'logPool'),3),...sample(tagPool(anaPool,'anaPool'),2)]);}
-function buildLongSet(){return shuffle([...sample(tagPool(seqPool,'seqPool'),10),...sample(tagPool(matPool,'matPool'),10),...sample(tagPool(spatPool,'spatPool'),10),...sample(tagPool(logPool,'logPool'),5),...sample(tagPool(anaPool,'anaPool'),5)]);}
+function buildShortSet(){return shuffle([...sample(tagPool(seqPool,'seqPool'),5),...sample(tagPool(matPool,'matPool'),5),...sample(tagPool(logPool,'logPool'),3),...sample(tagPool(anaPool,'anaPool'),2),...tagPool(hardPool,'hardPool')]);}
+function buildLongSet(){return shuffle([...sample(tagPool(seqPool,'seqPool'),10),...sample(tagPool(matPool,'matPool'),10),...sample(tagPool(spatPool,'spatPool'),10),...sample(tagPool(logPool,'logPool'),5),...sample(tagPool(anaPool,'anaPool'),5),...tagPool(veryHardPool,'veryHardPool')]);}
 
 // ── State ──
 let currentMode='short',questions=[],curQ=0,answers=[],timer=null,timeLeft=0,testStart=0;
@@ -236,7 +236,12 @@ function getTranslatedQ(q){
 }
 
 function buildQHTML(q,idx){
-  const tq=getTranslatedQ(q);
+  let tq=getTranslatedQ(q);
+  // Shuffle option order to eliminate systematic answer-position bias
+  const perm=[0,1,2,3];
+  for(let i=3;i>0;i--){const j=Math.floor(Math.random()*(i+1));[perm[i],perm[j]]=[perm[j],perm[i]];}
+  tq={...tq,opts:perm.map(p=>tq.opts[p]),correct:perm.indexOf(tq.correct)};
+  questions[curQ].correct=tq.correct;
   const typeLabel=tl(q.typeLabel);
   const qNum=tp('qNum',{n:idx+1})||`문항 ${idx+1}`;
   let html=`<div class="q-num">${qNum} &nbsp;·&nbsp;<span class="tag" style="background:var(--primary-bg);color:var(--primary-mid)">${typeLabel}</span></div>
@@ -289,9 +294,9 @@ function finishTest(){
 
 // ── IQ Computation ──
 function calcIQ(correct,total){
-  const mean=total*0.50,sd=total*0.17;
+  const mean=total*0.55,sd=total*0.14;
   const z=(correct-mean)/sd;
-  return Math.max(55,Math.min(148,Math.round(100+z*15)));
+  return Math.max(55,Math.min(145,Math.round(100+z*15)));
 }
 function getIQCat(iq){return iqCats.find(c=>iq>=c.min)||iqCats[iqCats.length-1];}
 

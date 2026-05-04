@@ -426,7 +426,10 @@ function startExtTest(id){
   extTest={...extendedTests[id]};
   const extLang=window.IQ_LANG&&window.IQ_LANG.extTests&&window.IQ_LANG.extTests[id];
   if(extLang&&extLang.title)extTest.title=extLang.title;
-  extQuestions=shuffle(extTest.questions);
+  const extQT=window.IQ_LANG&&window.IQ_LANG.extQuestions&&window.IQ_LANG.extQuestions[id];
+  const qList=extQT&&extQT.questions;
+  const qs=extTest.questions.map((q,i)=>qList&&qList[i]?Object.assign({},q,{q:qList[i].q||q.q,opts:qList[i].opts||q.opts}):q);
+  extQuestions=shuffle(qs);
   extCurQ=0;extAnswers=[];
   document.getElementById('eq-type-lbl').textContent=extTest.title;
   showScreen('extended-test');renderExtQ();
@@ -490,9 +493,14 @@ function showExtResults(result){
   const score=result.score;
   const pctile=getExtPercentile(score,extTest.mean||76,extTest.sd||8);
   const topPct=100-pctile;
+  // Apply translated result strings
+  const extSR=window.IQ_LANG&&window.IQ_LANG.extScoreResult&&window.IQ_LANG.extScoreResult[extTest.id];
+  if(extSR){const k=score>=85?'hi':score>=67?'mid':'lo';if(extSR[k])result={...result,...extSR[k]};}
+  const extSRL=window.IQ_LANG&&window.IQ_LANG.extScoreRanges&&window.IQ_LANG.extScoreRanges[extTest.id];
+  const scoreRanges=extSRL?extTest.scoreRanges.map((r,i)=>({...r,...(extSRL[i]||{})})):extTest.scoreRanges;
 
   // Hero
-  document.getElementById('ext-res-label').textContent=tp('extResLabel',{title:extTest.title})||(extTest.title+' 결과');
+  document.getElementById('ext-res-label').textContent=tp('extResLabel',{title:extTest.title})||(extTest.title+' Result');
   document.getElementById('ext-score').textContent=score;
   document.getElementById('ext-top-pct').textContent=topPct;
   document.getElementById('ext-res-cat').textContent=result.cat;
@@ -504,7 +512,7 @@ function showExtResults(result){
   const scoreUnit=t('extStatScoreLabel')||'점';
   document.getElementById('ext-stat-score').textContent=score+(scoreUnit==='Score'?'':scoreUnit);
   document.getElementById('ext-stat-pct').textContent=tp('topPctStr',{n:topPct})||('Top '+topPct+'%');
-  const levelRange=extTest.scoreRanges.find(r=>score>=r.min)||extTest.scoreRanges[extTest.scoreRanges.length-1];
+  const levelRange=scoreRanges.find(r=>score>=r.min)||scoreRanges[scoreRanges.length-1];
   document.getElementById('ext-stat-level').textContent=levelRange.label;
   document.getElementById('ext-stat-level').style.color=levelRange.color;
 
@@ -529,11 +537,13 @@ function showExtResults(result){
     drawBellCurve('ext-bell-chart',score,extTest.color,extTest.mean||76,extTest.sd||8);
     document.getElementById('ext-chart-title').textContent=tp('extChartTitle',{title:extTest.title})||`🔍 ${extTest.title} 세부 영역 분석`;
     drawExtRadar(score);
-    renderInterpTable(score,extTest.scoreRanges,pctile);
+    renderInterpTable(score,scoreRanges,pctile);
     renderExtBreakdown(score);
-    const extBDH3=document.getElementById('ext-bd-title');if(extBDH3)extBDH3.textContent=t('extBDTitle')||'세부 영역별 결과';
-    const tips=extTest.getTips(score);
-    document.getElementById('tips-title').textContent=tp('tipsTitle',{title:extTest.title})||`💡 ${extTest.title} 개선 가이드`;
+    const extBDH3=document.getElementById('ext-bd-title');if(extBDH3)extBDH3.textContent=t('extBDTitle')||'Detailed Domain Results';
+    const extQT2=window.IQ_LANG&&window.IQ_LANG.extQuestions&&window.IQ_LANG.extQuestions[extTest.id];
+    let tips=extTest.getTips(score);
+    if(extQT2&&extQT2.tips){const tk=score>=85?'hi':score>=67?'mid':'lo';if(extQT2.tips[tk])tips=extQT2.tips[tk];}
+    document.getElementById('tips-title').textContent=tp('tipsTitle',{title:extTest.title})||`💡 ${extTest.title} Improvement Guide`;
     document.getElementById('tips-list').innerHTML=tips.map(tip=>`<div class="tip-item"><div class="tip-dot"></div><div>${tip}</div></div>`).join('');
   },400);
 }
@@ -701,7 +711,7 @@ function restoreExtResults(tid,score,cat,topPct){
   document.getElementById('ext-res-desc').textContent='';
   document.getElementById('ext-stat-score').textContent=window.IQ_LANG?score:(score+'점');
   document.getElementById('ext-stat-pct').textContent=tp('topPctStr',{n:topPct})||('Top '+topPct+'%');
-  const levelRange=extTest.scoreRanges.find(r=>score>=r.min)||extTest.scoreRanges[extTest.scoreRanges.length-1];
+  const levelRange=scoreRanges.find(r=>score>=r.min)||scoreRanges[scoreRanges.length-1];
   document.getElementById('ext-stat-level').textContent=levelRange.label;
   document.getElementById('ext-stat-level').style.color=levelRange.color;
   document.getElementById('ext-sc-score').textContent=window.IQ_LANG?score:(score+'점');

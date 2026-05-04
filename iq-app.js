@@ -14,6 +14,16 @@ function applyLang(){
   const L=window.IQ_LANG;if(!L)return;
   document.documentElement.lang=L.htmlLang||'ko';
   if(L.docTitle)document.title=L.docTitle;
+  // Per-language SEO meta tag updates
+  const _l=window.IQ_CURRENT_LANG||'ko';
+  const _url=_l==='ko'?'https://iq-test.all-lifes.com/':'https://iq-test.all-lifes.com/?lang='+_l;
+  if(L.metaDesc){const m=document.querySelector('meta[name="description"]');if(m)m.content=L.metaDesc;}
+  if(L.metaKeywords){const m=document.querySelector('meta[name="keywords"]');if(m)m.content=L.metaKeywords;}
+  if(L.ogLocale){const m=document.querySelector('meta[property="og:locale"]');if(m)m.content=L.ogLocale;}
+  {const m=document.querySelector('meta[property="og:title"]');if(m&&L.docTitle)m.content=L.docTitle;}
+  {const m=document.querySelector('meta[property="og:description"]');if(m&&L.metaDesc)m.content=L.metaDesc;}
+  {const m=document.querySelector('meta[property="og:url"]');if(m)m.content=_url;}
+  {const c=document.querySelector('link[rel="canonical"]');if(c)c.href=_url;}
   // Hero
   const hero=document.querySelector('.home-hero');
   if(hero){

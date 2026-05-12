@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>IQ Test OG Image Generator — 1200×1200</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&family=Noto+Sans:ital,wght@0,400;0,600;0,700;0,900&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Noto Sans',sans-serif;background:#1e1b4b;color:#fff;min-height:100vh;padding:32px 20px;}
+  h1{text-align:center;color:#a5b4fc;font-size:22px;margin-bottom:8px;}
+  .sub{text-align:center;color:#6366f1;font-size:13px;margin-bottom:24px;}
+  .btn{display:block;margin:0 auto 28px;padding:18px 52px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;border:none;border-radius:16px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:1px;}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(99,102,241,.5);}
+  .btn:disabled{opacity:.5;cursor:default;transform:none;}
+  #status{text-align:center;color:#4ade80;font-size:16px;font-weight:700;min-height:26px;margin-bottom:16px;}
+  #preview{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;}
+  .thumb-wrap{text-align:center;}
+  .thumb-wrap canvas{width:180px;height:180px;border-radius:10px;border:2px solid #4f46e5;display:block;}
+  .thumb-wrap span{display:block;color:#a5b4fc;font-size:12px;margin-top:6px;}
+  .note{text-align:center;color:#818cf8;font-size:12px;margin-top:24px;line-height:1.8;}
+</style>
+</head>
+<body>
+
+<h1>🧠 IQ Test — OG Image Generator</h1>
+<p class="sub">언어별 정사각형(1200×1200) PNG를 한 번에 생성합니다</p>
+
+<button class="btn" id="genBtn" onclick="generateAll()">▶ Generate &amp; Download All 9 PNGs</button>
+<div id="status"></div>
+<div id="preview"></div>
+<p class="note">
+  다운로드된 PNG 9개를 <code>iq-test-webapp</code> 폴더에 넣고<br>
+  PowerShell에서 <code>git add *.png &amp;&amp; git commit -m "Add square OG images" &amp;&amp; git push origin main</code>
+</p>
+
+<script>
+const S = 1200; // canvas size
+
+const LANGS = {
+  ko: {
+    title: '무료 IQ 테스트',
+    ts: 76,
+    sub: '과학적 지능 측정  ·  무료  ·  즉시 결과',
+    cat: '최우수  ·  상위 3%',
+    f: "'Noto Sans KR', sans-serif",
+  },
+  en: {
+    title: 'Free IQ Test',
+    ts: 86,
+    sub: 'Scientific  ·  Online  ·  Instant Results',
+    cat: 'Superior  ·  Top 3%',
+    f: "'Noto Sans', Arial, sans-serif",
+  },
+  de: {
+    title: 'Kostenloser IQ-Test',
+    ts: 60,
+    sub: 'Wissenschaftlich  ·  Online  ·  Kostenlos',
+    cat: 'Sehr gut  ·  Top 3%',
+    f: "'Noto Sans', Arial, sans-serif",
+  },
+  fr: {
+    title: 'Test QI Gratuit',
+    ts: 74,
+    sub: 'Scientifique  ·  Online  ·  Instantané',
+    cat: 'Supérieur  ·  Top 3%',
+    f: "'Noto Sans', Arial, sans-serif",
+  },
+  es: {
+    title: 'Test de CI Gratuito',
+    ts: 64,
+    sub: 'Científico  ·  Online  ·  Resultados Inmediatos',
+    cat: 'Superior  ·  Top 3%',
+    f: "'Noto Sans', Arial, sans-serif",
+  },
+  pt: {
+    title: 'Teste de QI Gratuito',
+    ts: 62,
+    sub: 'Científico  ·  Online  ·  Resultados Imediatos',
+    cat: 'Superior  ·  Top 3%',
+    f: "'Noto Sans', Arial, sans-serif",
+  },
+  it: {
+    title: 'Test del QI Gratuito',
+    ts: 62,
+    sub: 'Scientifico  ·  Online  ·  Risultati Immediati',
+    cat: 'Superiore  ·  Top 3%',
+    f: "'Noto Sans', Arial, sans-serif",
+  },
+  ja: {
+    title: '無料IQテスト',
+    ts: 84,
+    sub: '科学的知能測定  ·  無料  ·  即時結果',
+    cat: '優秀  ·  上位3%',
+    f: "'Noto Sans JP', sans-serif",
+  },
+  id: {
+    title: 'Tes IQ Gratis',
+    ts: 80,
+    sub: 'Ilmiah  ·  Online  ·  Hasil Instan',
+    cat: 'Superior  ·  Top 3%',
+    f: "'Noto Sans', Arial, sans-serif",
+  },
+};
+
+function rr(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);
+  ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+  ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);
+  ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);
+  ctx.closePath();
+}
+
+function autoFit(ctx, text, maxW, startSize, weight, family) {
+  let sz = startSize;
+  ctx.font = `${weight} ${sz}px ${family}`;
+  while (ctx.measureText(text).width > maxW && sz > 28) {
+    sz -= 2;
+    ctx.font = `${weight} ${sz}px ${family}`;
+  }
+  return sz;
+}
+
+function drawOne(lang, L) {
+  const cv = document.createElement('canvas');
+  cv.width = S; cv.height = S;
+  const c = cv.getContext('2d');
+  const cx = S / 2;
+
+  // Background
+  const bg = c.createLinearGradient(0, 0, S, S);
+  bg.addColorStop(0, '#1e1b4b');
+  bg.addColorStop(0.45, '#3730a3');
+  bg.addColorStop(1, '#4f46e5');
+  c.fillStyle = bg;
+  c.fillRect(0, 0, S, S);
+
+  // Ambient blobs
+  [[1020,120,280,'#6366f1',0.10],[160,1060,230,'#4338ca',0.12],[1120,1090,190,'#818cf8',0.08],[600,600,400,'#fff',0.016]].forEach(([x,y,r,cl,a])=>{
+    c.save(); c.globalAlpha=a; c.fillStyle=cl;
+    c.beginPath(); c.arc(x,y,r,0,Math.PI*2); c.fill(); c.restore();
+  });
+
+  // Dot grid
+  c.save(); c.globalAlpha=0.12; c.fillStyle='#a5b4fc';
+  for(let row=0;row<4;row++) for(let col=0;col<5;col++){
+    c.beginPath(); c.arc(65+col*55, 65+row*55, 3, 0, Math.PI*2); c.fill();
+  }
+  c.restore();
+
+  // ── HEADER ──
+  // Badge pill
+  c.save(); c.globalAlpha=0.13; c.fillStyle='#fff';
+  rr(c, cx-120, 68, 240, 40, 20); c.fill(); c.restore();
+  c.fillStyle='#c7d2fe'; c.font=`700 15px 'Noto Sans',Arial,sans-serif`;
+  c.textAlign='center'; c.fillText('🧠  all-lifes.com', cx, 94);
+
+  // Title (auto-fit to 1080px width)
+  c.fillStyle='#ffffff';
+  autoFit(c, L.title, 1080, L.ts, '900', L.f);
+  c.textAlign='center';
+  c.fillText(L.title, cx, 210);
+
+  // Sub tagline
+  c.fillStyle='#a5b4fc'; c.font=`600 21px ${L.f}`; c.textAlign='center';
+  c.fillText(L.sub, cx, 258);
+
+  // Divider
+  c.fillStyle='#6366f1'; rr(c, cx-50, 278, 100, 5, 2.5); c.fill();
+
+  // ── SCORE RING ──
+  const RX=cx, RY=510, R=188, LW=22;
+
+  // Track
+  c.save(); c.globalAlpha=0.07; c.strokeStyle='#fff'; c.lineWidth=LW;
+  c.beginPath(); c.arc(RX,RY,R,0,Math.PI*2); c.stroke(); c.restore();
+
+  // Glow halo
+  c.save(); c.globalAlpha=0.18; c.strokeStyle='#818cf8'; c.lineWidth=LW+14; c.lineCap='round';
+  c.beginPath(); c.arc(RX,RY,R,-Math.PI/2,-Math.PI/2+Math.PI*2*0.80); c.stroke(); c.restore();
+
+  // Main arc
+  const ag = c.createLinearGradient(RX-R,RY,RX+R,RY);
+  ag.addColorStop(0,'#c7d2fe'); ag.addColorStop(1,'#818cf8');
+  c.strokeStyle=ag; c.lineWidth=LW; c.lineCap='round';
+  c.beginPath(); c.arc(RX,RY,R,-Math.PI/2,-Math.PI/2+Math.PI*2*0.80); c.stroke();
+
+  // Number
+  c.fillStyle='#fff'; c.textAlign='center'; c.textBaseline='middle';
+  c.font=`900 108px 'Noto Sans',Arial Black,sans-serif`;
+  c.fillText('128', RX, RY-8);
+  c.textBaseline='alphabetic';
+
+  // IQ SCORE label
+  c.fillStyle='#a5b4fc'; c.font=`700 17px 'Noto Sans',Arial,sans-serif`;
+  c.fillText('IQ SCORE', RX, RY+90);
+
+  // ── CATEGORY BADGE ──
+  c.save(); c.globalAlpha=0.60; c.fillStyle='#6366f1';
+  rr(c, cx-155, 673, 310, 40, 20); c.fill(); c.restore();
+  c.fillStyle='#e0e7ff'; c.font=`700 17px ${L.f}`; c.textAlign='center';
+  c.fillText(L.cat, cx, 699);
+
+  // ── STAT BOXES ──
+  const SW=310, SH=112, SG=25;
+  const SX0 = (S - (SW*3+SG*2)) / 2;
+  const SY  = 756;
+  [['93%','ACCURACY'],['18 min','DURATION'],['40 Q','PRECISION']].forEach(([v,lbl],i)=>{
+    const sx = SX0 + i*(SW+SG);
+    c.save(); c.globalAlpha=0.09; c.fillStyle='#fff';
+    rr(c, sx, SY, SW, SH, 18); c.fill(); c.restore();
+    c.fillStyle='#fff'; c.font=`900 40px 'Noto Sans',Arial Black,sans-serif`; c.textAlign='center';
+    c.fillText(v, sx+SW/2, SY+54);
+    c.fillStyle='#a5b4fc'; c.font=`600 15px 'Noto Sans',Arial,sans-serif`;
+    c.fillText(lbl, sx+SW/2, SY+82);
+  });
+
+  // ── FEATURE LINES ──
+  c.save(); c.globalAlpha=0.82; c.fillStyle='#a5b4fc';
+  c.font=`400 19px 'Noto Sans',Arial,sans-serif`; c.textAlign='center';
+  c.fillText("✓  Raven's Progressive Matrices  ·  CHC Theory", cx, 928);
+  c.fillText("✓  EQ · Memory · Creativity · Focus extended tests", cx, 964);
+  c.restore();
+
+  // ── URL PILL ──
+  c.save(); c.globalAlpha=0.58; c.fillStyle='#4f46e5';
+  rr(c, cx-180, 1000, 360, 50, 25); c.fill(); c.restore();
+  c.fillStyle='#e0e7ff'; c.font=`600 17px 'Noto Sans',Arial,sans-serif`; c.textAlign='center';
+  c.fillText('all-lifes.com / iq-test', cx, 1031);
+
+  // ── SCIENTIFIC TAGLINE ──
+  c.save(); c.globalAlpha=0.65; c.fillStyle='#6366f1';
+  c.font=`400 15px 'Noto Sans',Arial,sans-serif`; c.textAlign='center';
+  c.fillText("Raven's Progressive Matrices  ·  CHC Theory  ·  Cronbach's α .85~.92", cx, 1092);
+  c.restore();
+
+  return cv;
+}
+
+function dlCanvas(cv, name) {
+  return new Promise(res => {
+    cv.toBlob(blob => {
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(blob); a.download=name;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(()=>{ URL.revokeObjectURL(a.href); res(); }, 150);
+    }, 'image/png');
+  });
+}
+
+async function generateAll() {
+  const btn = document.getElementById('genBtn');
+  const status = document.getElementById('status');
+  const preview = document.getElementById('preview');
+  btn.disabled = true;
+  status.textContent = '폰트 로딩 중...';
+  preview.innerHTML = '';
+
+  await document.fonts.ready;
+  // Extra wait for CJK fonts
+  await new Promise(r => setTimeout(r, 600));
+
+  const entries = Object.entries(LANGS);
+  for (let i = 0; i < entries.length; i++) {
+    const [lang, L] = entries[i];
+    status.textContent = `(${i+1}/${entries.length}) og-${lang}.png 생성 중...`;
+    await new Promise(r => setTimeout(r, 100));
+
+    const cv = drawOne(lang, L);
+
+    // Preview thumbnail
+    const wrap = document.createElement('div');
+    wrap.className = 'thumb-wrap';
+    const th = document.createElement('canvas');
+    th.width = 180; th.height = 180;
+    th.getContext('2d').drawImage(cv, 0, 0, 180, 180);
+    const lbl = document.createElement('span');
+    lbl.textContent = `og-${lang}.png`;
+    wrap.appendChild(th); wrap.appendChild(lbl);
+    preview.appendChild(wrap);
+
+    await dlCanvas(cv, `og-${lang}.png`);
+    await new Promise(r => setTimeout(r, 300));
+  }
+
+  status.innerHTML = '✓ 완료! 9개 PNG 다운로드됨 — iq-test-webapp 폴더에 넣고 git push 하세요';
+  status.style.color = '#4ade80';
+  btn.disabled = false;
+}
+</script>
+</body>
+</html>

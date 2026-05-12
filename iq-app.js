@@ -24,6 +24,10 @@ function applyLang(){
   {const m=document.querySelector('meta[property="og:description"]');if(m&&L.metaDesc)m.content=L.metaDesc;}
   {const m=document.querySelector('meta[property="og:url"]');if(m)m.content=_url;}
   {const c=document.querySelector('link[rel="canonical"]');if(c)c.href=_url;}
+  {const _img=`https://iq-test.all-lifes.com/og-${_l}.png`;
+   const mi=document.querySelector('meta[property="og:image"]');if(mi)mi.content=_img;
+   const mt=document.querySelector('meta[name="twitter:image"]');if(mt)mt.content=_img;}
+  {const m=document.querySelector('meta[property="og:image:height"]');if(m)m.content='1200';}
   // Hero
   const hero=document.querySelector('.home-hero');
   if(hero){

@@ -452,7 +452,7 @@ ${urls}
     } else {
       ogTitle = L.title;
       ogDesc  = L.desc;
-      ogImage = `${APP_URL}/og-universal.png`;
+      ogImage = `${APP_URL}/og-${lang}.png`;
     }
 
     // iframe src — pass all query params through to the app

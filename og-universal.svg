@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e1b4b"/>
+      <stop offset="45%" style="stop-color:#3730a3"/>
+      <stop offset="100%" style="stop-color:#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.14"/>
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.04"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c7d2fe"/>
+      <stop offset="100%" style="stop-color:#818cf8"/>
+    </linearGradient>
+    <linearGradient id="iqText" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#c7d2fe"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="6" stdDeviation="20" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <filter id="textGlow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Ambient glow circles -->
+  <circle cx="1020" cy="70" r="240" fill="#6366f1" opacity="0.10"/>
+  <circle cx="80" cy="570" r="190" fill="#4338ca" opacity="0.13"/>
+  <circle cx="1160" cy="590" r="140" fill="#818cf8" opacity="0.08"/>
+  <circle cx="400" cy="315" r="300" fill="#ffffff" opacity="0.018"/>
+
+  <!-- Dot grid (top left) -->
+  <g opacity="0.14" fill="#a5b4fc">
+    <circle cx="62" cy="62" r="2.5"/><circle cx="112" cy="62" r="2.5"/><circle cx="162" cy="62" r="2.5"/><circle cx="212" cy="62" r="2.5"/>
+    <circle cx="62" cy="112" r="2.5"/><circle cx="112" cy="112" r="2.5"/><circle cx="162" cy="112" r="2.5"/><circle cx="212" cy="112" r="2.5"/>
+    <circle cx="62" cy="162" r="2.5"/><circle cx="112" cy="162" r="2.5"/><circle cx="162" cy="162" r="2.5"/><circle cx="212" cy="162" r="2.5"/>
+  </g>
+
+  <!-- ─── LEFT PANEL ─── -->
+
+  <!-- Site badge pill -->
+  <rect x="60" y="108" width="210" height="34" rx="17" fill="#ffffff" opacity="0.12"/>
+  <text x="165" y="130" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#c7d2fe" text-anchor="middle" letter-spacing="1">🧠  all-lifes.com</text>
+
+  <!-- IQ (massive gradient text) -->
+  <text x="55" y="285" font-family="Arial Black,Impact,sans-serif" font-size="175" font-weight="900" fill="url(#iqText)" letter-spacing="-6" filter="url(#textGlow)">IQ</text>
+
+  <!-- TEST -->
+  <text x="62" y="368" font-family="Arial Black,Impact,sans-serif" font-size="100" font-weight="900" fill="#818cf8" letter-spacing="6" opacity="0.90">TEST</text>
+
+  <!-- Accent divider -->
+  <rect x="62" y="390" width="90" height="5" rx="2.5" fill="#6366f1"/>
+  <rect x="162" y="393" width="30" height="2" rx="1" fill="#6366f1" opacity="0.5"/>
+
+  <!-- Tagline -->
+  <text x="62" y="428" font-family="Arial,sans-serif" font-size="19" fill="#c7d2fe" font-weight="600" letter-spacing="3.5">ONLINE · FREE · SCIENTIFIC</text>
+
+  <!-- Feature bullets -->
+  <text x="62" y="468" font-family="Arial,sans-serif" font-size="15" fill="#a5b4fc" opacity="0.85">✓  Raven's Progressive Matrices  ·  CHC Theory</text>
+  <text x="62" y="494" font-family="Arial,sans-serif" font-size="15" fill="#a5b4fc" opacity="0.85">✓  EQ · Memory · Creativity · Focus extended tests</text>
+
+  <!-- URL pill -->
+  <rect x="62" y="524" width="290" height="40" rx="20" fill="#4f46e5" opacity="0.60"/>
+  <text x="207" y="549" font-family="Arial,monospace" font-size="14" fill="#e0e7ff" text-anchor="middle" font-weight="600" letter-spacing="0.5">all-lifes.com / iq-test</text>
+
+  <!-- ─── RIGHT PANEL — Score Card ─── -->
+  <rect x="658" y="78" width="488" height="482" rx="32" fill="url(#card)" stroke="#ffffff" stroke-opacity="0.18" stroke-width="1.5" filter="url(#shadow)"/>
+
+  <!-- Card label -->
+  <text x="902" y="138" font-family="Arial,sans-serif" font-size="13" fill="#a5b4fc" text-anchor="middle" font-weight="700" letter-spacing="4">SCORE  RESULT</text>
+
+  <!-- Ring track -->
+  <circle cx="902" cy="295" r="112" fill="none" stroke="#ffffff" stroke-opacity="0.07" stroke-width="18"/>
+
+  <!-- Ring fill (~80% arc) — circumference=704, 20% gap=141 -->
+  <circle cx="902" cy="295" r="112" fill="none" stroke="url(#ring)" stroke-width="18" stroke-linecap="round"
+    stroke-dasharray="704" stroke-dashoffset="141"
+    transform="rotate(-90 902 295)" filter="url(#glow)"/>
+
+  <!-- IQ number -->
+  <text x="902" y="276" font-family="Arial Black,Impact,sans-serif" font-size="76" font-weight="900" fill="#ffffff" text-anchor="middle">128</text>
+  <text x="902" y="308" font-family="Arial,sans-serif" font-size="13" fill="#a5b4fc" text-anchor="middle" font-weight="700" letter-spacing="3">IQ SCORE</text>
+
+  <!-- Category badge -->
+  <rect x="802" y="332" width="200" height="30" rx="15" fill="#6366f1" opacity="0.65"/>
+  <text x="902" y="352" font-family="Arial,sans-serif" font-size="13" fill="#e0e7ff" text-anchor="middle" font-weight="700">Superior  ·  Top 3%</text>
+
+  <!-- Stat cards -->
+  <rect x="675" y="440" width="132" height="84" rx="16" fill="#ffffff" opacity="0.07"/>
+  <text x="741" y="476" font-family="Arial Black,sans-serif" font-size="30" font-weight="900" fill="#ffffff" text-anchor="middle">93%</text>
+  <text x="741" y="496" font-family="Arial,sans-serif" font-size="12" fill="#a5b4fc" text-anchor="middle" letter-spacing="1">ACCURACY</text>
+
+  <rect x="822" y="440" width="160" height="84" rx="16" fill="#ffffff" opacity="0.07"/>
+  <text x="902" y="476" font-family="Arial Black,sans-serif" font-size="30" font-weight="900" fill="#ffffff" text-anchor="middle">18 min</text>
+  <text x="902" y="496" font-family="Arial,sans-serif" font-size="12" fill="#a5b4fc" text-anchor="middle" letter-spacing="1">DURATION</text>
+
+  <rect x="997" y="440" width="132" height="84" rx="16" fill="#ffffff" opacity="0.07"/>
+  <text x="1063" y="476" font-family="Arial Black,sans-serif" font-size="30" font-weight="900" fill="#ffffff" text-anchor="middle">40 Q</text>
+  <text x="1063" y="496" font-family="Arial,sans-serif" font-size="12" fill="#a5b4fc" text-anchor="middle" letter-spacing="1">PRECISION</text>
+
+  <!-- Bottom scientific tagline -->
+  <text x="600" y="616" font-family="Arial,sans-serif" font-size="12" fill="#6366f1" text-anchor="middle" opacity="0.70">Raven's Progressive Matrices  ·  CHC Theory  ·  Cronbach's α .85~.92</text>
+</svg>

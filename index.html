@@ -263,6 +263,12 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
 .share-btn .sb-icon{font-size:24px;}
 .share-btn.telegram{background:#229ED9;color:#fff;}
 .share-btn.copy{background:var(--primary-mid);}
+.share-btn.kakao{background:#FEE500;color:#3C1E1E;}
+.share-btn.band{background:#00C73C;}
+.share-btn.whatsapp{background:#25D366;}
+.share-btn.facebook{background:#1877F2;}
+.share-btn.twitter{background:#000;}
+.share-btn.line{background:#06C755;}
 .copy-success{background:var(--success)!important;}
 
 /* Contact */
@@ -271,6 +277,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
 .contact-box p{font-size:12px;color:var(--text2);margin-bottom:8px;line-height:1.6;}
 .contact-box a{color:var(--primary-mid);font-weight:700;text-decoration:none;}
 .contact-box a:hover{text-decoration:underline;}
+.contact-box.tg-only{padding:12px 20px;margin-bottom:16px;display:flex;justify-content:center;}
 
 /* ── EXTENDED TEST SCREEN ── */
 #screen-extended-test{background:var(--bg);}
@@ -558,15 +565,10 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
         <div class="src-pct" id="sc-pct">상위 --%</div>
         <div class="src-site">무료 IQ 테스트 · 과학적으로 검증된 지능 지수 측정</div>
       </div>
-      <div class="share-row">
-        <button class="share-btn copy" id="copy-btn-iq" onclick="copyLink(false)"><span class="sb-icon">🔗</span><span id="copy-lbl-iq">링크복사</span></button>
-        <a class="share-btn telegram" href="https://t.me/all_lifes_community" target="_blank" rel="noopener"><span class="sb-icon">✈️</span><span class="tg-lbl">Telegram</span></a>
-      </div>
+      <div class="share-row" id="share-row-iq"></div>
     </div>
 
-    <div class="contact-box">
-      <h3 id="contact-title-iq">💬 문의 · 건의사항</h3>
-      <p id="contact-desc-iq">검사 문항, 결과 해석, 기능 개선에 대한 의견이나 건의 사항은<br>텔레그램 커뮤니티에 남겨주세요. <strong>적극적으로 반영</strong>하겠습니다.</p>
+    <div class="contact-box tg-only">
       <a href="https://t.me/all_lifes_community" target="_blank" rel="noopener" id="contact-link-iq">✈️ Telegram 커뮤니티 바로가기</a>
     </div>
 
@@ -662,15 +664,10 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
         <div class="src-pct" id="ext-sc-pct">상위 --%</div>
         <div class="src-site">무료 인지 능력 검사 · 6가지 심층 분석</div>
       </div>
-      <div class="share-row">
-        <button class="share-btn copy" id="copy-btn-ext" onclick="copyLink(true)"><span class="sb-icon">🔗</span><span id="copy-lbl-ext">링크복사</span></button>
-        <a class="share-btn telegram" href="https://t.me/all_lifes_community" target="_blank" rel="noopener"><span class="sb-icon">✈️</span><span class="tg-lbl">Telegram</span></a>
-      </div>
+      <div class="share-row" id="share-row-ext"></div>
     </div>
 
-    <div class="contact-box">
-      <h3 id="contact-title-ext">💬 문의 · 건의사항</h3>
-      <p id="contact-desc-ext">검사 문항, 결과 해석, 기능 개선에 대한 의견이나 건의 사항은<br>텔레그램 커뮤니티에 남겨주세요. <strong>적극적으로 반영</strong>하겠습니다.</p>
+    <div class="contact-box tg-only">
       <a href="https://t.me/all_lifes_community" target="_blank" rel="noopener" id="contact-link-ext">✈️ Telegram 커뮤니티 바로가기</a>
     </div>
 

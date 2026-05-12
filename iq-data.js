@@ -113,7 +113,7 @@ const spatPool=[
   {type:'spatial',typeLabel:'공간 추론',q:'n개의 직선이 서로 다른 최대 교점 수는?',opts:['n-1','n(n-1)','n(n-1)/2','n²'],correct:2,difficulty:4},
   {type:'spatial',typeLabel:'공간 추론',q:'정팔면체의 면의 수는?',opts:['4','6','8','12'],correct:2,difficulty:3},
   {type:'spatial',typeLabel:'공간 추론',q:'한 변의 길이가 a인 정육면체의 대각선 길이는?',opts:['a√2','a√3','2a','a√6'],correct:1,difficulty:4},
-  {type:'spatial',typeLabel:'공간 추론',q:'정삼각형을 4개의 합동 정삼각형으로 나눌 때, 각 작은 삼각형의 한 변은 원래의?',opts:['1/2','1/3','1/4','√3/2'],correct:0,difficulty:3},
+  {type:'spatial',typeLabel:'공간 추론',q:'정삼각형을 4개의 합동 정삼각형으로 나눌 때, 각 작은 삼각형의 한 변은 원래의 몇 배인가?',opts:['1/2','1/3','1/4','√3/2'],correct:0,difficulty:3},
   {type:'spatial',typeLabel:'공간 추론',q:'시계가 2시 정각일 때 시침과 분침이 이루는 각도(작은 쪽)는?',opts:['30°','45°','60°','90°'],correct:2,difficulty:2},
   {type:'spatial',typeLabel:'공간 추론',q:'9시 정각일 때 시침과 분침이 이루는 각도(작은 쪽)는?',opts:['90°','120°','180°','270°'],correct:0,difficulty:2},
   {type:'spatial',typeLabel:'공간 추론',q:'4시 20분을 가리킬 때 시침과 분침이 이루는 각도(작은 쪽)는?',opts:['5°','10°','15°','20°'],correct:1,difficulty:4},

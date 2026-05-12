@@ -8,7 +8,7 @@ try { if(window.Kakao && !Kakao.isInitialized()) { const _kk = window.IQ_KAKAO_K
 // ── i18n helpers ──
 function t(k){const L=window.IQ_LANG;return(L&&L[k]!=null?L[k]:null);}
 function tl(koLabel){const m=window.IQ_LANG&&window.IQ_LANG.typeLabelMap;return(m&&m[koLabel])||koLabel;}
-function tp(key,vars){let s=t(key)||key;if(vars)Object.entries(vars).forEach(([k,v])=>{s=s.replace('{'+k+'}',v);});return s;}
+function tp(key,vars){const raw=t(key);if(raw==null)return null;let s=raw;if(vars)Object.entries(vars).forEach(([k,v])=>{s=s.replace('{'+k+'}',v);});return s;}
 
 function applyLang(){
   const L=window.IQ_LANG;if(!L)return;
@@ -136,6 +136,7 @@ function sendResize(){
 // ── Mobile share button visibility ──
 window.addEventListener('DOMContentLoaded', () => {
   applyLang();
+  updateShareRows();
   if(navigator.share) {
     document.querySelectorAll('[id^="native-btn"]').forEach(b => b.style.display = '');
   }
@@ -334,15 +335,15 @@ function computeResults(){
   const timeT=t('timeStr');
   document.getElementById('r-time').textContent=timeT?timeT.replace('{m}',Math.floor(elapsed/60)).replace('{s}',elapsed%60):(Math.floor(elapsed/60)+'m '+(elapsed%60)+'s');
   document.getElementById('r-top').textContent=topPct;
-  document.getElementById('res-pct-label').textContent=tp('topPctStr',{n:topPct})||`Top ${topPct}%`;
-  document.getElementById('pct-text').textContent=tp('topPctStr',{n:topPct})||`Top ${topPct}%`;
+  document.getElementById('res-pct-label').textContent=tp('topPctStr',{n:topPct})||`상위 ${topPct}%`;
+  document.getElementById('pct-text').textContent=tp('topPctStr',{n:topPct})||`상위 ${topPct}%`;
   document.getElementById('switch-btn').textContent=currentMode==='short'?(t('switchToLong')||'📝 Full Test'):(t('switchToShort')||'⚡ Short Test');
   const retakeBtn=document.getElementById('retake-btn');if(retakeBtn)retakeBtn.textContent=t('retake')||'🔁 Restart';
 
   // Share card update
   document.getElementById('sc-iq').textContent=iq;
   document.getElementById('sc-cat').textContent=catLabel.split(' ')[0];
-  document.getElementById('sc-pct').textContent=tp('topPctStr',{n:topPct})||`Top ${topPct}%`;
+  document.getElementById('sc-pct').textContent=tp('topPctStr',{n:topPct})||`상위 ${topPct}%`;
 
   setTimeout(()=>{document.getElementById('pct-fill').style.width=pctile+'%';},300);
   setTimeout(()=>{
@@ -521,7 +522,7 @@ function showExtResults(result){
   // Stats row
   const scoreUnit=t('extStatScoreLabel')||'점';
   document.getElementById('ext-stat-score').textContent=score+(scoreUnit==='Score'?'':scoreUnit);
-  document.getElementById('ext-stat-pct').textContent=tp('topPctStr',{n:topPct})||('Top '+topPct+'%');
+  document.getElementById('ext-stat-pct').textContent=tp('topPctStr',{n:topPct})||('상위 '+topPct+'%');
   const levelRange=scoreRanges.find(r=>score>=r.min)||scoreRanges[scoreRanges.length-1];
   document.getElementById('ext-stat-level').textContent=levelRange.label;
   document.getElementById('ext-stat-level').style.color=levelRange.color;
@@ -529,7 +530,7 @@ function showExtResults(result){
   // Share card
   document.getElementById('ext-sc-score').textContent=window.IQ_LANG?score:(score+'점');
   document.getElementById('ext-sc-cat').textContent=result.cat;
-  document.getElementById('ext-sc-pct').textContent=tp('topPctStr',{n:topPct})||('Top '+topPct+'%');
+  document.getElementById('ext-sc-pct').textContent=tp('topPctStr',{n:topPct})||('상위 '+topPct+'%');
 
   // Ring animation
   const circ=2*Math.PI*60;
@@ -694,15 +695,15 @@ function restoreIQResults(iq,catLabel,topPct,mode){
   document.getElementById('res-cat').textContent=displayLabel;
   document.getElementById('res-cat').style.color=cat.color;
   document.getElementById('res-desc').textContent=catLang?catLang.desc:cat.desc;
-  document.getElementById('res-pct-label').textContent=tp('topPctStr',{n:topPct})||`Top ${topPct}%`;
-  document.getElementById('pct-text').textContent=tp('topPctStr',{n:topPct})||`Top ${topPct}%`;
+  document.getElementById('res-pct-label').textContent=tp('topPctStr',{n:topPct})||`상위 ${topPct}%`;
+  document.getElementById('pct-text').textContent=tp('topPctStr',{n:topPct})||`상위 ${topPct}%`;
   document.getElementById('r-correct').textContent='--';
   document.getElementById('r-acc').textContent='--';
   document.getElementById('r-time').textContent='--';
   document.getElementById('r-top').textContent=topPct;
   document.getElementById('sc-iq').textContent=iq;
   document.getElementById('sc-cat').textContent=displayLabel.split(' ')[0];
-  document.getElementById('sc-pct').textContent=tp('topPctStr',{n:topPct})||`Top ${topPct}%`;
+  document.getElementById('sc-pct').textContent=tp('topPctStr',{n:topPct})||`상위 ${topPct}%`;
   document.getElementById('switch-btn').style.display='none';
   setTimeout(()=>{document.getElementById('pct-fill').style.width=pctile+'%';},300);
   setTimeout(()=>{drawBellCurve('bellChart',iq,'#4f46e5');},400);
@@ -720,13 +721,13 @@ function restoreExtResults(tid,score,cat,topPct){
   document.getElementById('ext-res-cat').textContent=cat;
   document.getElementById('ext-res-desc').textContent='';
   document.getElementById('ext-stat-score').textContent=window.IQ_LANG?score:(score+'점');
-  document.getElementById('ext-stat-pct').textContent=tp('topPctStr',{n:topPct})||('Top '+topPct+'%');
+  document.getElementById('ext-stat-pct').textContent=tp('topPctStr',{n:topPct})||('상위 '+topPct+'%');
   const levelRange=scoreRanges.find(r=>score>=r.min)||scoreRanges[scoreRanges.length-1];
   document.getElementById('ext-stat-level').textContent=levelRange.label;
   document.getElementById('ext-stat-level').style.color=levelRange.color;
   document.getElementById('ext-sc-score').textContent=window.IQ_LANG?score:(score+'점');
   document.getElementById('ext-sc-cat').textContent=cat;
-  document.getElementById('ext-sc-pct').textContent=tp('topPctStr',{n:topPct})||('Top '+topPct+'%');
+  document.getElementById('ext-sc-pct').textContent=tp('topPctStr',{n:topPct})||('상위 '+topPct+'%');
   const circ=2*Math.PI*60;
   const pct=Math.round(((score-62)/38)*100);
   const offset=circ*(1-pct/100);
@@ -748,8 +749,80 @@ function restoreExtResults(tid,score,cat,topPct){
   },400);
 }
 
+// ── Platform share config (per language) ──
+const SHARE_PLATFORMS={
+  ko:[{id:'kakao',label:'카카오톡'},{id:'band',label:'Band'},{id:'twitter',label:'X (Twitter)'},{id:'copy'}],
+  en:[{id:'twitter',label:'X (Twitter)'},{id:'facebook',label:'Facebook'},{id:'whatsapp',label:'WhatsApp'},{id:'copy'}],
+  ja:[{id:'line',label:'LINE'},{id:'twitter',label:'X (Twitter)'},{id:'copy'}],
+  de:[{id:'whatsapp',label:'WhatsApp'},{id:'facebook',label:'Facebook'},{id:'copy'}],
+  fr:[{id:'whatsapp',label:'WhatsApp'},{id:'facebook',label:'Facebook'},{id:'twitter',label:'X (Twitter)'},{id:'copy'}],
+  es:[{id:'whatsapp',label:'WhatsApp'},{id:'twitter',label:'X (Twitter)'},{id:'facebook',label:'Facebook'},{id:'copy'}],
+  pt:[{id:'whatsapp',label:'WhatsApp'},{id:'twitter',label:'X (Twitter)'},{id:'facebook',label:'Facebook'},{id:'copy'}],
+  it:[{id:'whatsapp',label:'WhatsApp'},{id:'facebook',label:'Facebook'},{id:'copy'}],
+  id:[{id:'whatsapp',label:'WhatsApp'},{id:'line',label:'LINE'},{id:'facebook',label:'Facebook'},{id:'copy'}],
+};
+
+function buildShareRow(isExt){
+  const lang=window.IQ_CURRENT_LANG||'ko';
+  const plats=SHARE_PLATFORMS[lang]||SHARE_PLATFORMS.en;
+  const copyLabel=t('copyBtn')||'링크복사';
+  const ex=isExt?'true':'false';
+  const suf=isExt?'-ext':'-iq';
+  return plats.map(p=>{
+    switch(p.id){
+      case 'kakao':   return `<button class="share-btn kakao" onclick="shareKakao(${ex})"><span class="sb-icon">💛</span><span>${p.label}</span></button>`;
+      case 'band':    return `<button class="share-btn band" onclick="shareBand(${ex})"><span class="sb-icon">B</span><span>${p.label}</span></button>`;
+      case 'twitter': return `<button class="share-btn twitter" onclick="shareTwitter(${ex})"><span class="sb-icon">𝕏</span><span>${p.label}</span></button>`;
+      case 'facebook':return `<button class="share-btn facebook" onclick="shareFacebook(${ex})"><span class="sb-icon">f</span><span>${p.label}</span></button>`;
+      case 'whatsapp':return `<button class="share-btn whatsapp" onclick="shareWhatsApp(${ex})"><span class="sb-icon">💬</span><span>${p.label}</span></button>`;
+      case 'line':    return `<button class="share-btn line" onclick="shareLine(${ex})"><span class="sb-icon">L</span><span>${p.label}</span></button>`;
+      case 'copy':    return `<button class="share-btn copy" id="copy-btn${suf}" onclick="copyLink(${ex})"><span class="sb-icon">🔗</span><span id="copy-lbl${suf}">${copyLabel}</span></button>`;
+      default: return '';
+    }
+  }).join('');
+}
+
+function updateShareRows(){
+  const r1=document.getElementById('share-row-iq');
+  const r2=document.getElementById('share-row-ext');
+  if(r1)r1.innerHTML=buildShareRow(false);
+  if(r2)r2.innerHTML=buildShareRow(true);
+}
+
 function shareTelegram(){
   window.open('https://t.me/all_lifes_community','_blank','noopener');
+}
+
+function shareWhatsApp(isExt=false){
+  const text=getShareText(isExt);
+  const url=getResultShareURL(isExt);
+  window.open(`https://wa.me/?text=${encodeURIComponent(text+'\n\n🔗 '+url)}`,'_blank','noopener');
+}
+
+function shareBand(isExt=false){
+  const text=getShareText(isExt);
+  const url=getResultShareURL(isExt);
+  window.open(`https://band.us/plugin/share?body=${encodeURIComponent(text)}&route=${encodeURIComponent(url)}`,'_blank','noopener');
+}
+
+function shareKakao(isExt=false){
+  try{
+    if(window.Kakao&&Kakao.isInitialized()){
+      const desc=getShareText(isExt);
+      const url=getResultShareURL(isExt);
+      Kakao.Share.sendDefault({
+        objectType:'feed',
+        content:{
+          title:t('shareTitle')||'IQ 테스트 결과',
+          description:desc,
+          imageUrl:'https://iq-test.all-lifes.com/og-image-ko.png',
+          link:{mobileWebUrl:url,webUrl:url}
+        }
+      });
+      return;
+    }
+  }catch(e){}
+  copyLink(isExt);
 }
 
 function shareTwitter(isExt=false){

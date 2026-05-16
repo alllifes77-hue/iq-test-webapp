@@ -154,14 +154,14 @@ promo:{
   iqSub:'Deepen your cognitive analysis with related apps and tests',
   extTitle:'Discover More Features',
   extSub:'From lucky numbers to precision IQ analysis — all free',
-  luckyTitle:'🍀 Lucky Number Generator',
-  luckyDesc:'Personalized lucky numbers via numerology & astrology',
-  luckyCta:'Try Now →',
-  brainIqTitle:'🧠 Brain Training Tests',
-  brainIqDesc:'EQ · Memory · Creativity · Focus · Processing Speed',
-  brainIqCta:'Take Test →',
-  brainExtTitle:'📊 Precision IQ Test',
-  brainExtDesc:'40-question scientific IQ with domain-level analysis',
-  brainExtCta:'Start Test →'
+  luckyTitle:'🌟 Discover Your Fortune',
+  luckyDesc:'Horoscope · Lucky Numbers · Destiny — Everything About Your Luck',
+  luckyCta:'Explore →',
+  brainIqTitle:'🧠 Brain Development Training',
+  brainIqDesc:'Neuroplasticity + 3 Brain Training Games · Free',
+  brainIqCta:'Start Training →',
+  brainExtTitle:'🧠 Brain Development Training',
+  brainExtDesc:'Neuroplasticity + 3 Brain Training Games · Free',
+  brainExtCta:'Start Training →'
 }
 };

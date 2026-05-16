@@ -208,6 +208,167 @@ function scrollToExt(){showScreen('results');setTimeout(()=>{const el=document.g
 function restartAll(){showScreen('home');}
 function switchMode(){startTest(currentMode==='short'?'long':'short');}
 
+// ── BRAIN TRAINING ──
+let btPrevScreen='results';
+function showBrainTraining(){
+  const cur=document.querySelector('.screen.active');
+  btPrevScreen=cur?cur.id.replace('screen-',''):'results';
+  showScreen('brain-training');
+  const iq=savedIQ||100;
+  const badge=document.getElementById('bt-iq-badge-text');
+  if(badge)badge.textContent=`내 IQ: ${iq}점`;
+  const msg=document.getElementById('bt-hero-msg');
+  if(msg){
+    if(iq<90)msg.textContent=`IQ ${iq}점 — 지금부터가 시작입니다! 뇌가소성 연구는 지능이 훈련으로 실질적으로 향상될 수 있음을 증명합니다. 매일 5분 훈련이 뇌 구조 자체를 변화시킵니다.`;
+    else if(iq<110)msg.textContent=`IQ ${iq}점 — 탄탄한 기반을 갖추고 있습니다. 두뇌 훈련으로 작업 기억과 처리 속도를 높이면 인지 능력 전반이 눈에 띄게 향상됩니다.`;
+    else if(iq<130)msg.textContent=`IQ ${iq}점 — 뛰어난 두뇌입니다! 꾸준한 인지 훈련은 최상위 수행을 유지하고 노화에 따른 인지 저하를 효과적으로 늦춥니다.`;
+    else msg.textContent=`IQ ${iq}점 — 탁월한 지능입니다! 도전적인 인지 훈련으로 뇌의 한계를 계속 넓히고 신경 회로의 효율성을 극대화하세요.`;
+  }
+  const backBtn=document.getElementById('bt-back-btn');
+  if(backBtn)backBtn.onclick=()=>showScreen(btPrevScreen);
+}
+
+// ── STROOP TEST ──
+const SCOLS=[{n:'빨강',c:'#ef4444'},{n:'파랑',c:'#3b82f6'},{n:'초록',c:'#22c55e'},{n:'노랑',c:'#eab308'}];
+let sSt=null;
+function startStroop(){
+  document.getElementById('stroop-area').classList.add('active');
+  document.getElementById('stroop-start-btn').textContent='■ 진행 중...';
+  sSt={r:0,ok:0,ms:0};nextStroop();
+}
+function nextStroop(){
+  if(!sSt)return;
+  if(sSt.r>=10){endStroop();return;}
+  sSt.r++;
+  document.getElementById('stroop-prog').textContent=`${sSt.r} / 10`;
+  const wi=Math.floor(Math.random()*4);
+  let ii;do{ii=Math.floor(Math.random()*4);}while(ii===wi);
+  const w=document.getElementById('stroop-word');
+  w.textContent=SCOLS[wi].n;w.style.color=SCOLS[ii].c;
+  sSt.ink=ii;sSt.t0=Date.now();
+  document.getElementById('stroop-opts').innerHTML=[0,1,2,3].sort(()=>Math.random()-.5).map(i=>
+    `<button class="stroop-opt" style="background:${SCOLS[i].c}" onclick="answerStroop(${i})">${SCOLS[i].n}</button>`
+  ).join('');
+  let sec=3;
+  const tEl=document.getElementById('stroop-timer');
+  if(tEl)tEl.textContent=`${sec}s`;
+  clearInterval(sSt.iv);
+  sSt.iv=setInterval(()=>{sec--;const e=document.getElementById('stroop-timer');if(e)e.textContent=`${sec}s`;if(sec<=0){clearInterval(sSt.iv);answerStroop(-1);}},1000);
+}
+function answerStroop(chosen){
+  if(!sSt)return;clearInterval(sSt.iv);
+  if(chosen===sSt.ink){sSt.ok++;sSt.ms+=Date.now()-sSt.t0;}
+  document.getElementById('stroop-opts').querySelectorAll('button').forEach(b=>b.disabled=true);
+  setTimeout(nextStroop,350);
+}
+function endStroop(){
+  document.getElementById('stroop-area').classList.remove('active');
+  document.getElementById('stroop-start-btn').textContent='▶ 다시 하기';
+  const acc=Math.round(sSt.ok/10*100);
+  const avg=sSt.ok>0?Math.round(sSt.ms/sSt.ok):0;
+  const box=document.getElementById('stroop-score-box');
+  box.textContent=`정확도 ${acc}% · 평균 ${avg}ms`;
+  box.style.color=acc>=80?'var(--success)':acc>=60?'var(--warning)':'var(--danger)';
+  sSt=null;
+}
+
+// ── MEMORY GRID ──
+let mSt=null;
+function startMemgrid(){
+  document.getElementById('memgrid-area').classList.add('active');
+  document.getElementById('memgrid-start-btn').textContent='■ 진행 중...';
+  mSt={lv:1,sc:0};runMemLv();
+}
+function runMemLv(){
+  if(!mSt)return;
+  const sz=3,total=sz*sz,litN=2+mSt.lv;
+  const lit=[...Array(total).keys()].sort(()=>Math.random()-.5).slice(0,litN);
+  mSt.lit=lit;mSt.sel=[];
+  const csz='clamp(44px,11vw,58px)';
+  const grid=document.getElementById('memgrid-grid');
+  grid.style.gridTemplateColumns=`repeat(${sz},1fr)`;
+  grid.innerHTML=[...Array(total)].map((_,i)=>
+    `<div class="memgrid-cell${lit.includes(i)?' lit':''}" data-i="${i}" style="width:${csz};height:${csz};"></div>`
+  ).join('');
+  document.getElementById('memgrid-status').textContent=`레벨 ${mSt.lv} — 패턴 기억 (${litN}칸)`;
+  document.getElementById('memgrid-confirm-btn').style.display='none';
+  setTimeout(()=>{
+    if(!mSt)return;
+    grid.querySelectorAll('.memgrid-cell').forEach(c=>{
+      c.classList.remove('lit');
+      c.onclick=()=>memClick(c,parseInt(c.dataset.i));
+    });
+    document.getElementById('memgrid-status').textContent='기억한 칸을 클릭하세요';
+    document.getElementById('memgrid-confirm-btn').style.display='inline-block';
+  },1600);
+}
+function memClick(cell,idx){
+  if(!mSt)return;
+  if(mSt.sel.includes(idx)){mSt.sel=mSt.sel.filter(i=>i!==idx);cell.classList.remove('selected');}
+  else{mSt.sel.push(idx);cell.classList.add('selected');}
+}
+function confirmMemgrid(){
+  if(!mSt)return;
+  const lit=new Set(mSt.lit),sel=new Set(mSt.sel);
+  document.getElementById('memgrid-grid').querySelectorAll('.memgrid-cell').forEach(c=>{
+    const i=parseInt(c.dataset.i);c.onclick=null;
+    if(lit.has(i)&&sel.has(i))c.classList.add('correct');
+    else if(!lit.has(i)&&sel.has(i))c.classList.add('wrong');
+    else if(lit.has(i)&&!sel.has(i))c.classList.add('lit');
+  });
+  const ok=[...lit].every(i=>sel.has(i))&&[...sel].every(i=>lit.has(i));
+  if(ok)mSt.sc++;
+  document.getElementById('memgrid-status').textContent=ok?'✓ 정확합니다!':'✗ 틀렸습니다';
+  document.getElementById('memgrid-confirm-btn').style.display='none';
+  setTimeout(()=>{if(ok&&mSt.lv<5){mSt.lv++;runMemLv();}else endMemgrid();},900);
+}
+function endMemgrid(){
+  document.getElementById('memgrid-area').classList.remove('active');
+  document.getElementById('memgrid-start-btn').textContent='▶ 다시 하기';
+  const box=document.getElementById('memgrid-score-box');
+  box.textContent=`레벨 ${mSt.lv} 도달 · ${mSt.sc}/5 통과`;
+  box.style.color=mSt.lv>=4?'var(--success)':mSt.lv>=2?'var(--warning)':'var(--danger)';
+  mSt=null;
+}
+
+// ── REACTION (GO/NO-GO) ──
+let rxSt=null;
+function startReaction(){
+  document.getElementById('reaction-area').classList.add('active');
+  document.getElementById('reaction-start-btn').textContent='■ 진행 중...';
+  rxSt={ok:0,wrong:0,t:30,tapped:false};
+  document.getElementById('rx-live').textContent='정답: 0 · 오답: 0';
+  const fill=document.getElementById('rx-bar-fill');
+  fill.style.transition='none';fill.style.width='100%';
+  setTimeout(()=>{fill.style.transition='width 30s linear';fill.style.width='0%';},50);
+  rxSt.iv=setInterval(()=>{rxSt.t--;if(rxSt.t<=0){clearInterval(rxSt.iv);clearTimeout(rxSt.st);endReaction();}},1000);
+  showNextRx();
+}
+function showNextRx(){
+  if(!rxSt||rxSt.t<=0)return;
+  const n=Math.floor(Math.random()*9)+1;
+  rxSt.n=n;rxSt.odd=n%2!==0;rxSt.tapped=false;
+  const tgt=document.getElementById('rx-target');
+  tgt.textContent=n;tgt.className='rx-target '+(rxSt.odd?'go':'nogo');
+  rxSt.st=setTimeout(()=>{if(!rxSt.tapped&&rxSt.odd){rxSt.wrong++;updateRxLive();}showNextRx();},1100);
+}
+function reactionTap(){
+  if(!rxSt||rxSt.tapped)return;
+  rxSt.tapped=true;clearTimeout(rxSt.st);
+  if(rxSt.odd)rxSt.ok++;else rxSt.wrong++;
+  updateRxLive();setTimeout(showNextRx,180);
+}
+function updateRxLive(){const el=document.getElementById('rx-live');if(el)el.textContent=`정답: ${rxSt.ok} · 오답: ${rxSt.wrong}`;}
+function endReaction(){
+  document.getElementById('reaction-area').classList.remove('active');
+  document.getElementById('reaction-start-btn').textContent='▶ 다시 하기';
+  const tot=rxSt.ok+rxSt.wrong,acc=tot>0?Math.round(rxSt.ok/tot*100):0;
+  const box=document.getElementById('reaction-score-box');
+  box.textContent=`정답 ${rxSt.ok}회 · 정확도 ${acc}%`;
+  box.style.color=acc>=80?'var(--success)':acc>=60?'var(--warning)':'var(--danger)';
+  rxSt=null;
+}
+
 // ── Start test ──
 function startTest(mode){
   currentMode=mode;

@@ -124,14 +124,14 @@ promo:{
   iqSub:'Perdalam analisis kognitif dengan app dan tes terkait',
   extTitle:'Temukan Lebih Banyak Fitur',
   extSub:'Dari angka keberuntungan hingga analisis IQ presisi — semuanya gratis',
-  luckyTitle:'🍀 Generator Angka Keberuntungan',
-  luckyDesc:'Angka keberuntungan personal berbasis numerologi & astrologi',
-  luckyCta:'Coba Sekarang →',
-  brainIqTitle:'🧠 Tes Latihan Otak',
-  brainIqDesc:'EQ · Memori · Kreativitas · Fokus · Kecepatan Pemrosesan',
-  brainIqCta:'Ambil Tes →',
-  brainExtTitle:'📊 Tes IQ Presisi',
-  brainExtDesc:'Pengukuran IQ ilmiah 40 pertanyaan dengan analisis domain',
-  brainExtCta:'Mulai Tes →'
+  luckyTitle:'🌟 Temukan Takdir Anda',
+  luckyDesc:'Horoskop · Angka Keberuntungan · Takdir — Semua Tentang Keberuntungan Anda',
+  luckyCta:'Jelajahi →',
+  brainIqTitle:'🧠 Pelatihan Otak',
+  brainIqDesc:'Neuroplastisitas + 3 game pelatihan otak · Gratis',
+  brainIqCta:'Mulai Latihan →',
+  brainExtTitle:'🧠 Pelatihan Otak',
+  brainExtDesc:'Neuroplastisitas + 3 game pelatihan otak · Gratis',
+  brainExtCta:'Mulai Latihan →'
 }
 };

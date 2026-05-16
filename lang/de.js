@@ -124,14 +124,14 @@ promo:{
   iqSub:'Tiefere kognitive Analyse mit verwandten Apps und Tests',
   extTitle:'Weitere Funktionen entdecken',
   extSub:'Von Glückszahlen bis zur Präzisions-IQ-Analyse — alles kostenlos',
-  luckyTitle:'🍀 Glückszahlen-Generator',
-  luckyDesc:'Personalisierte Glückszahlen via Numerologie & Astrologie',
-  luckyCta:'Jetzt testen →',
-  brainIqTitle:'🧠 Gehirntraining-Tests',
-  brainIqDesc:'EQ · Gedächtnis · Kreativität · Fokus · Verarbeitungsgeschwindigkeit',
-  brainIqCta:'Test starten →',
-  brainExtTitle:'📊 Präzisions-IQ-Test',
-  brainExtDesc:'40 Fragen wissenschaftliche IQ-Messung mit Bereichsanalyse',
-  brainExtCta:'Test starten →'
+  luckyTitle:'🌟 Entdecke dein Schicksal',
+  luckyDesc:'Horoskop · Glückszahlen · Destiny — Alles über dein Glück',
+  luckyCta:'Entdecken →',
+  brainIqTitle:'🧠 Gehirn-Entwicklungstraining',
+  brainIqDesc:'Neuroplastizität + 3 Gehirntraining-Spiele · Kostenlos',
+  brainIqCta:'Training starten →',
+  brainExtTitle:'🧠 Gehirn-Entwicklungstraining',
+  brainExtDesc:'Neuroplastizität + 3 Gehirntraining-Spiele · Kostenlos',
+  brainExtCta:'Training starten →'
 }
 };

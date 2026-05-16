@@ -124,14 +124,14 @@ promo:{
   iqSub:'関連アプリと追加テストで認知分析をさらに深めましょう',
   extTitle:'さらに機能を探索',
   extSub:'ラッキーナンバーから精密IQ分析まで — すべて無料',
-  luckyTitle:'🍀 ラッキーナンバー生成器',
-  luckyDesc:'数秘術・占星術に基づくあなただけの幸運の数字',
-  luckyCta:'今すぐ試す →',
-  brainIqTitle:'🧠 脳トレテスト',
-  brainIqDesc:'EQ · 記憶力 · 創造性 · 集中力 · 処理速度',
-  brainIqCta:'テストする →',
-  brainExtTitle:'📊 精密IQテスト',
-  brainExtDesc:'40問の科学的IQ測定 · 領域別詳細分析',
-  brainExtCta:'テストする →'
+  luckyTitle:'🌟 あなたの運命を知ろう',
+  luckyDesc:'占星術・ラッキーナンバー・運命 — あなたの運のすべて',
+  luckyCta:'探索する →',
+  brainIqTitle:'🧠 脳開発トレーニング',
+  brainIqDesc:'神経可塑性 + 脳トレゲーム3種 · 無料',
+  brainIqCta:'トレーニング開始 →',
+  brainExtTitle:'🧠 脳開発トレーニング',
+  brainExtDesc:'神経可塑性 + 脳トレゲーム3種 · 無料',
+  brainExtCta:'トレーニング開始 →'
 }
 };

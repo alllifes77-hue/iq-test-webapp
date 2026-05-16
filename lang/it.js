@@ -124,14 +124,14 @@ promo:{
   iqSub:'Approfondisci la tua analisi cognitiva con app e test correlati',
   extTitle:'Scopri altre funzionalità',
   extSub:'Dai numeri fortunati all\'analisi del QI — tutto gratuito',
-  luckyTitle:'🍀 Generatore di Numeri Fortunati',
-  luckyDesc:'Numeri fortunati personalizzati via numerologia e astrologia',
-  luckyCta:'Prova ora →',
-  brainIqTitle:'🧠 Test di allenamento cerebrale',
-  brainIqDesc:'EQ · Memoria · Creatività · Focus · Velocità di elaborazione',
-  brainIqCta:'Fai il test →',
-  brainExtTitle:'📊 Test del QI di precisione',
-  brainExtDesc:'Misurazione scientifica del QI in 40 domande con analisi',
+  luckyTitle:'🌟 Scopri il tuo destino',
+  luckyDesc:'Oroscopo · Numeri fortunati · Destino — Tutto sulla tua fortuna',
+  luckyCta:'Esplora →',
+  brainIqTitle:'🧠 Allenamento cerebrale',
+  brainIqDesc:'Neuroplasticità + 3 giochi di allenamento · Gratuito',
+  brainIqCta:'Inizia →',
+  brainExtTitle:'🧠 Allenamento cerebrale',
+  brainExtDesc:'Neuroplasticità + 3 giochi di allenamento · Gratuito',
   brainExtCta:'Inizia →'
 }
 };

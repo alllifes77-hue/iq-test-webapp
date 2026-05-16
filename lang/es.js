@@ -124,14 +124,14 @@ promo:{
   iqSub:'Análisis cognitivo más profundo con apps y tests relacionados',
   extTitle:'Descubre más funciones',
   extSub:'De los números de la suerte al CI de precisión — todo gratis',
-  luckyTitle:'🍀 Generador de Números de la Suerte',
-  luckyDesc:'Números personalizados basados en numerología y astrología',
-  luckyCta:'Probar →',
-  brainIqTitle:'🧠 Tests de entrenamiento cerebral',
-  brainIqDesc:'IE · Memoria · Creatividad · Concentración · Velocidad',
-  brainIqCta:'Hacer prueba →',
-  brainExtTitle:'📊 Test de CI de precisión',
-  brainExtDesc:'Medición científica de CI en 40 preguntas con análisis',
-  brainExtCta:'Comenzar →'
+  luckyTitle:'🌟 Descubre tu destino',
+  luckyDesc:'Horóscopo · Números de la suerte · Destino — Todo sobre tu suerte',
+  luckyCta:'Explorar →',
+  brainIqTitle:'🧠 Entrenamiento cerebral',
+  brainIqDesc:'Neuroplasticidad + 3 juegos de entrenamiento · Gratis',
+  brainIqCta:'Empezar →',
+  brainExtTitle:'🧠 Entrenamiento cerebral',
+  brainExtDesc:'Neuroplasticidad + 3 juegos de entrenamiento · Gratis',
+  brainExtCta:'Empezar →'
 }
 };

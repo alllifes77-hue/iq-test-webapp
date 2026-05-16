@@ -140,6 +140,9 @@ function applyLang(){
     upd('promo-badge-ext',P.badge);upd('promo-title-ext',P.extTitle);upd('promo-sub-ext',P.extSub);
     upd('promo-lucky-title-ext',P.luckyTitle);upd('promo-lucky-desc-ext',P.luckyDesc);upd('promo-lucky-cta-ext',P.luckyCta);
     upd('promo-brain-title-ext',P.brainExtTitle);upd('promo-brain-desc-ext',P.brainExtDesc);upd('promo-brain-cta-ext',P.brainExtCta);
+    // Lucky URL: language-specific
+    const luckyUrl=`https://all-lifes.com/lucky${_l!=='ko'?'?lang='+_l:''}`;
+    ['promo-lucky-card-iq','promo-lucky-card-ext'].forEach(id=>{const el=document.getElementById(id);if(el)el.href=luckyUrl;});
   }
 }
 

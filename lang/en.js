@@ -147,5 +147,21 @@ seoSections:[
   {h3:'Understanding Your IQ Score: Percentiles and Bell Curve',p:"Your IQ score places you within a normal distribution of the entire population. An IQ of 100 is exactly average (50th percentile). Scoring 115 puts you in the top 16%; 130 reaches the top 2%; 145 the top 0.1%. This online IQ test uses the error function (erf) for precise percentile calculation, ensuring your result accurately reflects where you stand relative to the global population — not just a self-selected online sample."},
   {h3:'IQ vs. EQ: Why Both Matter for Real-World Success',p:"Research shows IQ predicts academic and occupational performance, but Emotional Intelligence (EQ) predicts leadership effectiveness, relationship quality, and stress resilience. Our platform measures both: the IQ test evaluates fluid intelligence and logical reasoning, while the free EQ assessment covers self-awareness, empathy, and emotion regulation. High performers typically combine strong analytical ability with well-developed emotional skills — our 6-domain cognitive profile helps you identify where to grow."},
   {h3:'Can I Retake the Free IQ Test?',p:'Items are randomly drawn from a large pool each session, so repetition is unlikely. To avoid practice effects, we recommend waiting at least two weeks between retests. The Precision IQ Test (40 items) yields more stable results than the Quick version. For the most reliable cognitive assessment, take the test when well-rested, in a quiet environment, without alcohol or stimulants affecting your baseline cognition.'}
-]
+],
+promo:{
+  badge:'✨ Recommended',
+  iqTitle:'Explore More Brain Power',
+  iqSub:'Deepen your cognitive analysis with related apps and tests',
+  extTitle:'Discover More Features',
+  extSub:'From lucky numbers to precision IQ analysis — all free',
+  luckyTitle:'🍀 Lucky Number Generator',
+  luckyDesc:'Personalized lucky numbers via numerology & astrology',
+  luckyCta:'Try Now →',
+  brainIqTitle:'🧠 Brain Training Tests',
+  brainIqDesc:'EQ · Memory · Creativity · Focus · Processing Speed',
+  brainIqCta:'Take Test →',
+  brainExtTitle:'📊 Precision IQ Test',
+  brainExtDesc:'40-question scientific IQ with domain-level analysis',
+  brainExtCta:'Start Test →'
+}
 };

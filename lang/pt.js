@@ -117,5 +117,21 @@ seoSections:[
   {h3:'Entendendo sua pontuação de QI: percentis e curva de Gauss',p:"Sua pontuação de QI o situa dentro da distribuição normal da população geral. Um QI de 100 é exatamente a média (percentil 50). Uma pontuação de 115 coloca você no top 16 %; 130 no top 2 %; 145 no top 0,1 %. Este teste de QI online usa a função de erro (erf) para cálculo preciso de percentil, garantindo que seu resultado reflita com precisão onde você está em relação à população mundial."},
   {h3:'QI vs. IE: por que ambos importam para o sucesso',p:"A pesquisa mostra que o QI prevê desempenho acadêmico e profissional, enquanto a Inteligência Emocional (IE) prevê eficácia de liderança, qualidade de relacionamentos e resiliência ao estresse. Nossa plataforma mede ambos: o teste de QI avalia inteligência fluida e raciocínio lógico, enquanto a avaliação de IE gratuita cobre autoconsciência, empatia e regulação emocional."},
   {h3:'Posso refazer o teste de QI gratuito?',p:"As perguntas são retiradas aleatoriamente de um grande banco a cada sessão, tornando a repetição improvável. Para evitar efeitos de prática, recomendamos aguardar pelo menos duas semanas entre retestes. O Teste de Precisão (40 perguntas) fornece resultados mais estáveis. Para melhores resultados: faça o teste descansado, em ambiente tranquilo, sem distrações."}
-]
+],
+promo:{
+  badge:'✨ Recomendado',
+  iqTitle:'Explore mais seu cérebro',
+  iqSub:'Aprofunde sua análise cognitiva com apps e testes relacionados',
+  extTitle:'Descubra mais recursos',
+  extSub:'De números da sorte à análise de QI de precisão — tudo gratuito',
+  luckyTitle:'🍀 Gerador de Números da Sorte',
+  luckyDesc:'Números da sorte personalizados via numerologia e astrologia',
+  luckyCta:'Experimentar →',
+  brainIqTitle:'🧠 Testes de treinamento cerebral',
+  brainIqDesc:'QE · Memória · Criatividade · Foco · Velocidade de Processamento',
+  brainIqCta:'Fazer teste →',
+  brainExtTitle:'📊 Teste de QI de precisão',
+  brainExtDesc:'Medição científica de QI em 40 questões com análise de domínio',
+  brainExtCta:'Iniciar teste →'
+}
 };

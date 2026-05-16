@@ -117,5 +117,21 @@ seoSections:[
   {h3:'Capire il tuo punteggio di QI: percentili e curva di Gauss',p:"Il tuo punteggio di QI ti colloca nella distribuzione normale dell'intera popolazione. Un QI di 100 è esattamente nella media (50° percentile). Un punteggio di 115 ti pone nel top 16 %; 130 nel top 2 %; 145 nel top 0,1 %. Questo test del QI online usa la funzione di errore (erf) per il calcolo preciso del percentile, garantendo che il tuo risultato rifletta accuratamente la tua posizione rispetto alla popolazione mondiale."},
   {h3:'QI vs. EQ: perché entrambi contano per il successo',p:"La ricerca mostra che il QI predice le prestazioni accademiche e professionali, mentre l'Intelligenza Emotiva (EQ) predice l'efficacia della leadership, la qualità delle relazioni e la resilienza allo stress. La nostra piattaforma misura entrambi: il test del QI valuta l'intelligenza fluida e il ragionamento logico, mentre la valutazione EQ gratuita copre autoconsapevolezza, empatia e regolazione emotiva."},
   {h3:'Posso ripetere il test del QI gratuito?',p:"Le domande vengono estratte casualmente da un grande pool a ogni sessione, rendendo improbabile la ripetizione. Per evitare effetti di pratica, raccomandiamo di attendere almeno due settimane tra i retest. Il Test di Precisione (40 domande) fornisce risultati più stabili. Per risultati ottimali: fai il test ben riposato, in un ambiente tranquillo, senza distrazioni."}
-]
+],
+promo:{
+  badge:'✨ Consigliato',
+  iqTitle:'Esplora di più il tuo cervello',
+  iqSub:'Approfondisci la tua analisi cognitiva con app e test correlati',
+  extTitle:'Scopri altre funzionalità',
+  extSub:'Dai numeri fortunati all\'analisi del QI — tutto gratuito',
+  luckyTitle:'🍀 Generatore di Numeri Fortunati',
+  luckyDesc:'Numeri fortunati personalizzati via numerologia e astrologia',
+  luckyCta:'Prova ora →',
+  brainIqTitle:'🧠 Test di allenamento cerebrale',
+  brainIqDesc:'EQ · Memoria · Creatività · Focus · Velocità di elaborazione',
+  brainIqCta:'Fai il test →',
+  brainExtTitle:'📊 Test del QI di precisione',
+  brainExtDesc:'Misurazione scientifica del QI in 40 domande con analisi',
+  brainExtCta:'Inizia →'
+}
 };

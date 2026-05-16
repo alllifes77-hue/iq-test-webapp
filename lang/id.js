@@ -117,5 +117,21 @@ seoSections:[
   {h3:'Memahami skor IQ Anda: persentil dan kurva lonceng',p:"Skor IQ Anda menempatkan Anda dalam distribusi normal seluruh populasi. IQ 100 adalah tepat rata-rata (persentil ke-50). Skor 115 menempatkan Anda di top 16%; 130 di top 2%; 145 di top 0,1%. Tes IQ online ini menggunakan fungsi kesalahan (erf) untuk perhitungan persentil yang tepat, memastikan hasil Anda secara akurat mencerminkan posisi Anda relatif terhadap populasi global."},
   {h3:'IQ vs. EQ: mengapa keduanya penting untuk kesuksesan',p:"Penelitian menunjukkan bahwa IQ memprediksi kinerja akademik dan profesional, sementara Kecerdasan Emosional (EQ) memprediksi efektivitas kepemimpinan, kualitas hubungan, dan ketahanan terhadap stres. Platform kami mengukur keduanya: tes IQ mengevaluasi kecerdasan cair dan penalaran logis, sementara penilaian EQ gratis mencakup kesadaran diri, empati, dan regulasi emosi."},
   {h3:'Bisakah saya mengulang tes IQ gratis?',p:"Pertanyaan diambil secara acak dari kumpulan besar setiap sesi, sehingga pengulangan tidak mungkin terjadi. Untuk menghindari efek latihan, kami merekomendasikan menunggu setidaknya dua minggu antara pengulangan tes. Tes Presisi (40 pertanyaan) memberikan hasil yang lebih stabil. Untuk hasil terbaik: lakukan tes dalam kondisi segar, di lingkungan yang tenang, tanpa gangguan."}
-]
+],
+promo:{
+  badge:'✨ Rekomendasi',
+  iqTitle:'Jelajahi Lebih Banyak Kemampuan Otak',
+  iqSub:'Perdalam analisis kognitif dengan app dan tes terkait',
+  extTitle:'Temukan Lebih Banyak Fitur',
+  extSub:'Dari angka keberuntungan hingga analisis IQ presisi — semuanya gratis',
+  luckyTitle:'🍀 Generator Angka Keberuntungan',
+  luckyDesc:'Angka keberuntungan personal berbasis numerologi & astrologi',
+  luckyCta:'Coba Sekarang →',
+  brainIqTitle:'🧠 Tes Latihan Otak',
+  brainIqDesc:'EQ · Memori · Kreativitas · Fokus · Kecepatan Pemrosesan',
+  brainIqCta:'Ambil Tes →',
+  brainExtTitle:'📊 Tes IQ Presisi',
+  brainExtDesc:'Pengukuran IQ ilmiah 40 pertanyaan dengan analisis domain',
+  brainExtCta:'Mulai Tes →'
+}
 };

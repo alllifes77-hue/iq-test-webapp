@@ -117,5 +117,21 @@ seoSections:[
   {h3:'Comprendre votre score de QI : percentiles et courbe de Gauss',p:"Votre score de QI vous situe dans la distribution normale de l'ensemble de la population. Un QI de 100 est exactement dans la moyenne (50e percentile). Un score de 115 vous place dans le top 16 % ; 130 dans le top 2 % ; 145 dans le top 0,1 %. Ce test de QI utilise la fonction d'erreur (erf) pour un calcul précis du percentile, garantissant que votre résultat reflète fidèlement votre position par rapport à la population mondiale."},
   {h3:'QI vs. QE : pourquoi les deux comptent pour la réussite',p:"La recherche montre que le QI prédit les performances académiques et professionnelles, tandis que l'Intelligence Émotionnelle (QE) prédit l'efficacité du leadership, la qualité des relations et la résilience au stress. Notre plateforme mesure les deux : le test de QI évalue l'intelligence fluide et le raisonnement logique, tandis que l'évaluation QE gratuite couvre la conscience de soi, l'empathie et la régulation émotionnelle."},
   {h3:'Puis-je repasser le test de QI gratuit ?',p:"Les questions sont tirées aléatoirement d'un large pool à chaque session, ce qui rend la répétition peu probable. Pour éviter les effets de pratique, nous recommandons d'attendre au moins deux semaines entre les retests. Le Test de Précision (40 questions) donne des résultats plus stables. Pour des résultats optimaux : testez-vous bien reposé, dans un environnement calme, sans distractions."}
-]
+],
+promo:{
+  badge:'✨ Recommandé',
+  iqTitle:'Explorez davantage votre cerveau',
+  iqSub:'Approfondissez votre analyse cognitive avec nos apps et tests',
+  extTitle:'Découvrez plus de fonctionnalités',
+  extSub:'Des chiffres chanceux à l\'analyse QI de précision — tout gratuit',
+  luckyTitle:'🍀 Générateur de Numéros Chanceux',
+  luckyDesc:'Numéros chanceux personnalisés via numérologie & astrologie',
+  luckyCta:'Essayer →',
+  brainIqTitle:'🧠 Tests d\'entraînement cérébral',
+  brainIqDesc:'QE · Mémoire · Créativité · Concentration · Vitesse',
+  brainIqCta:'Faire le test →',
+  brainExtTitle:'📊 Test QI de précision',
+  brainExtDesc:'Mesure scientifique du QI en 40 questions avec analyse',
+  brainExtCta:'Commencer →'
+}
 };

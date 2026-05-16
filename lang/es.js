@@ -117,5 +117,21 @@ seoSections:[
   {h3:'Entender tu puntuación de CI: percentiles y curva de Gauss',p:"Tu puntuación de CI te sitúa dentro de la distribución normal de la población general. Un CI de 100 es exactamente promedio (percentil 50). Una puntuación de 115 te coloca en el top 16 %; 130 en el top 2 %; 145 en el top 0,1 %. Este test de IQ online utiliza la función de error (erf) para el cálculo preciso del percentil, asegurando que tu resultado refleje fielmente tu posición respecto a la población mundial."},
   {h3:'CI vs. IE: por qué ambos importan para el éxito',p:"La investigación muestra que el CI predice el rendimiento académico y profesional, mientras que la Inteligencia Emocional (IE) predice la eficacia del liderazgo, la calidad de las relaciones y la resiliencia al estrés. Nuestra plataforma mide ambos: el test de CI evalúa la inteligencia fluida y el razonamiento lógico, mientras que la evaluación de IE gratuita cubre la autoconciencia, la empatía y la regulación emocional."},
   {h3:'¿Puedo repetir el test de IQ gratuito?',p:"Las preguntas se extraen aleatoriamente de un gran banco en cada sesión, lo que hace improbable la repetición. Para evitar efectos de práctica, recomendamos esperar al menos dos semanas entre repeticiones. El Test de Precisión (40 preguntas) da resultados más estables. Para resultados óptimos: haz el test descansado, en un entorno tranquilo, sin distracciones."}
-]
+],
+promo:{
+  badge:'✨ Recomendado',
+  iqTitle:'Explora más tu cerebro',
+  iqSub:'Análisis cognitivo más profundo con apps y tests relacionados',
+  extTitle:'Descubre más funciones',
+  extSub:'De los números de la suerte al CI de precisión — todo gratis',
+  luckyTitle:'🍀 Generador de Números de la Suerte',
+  luckyDesc:'Números personalizados basados en numerología y astrología',
+  luckyCta:'Probar →',
+  brainIqTitle:'🧠 Tests de entrenamiento cerebral',
+  brainIqDesc:'IE · Memoria · Creatividad · Concentración · Velocidad',
+  brainIqCta:'Hacer prueba →',
+  brainExtTitle:'📊 Test de CI de precisión',
+  brainExtDesc:'Medición científica de CI en 40 preguntas con análisis',
+  brainExtCta:'Comenzar →'
+}
 };

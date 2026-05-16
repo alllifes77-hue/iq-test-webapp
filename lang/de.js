@@ -117,5 +117,21 @@ seoSections:[
   {h3:'IQ-Wert verstehen: Perzentilen und Normalverteilung',p:'Ihr IQ-Wert ordnet Sie in die Normalverteilung der Gesamtbevölkerung ein. Ein IQ von 100 ist exakt durchschnittlich (50. Perzentile). Ein Wert von 115 entspricht Top 16 %; 130 entspricht Top 2 %; 145 entspricht Top 0,1 %. Dieser Online-IQ-Test verwendet die Fehlerfunktion (erf) für eine präzise Perzentilenberechnung, sodass Ihr Ergebnis Ihren tatsächlichen Platz in der Bevölkerung widerspiegelt.'},
   {h3:'IQ vs. EQ – Warum beide für den Erfolg wichtig sind',p:'Forschungen zeigen, dass IQ akademische und berufliche Leistung vorhersagt, während emotionale Intelligenz (EQ) Führungseffektivität, Beziehungsqualität und Stressresistenz bestimmt. Unsere Plattform misst beides: Der IQ-Test bewertet fluide Intelligenz und logisches Denken, während das kostenlose EQ-Assessment Selbstwahrnehmung, Empathie und Emotionsregulation erfasst.'},
   {h3:'Kann ich den kostenlosen IQ-Test mehrmals machen?',p:'Aufgaben werden jede Sitzung zufällig aus einem großen Pool ausgewählt, sodass Wiederholungen unwahrscheinlich sind. Um Übungseffekte zu vermeiden, empfehlen wir mindestens zwei Wochen Abstand zwischen Wiederholungstests. Der Präzisions-IQ-Test (40 Items) liefert stabilere Ergebnisse. Für optimale Ergebnisse: ausgeruht testen, ruhige Umgebung wählen, keine Ablenkungen.'}
-]
+],
+promo:{
+  badge:'✨ Empfehlung',
+  iqTitle:'Erkunde dein Gehirn weiter',
+  iqSub:'Tiefere kognitive Analyse mit verwandten Apps und Tests',
+  extTitle:'Weitere Funktionen entdecken',
+  extSub:'Von Glückszahlen bis zur Präzisions-IQ-Analyse — alles kostenlos',
+  luckyTitle:'🍀 Glückszahlen-Generator',
+  luckyDesc:'Personalisierte Glückszahlen via Numerologie & Astrologie',
+  luckyCta:'Jetzt testen →',
+  brainIqTitle:'🧠 Gehirntraining-Tests',
+  brainIqDesc:'EQ · Gedächtnis · Kreativität · Fokus · Verarbeitungsgeschwindigkeit',
+  brainIqCta:'Test starten →',
+  brainExtTitle:'📊 Präzisions-IQ-Test',
+  brainExtDesc:'40 Fragen wissenschaftliche IQ-Messung mit Bereichsanalyse',
+  brainExtCta:'Test starten →'
+}
 };

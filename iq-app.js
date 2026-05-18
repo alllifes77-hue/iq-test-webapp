@@ -144,6 +144,23 @@ function applyLang(){
     const luckyUrl=`https://all-lifes.com/lucky${_l!=='ko'?'?lang='+_l:''}`;
     ['promo-lucky-card-iq','promo-lucky-card-ext'].forEach(id=>{const el=document.getElementById(id);if(el)el.href=luckyUrl;});
   }
+  // Brain training screen static text
+  if(L.bt){
+    const B=L.bt;
+    const upd=(id,val)=>{const el=document.getElementById(id);if(el&&val!=null)el.textContent=val;};
+    const updH=(id,val)=>{const el=document.getElementById(id);if(el&&val!=null)el.innerHTML=val;};
+    updH('bt-h2',B.h2);
+    if(B.chips){const c=document.getElementById('bt-chips');if(c)c.innerHTML=B.chips.map(t=>`<span class="bt-chip">${t}</span>`).join('');}
+    upd('bt-neuro-h4',B.neuroH4);upd('bt-neuro-p',B.neuroP);
+    upd('bt-games-label',B.gamesLabel);upd('bt-games-sub',B.gamesSub);
+    upd('bt-stroop-h3',B.stroopH3);updH('bt-stroop-desc',B.stroopDesc);
+    upd('stroop-score-box',B.notPlayed);upd('stroop-start-btn',B.start);
+    upd('bt-mem-h3',B.memH3);updH('bt-mem-desc',B.memDesc);
+    upd('memgrid-score-box',B.notPlayed);upd('memgrid-start-btn',B.start);upd('bt-mem-confirm',B.memConfirm);
+    upd('bt-rx-h3',B.rxH3);updH('bt-rx-desc',B.rxDesc);
+    upd('reaction-score-box',B.notPlayed);upd('reaction-start-btn',B.start);
+    updH('rx-hint',B.rxHint);upd('bt-back-btn',B.backBtn);
+  }
 }
 
 function sendResize(){
@@ -213,30 +230,38 @@ function switchMode(){startTest(currentMode==='short'?'long':'short');}
 
 // ── BRAIN TRAINING ──
 let btPrevScreen='results';
+function btL(){return(window.IQ_LANG&&window.IQ_LANG.bt)||null;}
+function btFmt(tpl,vars){return tpl?tpl.replace(/\{(\w+)\}/g,(_,k)=>vars[k]!=null?vars[k]:_):'';}
 function showBrainTraining(){
   const cur=document.querySelector('.screen.active');
   btPrevScreen=cur?cur.id.replace('screen-',''):'results';
   showScreen('brain-training');
   const iq=savedIQ||100;
+  const B=btL();
   const badge=document.getElementById('bt-iq-badge-text');
-  if(badge)badge.textContent=`내 IQ: ${iq}점`;
+  if(badge)badge.textContent=B?btFmt(B.badge,{iq}):`내 IQ: ${iq}점`;
   const msg=document.getElementById('bt-hero-msg');
   if(msg){
-    if(iq<90)msg.textContent=`IQ ${iq}점 — 지금부터가 시작입니다! 뇌가소성 연구는 지능이 훈련으로 실질적으로 향상될 수 있음을 증명합니다. 매일 5분 훈련이 뇌 구조 자체를 변화시킵니다.`;
-    else if(iq<110)msg.textContent=`IQ ${iq}점 — 탄탄한 기반을 갖추고 있습니다. 두뇌 훈련으로 작업 기억과 처리 속도를 높이면 인지 능력 전반이 눈에 띄게 향상됩니다.`;
-    else if(iq<130)msg.textContent=`IQ ${iq}점 — 뛰어난 두뇌입니다! 꾸준한 인지 훈련은 최상위 수행을 유지하고 노화에 따른 인지 저하를 효과적으로 늦춥니다.`;
-    else msg.textContent=`IQ ${iq}점 — 탁월한 지능입니다! 도전적인 인지 훈련으로 뇌의 한계를 계속 넓히고 신경 회로의 효율성을 극대화하세요.`;
+    if(B){
+      msg.textContent=iq<90?btFmt(B.msgLow,{iq}):iq<110?btFmt(B.msgMid,{iq}):iq<130?btFmt(B.msgHigh,{iq}):btFmt(B.msgTop,{iq});
+    }else{
+      if(iq<90)msg.textContent=`IQ ${iq}점 — 지금부터가 시작입니다! 뇌가소성 연구는 지능이 훈련으로 실질적으로 향상될 수 있음을 증명합니다. 매일 5분 훈련이 뇌 구조 자체를 변화시킵니다.`;
+      else if(iq<110)msg.textContent=`IQ ${iq}점 — 탄탄한 기반을 갖추고 있습니다. 두뇌 훈련으로 작업 기억과 처리 속도를 높이면 인지 능력 전반이 눈에 띄게 향상됩니다.`;
+      else if(iq<130)msg.textContent=`IQ ${iq}점 — 뛰어난 두뇌입니다! 꾸준한 인지 훈련은 최상위 수행을 유지하고 노화에 따른 인지 저하를 효과적으로 늦춥니다.`;
+      else msg.textContent=`IQ ${iq}점 — 탁월한 지능입니다! 도전적인 인지 훈련으로 뇌의 한계를 계속 넓히고 신경 회로의 효율성을 극대화하세요.`;
+    }
   }
   const backBtn=document.getElementById('bt-back-btn');
   if(backBtn)backBtn.onclick=()=>showScreen(btPrevScreen);
 }
 
 // ── STROOP TEST ──
-const SCOLS=[{n:'빨강',c:'#ef4444'},{n:'파랑',c:'#3b82f6'},{n:'초록',c:'#22c55e'},{n:'노랑',c:'#eab308'}];
+const SCOLS_KO=[{n:'빨강',c:'#ef4444'},{n:'파랑',c:'#3b82f6'},{n:'초록',c:'#22c55e'},{n:'노랑',c:'#eab308'}];
+function getSCOLS(){const B=btL();const names=B&&B.colors?B.colors:null;if(!names)return SCOLS_KO;return[{n:names[0],c:'#ef4444'},{n:names[1],c:'#3b82f6'},{n:names[2],c:'#22c55e'},{n:names[3],c:'#eab308'}];}
 let sSt=null;
 function startStroop(){
   document.getElementById('stroop-area').classList.add('active');
-  document.getElementById('stroop-start-btn').textContent='■ 진행 중...';
+  const B=btL();document.getElementById('stroop-start-btn').textContent=B?B.playing:'■ 진행 중...';
   sSt={r:0,ok:0,ms:0};nextStroop();
 }
 function nextStroop(){
@@ -244,6 +269,7 @@ function nextStroop(){
   if(sSt.r>=10){endStroop();return;}
   sSt.r++;
   document.getElementById('stroop-prog').textContent=`${sSt.r} / 10`;
+  const SCOLS=getSCOLS();
   const wi=Math.floor(Math.random()*4);
   let ii;do{ii=Math.floor(Math.random()*4);}while(ii===wi);
   const w=document.getElementById('stroop-word');
@@ -266,11 +292,11 @@ function answerStroop(chosen){
 }
 function endStroop(){
   document.getElementById('stroop-area').classList.remove('active');
-  document.getElementById('stroop-start-btn').textContent='▶ 다시 하기';
+  const B=btL();document.getElementById('stroop-start-btn').textContent=B?B.replay:'▶ 다시 하기';
   const acc=Math.round(sSt.ok/10*100);
   const avg=sSt.ok>0?Math.round(sSt.ms/sSt.ok):0;
   const box=document.getElementById('stroop-score-box');
-  box.textContent=`정확도 ${acc}% · 평균 ${avg}ms`;
+  box.textContent=B?btFmt(B.stroopScore,{acc,avg}):`정확도 ${acc}% · 평균 ${avg}ms`;
   box.style.color=acc>=80?'var(--success)':acc>=60?'var(--warning)':'var(--danger)';
   sSt=null;
 }
@@ -279,7 +305,7 @@ function endStroop(){
 let mSt=null;
 function startMemgrid(){
   document.getElementById('memgrid-area').classList.add('active');
-  document.getElementById('memgrid-start-btn').textContent='■ 진행 중...';
+  const B=btL();document.getElementById('memgrid-start-btn').textContent=B?B.playing:'■ 진행 중...';
   mSt={lv:1,sc:0};runMemLv();
 }
 function runMemLv(){
@@ -293,7 +319,8 @@ function runMemLv(){
   grid.innerHTML=[...Array(total)].map((_,i)=>
     `<div class="memgrid-cell${lit.includes(i)?' lit':''}" data-i="${i}" style="width:${csz};height:${csz};"></div>`
   ).join('');
-  document.getElementById('memgrid-status').textContent=`레벨 ${mSt.lv} — 패턴 기억 (${litN}칸)`;
+  const B=btL();
+  document.getElementById('memgrid-status').textContent=B?btFmt(B.memLevel,{lv:mSt.lv,n:litN}):`레벨 ${mSt.lv} — 패턴 기억 (${litN}칸)`;
   document.getElementById('memgrid-confirm-btn').style.display='none';
   setTimeout(()=>{
     if(!mSt)return;
@@ -301,7 +328,7 @@ function runMemLv(){
       c.classList.remove('lit');
       c.onclick=()=>memClick(c,parseInt(c.dataset.i));
     });
-    document.getElementById('memgrid-status').textContent='기억한 칸을 클릭하세요';
+    document.getElementById('memgrid-status').textContent=B?B.memClickHint:'기억한 칸을 클릭하세요';
     document.getElementById('memgrid-confirm-btn').style.display='inline-block';
   },1600);
 }
@@ -321,15 +348,15 @@ function confirmMemgrid(){
   });
   const ok=[...lit].every(i=>sel.has(i))&&[...sel].every(i=>lit.has(i));
   if(ok)mSt.sc++;
-  document.getElementById('memgrid-status').textContent=ok?'✓ 정확합니다!':'✗ 틀렸습니다';
+  const Bm=btL();document.getElementById('memgrid-status').textContent=ok?(Bm?Bm.memCorrect:'✓ 정확합니다!'):(Bm?Bm.memWrong:'✗ 틀렸습니다');
   document.getElementById('memgrid-confirm-btn').style.display='none';
   setTimeout(()=>{if(ok&&mSt.lv<5){mSt.lv++;runMemLv();}else endMemgrid();},900);
 }
 function endMemgrid(){
   document.getElementById('memgrid-area').classList.remove('active');
-  document.getElementById('memgrid-start-btn').textContent='▶ 다시 하기';
+  const B=btL();document.getElementById('memgrid-start-btn').textContent=B?B.replay:'▶ 다시 하기';
   const box=document.getElementById('memgrid-score-box');
-  box.textContent=`레벨 ${mSt.lv} 도달 · ${mSt.sc}/5 통과`;
+  box.textContent=B?btFmt(B.memResult,{lv:mSt.lv,sc:mSt.sc}):`레벨 ${mSt.lv} 도달 · ${mSt.sc}/5 통과`;
   box.style.color=mSt.lv>=4?'var(--success)':mSt.lv>=2?'var(--warning)':'var(--danger)';
   mSt=null;
 }
@@ -338,9 +365,9 @@ function endMemgrid(){
 let rxSt=null;
 function startReaction(){
   document.getElementById('reaction-area').classList.add('active');
-  document.getElementById('reaction-start-btn').textContent='■ 진행 중...';
+  const B=btL();document.getElementById('reaction-start-btn').textContent=B?B.playing:'■ 진행 중...';
   rxSt={ok:0,wrong:0,t:30,tapped:false};
-  document.getElementById('rx-live').textContent='정답: 0 · 오답: 0';
+  document.getElementById('rx-live').textContent=B?btFmt(B.rxLive,{ok:0,wrong:0}):'정답: 0 · 오답: 0';
   const fill=document.getElementById('rx-bar-fill');
   fill.style.transition='none';fill.style.width='100%';
   setTimeout(()=>{fill.style.transition='width 30s linear';fill.style.width='0%';},50);
@@ -361,13 +388,13 @@ function reactionTap(){
   if(rxSt.odd)rxSt.ok++;else rxSt.wrong++;
   updateRxLive();setTimeout(showNextRx,180);
 }
-function updateRxLive(){const el=document.getElementById('rx-live');if(el)el.textContent=`정답: ${rxSt.ok} · 오답: ${rxSt.wrong}`;}
+function updateRxLive(){const B=btL();const el=document.getElementById('rx-live');if(el)el.textContent=B?btFmt(B.rxLive,{ok:rxSt.ok,wrong:rxSt.wrong}):`정답: ${rxSt.ok} · 오답: ${rxSt.wrong}`;}
 function endReaction(){
   document.getElementById('reaction-area').classList.remove('active');
-  document.getElementById('reaction-start-btn').textContent='▶ 다시 하기';
+  const B=btL();document.getElementById('reaction-start-btn').textContent=B?B.replay:'▶ 다시 하기';
   const tot=rxSt.ok+rxSt.wrong,acc=tot>0?Math.round(rxSt.ok/tot*100):0;
   const box=document.getElementById('reaction-score-box');
-  box.textContent=`정답 ${rxSt.ok}회 · 정확도 ${acc}%`;
+  box.textContent=B?btFmt(B.rxResult,{ok:rxSt.ok,acc}):`정답 ${rxSt.ok}회 · 정확도 ${acc}%`;
   box.style.color=acc>=80?'var(--success)':acc>=60?'var(--warning)':'var(--danger)';
   rxSt=null;
 }

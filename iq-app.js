@@ -144,6 +144,8 @@ function applyLang(){
     const luckyUrl=`https://all-lifes.com/lucky${_l!=='ko'?'?lang='+_l:''}`;
     ['promo-lucky-card-iq','promo-lucky-card-ext'].forEach(id=>{const el=document.getElementById(id);if(el)el.href=luckyUrl;});
   }
+  // Daily banner (re-apply after lang switch)
+  updateDailyBanner();
   // Brain training screen static text
   if(L.bt){
     const B=L.bt;
@@ -177,6 +179,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   animateReliabilityBars();
   toggleFAQ(null);
+  updateDailyBanner();
   checkShareParams();
   // Report initial height to parent (Cloudflare Worker iframe wrapper)
   setTimeout(sendResize, 200);
@@ -210,6 +213,180 @@ function getExtPercentile(score,mean=76,sd=8){
 function tagPool(pool,name){return pool.map((q,i)=>Object.assign({},q,{_pool:name,_poolIdx:i}));}
 function buildShortSet(){return shuffle([...sample(tagPool(seqPool,'seqPool'),5),...sample(tagPool(matPool,'matPool'),5),...sample(tagPool(logPool,'logPool'),3),...sample(tagPool(anaPool,'anaPool'),2),...tagPool(hardPool,'hardPool')]);}
 function buildLongSet(){return shuffle([...sample(tagPool(seqPool,'seqPool'),10),...sample(tagPool(matPool,'matPool'),10),...sample(tagPool(spatPool,'spatPool'),10),...sample(tagPool(logPool,'logPool'),5),...sample(tagPool(anaPool,'anaPool'),5),...tagPool(veryHardPool,'veryHardPool')]);}
+
+// ── BRAIN AGE ──
+function calcBrainAge(iq){return Math.max(18,Math.min(65,Math.round(30-(iq-100)/3)));}
+function showBrainAgeCard(iq,suffix){
+  const age=calcBrainAge(iq);
+  const n=document.getElementById('brain-age-num-'+suffix);if(n)n.textContent=age;
+  const L=window.IQ_LANG&&window.IQ_LANG.brainAge;
+  const msgs=L?[
+    [25,L.ba_excellent,L.ba_excellent_d],[30,L.ba_great,L.ba_great_d],[38,L.ba_avg,L.ba_avg_d],[99,L.ba_grow,L.ba_grow_d]
+  ]:[
+    [25,'🧠 탁월한 뇌 나이!','최상위 인지 능력 — 꾸준한 두뇌 훈련으로 유지하세요.'],
+    [30,'🧠 우수한 뇌 나이!','평균보다 훨씬 젊은 두뇌 — 두뇌 훈련으로 더 낮춰보세요.'],
+    [38,'🧠 측정된 뇌 나이','두뇌 훈련으로 인지 능력을 향상시키세요.'],
+    [99,'🧠 성장 가능성 있음','매일 두뇌 훈련으로 뇌 나이를 낮출 수 있습니다!'],
+  ];
+  const [,title,desc]=msgs.find(([lim])=>age<=lim)||msgs[msgs.length-1];
+  const t=document.getElementById('brain-age-title-'+suffix);if(t)t.textContent=title;
+  const d=document.getElementById('brain-age-desc-'+suffix);if(d)d.textContent=desc;
+}
+
+// ── IQ HISTORY ──
+function saveIQHistory(iq,mode){
+  try{const h=JSON.parse(localStorage.getItem('iq_hist_v1')||'[]');h.push({date:new Date().toISOString().slice(0,10),iq,mode});if(h.length>10)h.shift();localStorage.setItem('iq_hist_v1',JSON.stringify(h));}catch{}
+}
+function renderIQHistory(cardId){
+  try{
+    const hist=JSON.parse(localStorage.getItem('iq_hist_v1')||'[]');
+    const el=document.getElementById(cardId);if(!el)return;
+    if(hist.length<2){el.style.display='none';return;}
+    el.style.display='block';
+    const L=window.IQ_LANG&&window.IQ_LANG;
+    const maxQ=Math.max(...hist.map(h=>h.iq)),minQ=Math.min(...hist.map(h=>h.iq));
+    const rng=Math.max(maxQ-minQ,10);
+    const avg=Math.round(hist.reduce((a,h)=>a+h.iq,0)/hist.length);
+    const hd=(L&&L.histTitle)||`📈 내 IQ 기록 (${hist.length}회)`;
+    const metaBest=(L&&L.histBest)||'최고';
+    const metaAvg=(L&&L.histAvg)||'평균';
+    const metaCount=(L&&L.histCount)||'기록';
+    el.innerHTML=`<div class="history-hd">${hd.replace('{n}',hist.length)}</div>
+      <div class="history-bars">${hist.map(h=>{const pct=Math.max(15,Math.round((h.iq-minQ+5)/(rng+10)*100));const c=h.iq>=120?'var(--success)':h.iq>=100?'#6366f1':'var(--warning)';return`<div class="h-bar-w"><div class="h-bar-v">${h.iq}</div><div class="h-bar" style="height:${pct}%;background:${c}"></div></div>`;}).join('')}</div>
+      <div class="history-meta"><span>${metaBest}: <strong>${maxQ}</strong></span><span>${metaAvg}: <strong>${avg}</strong></span><span>${metaCount}: <strong>${hist.length}회</strong></span></div>`;
+  }catch{}
+}
+
+// ── DAILY BRAIN CHALLENGE ──
+function _dHash(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h^s.charCodeAt(i))&0x7fffffff;return h;}
+function _dRand(seed){let s=seed|0;return()=>{s=(s*1664525+1013904223)&0xffffffff;return(s>>>0)/4294967295;};}
+function getDSt(){try{return JSON.parse(localStorage.getItem('iq_daily_v1'))||{};}catch{return{};}}
+function setDSt(s){try{localStorage.setItem('iq_daily_v1',JSON.stringify(s));}catch{}}
+
+function getDailyQs(){
+  const today=new Date().toISOString().slice(0,10);
+  const rand=_dRand(_dHash(today));
+  const pool=[...seqPool,...anaPool,...logPool];
+  return [...pool].map(q=>({q,r:rand()})).sort((a,b)=>a.r-b.r).map(x=>x.q).slice(0,5);
+}
+
+function updateDailyBanner(){
+  const st=getDSt();
+  const today=new Date().toISOString().slice(0,10);
+  const done=st.lastDate===today&&st.done;
+  const streak=st.streak||0;
+  const L=window.IQ_LANG;
+  const streakEl=document.getElementById('daily-banner-streak');
+  if(streakEl)streakEl.textContent=`🔥 ${streak}${(L&&L.daySuffix)||'일'}`;
+  const cta=document.getElementById('daily-banner-cta');
+  const sub=document.getElementById('daily-banner-sub');
+  const title=document.getElementById('daily-banner-title');
+  if(title&&L&&L.dailyBannerTitle)title.textContent=L.dailyBannerTitle;
+  if(done){
+    if(cta)cta.textContent=`✅ ${st.score||0}/5`;
+    if(sub)sub.textContent=(L&&L.dailyDoneSub)||'오늘 완료! 내일 또 도전하세요.';
+  }else{
+    if(cta)cta.textContent=(L&&L.dailyGo)||'도전하기 →';
+    if(sub)sub.textContent=(L&&L.dailyBannerSub)||'매일 5문제 · 연속 도전으로 뇌를 깨워보세요';
+  }
+}
+
+let _dCur=0,_dQs=[],_dRes=[],_dTmr=null,_dSec=30;
+
+function showDailyChallenge(){
+  const today=new Date().toISOString().slice(0,10);
+  const st=getDSt();
+  const L=window.IQ_LANG;
+  // Update hero
+  document.getElementById('daily-date-chip').textContent=today;
+  const heroTitle=document.getElementById('daily-hero-title');if(heroTitle&&L&&L.dailyTitle)heroTitle.textContent=L.dailyTitle;
+  const heroSub=document.getElementById('daily-hero-sub');if(heroSub&&L&&L.dailyHeroSub)heroSub.textContent=L.dailyHeroSub;
+  const streak=st.streak||0,best=st.bestStreak||0;
+  const sfx=(L&&L.daySuffix)||'일';
+  const strEl=document.getElementById('daily-streak-display');if(strEl)strEl.textContent=`${streak}${sfx} ${(L&&L.consecutive)||'연속'}`;
+  const bestEl=document.getElementById('daily-best-display');if(bestEl)bestEl.textContent=`${(L&&L.best)||'최고'} ${best}${sfx}`;
+  showScreen('daily');
+  // Already done?
+  if(st.lastDate===today&&st.done){
+    document.getElementById('daily-q-section').style.display='none';
+    document.getElementById('daily-result-section').style.display='none';
+    document.getElementById('daily-done-section').style.display='block';
+    document.getElementById('daily-done-score').textContent=`${st.score||0}/5`;
+    const doneMsg=document.getElementById('daily-done-msg');if(doneMsg&&L&&L.dailyAlreadyDone)doneMsg.textContent=L.dailyAlreadyDone;
+    document.getElementById('daily-done-streak').textContent=`🔥 ${streak}${sfx} ${(L&&L.inStreak)||'연속 중!'}`;
+    const doneBack=document.getElementById('daily-done-back-btn');if(doneBack&&L&&L.backHome)doneBack.textContent=L.backHome;
+    return;
+  }
+  document.getElementById('daily-q-section').style.display='block';
+  document.getElementById('daily-result-section').style.display='none';
+  document.getElementById('daily-done-section').style.display='none';
+  _dQs=getDailyQs();_dCur=0;_dRes=[];
+  renderDailyQ();
+}
+
+function renderDailyQ(){
+  const q=_dQs[_dCur];
+  for(let i=0;i<5;i++){const dot=document.getElementById('daily-dot-'+i);if(!dot)continue;dot.className='daily-dot';if(i<_dCur)dot.classList.add(_dRes[i]?'correct':'wrong');else if(i===_dCur)dot.classList.add('active');}
+  document.getElementById('daily-q-type').textContent=q.typeLabel||q.type;
+  document.getElementById('daily-q-text').textContent=q.q;
+  const body=document.getElementById('daily-q-body');
+  body.textContent=q.seq||q.analogy||q.premise||'';
+  const optsEl=document.getElementById('daily-q-opts');
+  optsEl.innerHTML=q.opts.map((o,i)=>`<button class="daily-q-opt" onclick="answerDaily(${i})">${o}</button>`).join('');
+  startDailyTimer();
+}
+
+function startDailyTimer(){
+  clearInterval(_dTmr);_dSec=30;
+  const fill=document.getElementById('daily-timer-fill'),txt=document.getElementById('daily-timer-txt');
+  if(fill){fill.style.transition='none';fill.style.width='100%';}
+  setTimeout(()=>{if(fill){fill.style.transition='width 30s linear';fill.style.width='0%';}},50);
+  _dTmr=setInterval(()=>{_dSec--;if(txt)txt.textContent=_dSec;if(_dSec<=0){clearInterval(_dTmr);answerDaily(-1);}},1000);
+}
+
+function answerDaily(chosen){
+  clearInterval(_dTmr);
+  const q=_dQs[_dCur];
+  const correct=chosen===q.correct;
+  _dRes.push(correct);
+  document.querySelectorAll('.daily-q-opt').forEach((btn,i)=>{btn.disabled=true;if(i===q.correct)btn.classList.add('correct');else if(i===chosen&&!correct)btn.classList.add('wrong');});
+  setTimeout(()=>{_dCur++;if(_dCur>=5)endDailyChallenge();else renderDailyQ();},700);
+}
+
+function endDailyChallenge(){
+  const today=new Date().toISOString().slice(0,10);
+  const score=_dRes.filter(Boolean).length;
+  const st=getDSt();
+  const yesterday=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  let newStreak=1;
+  if(st.lastDate===yesterday)newStreak=(st.streak||0)+1;
+  else if(st.lastDate===today)newStreak=st.streak||1;
+  const best=Math.max(newStreak,st.bestStreak||0);
+  setDSt({lastDate:today,done:true,score,streak:newStreak,bestStreak:best});
+  updateDailyBanner();
+  const L=window.IQ_LANG;
+  const sfx=(L&&L.daySuffix)||'일';
+  const starsMap=['💪','⭐','⭐⭐','⭐⭐⭐','⭐⭐⭐⭐','⭐⭐⭐⭐⭐'];
+  document.getElementById('daily-res-stars').textContent=starsMap[score]||'💪';
+  document.getElementById('daily-res-score').textContent=score;
+  const sub=document.getElementById('daily-res-sub');if(sub)sub.textContent=`/ 5 ${(L&&L.correct)||'정답'}`;
+  document.getElementById('daily-res-streak').textContent=`🔥 ${newStreak}${sfx} ${(L&&L.streakAchieved)||'연속 달성!'}`;
+  for(let i=0;i<5;i++){const dot=document.getElementById('daily-dot-'+i);if(dot)dot.className='daily-dot '+(_dRes[i]?'correct':'wrong');}
+  const shareBtn=document.getElementById('daily-share-btn');if(shareBtn&&L&&L.dailyShare)shareBtn.textContent=L.dailyShare;
+  const backBtn=document.getElementById('daily-back-btn');if(backBtn&&L&&L.backHome)backBtn.textContent=L.backHome;
+  document.getElementById('daily-q-section').style.display='none';
+  document.getElementById('daily-result-section').style.display='block';
+}
+
+function shareDailyResult(){
+  const st=getDSt();const score=st.score||0;const streak=st.streak||0;
+  const emoji=_dRes.map(r=>r?'🟩':'🟥').join('');
+  const L=window.IQ_LANG;
+  const url=(L&&L.shareUrl)||'https://all-lifes.com/iq';
+  const text=`🧠 ${(L&&L.dailyTitle)||'오늘의 두뇌 챌린지'} ${score}/5\n${emoji}\n🔥 ${streak}${(L&&L.daySuffix)||'일'} ${(L&&L.consecutive)||'연속'} #IQTest\n${url}`;
+  if(navigator.share){navigator.share({text}).catch(()=>{});}
+  else if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>{const msg=(L&&L.copied)||'클립보드에 복사됨!';showToast(msg);}).catch(()=>{});}
+}
 
 // ── State ──
 let currentMode='short',questions=[],curQ=0,answers=[],timer=null,timeLeft=0,testStart=0;
@@ -564,6 +741,9 @@ function computeResults(){
     }
   },400);
   buildExtGrid();
+  saveIQHistory(iq,currentMode);
+  showBrainAgeCard(iq,'iq');
+  renderIQHistory('history-card-iq');
 }
 
 // ── Bell Curve ──
@@ -748,6 +928,8 @@ function showExtResults(result){
   setTimeout(()=>{ring.style.strokeDashoffset=offset;},200);
 
   showScreen('ext-results');
+  showBrainAgeCard(savedIQ,'ext');
+  renderIQHistory('history-card-ext');
 
   setTimeout(()=>{
     document.getElementById('ext-bell-title').textContent=tp('extBellTitle',{title:extTest.title})||`📊 ${extTest.title} 점수 분포에서의 위치`;

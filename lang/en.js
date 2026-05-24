@@ -164,6 +164,33 @@ promo:{
   brainExtDesc:'Neuroplasticity + 3 Brain Training Games · Free',
   brainExtCta:'Start Training →'
 },
+// Daily Challenge
+dailyTitle:'🗓️ Today\'s Brain Challenge',
+dailyBannerTitle:'Today\'s Brain Challenge',
+dailyBannerSub:'5 questions daily · build your streak · wake up your brain',
+dailyDoneSub:'Today complete! Come back tomorrow.',
+dailyGo:'Challenge →',
+dailyAlreadyDone:'Today\'s challenge complete! See you tomorrow.',
+dailyHeroSub:'5 questions · once a day · daily streaks keep your brain sharp',
+dailyShare:'📤 Share Result',
+daySuffix:' days',
+consecutive:'streak',
+inStreak:'streak ongoing!',
+streakAchieved:'streak achieved!',
+best:'Best',
+correct:'correct',
+backHome:'← Back to Home',
+shareUrl:'https://all-lifes.com/iq',
+// Brain Age
+brainAge:{
+  ba_excellent:'🧠 Exceptional brain age!',ba_excellent_d:'Top-tier cognitive ability — keep training to maintain it.',
+  ba_great:'🧠 Great brain age!',ba_great_d:'Much younger than average — push it lower with brain training!',
+  ba_avg:'🧠 Measured brain age',ba_avg_d:'Boost your cognition with daily brain training.',
+  ba_grow:'🧠 Room to grow',ba_grow_d:'Daily brain training can lower your brain age significantly!'
+},
+// History
+histTitle:'📈 My IQ History ({n} records)',
+histBest:'Best',histAvg:'Average',histCount:'Records',
 bt:{
   h2:'Neuroplasticity — Your <span>Brain Grows</span>',
   chips:['🔬 Scientific basis','🧬 Neuroplasticity','💪 5 min/day','📈 Measurable growth'],

@@ -344,6 +344,64 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
 .promo-card.brain .pc-cta{color:var(--accent);background:rgba(124,58,237,.1);}
 @media(max-width:600px){.promo-cards{grid-template-columns:1fr;}.promo-card{gap:10px;padding:14px 12px;}}
 
+/* ── DAILY CHALLENGE ── */
+.daily-banner{max-width:720px;margin:0 auto 6px;padding:0 16px;}
+.daily-banner-inner{background:linear-gradient(135deg,#0f172a,#1e293b);border:1.5px solid #4f46e5;border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:border-color .2s;}
+.daily-banner-inner:hover{border-color:#818cf8;}
+.daily-fire{font-size:30px;flex-shrink:0;}
+.daily-banner-info{flex:1;min-width:0;}
+.daily-banner-info h4{color:#e0e7ff;font-size:14px;font-weight:700;margin:0 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.daily-banner-info p{color:#64748b;font-size:11px;margin:0;}
+.daily-banner-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;}
+.daily-banner-streak{background:rgba(245,158,11,.15);border:1px solid #f59e0b;border-radius:8px;padding:3px 9px;font-size:11px;font-weight:700;color:#fcd34d;white-space:nowrap;}
+.daily-banner-cta{background:#4f46e5;color:#fff;border:none;border-radius:9px;padding:8px 14px;font-weight:700;font-size:12px;cursor:pointer;white-space:nowrap;}
+#screen-daily{background:var(--bg);padding-bottom:60px;}
+.daily-hero{background:linear-gradient(135deg,#0f172a,#1e293b,#312e81);color:#fff;padding:26px 20px 20px;text-align:center;}
+.daily-date-chip{display:inline-block;background:rgba(99,102,241,.25);border:1px solid #6366f1;border-radius:20px;padding:3px 14px;font-size:10px;font-weight:700;color:#a5b4fc;letter-spacing:.5px;margin-bottom:8px;}
+.daily-hero h2{font-size:clamp(17px,3vw,22px);font-weight:900;margin:0 0 10px;}
+.daily-streak-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
+.daily-s-chip{display:inline-flex;align-items:center;gap:5px;background:rgba(245,158,11,.15);border:1px solid #f59e0b;border-radius:20px;padding:5px 13px;font-size:12px;font-weight:700;color:#fcd34d;}
+.daily-q-wrap{max-width:540px;margin:0 auto;padding:18px 14px;}
+.daily-progress{display:flex;gap:6px;margin-bottom:14px;}
+.daily-dot{flex:1;height:5px;border-radius:3px;background:var(--border);transition:background .3s;}
+.daily-dot.active{background:#6366f1;}.daily-dot.correct{background:var(--success);}.daily-dot.wrong{background:var(--danger);}
+.daily-timer-wrap{margin-bottom:12px;}
+.daily-timer-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
+.daily-timer-fill{height:100%;background:#6366f1;border-radius:2px;transition:width 1s linear;}
+.daily-timer-txt{text-align:right;font-size:10px;color:var(--muted);margin-top:2px;}
+.daily-q-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;}
+.daily-q-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px;}
+.daily-q-text{font-size:14px;font-weight:600;color:var(--text);margin-bottom:10px;line-height:1.5;}
+.daily-q-body{font-size:17px;font-weight:800;color:#6366f1;background:rgba(99,102,241,.07);border-radius:10px;padding:11px 14px;text-align:center;margin-bottom:14px;word-break:break-word;line-height:1.5;}
+.daily-q-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.daily-q-opt{background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:11px 8px;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;transition:all .12s;text-align:center;}
+.daily-q-opt:hover:not(:disabled){border-color:#6366f1;background:rgba(99,102,241,.06);}
+.daily-q-opt.correct{border-color:var(--success)!important;background:rgba(5,150,105,.1)!important;color:var(--success)!important;}
+.daily-q-opt.wrong{border-color:var(--danger)!important;background:rgba(239,68,68,.1)!important;color:var(--danger)!important;}
+.daily-result-wrap{max-width:440px;margin:0 auto;padding:24px 14px;text-align:center;}
+.daily-res-stars{font-size:40px;letter-spacing:3px;margin-bottom:12px;}
+.daily-res-big{font-size:52px;font-weight:900;color:var(--text);line-height:1;}
+.daily-res-sub{font-size:14px;color:var(--muted);margin:4px 0 16px;}
+.daily-res-streak{background:rgba(245,158,11,.12);border:1px solid #f59e0b;border-radius:11px;padding:10px 18px;margin-bottom:16px;font-size:13px;font-weight:700;color:#fcd34d;}
+.daily-share-btn{width:100%;background:#6366f1;color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:9px;}
+.daily-back-btn{width:100%;background:transparent;border:1px solid var(--border);border-radius:12px;padding:11px;font-size:13px;color:var(--muted);cursor:pointer;}
+.daily-done-box{background:var(--card);border:1.5px solid var(--success);border-radius:16px;padding:22px;text-align:center;}
+.daily-done-score{font-size:44px;font-weight:900;color:var(--success);margin-bottom:5px;}
+/* Brain Age Card */
+.brain-age-card{background:var(--card);border:1.5px solid #6366f1;border-radius:16px;padding:18px 20px;margin-bottom:16px;display:flex;align-items:center;gap:16px;}
+.brain-age-num{font-size:54px;font-weight:900;color:#6366f1;line-height:1;flex-shrink:0;}
+.brain-age-unit{font-size:16px;font-weight:700;color:#818cf8;margin-left:2px;}
+.brain-age-info h4{font-size:14px;font-weight:700;color:var(--text);margin:0 0 4px;}
+.brain-age-info p{font-size:12px;color:var(--muted);margin:0;line-height:1.5;}
+/* History Chart */
+.history-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 18px;margin-bottom:16px;}
+.history-hd{font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;}
+.history-bars{display:flex;align-items:flex-end;gap:5px;height:60px;}
+.h-bar-w{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;height:100%;}
+.h-bar{width:100%;border-radius:4px 4px 0 0;min-height:4px;}
+.h-bar-v{font-size:10px;font-weight:700;color:var(--text);}
+.history-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;font-size:11px;color:var(--muted);}
+.history-meta strong{color:var(--text);}
 /* ── BRAIN TRAINING SCREEN ── */
 #screen-brain-training{background:var(--bg);padding-bottom:60px;}
 .bt-hero{background:linear-gradient(135deg,#1e1b4b,#312e81,#4f46e5);color:#fff;padding:44px 20px 36px;text-align:center;}
@@ -437,6 +495,21 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
         <span class="trust-chip">📈 정규분포 IQ 산출</span>
         <span class="trust-chip">✅ 완전 무료</span>
         <span class="trust-chip">🔒 데이터 비저장</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Daily Brain Challenge Banner -->
+  <div class="daily-banner" id="daily-home-banner">
+    <div class="daily-banner-inner" onclick="event.preventDefault();showDailyChallenge();">
+      <div class="daily-fire">🔥</div>
+      <div class="daily-banner-info">
+        <h4 id="daily-banner-title">오늘의 두뇌 챌린지</h4>
+        <p id="daily-banner-sub">매일 5문제 · 연속 도전으로 뇌를 깨워보세요</p>
+      </div>
+      <div class="daily-banner-right">
+        <span class="daily-banner-streak" id="daily-banner-streak">🔥 0일</span>
+        <button class="daily-banner-cta" id="daily-banner-cta">도전하기 →</button>
       </div>
     </div>
   </div>
@@ -624,6 +697,17 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
       <div class="ext-grid" id="ext-grid"></div>
     </div>
 
+    <!-- Brain Age -->
+    <div class="brain-age-card" id="brain-age-card-iq">
+      <div><div class="brain-age-num" id="brain-age-num-iq">--</div><div class="brain-age-unit" id="brain-age-unit-iq">세</div></div>
+      <div class="brain-age-info">
+        <h4 id="brain-age-title-iq">🧠 측정된 뇌 나이</h4>
+        <p id="brain-age-desc-iq">두뇌 훈련으로 뇌 나이를 낮춰보세요!</p>
+      </div>
+    </div>
+    <!-- IQ History Chart -->
+    <div class="history-card" id="history-card-iq" style="display:none"></div>
+
     <!-- 두뇌 훈련 & 추천 앱 프로모션 -->
     <div class="promo-section" id="promo-iq">
       <div class="promo-header">
@@ -750,6 +834,17 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
       <div id="tips-list"></div>
     </div>
 
+    <!-- Brain Age (ext) -->
+    <div class="brain-age-card" id="brain-age-card-ext">
+      <div><div class="brain-age-num" id="brain-age-num-ext">--</div><div class="brain-age-unit" id="brain-age-unit-ext">세</div></div>
+      <div class="brain-age-info">
+        <h4 id="brain-age-title-ext">🧠 측정된 뇌 나이</h4>
+        <p id="brain-age-desc-ext">두뇌 훈련으로 뇌 나이를 낮춰보세요!</p>
+      </div>
+    </div>
+    <!-- IQ History Chart (ext) -->
+    <div class="history-card" id="history-card-ext" style="display:none"></div>
+
     <!-- 두뇌 훈련 & 추천 앱 프로모션 -->
     <div class="promo-section" id="promo-ext">
       <div class="promo-header">
@@ -802,6 +897,64 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
 </div>
 
 <!-- ══ BRAIN TRAINING ══ -->
+<!-- ── DAILY BRAIN CHALLENGE SCREEN ── -->
+<div id="screen-daily" class="screen">
+  <div class="daily-hero">
+    <div class="container">
+      <div class="daily-date-chip" id="daily-date-chip">2026-05-25</div>
+      <h2 id="daily-hero-title">🗓️ 오늘의 두뇌 챌린지</h2>
+      <p style="color:#94a3b8;font-size:12px;margin:0 0 12px;" id="daily-hero-sub">매일 5문제 · 하루 한 번 · 연속 도전으로 두뇌를 깨워보세요</p>
+      <div class="daily-streak-row">
+        <div class="daily-s-chip">🔥 <span id="daily-streak-display">0일 연속</span></div>
+        <div class="daily-s-chip">🏆 <span id="daily-best-display">최고 0일</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Question Section -->
+  <div id="daily-q-section" class="daily-q-wrap">
+    <div class="daily-progress">
+      <div class="daily-dot" id="daily-dot-0"></div>
+      <div class="daily-dot" id="daily-dot-1"></div>
+      <div class="daily-dot" id="daily-dot-2"></div>
+      <div class="daily-dot" id="daily-dot-3"></div>
+      <div class="daily-dot" id="daily-dot-4"></div>
+    </div>
+    <div class="daily-timer-wrap">
+      <div class="daily-timer-bar"><div class="daily-timer-fill" id="daily-timer-fill" style="width:100%"></div></div>
+      <div class="daily-timer-txt"><span id="daily-timer-txt">30</span>s</div>
+    </div>
+    <div class="daily-q-card">
+      <div class="daily-q-type" id="daily-q-type">수열 추론</div>
+      <div class="daily-q-text" id="daily-q-text">다음 수열의 빈 칸에 들어갈 숫자는?</div>
+      <div class="daily-q-body" id="daily-q-body">3, 6, 12, 24, ?</div>
+      <div class="daily-q-opts" id="daily-q-opts"></div>
+    </div>
+  </div>
+
+  <!-- Result Section -->
+  <div id="daily-result-section" class="daily-result-wrap" style="display:none">
+    <div class="daily-res-stars" id="daily-res-stars">⭐⭐⭐⭐⭐</div>
+    <div class="daily-res-big" id="daily-res-score">5</div>
+    <div class="daily-res-sub" id="daily-res-sub">/ 5 정답</div>
+    <div class="daily-res-streak" id="daily-res-streak">🔥 1일 연속 달성!</div>
+    <button class="daily-share-btn" onclick="shareDailyResult()" id="daily-share-btn">📤 결과 공유하기</button>
+    <button class="daily-back-btn" onclick="showScreen('home')" id="daily-back-btn">← 홈으로 돌아가기</button>
+  </div>
+
+  <!-- Already Done Today -->
+  <div id="daily-done-section" class="daily-q-wrap" style="display:none">
+    <div class="daily-done-box">
+      <div class="daily-done-score" id="daily-done-score">5/5</div>
+      <p style="color:var(--muted);font-size:13px;margin:6px 0 14px;" id="daily-done-msg">오늘의 챌린지를 완료했습니다! 내일 다시 도전하세요.</p>
+      <div class="daily-res-streak" id="daily-done-streak">🔥 1일 연속 중!</div>
+    </div>
+    <div style="text-align:center;margin-top:16px;">
+      <button class="daily-back-btn" onclick="showScreen('home')" style="max-width:320px;display:inline-block;" id="daily-done-back-btn">← 홈으로 돌아가기</button>
+    </div>
+  </div>
+</div>
+
 <div id="screen-brain-training" class="screen">
   <div class="bt-hero">
     <div class="container">

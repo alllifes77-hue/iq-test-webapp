@@ -266,7 +266,8 @@ function setDSt(s){try{localStorage.setItem('iq_daily_v1',JSON.stringify(s));}ca
 function getDailyQs(){
   const today=new Date().toISOString().slice(0,10);
   const rand=_dRand(_dHash(today));
-  const pool=[...seqPool,...anaPool,...logPool];
+  // Tag with pool name + index so getTranslatedQ can apply localization
+  const pool=[...tagPool(seqPool,'seqPool'),...tagPool(anaPool,'anaPool'),...tagPool(logPool,'logPool')];
   return [...pool].map(q=>({q,r:rand()})).sort((a,b)=>a.r-b.r).map(x=>x.q).slice(0,5);
 }
 
@@ -325,7 +326,8 @@ function showDailyChallenge(){
 }
 
 function renderDailyQ(){
-  const q=_dQs[_dCur];
+  const raw=_dQs[_dCur];
+  const q=getTranslatedQ(raw);
   for(let i=0;i<5;i++){const dot=document.getElementById('daily-dot-'+i);if(!dot)continue;dot.className='daily-dot';if(i<_dCur)dot.classList.add(_dRes[i]?'correct':'wrong');else if(i===_dCur)dot.classList.add('active');}
   document.getElementById('daily-q-type').textContent=q.typeLabel||q.type;
   document.getElementById('daily-q-text').textContent=q.q;

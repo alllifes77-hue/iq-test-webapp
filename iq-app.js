@@ -163,6 +163,19 @@ function applyLang(){
     upd('reaction-score-box',B.notPlayed);upd('reaction-start-btn',B.start);
     updH('rx-hint',B.rxHint);upd('bt-back-btn',B.backBtn);
   }
+  // ASD section localization
+  if(L.asd){
+    const A=L.asd;
+    const aupd=(id,val)=>{const el=document.getElementById(id);if(el&&val!=null)el.textContent=val;};
+    aupd('asd-section-title',A.sectionTitle);
+    aupd('asd-section-sub',A.sectionSub);
+    aupd('asd-card-title',A.cardTitle);
+    aupd('asd-card-desc',A.cardDesc);
+    aupd('asd-card2-title',A.card2Title);
+    aupd('asd-card2-desc',A.card2Desc);
+    aupd('asd-q-disclaimer',A.qDisclaimer);
+    const bb=document.querySelector('.asd-back-btn');if(bb&&L.backHome)bb.textContent=L.backHome;
+  }
 }
 
 function sendResize(){
@@ -1295,4 +1308,206 @@ function animateReliabilityBars(){
   },{threshold:0.3});
   const wrap=document.querySelector('.rl-wrap');
   if(wrap)observer.observe(wrap);
+}
+
+// ═══════════════════════════════════════════════════════════
+// ASD / ASPERGER / ADHD SCREENING
+// ═══════════════════════════════════════════════════════════
+
+// Question pool metadata: cat = sc|rb|ss|cg|adhd, reverse = true → disagree scores 1
+const _asdPool=[
+  {cat:'sc',reverse:true},  // Q1
+  {cat:'sc',reverse:false}, // Q2
+  {cat:'sc',reverse:true},  // Q3
+  {cat:'sc',reverse:false}, // Q4
+  {cat:'sc',reverse:false}, // Q5
+  {cat:'sc',reverse:false}, // Q6
+  {cat:'sc',reverse:false}, // Q7
+  {cat:'rb',reverse:false}, // Q8
+  {cat:'rb',reverse:false}, // Q9
+  {cat:'rb',reverse:false}, // Q10
+  {cat:'rb',reverse:false}, // Q11
+  {cat:'ss',reverse:false}, // Q12
+  {cat:'ss',reverse:false}, // Q13
+  {cat:'ss',reverse:false}, // Q14
+  {cat:'ss',reverse:false}, // Q15
+  {cat:'cg',reverse:false}, // Q16
+  {cat:'cg',reverse:false}, // Q17
+  {cat:'cg',reverse:false}, // Q18
+  {cat:'cg',reverse:false}, // Q19
+  {cat:'cg',reverse:false}, // Q20
+  {cat:'adhd',reverse:false},// Q21
+  {cat:'adhd',reverse:false},// Q22
+  {cat:'adhd',reverse:false},// Q23
+  {cat:'adhd',reverse:false},// Q24
+  {cat:'adhd',reverse:false},// Q25
+];
+
+const _asdQKo=[
+  '누군가 직접 말하지 않아도 그 뜻을 쉽게 알아챈다',
+  '사교적인 상황이 혼란스럽거나 압도적으로 느껴진다',
+  '상대방이 지루해하거나 흥미를 잃었다는 것을 쉽게 알 수 있다',
+  '대화 중 표정이나 목소리 톤만으로 상대방의 감정을 파악하기 어렵다',
+  '가벼운 잡담이나 사교적 대화가 어렵거나 불편하다',
+  '원하더라도 새로운 사람을 사귀는 것이 어렵다',
+  '사람들이 나를 이상하다고 하거나, 당연한 사회적 규칙을 잘 모른다고 한다',
+  '일과나 일상이 예상치 못하게 바뀌면 매우 불편하거나 괴롭다',
+  '같은 경로, 같은 방식, 같은 순서로 일을 처리하는 것을 선호한다',
+  '남들보다 훨씬 깊이 빠져드는 특별한 관심사가 하나 이상 있다',
+  '특정 종류(자동차, 역사, 동물 등)에 대한 정보를 수집하는 것을 즐긴다',
+  '남들은 신경 쓰지 않는 소리, 빛, 냄새, 질감에 민감하게 반응한다',
+  '특정 옷감, 소리, 냄새가 강한 불편감을 준다',
+  '소란스럽거나 사람이 많은 장소에서 쉽게 압도되거나 지친다',
+  '다른 사람들이 보통 알아채지 못하는 환경 속 작은 세부 사항을 잘 인식한다',
+  '책이나 영화에서 등장인물의 생각이나 의도를 파악하기 어렵다',
+  '사물이나 상황에서 패턴이나 규칙을 찾는 것을 즐긴다',
+  '하나의 일을 하다가 다른 일로 전환하는 것이 힘들다',
+  '여러 사람의 대화를 동시에 따라가기 어렵다',
+  '말로 설명된 것보다 그림이나 시각적 자료를 이해하기 더 쉽다',
+  '집중이 필요한 과제를 수행할 때 부주의한 실수를 자주 한다',
+  '흥미롭지 않은 일에 집중을 유지하기 어렵다',
+  '가만히 있기 어렵거나 내면적으로 안절부절못하는 느낌이 있다',
+  '생각이 빠르게 여러 방향으로 이리저리 옮겨다닌다',
+  '결과를 생각하지 않고 충동적으로 행동하거나 말할 때가 있다',
+];
+
+// ASD state
+let _asdAnswers=[];
+let _asdCur=0;
+
+function _asdL(key,fallback){const A=window.IQ_LANG&&window.IQ_LANG.asd;return(A&&A[key]!=null?A[key]:fallback);}
+
+function startASD(){
+  _asdAnswers=[];_asdCur=0;
+  showScreen('asd');
+  _renderASDQ();
+}
+
+function _asdQText(i){
+  const A=window.IQ_LANG&&window.IQ_LANG.asd;
+  return(A&&A.questions&&A.questions[i])||_asdQKo[i];
+}
+
+function _asdCatLabel(cat){
+  const A=window.IQ_LANG&&window.IQ_LANG.asd;
+  const m=A&&A.catLabels;
+  const ko={sc:'사회적 소통',rb:'반복 행동·루틴',ss:'감각 민감도',cg:'인지 스타일',adhd:'ADHD 동반 평가'};
+  return(m&&m[cat])||ko[cat]||cat;
+}
+
+function _renderASDQ(){
+  const q=_asdPool[_asdCur];
+  const total=_asdPool.length;
+  // Dots
+  const dots=document.getElementById('asd-dots');
+  if(dots)dots.innerHTML=_asdPool.map((_,i)=>`<span class="asd-dot${i<_asdCur?' done':i===_asdCur?' active':''}"></span>`).join('');
+  // Counter
+  const ctr=document.getElementById('asd-counter');if(ctr)ctr.textContent=`${_asdCur+1} / ${total}`;
+  // Category
+  const catEl=document.getElementById('asd-cat');if(catEl)catEl.textContent=_asdCatLabel(q.cat);
+  // Cat color class
+  if(catEl){catEl.className='asd-cat-badge asd-cat-'+q.cat;}
+  // Question
+  const qEl=document.getElementById('asd-q-text');if(qEl)qEl.textContent=_asdQText(_asdCur);
+  // Progress bar
+  const bar=document.getElementById('asd-progress-bar');if(bar)bar.style.width=`${(_asdCur/total)*100}%`;
+  // Answer buttons
+  const labels=_asdL('answerLabels',['전혀 아니다','약간 아니다','약간 그렇다','매우 그렇다']);
+  const optsEl=document.getElementById('asd-opts');
+  if(optsEl)optsEl.innerHTML=labels.map((lb,i)=>`<button class="asd-opt" onclick="answerASD(${i})">${lb}</button>`).join('');
+}
+
+function answerASD(val){
+  _asdAnswers.push(val);
+  _asdCur++;
+  if(_asdCur>=_asdPool.length){_computeASDResult();}
+  else{_renderASDQ();}
+}
+
+function _computeASDResult(){
+  let asdScore=0,adhdScore=0;
+  const catScores={sc:0,rb:0,ss:0,cg:0};
+  const catMax={sc:7,rb:4,ss:4,cg:5};
+  _asdPool.forEach((q,i)=>{
+    const agreed=_asdAnswers[i]>=2;
+    const pt=q.reverse?(agreed?0:1):(agreed?1:0);
+    if(q.cat==='adhd'){adhdScore+=pt;}
+    else{asdScore+=pt;catScores[q.cat]+=pt;}
+  });
+  _showASDResult(asdScore,adhdScore,catScores,catMax);
+}
+
+function _showASDResult(asdScore,adhdScore,catScores,catMax){
+  showScreen('asd-result');
+  // Score
+  const sEl=document.getElementById('asd-score');if(sEl)sEl.textContent=asdScore;
+  // Level
+  const lvl=asdScore<=5?0:asdScore<=10?1:asdScore<=15?2:3;
+  const lvlKeys=['low','borderline','significant','strong'];
+  const lvlLabelsKo=['낮음','경계선','유의미','강함'];
+  const lvlDescsKo=[
+    'ASD 관련 특성이 낮은 범위입니다. 신경전형적(Neurotypical) 범위에 해당합니다.',
+    '일부 ASD 특성이 관찰됩니다. 스트레스·환경에 따라 더 두드러질 수 있습니다.',
+    '유의미한 ASD 특성이 있습니다. 정신건강의학과 또는 심리 전문가 평가를 권장합니다.',
+    '강한 ASD 특성이 있습니다. 전문 심리사 또는 정신건강의학과 전문의 상담을 강력히 권장합니다.',
+  ];
+  const lvlEl=document.getElementById('asd-level');
+  if(lvlEl){lvlEl.textContent=_asdL('levels',lvlLabelsKo)[lvl];lvlEl.className='asd-level-badge asd-lvl-'+lvlKeys[lvl];}
+  const ldEl=document.getElementById('asd-level-desc');if(ldEl)ldEl.textContent=_asdL('levelDescs',lvlDescsKo)[lvl];
+  // Profile
+  let profileIdx=4;
+  if(asdScore<=5)profileIdx=0;
+  else if(asdScore>=11&&adhdScore<=1)profileIdx=1;
+  else if(asdScore>=11&&adhdScore>=3)profileIdx=2;
+  else if(asdScore<=10&&adhdScore>=3)profileIdx=3;
+  const profilesKo=['신경전형적 범위','아스퍼거 / 고기능 자폐 프로필','AuDHD (ASD + ADHD 동반) 프로필','ADHD 주도 프로필','경계선 / 추가 평가 권장'];
+  const pfEl=document.getElementById('asd-profile');if(pfEl)pfEl.textContent=_asdL('profiles',profilesKo)[profileIdx];
+  // ADHD
+  const adhdLvl=adhdScore<=1?0:adhdScore<=3?1:2;
+  const adhdLbsKo=['낮음','중간','높음'];
+  const adhdDsKo=[
+    'ADHD 관련 특성이 낮습니다.',
+    '일부 ADHD 특성이 관찰됩니다. ASD와 ADHD는 함께 나타나는 경우가 많습니다.',
+    'ADHD 관련 특성이 높습니다. ASD+ADHD(AuDHD) 동반 가능성이 있으며 전문가 평가를 권장합니다.',
+  ];
+  const adhdLbs=_asdL('adhdLevels',adhdLbsKo);
+  const adhdDs=_asdL('adhdDescs',adhdDsKo);
+  const ahdlEl=document.getElementById('asd-adhd-level');if(ahdlEl)ahdlEl.textContent=`ADHD ${adhdLbs[adhdLvl]}: ${adhdScore}/5`;
+  const ahddEl=document.getElementById('asd-adhd-desc');if(ahddEl)ahddEl.textContent=adhdDs[adhdLvl];
+  // Category bars
+  const catEl=document.getElementById('asd-cat-bars');
+  if(catEl){
+    const A=window.IQ_LANG&&window.IQ_LANG.asd;
+    const cn=A&&A.catNames||{sc:'사회적 소통',rb:'반복 행동',ss:'감각 민감도',cg:'인지 스타일'};
+    catEl.innerHTML=Object.entries(catScores).map(([cat,score])=>{
+      const pct=Math.round((score/catMax[cat])*100);
+      return `<div class="asd-cat-row"><span class="asd-cat-nm">${cn[cat]||cat}</span><div class="asd-bar-wrap"><div class="asd-bar asd-bar-${cat}" style="width:${pct}%"></div></div><span class="asd-cat-sc">${score}/${catMax[cat]}</span></div>`;
+    }).join('');
+  }
+  // Result disclaimer
+  const disEl=document.getElementById('asd-result-disclaimer');
+  if(disEl)disEl.textContent=_asdL('resultDisclaimer','⚠️ 이 결과는 전문적 진단이 아닙니다. 점수가 높다면 정신건강의학과 또는 심리 전문가와 상담을 받아보시길 권장합니다.');
+  // Share button text
+  const shBtn=document.getElementById('asd-share-btn');if(shBtn)shBtn.textContent=_asdL('shareBtn','📤 결과 공유');
+  const hBtn=document.getElementById('asd-home-btn');if(hBtn)hBtn.textContent=_asdL('homeBtn','홈으로');
+}
+
+function shareASD(){
+  const scoreEl=document.getElementById('asd-score');
+  const levelEl=document.getElementById('asd-level');
+  const profileEl=document.getElementById('asd-profile');
+  const score=scoreEl?scoreEl.textContent:'?';
+  const level=levelEl?levelEl.textContent:'';
+  const profile=profileEl?profileEl.textContent:'';
+  const A=window.IQ_LANG&&window.IQ_LANG.asd;
+  const tmpl=(A&&A.shareText)||`[자폐 스펙트럼 검사] ASD 점수: ${score}/20 · ${level} · ${profile}\n무료 스크리닝 → https://all-lifes.com/iq-test/`;
+  const text=tmpl.replace('{score}',score).replace('{level}',level).replace('{profile}',profile);
+  const url='https://all-lifes.com/iq-test/';
+  if(navigator.share){navigator.share({title:'ASD 검사 결과',text,url}).catch(()=>{});}
+  else{
+    const el=document.createElement('textarea');el.value=text+'\n'+url;
+    el.style.position='fixed';el.style.opacity='0';document.body.appendChild(el);el.select();
+    try{document.execCommand('copy');}catch(e){}document.body.removeChild(el);
+    showToast(_asdL('copiedToast','📋 결과가 복사되었습니다!'));
+  }
 }

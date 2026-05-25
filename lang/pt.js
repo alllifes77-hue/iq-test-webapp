@@ -1,4 +1,4 @@
-window.IQ_LANG={
+﻿window.IQ_LANG={
 htmlLang:'pt',
 docTitle:'Teste de QI Gratuito – Medição de Inteligência Online Cientificamente Validada',
 heroEyebrow:'Plataforma de Avaliação Cognitiva Cientificamente Validada',
@@ -193,5 +193,28 @@ bt:{
   msgMid:'QI {iq} — Você tem uma base sólida. O treinamento cerebral para impulsionar a memória de trabalho e a velocidade de processamento elevará visivelmente seu desempenho cognitivo.',
   msgHigh:'QI {iq} — Cérebro brilhante! O treinamento cognitivo consistente mantém o desempenho máximo e retarda o declínio cognitivo relacionado à idade.',
   msgTop:'QI {iq} — Inteligência excepcional! Empurre os limites do seu cérebro e maximize a eficiência dos circuitos neurais.'
+},
+asd:{
+  sectionTitle:'Autismo · Asperger · TDAH — Rastreio',
+  sectionSub:'25 perguntas baseadas no AQ · Comunicação social · Comportamentos repetitivos · Sensibilidade sensorial · TDAH',
+  cardTitle:'Teste do Espectro Autista',
+  cardDesc:'Avaliação abrangente de dificuldades de comunicação social, comportamentos repetitivos, sensibilidade sensorial, estilo cognitivo e comorbidade com TDAH.',
+  card2Title:'Asperger · Comorbidade com TDAH',
+  card2Desc:'Identifique traços do autismo de alto funcionamento (Asperger) e comorbidade com TDAH, e receba um perfil personalizado.',
+  answerLabels:['Definitivamente não','Ligeiramente não','Ligeiramente sim','Definitivamente sim'],
+  catLabels:{sc:'Comunicação social',rb:'Comportamentos repetitivos',ss:'Sensibilidade sensorial',cg:'Estilo cognitivo',adhd:'Comorbidade TDAH'},
+  catNames:{sc:'Comunicação social',rb:'Comportamentos repetitivos',ss:'Sensibilidade sensorial',cg:'Estilo cognitivo'},
+  resultEyebrow:'Resultado do rastreio do espectro autista',
+  breakdownTitle:'Pontuações por área',
+  levels:['Baixo','Limítrofe','Significativo','Forte'],
+  levelDescs:['Os traços de TEA estão no intervalo baixo. Corresponde a um perfil neurotípico.','Alguns traços de TEA observados. Podem ser mais pronunciados sob estresse ou mudanças ambientais.','Traços de TEA significativos presentes. Avaliação por psicólogo ou psiquiatra é recomendada.','Traços de TEA fortes presentes. Consulta com profissional de saúde mental é fortemente recomendada.'],
+  profiles:['Faixa neurotípica','Perfil Asperger / Autismo de alto funcionamento','Perfil AuDHD (TEA + TDAH)','Perfil dominado por TDAH','Limítrofe / Avaliação adicional recomendada'],
+  adhdLevels:['Baixo','Moderado','Alto'],
+  adhdDescs:['Os traços de TDAH são baixos.','Alguns traços de TDAH observados. TEA e TDAH coexistem frequentemente.','Traços de TDAH altos. Comorbidade TEA+TDAH (AuDHD) é possível — avaliação profissional recomendada.'],
+  resultDisclaimer:'⚠️ Este resultado não é um diagnóstico profissional. Se a sua pontuação for alta, recomendamos consultar um psiquiatra ou psicólogo licenciado.',
+  shareBtn:'📤 Partilhar resultado',homeBtn:'Voltar ao início',
+  shareText:'[Rastreio Espectro Autista] Pontuação TEA: {score}/20 · {level} · {profile}\nRastreio gratuito → https://all-lifes.com/iq-test/',
+  copiedToast:'📋 Resultado copiado!',qDisclaimer:'Esta ferramenta de rastreio não substitui um diagnóstico profissional.',
+  questions:["Consigo facilmente perceber o que alguém quer dizer mesmo que não o diga diretamente","Situações sociais me parecem confusas ou avassaladoras","Consigo facilmente perceber quando alguém está a ficar entediado ou a perder o interesse","É difícil perceber as emoções de alguém apenas pelas expressões faciais ou tom de voz","Conversa fiada e conversas sociais casuais me parecem difíceis ou desconfortáveis","Acho difícil fazer novos amigos, mesmo quando quero","As pessoas disseram que sou estranho ou que não entendo regras sociais óbvias","Mudanças inesperadas na minha rotina causam-me grande angústia","Prefiro fazer as coisas da mesma forma, na mesma ordem, e pelos mesmos caminhos","Tenho um ou mais interesses especiais sobre os quais sei muito mais do que a maioria das pessoas","Gosto de colecionar informações sobre categorias específicas (carros, história, animais, etc.)","Reajo fortemente a sons, luzes, cheiros ou texturas que os outros não parecem notar","Certos tecidos, sons ou cheiros causam-me grande desconforto","Fico facilmente sobrecarregado ou exausto em locais barulhentos ou lotados","Noto pequenos detalhes no meu ambiente que os outros normalmente não percebem","Acho difícil perceber o que os personagens de livros ou filmes estão a pensar ou a pretender","Gosto de encontrar padrões e regras nas coisas ou situações","Acho difícil passar de uma tarefa para outra","É difícil acompanhar várias conversas ao mesmo tempo","Entendo as coisas mais facilmente através de imagens ou informação visual do que através de palavras","Frequentemente cometo erros por descuido em tarefas que exigem atenção prolongada","Tenho dificuldade em manter o foco em tarefas que não me interessam","Acho difícil ficar quieto ou sinto-me agitado e inquieto por dentro","Os meus pensamentos saltam rapidamente de uma coisa para outra em várias direções","Às vezes ajo ou falo impulsivamente sem pensar nas consequências"]
 }
 };

@@ -1,4 +1,4 @@
-window.IQ_LANG={
+﻿window.IQ_LANG={
 htmlLang:'id',
 docTitle:'Tes IQ Gratis – Pengukuran Kecerdasan Online yang Tervalidasi Secara Ilmiah',
 heroEyebrow:'Platform Penilaian Kognitif yang Tervalidasi Secara Ilmiah',
@@ -193,5 +193,28 @@ bt:{
   msgMid:'IQ {iq} — Anda memiliki fondasi yang kuat. Latihan otak untuk meningkatkan memori kerja dan kecepatan pemrosesan akan meningkatkan kinerja kognitif secara nyata.',
   msgHigh:'IQ {iq} — Otak yang cemerlang! Latihan kognitif yang konsisten mempertahankan kinerja puncak dan memperlambat penurunan kognitif terkait usia.',
   msgTop:'IQ {iq} — Kecerdasan yang luar biasa! Dorong batas otak Anda dengan latihan kognitif yang menantang dan maksimalkan efisiensi sirkuit saraf.'
+},
+asd:{
+  sectionTitle:'Autisme · Asperger · ADHD — Skrining',
+  sectionSub:'25 pertanyaan berbasis AQ · Komunikasi sosial · Perilaku repetitif · Sensitivitas sensorik · ADHD',
+  cardTitle:'Tes Spektrum Autisme',
+  cardDesc:'Evaluasi komprehensif kesulitan komunikasi sosial, perilaku repetitif, sensitivitas sensorik, gaya kognitif, dan komorbiditas ADHD.',
+  card2Title:'Asperger · Komorbiditas ADHD',
+  card2Desc:'Identifikasi ciri-ciri autisme fungsi tinggi (Asperger) dan komorbiditas ADHD, serta dapatkan profil yang dipersonalisasi.',
+  answerLabels:['Sama sekali tidak','Agak tidak','Agak ya','Pasti ya'],
+  catLabels:{sc:'Komunikasi Sosial',rb:'Perilaku Repetitif',ss:'Sensitivitas Sensorik',cg:'Gaya Kognitif',adhd:'Komorbiditas ADHD'},
+  catNames:{sc:'Komunikasi Sosial',rb:'Perilaku Repetitif',ss:'Sensitivitas Sensorik',cg:'Gaya Kognitif'},
+  resultEyebrow:'Hasil Skrining Spektrum Autisme',
+  breakdownTitle:'Skor per Area',
+  levels:['Rendah','Batas','Signifikan','Kuat'],
+  levelDescs:['Ciri-ciri terkait ASD berada dalam kisaran rendah. Sesuai dengan profil neurotipikal.','Beberapa ciri ASD diamati. Mungkin lebih menonjol saat stres atau perubahan lingkungan.','Ciri ASD yang signifikan terdeteksi. Evaluasi oleh psikolog atau psikiater disarankan.','Ciri ASD yang kuat terdeteksi. Konsultasi dengan profesional kesehatan mental sangat dianjurkan.'],
+  profiles:['Rentang neurotipikal','Profil Asperger / Autisme fungsi tinggi','Profil AuDHD (ASD + ADHD)','Profil dominan ADHD','Batas / Evaluasi lebih lanjut disarankan'],
+  adhdLevels:['Rendah','Sedang','Tinggi'],
+  adhdDescs:['Ciri-ciri terkait ADHD rendah.','Beberapa ciri ADHD diamati. ASD dan ADHD sering terjadi bersamaan.','Ciri ADHD yang tinggi. Komorbiditas ASD+ADHD (AuDHD) mungkin terjadi — evaluasi profesional disarankan.'],
+  resultDisclaimer:'⚠️ Hasil ini bukan diagnosis profesional. Jika skor Anda tinggi, kami menyarankan untuk berkonsultasi dengan psikiater atau psikolog berlisensi.',
+  shareBtn:'📤 Bagikan Hasil',homeBtn:'Kembali ke Beranda',
+  shareText:'[Skrining Spektrum Autisme] Skor ASD: {score}/20 · {level} · {profile}\nSkrining gratis → https://all-lifes.com/iq-test/',
+  copiedToast:'📋 Hasil disalin!',qDisclaimer:'Alat skrining ini bukan pengganti diagnosis profesional.',
+  questions:["Saya dapat dengan mudah memahami apa yang dimaksud seseorang meskipun tidak dikatakannya secara langsung","Situasi sosial terasa membingungkan atau membebani bagi saya","Saya dapat dengan mudah mengetahui ketika seseorang mulai bosan atau kehilangan minat","Sulit bagi saya untuk memahami emosi seseorang hanya dari ekspresi wajah atau nada suaranya","Obrolan ringan dan percakapan sosial kasual terasa sulit atau tidak nyaman bagi saya","Saya merasa sulit untuk berteman baru, bahkan ketika saya menginginkannya","Orang-orang pernah mengatakan bahwa saya aneh atau tidak memahami aturan sosial yang sudah jelas","Perubahan tak terduga pada rutinitas saya menyebabkan tekanan yang signifikan","Saya lebih suka melakukan sesuatu dengan cara yang sama, urutan yang sama, dan rute yang sama setiap kali","Saya memiliki satu atau lebih minat khusus yang saya ketahui jauh lebih banyak daripada kebanyakan orang","Saya menikmati mengumpulkan informasi tentang kategori tertentu (mobil, sejarah, hewan, dll.)","Saya bereaksi kuat terhadap suara, cahaya, bau, atau tekstur yang tampaknya tidak diperhatikan orang lain","Kain, suara, atau bau tertentu menyebabkan ketidaknyamanan yang signifikan bagi saya","Saya mudah kewalahan atau kelelahan di tempat yang bising atau ramai","Saya memperhatikan detail kecil di lingkungan saya yang biasanya tidak diperhatikan orang lain","Saya merasa sulit untuk memahami apa yang dipikirkan atau dimaksudkan oleh tokoh-tokoh dalam buku atau film","Saya menikmati menemukan pola dan aturan dalam berbagai hal atau situasi","Saya merasa sulit untuk beralih dari satu tugas ke tugas lain","Sulit untuk mengikuti beberapa percakapan yang terjadi secara bersamaan","Saya lebih mudah memahami sesuatu melalui gambar atau informasi visual daripada melalui kata-kata","Saya sering membuat kesalahan ceroboh dalam tugas yang membutuhkan perhatian berkelanjutan","Saya kesulitan mempertahankan fokus pada tugas yang tidak saya minati","Saya merasa sulit untuk duduk diam atau merasa gelisah dan resah di dalam","Pikiran saya melompat-lompat dengan cepat dari satu hal ke hal lain dalam banyak arah","Saya terkadang bertindak atau berbicara secara impulsif tanpa memikirkan konsekuensinya"]
 }
 };

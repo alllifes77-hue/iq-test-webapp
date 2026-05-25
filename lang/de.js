@@ -1,4 +1,4 @@
-window.IQ_LANG={
+﻿window.IQ_LANG={
 htmlLang:'de',
 docTitle:'Kostenloser IQ-Test – Wissenschaftlich validierte Online-Intelligenzmessung',
 heroEyebrow:'Wissenschaftlich validierte kognitive Bewertungsplattform',
@@ -193,5 +193,28 @@ bt:{
   msgMid:'IQ {iq} — Sie haben eine solide Basis. Gehirntraining zur Steigerung des Arbeitsgedächtnisses und der Verarbeitungsgeschwindigkeit wird Ihre kognitiven Leistungen spürbar verbessern.',
   msgHigh:'IQ {iq} — Hervorragendes Gehirn! Beständiges kognitives Training erhält Spitzenleistungen und verlangsamt den altersbedingten kognitiven Abbau effektiv.',
   msgTop:'IQ {iq} — Außergewöhnliche Intelligenz! Erweitern Sie die Grenzen Ihres Gehirns und maximieren Sie die Effizienz Ihrer Neuronenverbindungen.'
+},
+asd:{
+  sectionTitle:'Autismus-Spektrum · Asperger · ADHS Screening',
+  sectionSub:'AQ-basiert · 25 Fragen · Soziale Kommunikation · Repetitive Verhaltensweisen · Sensorische Sensitivität · ADHS',
+  cardTitle:'Autismus-Spektrum-Test',
+  cardDesc:'Umfassende Bewertung von sozialen Kommunikationsschwierigkeiten, repetitiven Verhaltensweisen, sensorischer Empfindlichkeit, kognitivem Stil und ADHS-Komorbidität.',
+  card2Title:'Asperger · ADHS Komorbidität',
+  card2Desc:'Erkennen Sie hochfunktionale Autismus- (Asperger-)Merkmale und ADHS-Komorbidität und erhalten Sie ein personalisiertes Profil.',
+  answerLabels:['Überhaupt nicht','Eher nicht','Eher ja','Definitiv ja'],
+  catLabels:{sc:'Soziale Kommunikation',rb:'Repetitive Verhaltensweisen',ss:'Sensorische Sensitivität',cg:'Kognitiver Stil',adhd:'ADHS-Komorbidität'},
+  catNames:{sc:'Soziale Kommunikation',rb:'Repetitive Verhaltensweisen',ss:'Sensorische Sensitivität',cg:'Kognitiver Stil'},
+  resultEyebrow:'Autismus-Spektrum-Screening-Ergebnis',
+  breakdownTitle:'Punktzahlen nach Bereich',
+  levels:['Niedrig','Grenzwertig','Signifikant','Stark'],
+  levelDescs:['ASD-Merkmale liegen im niedrigen Bereich. Entspricht einem neurotypischen Profil.','Einige ASD-Merkmale beobachtet. Können unter Stress oder Umweltveränderungen ausgeprägter sein.','Signifikante ASD-Merkmale vorhanden. Eine Bewertung durch einen Psychologen oder Psychiater wird empfohlen.','Starke ASD-Merkmale vorhanden. Eine Beratung durch einen psychischen Gesundheitsfachmann wird dringend empfohlen.'],
+  profiles:['Neurotypischer Bereich','Asperger / Hochfunktionaler Autismus','AuDHD (ASD + ADHS Komorbidität)','ADHS-dominantes Profil','Grenzwertig / Weitere Bewertung empfohlen'],
+  adhdLevels:['Niedrig','Mittel','Hoch'],
+  adhdDescs:['ADHS-Merkmale sind niedrig.','Einige ADHS-Merkmale beobachtet. ASD und ADHS treten häufig gemeinsam auf.','Hohe ADHS-Merkmale. ASD+ADHS (AuDHD) Komorbidität möglich — professionelle Bewertung empfohlen.'],
+  resultDisclaimer:'⚠️ Dieses Ergebnis ist keine professionelle Diagnose. Bei hohem Score empfehlen wir eine Beratung bei einem Psychiater oder Psychologen.',
+  shareBtn:'📤 Ergebnis teilen',homeBtn:'Zur Startseite',
+  shareText:'[Autismus-Spektrum-Screening] ASD-Score: {score}/20 · {level} · {profile}\nKostenloses Screening → https://all-lifes.com/iq-test/?lang=de',
+  copiedToast:'📋 Ergebnis kopiert!',qDisclaimer:'Dieses Screening-Tool ersetzt keine professionelle Diagnose.',
+  questions:["Ich kann leicht verstehen, was jemand meint, auch wenn er es nicht direkt sagt","Soziale Situationen fühlen sich für mich verwirrend oder überwältigend an","Ich kann leicht erkennen, wenn jemand gelangweilt wird oder das Interesse verliert","Es ist schwer, jemandes Emotionen nur aus Mimik oder Tonfall zu erkennen","Smalltalk und lockere Gespräche fühlen sich schwierig oder unangenehm an","Ich habe Schwierigkeiten, neue Freunde zu finden, selbst wenn ich es möchte","Menschen haben gesagt, ich sei seltsam oder verstehe offensichtliche soziale Regeln nicht","Unerwartete Änderungen an meiner Routine bereiten mir große Schwierigkeiten","Ich bevorzuge es, Dinge auf dieselbe Weise, in derselben Reihenfolge und auf denselben Wegen zu erledigen","Ich habe ein oder mehrere spezielle Interessen, über die ich weit mehr weiß als die meisten Menschen","Ich sammle gerne Informationen über bestimmte Kategorien (Autos, Geschichte, Tiere usw.)","Ich reagiere stark auf Geräusche, Lichter, Gerüche oder Texturen, die andere nicht zu bemerken scheinen","Bestimmte Stoffe, Geräusche oder Gerüche bereiten mir erhebliche Beschwerden","In lauten oder überfüllten Orten werde ich leicht überfordert oder erschöpft","Ich bemerke kleine Details in meiner Umgebung, die andere normalerweise übersehen","Ich habe Schwierigkeiten herauszufinden, was Charaktere in Büchern oder Filmen denken oder beabsichtigen","Ich finde es angenehm, Muster und Regeln in Dingen oder Situationen zu entdecken","Ich finde es schwer, von einer Aufgabe zur anderen zu wechseln","Es ist schwierig, mehrere gleichzeitig stattfindende Gespräche zu verfolgen","Ich verstehe Dinge leichter durch Bilder oder visuelle Informationen als durch Worte","Ich mache oft unachtsame Fehler bei Aufgaben, die anhaltende Aufmerksamkeit erfordern","Ich habe Schwierigkeiten, mich auf Aufgaben zu konzentrieren, die ich nicht interessant finde","Ich finde es schwer, stillzusitzen, oder fühle mich innerlich ruhelos und unruhig","Meine Gedanken springen schnell von einer Sache zur anderen in viele Richtungen","Manchmal handle oder spreche ich impulsiv, ohne über die Folgen nachzudenken"]
 }
 };

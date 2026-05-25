@@ -1,4 +1,4 @@
-window.IQ_LANG={
+﻿window.IQ_LANG={
 htmlLang:'fr',
 docTitle:'Test QI Gratuit – Mesure de l\'Intelligence en Ligne Validée Scientifiquement',
 heroEyebrow:'Plateforme d\'évaluation cognitive validée scientifiquement',
@@ -193,5 +193,28 @@ bt:{
   msgMid:'QI {iq} — Vous avez une base solide. L\'entraînement cérébral pour booster la mémoire de travail et la vitesse de traitement améliorera sensiblement vos performances cognitives.',
   msgHigh:'QI {iq} — Cerveau brillant ! Un entraînement cognitif régulier maintient les performances de pointe et ralentit le déclin cognitif lié à l\'âge.',
   msgTop:'QI {iq} — Intelligence exceptionnelle ! Repoussez les limites de votre cerveau et maximisez l\'efficacité des circuits neuronaux.'
+},
+asd:{
+  sectionTitle:'Autisme · Asperger · TDAH — Dépistage',
+  sectionSub:'25 questions basées sur l\'AQ · Communication sociale · Comportements répétitifs · Sensibilité sensorielle · TDAH',
+  cardTitle:'Test du Spectre Autistique',
+  cardDesc:'Évaluation complète des difficultés de communication sociale, des comportements répétitifs, de la sensibilité sensorielle, du style cognitif et de la comorbidité TDAH.',
+  card2Title:'Asperger · Comorbidité TDAH',
+  card2Desc:'Identifiez les traits d\'autisme à haut niveau de fonctionnement et la comorbidité TDAH, et recevez un profil personnalisé.',
+  answerLabels:['Absolument non','Plutôt non','Plutôt oui','Absolument oui'],
+  catLabels:{sc:'Communication sociale',rb:'Comportements répétitifs',ss:'Sensibilité sensorielle',cg:'Style cognitif',adhd:'Comorbidité TDAH'},
+  catNames:{sc:'Communication sociale',rb:'Comportements répétitifs',ss:'Sensibilité sensorielle',cg:'Style cognitif'},
+  resultEyebrow:'Résultat du dépistage du spectre autistique',
+  breakdownTitle:'Scores par domaine',
+  levels:['Faible','Limite','Significatif','Fort'],
+  levelDescs:['Les traits TSA sont dans la plage basse. Correspond à un profil neurotypique.','Quelques traits TSA observés. Peuvent être plus prononcés sous stress ou changements environnementaux.','Traits TSA significatifs présents. Une évaluation par un psychologue ou psychiatre est recommandée.','Traits TSA forts présents. Une consultation avec un professionnel de santé mentale est fortement recommandée.'],
+  profiles:['Plage neurotypique','Profil Asperger / Autisme de haut niveau de fonctionnement','Profil AuDHD (TSA + TDAH)','Profil à dominante TDAH','Limite / Évaluation complémentaire recommandée'],
+  adhdLevels:['Faible','Modéré','Élevé'],
+  adhdDescs:['Les traits TDAH sont faibles.','Quelques traits TDAH observés. Le TSA et le TDAH coexistent fréquemment.','Traits TDAH élevés. Une comorbidité TSA+TDAH (AuDHD) est possible — évaluation professionnelle recommandée.'],
+  resultDisclaimer:'⚠️ Ce résultat n\'est pas un diagnostic professionnel. Si votre score est élevé, nous recommandons de consulter un psychiatre ou un psychologue agréé.',
+  shareBtn:'📤 Partager le résultat',homeBtn:'Retour à l\'accueil',
+  shareText:'[Dépistage TSA] Score ASD : {score}/20 · {level} · {profile}\nDépistage gratuit → https://all-lifes.com/iq-test/',
+  copiedToast:'📋 Résultat copié !',qDisclaimer:'Cet outil de dépistage ne remplace pas un diagnostic professionnel.',
+  questions:["Je comprends facilement ce que quelqu'un veut dire même s'il ne le dit pas directement","Les situations sociales me semblent déroutantes ou écrasantes","Je perçois facilement quand quelqu'un s'ennuie ou perd son intérêt","Il m'est difficile de comprendre les émotions de quelqu'un juste à partir de ses expressions faciales ou de son ton de voix","Les petites conversations et bavardages sociaux me semblent difficiles ou inconfortables","Je trouve difficile de me faire de nouveaux amis, même quand je le veux","Des gens ont dit que j'étais bizarre ou que je ne comprends pas les règles sociales évidentes","Des changements inattendus dans ma routine me causent une détresse importante","Je préfère faire les choses de la même façon, dans le même ordre, et prendre les mêmes chemins à chaque fois","J'ai un ou plusieurs intérêts particuliers sur lesquels j'en sais bien plus que la plupart des gens","J'aime collecter des informations sur des catégories spécifiques (voitures, histoire, animaux, etc.)","Je réagis fortement aux sons, lumières, odeurs ou textures que les autres ne semblent pas remarquer","Certains tissus, sons ou odeurs me causent un inconfort important","Je suis facilement submergé ou épuisé dans des endroits bruyants ou bondés","Je remarque des petits détails dans mon environnement que les autres ne remarquent généralement pas","J'ai du mal à comprendre ce que les personnages de livres ou de films pensent ou veulent faire","J'aime trouver des schémas et des règles dans les choses ou les situations","J'ai du mal à passer d'une tâche à une autre","Il m'est difficile de suivre plusieurs conversations en même temps","Je comprends les choses plus facilement à travers des images ou des informations visuelles que par les mots","Je fais souvent des erreurs d'inattention dans des tâches qui nécessitent une attention soutenue","J'ai du mal à maintenir ma concentration sur des tâches qui ne m'intéressent pas","J'ai du mal à rester assis tranquille ou je me sens agité intérieurement","Mes pensées sautent rapidement d'une chose à l'autre dans plusieurs directions","Il m'arrive d'agir ou de parler impulsivement sans penser aux conséquences"]
 }
 };

@@ -1,4 +1,4 @@
-window.IQ_LANG={
+﻿window.IQ_LANG={
 htmlLang:'en',
 docTitle:'Free IQ Test – Scientifically Validated Online Intelligence Measurement',
 heroEyebrow:'Scientifically Validated Cognitive Assessment Platform',
@@ -226,5 +226,28 @@ bt:{
   msgMid:'IQ {iq} — You have a solid foundation. Brain training to boost working memory and processing speed will noticeably elevate your overall cognitive performance.',
   msgHigh:'IQ {iq} — Brilliant brain! Consistent cognitive training maintains peak performance and effectively slows age-related cognitive decline.',
   msgTop:'IQ {iq} — Exceptional intelligence! Push your brain\'s limits with challenging cognitive training and maximize neural circuit efficiency.'
+},
+asd:{
+  sectionTitle:'Autism Spectrum · Asperger · ADHD Screening',
+  sectionSub:'AQ-based 25 questions · Social communication · Repetitive behaviors · Sensory sensitivity · ADHD co-occurrence',
+  cardTitle:'Autism Spectrum Test',
+  cardDesc:'Comprehensive evaluation of social communication difficulties, repetitive behaviors, sensory sensitivity, cognitive style, and ADHD co-occurrence.',
+  card2Title:'Asperger · ADHD Co-occurrence',
+  card2Desc:'Check for high-functioning autism (Asperger) traits and ADHD co-occurrence, and receive a personalized profile.',
+  answerLabels:['Definitely No','Slightly No','Slightly Yes','Definitely Yes'],
+  catLabels:{sc:'Social Communication',rb:'Repetitive Behaviors',ss:'Sensory Sensitivity',cg:'Cognitive Style',adhd:'ADHD Co-occurrence'},
+  catNames:{sc:'Social Communication',rb:'Repetitive Behaviors',ss:'Sensory Sensitivity',cg:'Cognitive Style'},
+  resultEyebrow:'Autism Spectrum Screening Result',
+  breakdownTitle:'Scores by Domain',
+  levels:['Low','Borderline','Significant','Strong'],
+  levelDescs:['ASD-related traits are in the low range. Corresponds to a neurotypical profile.','Some ASD traits observed. May be more pronounced under stress or environmental changes.','Significant ASD traits present. Evaluation by a psychologist or psychiatrist is recommended.','Strong ASD traits present. Consultation with a mental health professional is strongly recommended.'],
+  profiles:['Neurotypical range','Asperger / High-functioning autism profile','AuDHD (ASD + ADHD co-occurrence) profile','ADHD-dominant profile','Borderline / Further evaluation recommended'],
+  adhdLevels:['Low','Moderate','High'],
+  adhdDescs:['ADHD-related traits are low.','Some ADHD traits observed. ASD and ADHD frequently co-occur.','High ADHD-related traits. ASD+ADHD (AuDHD) co-occurrence is possible — professional evaluation recommended.'],
+  resultDisclaimer:'⚠️ This result is not a professional diagnosis. If your score is high, we recommend consulting a psychiatrist or licensed psychologist.',
+  shareBtn:'📤 Share Result',homeBtn:'Back to Home',
+  shareText:'[Autism Spectrum Screening] ASD Score: {score}/20 · {level} · {profile}\nFree screening → https://all-lifes.com/iq-test/',
+  copiedToast:'📋 Result copied!',qDisclaimer:'This screening tool is not a substitute for professional diagnosis.',
+  questions:["I can easily understand what someone means even if they don't say it directly","Social situations feel confusing or overwhelming to me","I can easily tell when someone is getting bored or losing interest","It's hard to understand someone's emotions just from their facial expressions or tone of voice","Small talk and casual social conversation feels difficult or uncomfortable","I find it difficult to make new friends, even when I want to","People have said I'm strange or that I don't understand obvious social rules","Unexpected changes to my routine cause me significant distress","I prefer to do things in the same way, the same order, and take the same routes each time","I have one or more special interests that I know far more about than most people","I enjoy collecting information about specific categories (cars, history, animals, etc.)","I react strongly to sounds, lights, smells, or textures that others don't seem to notice","Certain fabrics, sounds, or smells cause me significant discomfort","I get easily overwhelmed or exhausted in noisy or crowded places","I notice small details in my environment that others typically miss","I find it hard to figure out what characters in books or movies are thinking or intending","I enjoy finding patterns and rules in things or situations","I find it hard to switch from one task to another","It's difficult to follow several conversations happening at the same time","I understand things more easily through pictures or visual information than through words","I often make careless mistakes in tasks that require sustained attention","I struggle to maintain focus on tasks I don't find interesting","I find it hard to sit still or feel restless and fidgety on the inside","My thoughts jump rapidly from one thing to another in many directions","I sometimes act or speak impulsively without thinking about the consequences"]
 }
 };

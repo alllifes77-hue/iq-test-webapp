@@ -364,6 +364,15 @@ export default {
     const url  = new URL(request.url);
     const path = url.pathname;
 
+    // iq-test.all-lifes.com → all-lifes.com/iq-test/ (301)
+    if (url.hostname === 'iq-test.all-lifes.com') {
+      const lang = url.searchParams.get('lang');
+      const dest = lang
+        ? `https://all-lifes.com/iq-test/?lang=${lang}`
+        : 'https://all-lifes.com/iq-test/';
+      return Response.redirect(dest, 301);
+    }
+
     // ── Route 0: Sitemap (/iq-test-sitemap.xml) ────────────
     if (path === '/iq-test-sitemap.xml') {
       const lastmod = '2026-04-30';

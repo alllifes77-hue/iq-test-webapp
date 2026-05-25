@@ -216,5 +216,14 @@ asd:{
   shareText:'[Evaluación Espectro Autista] Puntuación TEA: {score}/20 · {level} · {profile}\nEvaluación gratuita → https://all-lifes.com/iq-test/',
   copiedToast:'📋 ¡Resultado copiado!',qDisclaimer:'Esta herramienta de evaluación no sustituye un diagnóstico profesional.',
   questions:["Puedo entender fácilmente lo que alguien quiere decir aunque no lo diga directamente","Las situaciones sociales me resultan confusas o abrumadoras","Puedo detectar fácilmente cuando alguien se está aburriendo o perdiendo el interés","Me cuesta entender las emociones de alguien solo por sus expresiones faciales o tono de voz","La charla casual y la conversación social informal me resulta difícil o incómoda","Me resulta difícil hacer nuevos amigos, incluso cuando quiero","La gente ha dicho que soy raro o que no entiendo las reglas sociales obvias","Los cambios inesperados en mi rutina me causan un malestar importante","Prefiero hacer las cosas de la misma manera, en el mismo orden, y tomar los mismos caminos","Tengo uno o más intereses especiales sobre los que sé mucho más que la mayoría de la gente","Disfruto recopilando información sobre categorías específicas (coches, historia, animales, etc.)","Reacciono fuertemente a sonidos, luces, olores o texturas que los demás no parecen notar","Ciertos tejidos, sonidos u olores me causan un malestar importante","Me agobio o canso fácilmente en lugares ruidosos o concurridos","Noto pequeños detalles en mi entorno que los demás suelen pasar por alto","Me resulta difícil entender lo que piensan o pretenden los personajes de libros o películas","Disfruto encontrando patrones y reglas en las cosas o situaciones","Me cuesta pasar de una tarea a otra","Me resulta difícil seguir varias conversaciones a la vez","Entiendo las cosas más fácilmente a través de imágenes o información visual que a través de palabras","A menudo cometo errores por descuido en tareas que requieren atención sostenida","Me cuesta mantener la concentración en tareas que no me interesan","Me resulta difícil quedarme quieto o me siento inquieto por dentro","Mis pensamientos saltan rápidamente de una cosa a otra en muchas direcciones","A veces actúo o hablo impulsivamente sin pensar en las consecuencias"]
+},chat:{
+  panelTitle:'Análisis de resultados IA',
+  panelSub:'Llama · Asesor IA gratuito',
+  placeholder:'Haz una pregunta adicional...',
+  disclaimer:'⚠️ El análisis de IA es orientativo — no es un diagnóstico profesional.',
+  greeting:'¡Hola! Comenzaré un análisis detallado de tus resultados ahora 🧠',
+  noContext:'Por favor completa primero el test de CI o ASD para recibir tu análisis.',
+  rateLimit:'Por favor espera un momento. (Límite: 20 solicitudes por hora)',
+  error:'Ocurrió un error. Por favor intenta de nuevo.'
 }
 };

@@ -249,5 +249,14 @@ asd:{
   shareText:'[Autism Spectrum Screening] ASD Score: {score}/20 · {level} · {profile}\nFree screening → https://all-lifes.com/iq-test/',
   copiedToast:'📋 Result copied!',qDisclaimer:'This screening tool is not a substitute for professional diagnosis.',
   questions:["I can easily understand what someone means even if they don't say it directly","Social situations feel confusing or overwhelming to me","I can easily tell when someone is getting bored or losing interest","It's hard to understand someone's emotions just from their facial expressions or tone of voice","Small talk and casual social conversation feels difficult or uncomfortable","I find it difficult to make new friends, even when I want to","People have said I'm strange or that I don't understand obvious social rules","Unexpected changes to my routine cause me significant distress","I prefer to do things in the same way, the same order, and take the same routes each time","I have one or more special interests that I know far more about than most people","I enjoy collecting information about specific categories (cars, history, animals, etc.)","I react strongly to sounds, lights, smells, or textures that others don't seem to notice","Certain fabrics, sounds, or smells cause me significant discomfort","I get easily overwhelmed or exhausted in noisy or crowded places","I notice small details in my environment that others typically miss","I find it hard to figure out what characters in books or movies are thinking or intending","I enjoy finding patterns and rules in things or situations","I find it hard to switch from one task to another","It's difficult to follow several conversations happening at the same time","I understand things more easily through pictures or visual information than through words","I often make careless mistakes in tasks that require sustained attention","I struggle to maintain focus on tasks I don't find interesting","I find it hard to sit still or feel restless and fidgety on the inside","My thoughts jump rapidly from one thing to another in many directions","I sometimes act or speak impulsively without thinking about the consequences"]
+},chat:{
+  panelTitle:'AI Result Analysis',
+  panelSub:'Llama · Free AI Advisor',
+  placeholder:'Ask a follow-up question...',
+  disclaimer:'⚠️ AI analysis is for guidance only — not a professional diagnosis.',
+  greeting:'Hi! I\'ll start a detailed analysis of your results right away 🧠',
+  noContext:'Please complete the IQ or ASD test first to receive your AI analysis.',
+  rateLimit:'Please wait a moment. (20 requests per hour limit)',
+  error:'An error occurred. Please try again.'
 }
 };

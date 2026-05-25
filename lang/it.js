@@ -216,5 +216,14 @@ asd:{
   shareText:'[Screening Spettro Autistico] Punteggio ASD: {score}/20 · {level} · {profile}\nScreening gratuito → https://all-lifes.com/iq-test/',
   copiedToast:'📋 Risultato copiato!',qDisclaimer:'Questo strumento di screening non sostituisce una diagnosi professionale.',
   questions:["Riesco facilmente a capire cosa intende qualcuno anche se non lo dice direttamente","Le situazioni sociali mi sembrano confuse o opprimenti","Riesco facilmente a capire quando qualcuno si sta annoiando o perdendo interesse","Trovo difficile capire le emozioni di qualcuno solo dalle espressioni del viso o dal tono della voce","Le chiacchiere e le conversazioni sociali casuali mi sembrano difficili o scomode","Trovo difficile fare nuove amicizie, anche quando voglio","Le persone hanno detto che sono strano o che non capisco le regole sociali ovvie","I cambiamenti imprevisti nella mia routine mi causano un notevole disagio","Preferisco fare le cose nello stesso modo, nello stesso ordine, e percorrere gli stessi percorsi ogni volta","Ho uno o più interessi speciali su cui so molto di più rispetto alla maggior parte delle persone","Mi piace raccogliere informazioni su categorie specifiche (automobili, storia, animali, ecc.)","Reagisco fortemente a suoni, luci, odori o texture che gli altri non sembrano notare","Certi tessuti, suoni o odori mi causano un notevole disagio","Mi sento facilmente sopraffatto o esausto in luoghi rumorosi o affollati","Noto piccoli dettagli nell'ambiente che gli altri di solito non colgono","Trovo difficile capire cosa stanno pensando o intendendo i personaggi di libri o film","Mi piace trovare schemi e regole nelle cose o nelle situazioni","Trovo difficile passare da un compito a un altro","È difficile seguire più conversazioni che avvengono contemporaneamente","Capisco le cose più facilmente attraverso immagini o informazioni visive che attraverso le parole","Spesso commetto errori di disattenzione in compiti che richiedono attenzione prolungata","Fatico a mantenere la concentrazione su compiti che non trovo interessanti","Fatico a stare fermo o mi sento irrequieto e agitato interiormente","I miei pensieri saltano rapidamente da una cosa all'altra in molte direzioni","A volte agisco o parlo in modo impulsivo senza pensare alle conseguenze"]
+},chat:{
+  panelTitle:'Analisi risultati con IA',
+  panelSub:'Llama · Consulente IA gratuito',
+  placeholder:'Fai una domanda aggiuntiva...',
+  disclaimer:'⚠️ L\'analisi IA è orientativa — non sostituisce una diagnosi professionale.',
+  greeting:'Ciao! Inizierò subito un\'analisi dettagliata dei tuoi risultati 🧠',
+  noContext:'Completa prima il test QI o ASD per ricevere la tua analisi.',
+  rateLimit:'Attendi un momento. (Limite: 20 richieste all\'ora)',
+  error:'Si è verificato un errore. Riprova.'
 }
 };

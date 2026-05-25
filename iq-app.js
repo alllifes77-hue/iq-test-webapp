@@ -759,6 +759,7 @@ function computeResults(){
   saveIQHistory(iq,currentMode);
   showBrainAgeCard(iq,'iq');
   renderIQHistory('history-card-iq');
+  _showChatFAB();
 }
 
 // ── Bell Curve ──
@@ -1490,6 +1491,7 @@ function _showASDResult(asdScore,adhdScore,catScores,catMax){
   // Share button text
   const shBtn=document.getElementById('asd-share-btn');if(shBtn)shBtn.textContent=_asdL('shareBtn','📤 결과 공유');
   const hBtn=document.getElementById('asd-home-btn');if(hBtn)hBtn.textContent=_asdL('homeBtn','홈으로');
+  _showChatFAB();
 }
 
 function shareASD(){
@@ -1510,4 +1512,175 @@ function shareASD(){
     try{document.execCommand('copy');}catch(e){}document.body.removeChild(el);
     showToast(_asdL('copiedToast','📋 결과가 복사되었습니다!'));
   }
+}
+
+// ══════════════════════════════════════════
+// ── AI CHAT ──
+// ══════════════════════════════════════════
+let _chatOpen=false,_chatBusy=false,_chatInit=false;
+let _chatMsgs=[];
+
+function _aiL(k,fb){const C=window.IQ_LANG&&window.IQ_LANG.chat;return(C&&C[k]!=null?C[k]:fb);}
+
+function _buildAIContext(){
+  const lang=window.IQ_CURRENT_LANG||'ko';
+  const langMap={ko:'Korean',en:'English',de:'German',fr:'French',es:'Spanish',pt:'Portuguese',it:'Italian',ja:'Japanese',id:'Indonesian'};
+  const countryMap={ko:'South Korea',en:'English-speaking countries (US, UK, Australia)',de:'Germany',fr:'France',es:'Spanish-speaking countries (Spain, Mexico, Latin America)',pt:'Brazil and Portugal',it:'Italy',ja:'Japan',id:'Indonesia'};
+  const ln=langMap[lang]||'Korean';
+  const cn=countryMap[lang]||'their country';
+  const lines=[];
+
+  // IQ context
+  const iqNum=document.getElementById('res-iq');
+  if(iqNum&&iqNum.textContent&&iqNum.textContent!=='—'){
+    const cat=document.getElementById('res-cat')?.textContent||'';
+    const top=document.getElementById('r-top')?.textContent||'';
+    const mode=document.getElementById('res-test-label')?.textContent||'';
+    lines.push(`IQ Score: ${iqNum.textContent}${cat?' ('+cat+')':''}${top?' · Top '+top+'%':''}`);
+    if(mode)lines.push(`Test type: ${mode}`);
+  }
+
+  // ASD context
+  const asdSc=document.getElementById('asd-score');
+  if(asdSc&&asdSc.textContent){
+    const lvl=document.getElementById('asd-level')?.textContent||'';
+    const prf=document.getElementById('asd-profile')?.textContent||'';
+    const adhd=document.getElementById('asd-adhd-level')?.textContent||'';
+    lines.push(`ASD Screening Score: ${asdSc.textContent}/20 · ${lvl} · ${prf}`);
+    if(adhd)lines.push(`ADHD Assessment: ${adhd}`);
+    // Category bars
+    const bars=document.querySelectorAll('#asd-cat-bars .asd-cat-row');
+    if(bars.length){
+      const cats=[];bars.forEach(r=>{const nm=r.querySelector('.asd-cat-nm')?.textContent||'';const sc=r.querySelector('.asd-cat-sc')?.textContent||'';if(nm)cats.push(`${nm}: ${sc}`);});
+      if(cats.length)lines.push(`Domain scores: ${cats.join(', ')}`);
+    }
+  }
+
+  if(!lines.length)return null;
+
+  const today=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  return `You are a compassionate, knowledgeable cognitive science advisor. You help people deeply understand their assessment results and plan a better future.
+
+## Test Results
+${lines.join('\n')}
+
+## Context
+- Date: ${today}
+- User's country/region: ${cn}
+- Response language: ${ln} (ALWAYS respond ONLY in ${ln})
+
+## Your Mission
+Provide a rich, personalized analysis covering:
+
+1. **What the scores mean personally** — interpret their specific numbers warmly and accurately
+2. **Social & cultural context** — what these traits/scores mean in ${cn} today: job market, education system, social expectations, stigma vs. acceptance of neurodiversity
+3. **Strengths to leverage** — concrete advantages hidden in their profile
+4. **Practical growth roadmap** — specific, actionable next steps for the next 3–6 months
+5. **Encouragement** — honest but optimistic framing; help them see a clear, positive path forward
+
+Style: warm, structured, scientifically grounded but accessible. Use clear headings. Avoid clinical coldness.
+Length: ~350–500 words for the initial analysis. Answer follow-up questions concisely.
+
+CRITICAL: Always respond only in ${ln}. This is a screening tool, not a clinical diagnosis — frame all insights accordingly.`;
+}
+
+function _showChatFAB(){
+  const fab=document.getElementById('ai-chat-fab');
+  if(fab)fab.style.display='flex';
+  // Update lang strings on fab area
+  const L=window.IQ_LANG;
+  if(L&&L.chat){
+    const t=document.getElementById('ai-chat-title');if(t&&L.chat.panelTitle)t.textContent=L.chat.panelTitle;
+    const s=document.getElementById('ai-chat-sub');if(s&&L.chat.panelSub)s.textContent=L.chat.panelSub;
+    const d=document.getElementById('ai-chat-disc');if(d&&L.chat.disclaimer)d.textContent=L.chat.disclaimer;
+    const inp=document.getElementById('ai-chat-input');if(inp&&L.chat.placeholder)inp.placeholder=L.chat.placeholder;
+  }
+}
+
+function openAIChat(){
+  const panel=document.getElementById('ai-chat-panel');if(!panel)return;
+  _chatOpen=true;panel.classList.add('ai-chat-open');
+  if(!_chatInit){
+    _chatInit=true;
+    const ctx=_buildAIContext();
+    if(ctx){
+      _chatMsgs=[{role:'system',content:ctx}];
+      // Auto-start analysis
+      const greeting=_aiL('greeting','안녕하세요! 검사 결과를 바탕으로 심층 분석을 시작할게요. 잠시만 기다려주세요 🧠');
+      _appendAIMsg('assistant',greeting);
+      const loader=_appendAILoader();
+      _fetchAI(_chatMsgs).then(reply=>{
+        _removeAILoader(loader);
+        if(reply){_chatMsgs.push({role:'assistant',content:reply});_appendAIMsg('assistant',reply);}
+      });
+    } else {
+      _appendAIMsg('assistant',_aiL('noContext','먼저 IQ 검사 또는 ASD 검사를 완료해주세요.'));
+    }
+  }
+  setTimeout(()=>{const inp=document.getElementById('ai-chat-input');if(inp)inp.focus();},320);
+}
+
+function closeAIChat(){
+  const panel=document.getElementById('ai-chat-panel');if(panel)panel.classList.remove('ai-chat-open');
+  _chatOpen=false;
+}
+
+function _appendAIMsg(role,content){
+  const msgs=document.getElementById('ai-chat-msgs');if(!msgs)return null;
+  const div=document.createElement('div');
+  div.className=`ai-msg ${role}`;
+  div.textContent=content;
+  msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+function _appendAILoader(){
+  const msgs=document.getElementById('ai-chat-msgs');if(!msgs)return null;
+  const div=document.createElement('div');
+  div.className='ai-msg loading';
+  div.innerHTML='<div class="ai-dots"><span></span><span></span><span></span></div>';
+  msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+function _removeAILoader(el){if(el&&el.parentNode)el.parentNode.removeChild(el);}
+
+async function _fetchAI(messages){
+  try{
+    const resp=await fetch('/iq-test/chat-proxy.php',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({messages})
+    });
+    if(resp.status===429)return _aiL('rateLimit','잠시 후 다시 시도해주세요. (시간당 20회 제한)');
+    const data=await resp.json();
+    return data.content||_aiL('error','오류가 발생했습니다. 다시 시도해주세요.');
+  }catch(e){
+    return _aiL('error','연결 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+  }
+}
+
+async function sendAIChatMessage(){
+  if(_chatBusy)return;
+  const inp=document.getElementById('ai-chat-input');
+  const btn=document.getElementById('ai-chat-send');
+  if(!inp)return;
+  const text=inp.value.trim();if(!text)return;
+  inp.value='';inp.style.height='auto';
+  _chatBusy=true;if(btn)btn.disabled=true;
+  _chatMsgs.push({role:'user',content:text});
+  _appendAIMsg('user',text);
+  const loader=_appendAILoader();
+  const reply=await _fetchAI(_chatMsgs);
+  _removeAILoader(loader);
+  if(reply){_chatMsgs.push({role:'assistant',content:reply});_appendAIMsg('assistant',reply);}
+  _chatBusy=false;if(btn)btn.disabled=false;
+  if(inp)inp.focus();
+}
+
+function handleAIChatKey(e){
+  const ta=e.target;
+  ta.style.height='auto';
+  ta.style.height=Math.min(ta.scrollHeight,80)+'px';
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAIChatMessage();}
 }

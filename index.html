@@ -478,6 +478,113 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
   .iq-number{font-size:60px;}
   .home-hero{padding:56px 16px 48px;}
 }
+
+/* ── ASD SECTION (home) ── */
+.asd-mode-section{padding:0 16px 28px;max-width:900px;margin:0 auto;}
+.asd-mode-header{text-align:center;margin-bottom:18px;}
+.asd-new-badge{display:inline-block;background:linear-gradient(135deg,#0d9488,#14b8a6);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:10px;letter-spacing:.5px;}
+.asd-mode-header h2{font-size:clamp(18px,4vw,24px);font-weight:900;margin-bottom:6px;color:var(--text);}
+.asd-mode-header p{font-size:13px;color:var(--text2);}
+.asd-cards-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.asd-card{background:var(--card);border:2px solid #99f6e4;border-radius:20px;padding:22px;cursor:pointer;transition:all .25s;display:flex;gap:16px;align-items:flex-start;box-shadow:var(--shadow);}
+.asd-card:hover{border-color:#14b8a6;box-shadow:0 8px 28px rgba(20,184,166,.18);transform:translateY(-3px);}
+.asd-card-icon{font-size:36px;flex-shrink:0;}
+.asd-card h3{font-size:16px;font-weight:800;margin-bottom:5px;color:var(--text);}
+.asd-card p{font-size:12px;color:var(--text2);line-height:1.55;margin-bottom:10px;}
+.badge-teal{background:#ccfbf1;color:#0f766e;border:1px solid #99f6e4;}
+@media(max-width:680px){.asd-cards-wrap{grid-template-columns:1fr;}.asd-card{gap:12px;padding:16px;}}
+
+/* ── ASD QUESTION SCREEN ── */
+#screen-asd{background:var(--bg);}
+.asd-q-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
+.asd-back-btn{background:none;border:none;color:var(--text2);font-size:14px;font-weight:600;cursor:pointer;padding:6px 10px;border-radius:8px;}
+.asd-back-btn:hover{background:var(--bg);}
+.asd-counter-txt{font-size:13px;font-weight:700;color:var(--text2);}
+.asd-progress-wrap{height:4px;background:var(--border);position:relative;}
+.asd-progress-bar{height:4px;background:linear-gradient(90deg,#0d9488,#14b8a6);transition:width .3s;}
+.asd-q-body{max-width:640px;margin:0 auto;padding:24px 20px 40px;}
+.asd-dots-row{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin-bottom:18px;}
+.asd-dot{width:9px;height:9px;border-radius:50%;background:var(--border);transition:all .2s;}
+.asd-dot.active{background:#14b8a6;transform:scale(1.3);}
+.asd-dot.done{background:#0d9488;}
+.asd-cat-badge{display:inline-block;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:16px;letter-spacing:.3px;}
+.asd-cat-sc{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;}
+.asd-cat-rb{background:#fdf4ff;color:#7e22ce;border:1px solid #e9d5ff;}
+.asd-cat-ss{background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;}
+.asd-cat-cg{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;}
+.asd-cat-adhd{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;}
+.asd-q-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:24px 22px;margin-bottom:20px;box-shadow:var(--shadow);}
+.asd-q-text{font-size:17px;font-weight:700;line-height:1.65;color:var(--text);margin:0;}
+.asd-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.asd-opt{padding:14px 10px;border-radius:12px;border:2px solid var(--border);background:var(--card);font-size:13px;font-weight:700;color:var(--text);cursor:pointer;transition:all .18s;text-align:center;}
+.asd-opt:hover{border-color:#14b8a6;background:#f0fdfa;color:#0d9488;}
+.asd-opt:active{transform:scale(.97);}
+.asd-q-disclaimer{font-size:11px;color:var(--muted);text-align:center;line-height:1.6;}
+
+/* ── ASD RESULT SCREEN ── */
+#screen-asd-result{background:var(--bg);}
+.asd-result-hero{background:linear-gradient(135deg,#042f2e,#134e4a,#0d9488);color:#fff;padding:40px 20px 32px;text-align:center;}
+.asd-result-eyebrow{font-size:12px;font-weight:700;color:#99f6e4;letter-spacing:1px;margin-bottom:12px;}
+.asd-score-display{margin:16px 0;}
+.asd-score-main{display:flex;align-items:baseline;justify-content:center;gap:6px;}
+.asd-score-num{font-size:80px;font-weight:900;line-height:1;color:#fff;}
+.asd-score-denom{font-size:22px;color:#99f6e4;font-weight:700;}
+.asd-level-badge{display:inline-block;padding:6px 20px;border-radius:24px;font-size:14px;font-weight:800;margin:10px 0 8px;letter-spacing:.5px;}
+.asd-lvl-low{background:#ccfbf1;color:#134e4a;}
+.asd-lvl-borderline{background:#fef9c3;color:#713f12;}
+.asd-lvl-significant{background:#fed7aa;color:#7c2d12;}
+.asd-lvl-strong{background:#fecaca;color:#7f1d1d;}
+.asd-level-desc{font-size:13px;color:#ccfbf1;max-width:500px;margin:0 auto 10px;line-height:1.65;}
+.asd-profile-badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#e4f4f4;font-size:12px;font-weight:700;padding:5px 16px;border-radius:20px;margin-top:4px;}
+.asd-result-body{max-width:640px;margin:0 auto;padding:24px 20px 48px;}
+.asd-adhd-card{background:var(--card);border:1.5px solid #fca5a5;border-radius:14px;padding:16px 18px;margin-bottom:14px;}
+.asd-adhd-title{font-size:13px;font-weight:800;color:#b91c1c;margin-bottom:4px;}
+.asd-adhd-desc{font-size:12px;color:var(--text2);margin:0;line-height:1.55;}
+.asd-breakdown-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:14px;}
+.asd-breakdown-card h3{font-size:14px;font-weight:800;margin-bottom:14px;color:var(--text);}
+.asd-cat-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.asd-cat-nm{font-size:12px;font-weight:600;color:var(--text2);min-width:90px;flex-shrink:0;}
+.asd-bar-wrap{flex:1;height:10px;background:var(--border);border-radius:5px;overflow:hidden;}
+.asd-bar{height:100%;border-radius:5px;transition:width .6s ease;}
+.asd-bar-sc{background:linear-gradient(90deg,#3b82f6,#60a5fa);}
+.asd-bar-rb{background:linear-gradient(90deg,#a855f7,#c084fc);}
+.asd-bar-ss{background:linear-gradient(90deg,#f97316,#fb923c);}
+.asd-bar-cg{background:linear-gradient(90deg,#22c55e,#4ade80);}
+.asd-cat-sc{font-size:11px;font-weight:700;color:var(--muted);min-width:32px;text-align:right;}
+.asd-disclaimer-card{background:#fffbeb;border:1px solid #fcd34d;border-radius:12px;padding:14px 16px;font-size:12px;color:#78350f;line-height:1.7;margin-bottom:18px;}
+.asd-result-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+
+/* ── AI CHAT ── */
+#ai-chat-fab{position:fixed;bottom:28px;right:24px;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;font-size:24px;display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 24px rgba(124,58,237,.45);z-index:1000;border:none;transition:transform .2s,box-shadow .2s;}
+#ai-chat-fab:hover{transform:scale(1.1);box-shadow:0 6px 32px rgba(124,58,237,.6);}
+#ai-chat-panel{position:fixed;right:16px;bottom:100px;width:360px;max-height:580px;background:var(--card);border-radius:20px;box-shadow:0 16px 60px rgba(0,0,0,.22);display:flex;flex-direction:column;z-index:999;overflow:hidden;transform:scale(.94) translateY(24px);opacity:0;pointer-events:none;transition:transform .28s cubic-bezier(.34,1.56,.64,1),opacity .22s;}
+#ai-chat-panel.ai-chat-open{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
+.ai-chat-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;flex-shrink:0;}
+.ai-chat-hinfo{display:flex;align-items:center;gap:10px;}
+.ai-chat-avatar{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.ai-chat-htitle{font-weight:800;font-size:14px;line-height:1.2;}
+.ai-chat-hsub{font-size:10px;opacity:.75;margin-top:1px;}
+.ai-chat-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:50%;font-size:14px;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.ai-chat-close:hover{background:rgba(255,255,255,.3);}
+.ai-chat-msgs{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:10px;min-height:120px;}
+.ai-msg{max-width:90%;line-height:1.6;font-size:13px;animation:msgIn .2s ease;}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.ai-msg.user{align-self:flex-end;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border-radius:16px 16px 4px 16px;padding:10px 14px;}
+.ai-msg.assistant{align-self:flex-start;background:var(--bg);color:var(--text);border-radius:16px 16px 16px 4px;padding:10px 14px;border:1px solid var(--border);white-space:pre-wrap;word-break:break-word;}
+.ai-msg.loading{align-self:flex-start;padding:12px 14px;}
+.ai-dots{display:flex;gap:5px;}
+.ai-dots span{width:7px;height:7px;border-radius:50%;background:#7c3aed;animation:aiDot 1.3s infinite;}
+.ai-dots span:nth-child(2){animation-delay:.2s;}
+.ai-dots span:nth-child(3){animation-delay:.4s;}
+@keyframes aiDot{0%,80%,100%{transform:scale(.6);opacity:.4;}40%{transform:scale(1);opacity:1;}}
+.ai-chat-disc{font-size:10px;color:var(--muted);text-align:center;padding:4px 14px 6px;flex-shrink:0;line-height:1.5;}
+.ai-chat-input-row{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--border);flex-shrink:0;align-items:flex-end;}
+#ai-chat-input{flex:1;border:1.5px solid var(--border);background:var(--bg);color:var(--text);border-radius:12px;padding:9px 12px;font-size:13px;resize:none;max-height:80px;font-family:inherit;outline:none;line-height:1.45;overflow-y:auto;}
+#ai-chat-input:focus{border-color:#7c3aed;}
+#ai-chat-send{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;font-size:17px;cursor:pointer;flex-shrink:0;transition:transform .18s;display:flex;align-items:center;justify-content:center;}
+#ai-chat-send:hover{transform:scale(1.1);}
+#ai-chat-send:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+@media(max-width:480px){#ai-chat-panel{right:8px;left:8px;width:auto;bottom:88px;}#ai-chat-fab{bottom:20px;right:16px;width:52px;height:52px;}}
 </style>
 </head>
 <body>
@@ -527,6 +634,33 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
         <h3>정밀 IQ 테스트</h3>
         <p>4개 영역 40문항으로 가장 정밀하게 IQ를 산출하고 영역별 강약점을 분석합니다.</p>
         <div class="tc-meta"><span class="badge badge-blue">40문항</span><span class="badge badge-sky">약 28분</span><span class="badge badge-purple">영역별 분석</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ASD / Asperger / ADHD Screening -->
+  <div class="asd-mode-section">
+    <div class="asd-mode-header">
+      <div class="asd-new-badge">🆕 신경다양성 검사</div>
+      <h2 id="asd-section-title">자폐 스펙트럼 · 아스퍼거 · ADHD 스크리닝</h2>
+      <p id="asd-section-sub">AQ 기반 25문항 · 사회적 소통 · 반복 행동 · 감각 민감도 · ADHD 동반 평가</p>
+    </div>
+    <div class="asd-cards-wrap">
+      <div class="asd-card" onclick="startASD()">
+        <div class="asd-card-icon">🧩</div>
+        <div class="asd-card-content">
+          <h3 id="asd-card-title">자폐 스펙트럼 검사</h3>
+          <p id="asd-card-desc">사회적 소통 어려움 · 반복 행동 · 감각 과민 · 인지 스타일 · ADHD 동반 경향까지 종합 평가합니다.</p>
+          <div class="tc-meta"><span class="badge badge-teal">25문항</span><span class="badge badge-sky">약 8분</span><span class="badge badge-purple">AQ 기반</span></div>
+        </div>
+      </div>
+      <div class="asd-card" onclick="startASD()">
+        <div class="asd-card-icon">⚡</div>
+        <div class="asd-card-content">
+          <h3 id="asd-card2-title">아스퍼거 · ADHD 동반 평가</h3>
+          <p id="asd-card2-desc">고기능 자폐(아스퍼거) 특성과 ADHD 공존 여부를 함께 확인하고 맞춤 프로필을 제공합니다.</p>
+          <div class="tc-meta"><span class="badge badge-teal">AuDHD 감지</span><span class="badge badge-sky">즉시 결과</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -955,6 +1089,58 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
   </div>
 </div>
 
+<!-- ══ ASD QUESTION SCREEN ══ -->
+<div id="screen-asd" class="screen">
+  <div class="asd-q-header">
+    <button class="asd-back-btn" onclick="showScreen('home')">← 홈</button>
+    <span class="asd-counter-txt" id="asd-counter">1 / 25</span>
+  </div>
+  <div class="asd-progress-wrap"><div class="asd-progress-bar" id="asd-progress-bar" style="width:0%"></div></div>
+  <div class="asd-q-body">
+    <div class="asd-dots-row" id="asd-dots"></div>
+    <div style="text-align:center;margin-bottom:14px;">
+      <span class="asd-cat-badge asd-cat-sc" id="asd-cat">사회적 소통</span>
+    </div>
+    <div class="asd-q-card">
+      <p class="asd-q-text" id="asd-q-text"></p>
+    </div>
+    <div class="asd-opts" id="asd-opts"></div>
+    <p class="asd-q-disclaimer" id="asd-q-disclaimer">이 검사는 전문 진단을 대체하지 않으며 스크리닝 목적으로만 활용하세요.</p>
+  </div>
+</div>
+
+<!-- ══ ASD RESULT SCREEN ══ -->
+<div id="screen-asd-result" class="screen">
+  <div class="asd-result-hero">
+    <div class="asd-result-eyebrow" id="asd-result-eyebrow">자폐 스펙트럼 검사 결과</div>
+    <div class="asd-score-display">
+      <div class="asd-score-main">
+        <div class="asd-score-num" id="asd-score">0</div>
+        <div class="asd-score-denom">/ 20</div>
+      </div>
+    </div>
+    <div class="asd-level-badge asd-lvl-low" id="asd-level">낮음</div>
+    <p class="asd-level-desc" id="asd-level-desc"></p>
+    <div class="asd-profile-badge" id="asd-profile"></div>
+  </div>
+  <div class="asd-result-body">
+    <div class="asd-adhd-card">
+      <div class="asd-adhd-title">ADHD 동반 경향</div>
+      <div style="font-size:14px;font-weight:800;color:#b91c1c;margin-bottom:6px;" id="asd-adhd-level">ADHD 낮음: 0/5</div>
+      <p class="asd-adhd-desc" id="asd-adhd-desc"></p>
+    </div>
+    <div class="asd-breakdown-card">
+      <h3 id="asd-breakdown-title">영역별 점수</h3>
+      <div id="asd-cat-bars"></div>
+    </div>
+    <div class="asd-disclaimer-card" id="asd-result-disclaimer"></div>
+    <div class="asd-result-actions">
+      <button class="btn btn-primary" id="asd-share-btn" onclick="shareASD()">📤 결과 공유</button>
+      <button class="btn btn-secondary" id="asd-home-btn" onclick="showScreen('home')">홈으로</button>
+    </div>
+  </div>
+</div>
+
 <div id="screen-brain-training" class="screen">
   <div class="bt-hero">
     <div class="container">
@@ -1038,6 +1224,29 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
+
+<!-- AI Chat FAB -->
+<button id="ai-chat-fab" onclick="openAIChat()" aria-label="AI Analysis">🤖</button>
+
+<!-- AI Chat Panel -->
+<div id="ai-chat-panel">
+  <div class="ai-chat-header">
+    <div class="ai-chat-hinfo">
+      <div class="ai-chat-avatar">🤖</div>
+      <div>
+        <div class="ai-chat-htitle" id="ai-chat-title">AI 결과 분석</div>
+        <div class="ai-chat-hsub" id="ai-chat-sub">Llama · 무료 AI 어드바이저</div>
+      </div>
+    </div>
+    <button class="ai-chat-close" onclick="closeAIChat()">✕</button>
+  </div>
+  <div id="ai-chat-msgs" class="ai-chat-msgs"></div>
+  <div class="ai-chat-disc" id="ai-chat-disc">⚠️ AI 분석은 참고용이며 전문 진단을 대체하지 않습니다</div>
+  <div class="ai-chat-input-row">
+    <textarea id="ai-chat-input" rows="1" placeholder="추가 질문을 입력하세요..." onkeydown="handleAIChatKey(event)"></textarea>
+    <button id="ai-chat-send" onclick="sendAIChatMessage()">↑</button>
+  </div>
+</div>
 
 <script src="iq-data.js"></script>
 <script src="iq-app.js"></script>

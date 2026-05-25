@@ -16,7 +16,7 @@ function applyLang(){
   if(L.docTitle)document.title=L.docTitle;
   // Per-language SEO meta tag updates
   const _l=window.IQ_CURRENT_LANG||'ko';
-  const _url=_l==='ko'?'https://iq-test.all-lifes.com/':'https://iq-test.all-lifes.com/?lang='+_l;
+  const _url=_l==='ko'?'https://all-lifes.com/iq-test/':'https://all-lifes.com/iq-test/?lang='+_l;
   if(L.metaDesc){const m=document.querySelector('meta[name="description"]');if(m)m.content=L.metaDesc;}
   if(L.metaKeywords){const m=document.querySelector('meta[name="keywords"]');if(m)m.content=L.metaKeywords;}
   if(L.ogLocale){const m=document.querySelector('meta[property="og:locale"]');if(m)m.content=L.ogLocale;}
@@ -24,7 +24,7 @@ function applyLang(){
   {const m=document.querySelector('meta[property="og:description"]');if(m&&L.metaDesc)m.content=L.metaDesc;}
   {const m=document.querySelector('meta[property="og:url"]');if(m)m.content=_url;}
   {const c=document.querySelector('link[rel="canonical"]');if(c)c.href=_url;}
-  {const _img=`https://iq-test.all-lifes.com/og-${_l}.png`;
+  {const _img=`https://all-lifes.com/iq-test/og-${_l}.png`;
    const mi=document.querySelector('meta[property="og:image"]');if(mi)mi.content=_img;
    const mt=document.querySelector('meta[name="twitter:image"]');if(mt)mt.content=_img;}
   {const m=document.querySelector('meta[property="og:image:height"]');if(m)m.content='1200';}
@@ -1205,7 +1205,7 @@ function shareKakao(isExt=false){
         content:{
           title:t('shareTitle')||'IQ 테스트 결과',
           description:desc,
-          imageUrl:'https://iq-test.all-lifes.com/og-image-ko.png',
+          imageUrl:'https://all-lifes.com/iq-test/og-image-ko.png',
           link:{mobileWebUrl:url,webUrl:url}
         }
       });

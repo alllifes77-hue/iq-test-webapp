@@ -1559,29 +1559,27 @@ function _buildAIContext(){
   if(!lines.length)return null;
 
   const today=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
-  return `You are a compassionate, knowledgeable cognitive science advisor. You help people deeply understand their assessment results and plan a better future.
+  return `You are a warm cognitive science advisor. Give a concise, personalized analysis of these results.
 
-## Test Results
-${lines.join('\n')}
+Results: ${lines.join(' | ')}
+Date: ${today} | Region: ${cn}
+Language: ALWAYS respond ONLY in ${ln}.
 
-## Context
-- Date: ${today}
-- User's country/region: ${cn}
-- Response language: ${ln} (ALWAYS respond ONLY in ${ln})
+Write ~150 words covering:
+1. What these scores mean for this person (specific numbers, warm tone)
+2. One key strength to leverage
+3. One concrete action for the next 30 days
+4. Brief encouragement
 
-## Your Mission
-Provide a rich, personalized analysis covering:
+FORMAT RULES (strictly follow):
+- Plain paragraphs only — NO markdown tables, NO pipe characters (|)
+- NO HTML tags (no <br>, no <strong> tags)
+- You MAY use **bold** for 2-3 key phrases only
+- NO section headers with ## or ###
+- Keep total response under 180 words
+- This is a screening tool, not clinical diagnosis — frame accordingly
 
-1. **What the scores mean personally** — interpret their specific numbers warmly and accurately
-2. **Social & cultural context** — what these traits/scores mean in ${cn} today: job market, education system, social expectations, stigma vs. acceptance of neurodiversity
-3. **Strengths to leverage** — concrete advantages hidden in their profile
-4. **Practical growth roadmap** — specific, actionable next steps for the next 3–6 months
-5. **Encouragement** — honest but optimistic framing; help them see a clear, positive path forward
-
-Style: warm, structured, scientifically grounded but accessible. Use clear headings. Avoid clinical coldness.
-Length: ~350–500 words for the initial analysis. Answer follow-up questions concisely.
-
-CRITICAL: Always respond only in ${ln}. This is a screening tool, not a clinical diagnosis — frame all insights accordingly.`;
+Respond ONLY in ${ln}.`;
 }
 
 function _showChatFAB(){
@@ -1626,11 +1624,20 @@ function closeAIChat(){
   _chatOpen=false;
 }
 
+function _md(text){
+  const s=text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*([^*\n]+?)\*/g,'<em>$1</em>');
+  return s.split(/\n\n+/).map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
+}
+
 function _appendAIMsg(role,content){
   const msgs=document.getElementById('ai-chat-msgs');if(!msgs)return null;
   const div=document.createElement('div');
   div.className=`ai-msg ${role}`;
-  div.textContent=content;
+  if(role==='assistant'){div.innerHTML=_md(content);}
+  else{div.textContent=content;}
   msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
   return div;
 }

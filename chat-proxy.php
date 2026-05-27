@@ -32,17 +32,19 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // ── API Key ──
 define('OPENROUTER_KEY', 'ENV_PLACEHOLDER');
 
-// Fallback model list — tries each in order until one succeeds
+// Fallback model list — verified available on OpenRouter free tier (2026-05)
+// Ordered: quality-first, then smaller fallbacks
 $models = [
+    'openai/gpt-oss-120b:free',
+    'nvidia/nemotron-3-super-120b-a12b:free',
     'google/gemma-4-31b-it:free',
+    'nousresearch/hermes-3-llama-3.1-405b:free',
     'meta-llama/llama-3.3-70b-instruct:free',
-    'qwen/qwen3-30b-a3b:free',
-    'deepseek/deepseek-r1-0528:free',
-    'microsoft/mai-ds-r1:free',
-    'meta-llama/llama-3.1-8b-instruct:free',
-    'qwen/qwen3-8b:free',
-    'meta-llama/llama-3.2-3b-instruct:free',
+    'google/gemma-4-26b-a4b-it:free',
+    'openai/gpt-oss-20b:free',
+    'z-ai/glm-4.5-air:free',
     'deepseek/deepseek-v4-flash:free',
+    'meta-llama/llama-3.2-3b-instruct:free',
     'minimax/minimax-m2.5:free',
 ];
 
@@ -106,12 +108,12 @@ foreach ($models as $model) {
     }
 
     $lastCode = $code;
-    if ($code === 429 || $code === 503) {
-        $rateLimited++;
-        continue; // try next model
+    if ($code === 429 || $code === 503 || $code === 404) {
+        if ($code === 429 || $code === 503) $rateLimited++;
+        continue; // try next model (404 = model not found, 429/503 = rate limited)
     }
-    // Non-retriable error (400, 401, 404, etc.) — stop trying
-    if ($code >= 400 && $code !== 429 && $code !== 503) break;
+    // Hard stop on auth/bad-request errors
+    if ($code === 401 || $code === 400) break;
 }
 
 // All models failed

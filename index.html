@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta name="naver-site-verification" content="e4fcec506f9b2d7d89a359c7075636a80e3f9bc6" />
@@ -584,6 +584,10 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
 #ai-chat-send{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;font-size:17px;cursor:pointer;flex-shrink:0;transition:transform .18s;display:flex;align-items:center;justify-content:center;}
 #ai-chat-send:hover{transform:scale(1.1);}
 #ai-chat-send:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+.ai-rate-limit-msg{border:1.5px solid #f59e0b;background:rgba(245,158,11,.08);border-radius:14px;padding:11px 13px;line-height:1.55;}
+.ai-rate-txt{font-size:12.5px;color:var(--text);opacity:.9;margin-bottom:8px;}
+.ai-retry-btn{background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;border-radius:8px;padding:6px 16px;font-size:12px;cursor:pointer;font-weight:600;transition:opacity .2s;}
+.ai-retry-btn:hover{opacity:.85;}
 @media(max-width:480px){#ai-chat-panel{right:8px;left:8px;width:auto;bottom:88px;}#ai-chat-fab{bottom:20px;right:16px;width:52px;height:52px;}}
 </style>
 </head>
@@ -1252,3 +1256,4 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
 <script src="iq-app.js"></script>
 </body>
 </html>
+

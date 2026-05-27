@@ -224,6 +224,7 @@ asd:{
   greeting:'¡Hola! Comenzaré un análisis detallado de tus resultados ahora 🧠',
   noContext:'Por favor completa primero el test de CI o ASD para recibir tu análisis.',
   rateLimit:'Por favor espera un momento. (Límite: 20 solicitudes por hora)',
-  error:'Ocurrió un error. Por favor intenta de nuevo.'
+  error:'Ocurrió un error. Por favor intenta de nuevo.',
+  retryBtn:'🔄 Reintentar'
 }
 };

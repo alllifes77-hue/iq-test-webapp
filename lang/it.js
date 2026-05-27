@@ -224,6 +224,7 @@ asd:{
   greeting:'Ciao! Inizierò subito un\'analisi dettagliata dei tuoi risultati 🧠',
   noContext:'Completa prima il test QI o ASD per ricevere la tua analisi.',
   rateLimit:'Attendi un momento. (Limite: 20 richieste all\'ora)',
-  error:'Si è verificato un errore. Riprova.'
+  error:'Si è verificato un errore. Riprova.',
+  retryBtn:'🔄 Riprova'
 }
 };

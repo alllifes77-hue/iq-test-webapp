@@ -1605,13 +1605,14 @@ function openAIChat(){
     const ctx=_buildAIContext();
     if(ctx){
       _chatMsgs=[{role:'system',content:ctx}];
-      // Auto-start analysis
       const greeting=_aiL('greeting','안녕하세요! 검사 결과를 바탕으로 심층 분석을 시작할게요. 잠시만 기다려주세요 🧠');
       _appendAIMsg('assistant',greeting);
       const loader=_appendAILoader();
-      _fetchAI(_chatMsgs).then(reply=>{
+      _fetchAI(_chatMsgs).then(res=>{
         _removeAILoader(loader);
-        if(reply){_chatMsgs.push({role:'assistant',content:reply});_appendAIMsg('assistant',reply);}
+        if(res.rateLimit){_appendRateLimitMsg();}
+        else if(res.content){_chatMsgs.push({role:'assistant',content:res.content});_appendAIMsg('assistant',res.content);}
+        else{_appendAIMsg('assistant',_aiL('error','오류가 발생했습니다. 다시 시도해주세요.'));}
       });
     } else {
       _appendAIMsg('assistant',_aiL('noContext','먼저 IQ 검사 또는 ASD 검사를 완료해주세요.'));
@@ -1652,12 +1653,35 @@ async function _fetchAI(messages){
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({messages})
     });
-    if(resp.status===429)return _aiL('rateLimit','잠시 후 다시 시도해주세요. (시간당 20회 제한)');
+    if(resp.status===429||resp.status===503)return{content:null,rateLimit:true};
     const data=await resp.json();
-    return data.content||_aiL('error','오류가 발생했습니다. 다시 시도해주세요.');
+    return{content:data.content||null,rateLimit:false};
   }catch(e){
-    return _aiL('error','연결 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+    return{content:null,rateLimit:false};
   }
+}
+
+function _appendRateLimitMsg(){
+  const msgs=document.getElementById('ai-chat-msgs');if(!msgs)return;
+  const div=document.createElement('div');
+  div.className='ai-msg assistant ai-rate-limit-msg';
+  const txt=_aiL('rateLimit','무료 AI 서버가 혼잡합니다. 잠시 후 재시도해주세요.');
+  const btnTxt=_aiL('retryBtn','🔄 다시 시도');
+  div.innerHTML=`<div class="ai-rate-txt">${txt}</div><button class="ai-retry-btn" onclick="retryAIChat(this)">${btnTxt}</button>`;
+  msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
+}
+
+function retryAIChat(btn){
+  const msgEl=btn?btn.closest('.ai-rate-limit-msg'):null;
+  if(msgEl)msgEl.remove();
+  if(!_chatInit||!_chatMsgs.length)return;
+  const loader=_appendAILoader();
+  _fetchAI(_chatMsgs).then(res=>{
+    _removeAILoader(loader);
+    if(res.rateLimit){_appendRateLimitMsg();}
+    else if(res.content){_chatMsgs.push({role:'assistant',content:res.content});_appendAIMsg('assistant',res.content);}
+    else{_appendAIMsg('assistant',_aiL('error','오류가 발생했습니다. 다시 시도해주세요.'));}
+  });
 }
 
 async function sendAIChatMessage(){
@@ -1671,9 +1695,18 @@ async function sendAIChatMessage(){
   _chatMsgs.push({role:'user',content:text});
   _appendAIMsg('user',text);
   const loader=_appendAILoader();
-  const reply=await _fetchAI(_chatMsgs);
+  const res=await _fetchAI(_chatMsgs);
   _removeAILoader(loader);
-  if(reply){_chatMsgs.push({role:'assistant',content:reply});_appendAIMsg('assistant',reply);}
+  if(res.rateLimit){
+    _chatMsgs.pop(); // remove failed user message from history
+    _appendRateLimitMsg();
+  } else if(res.content){
+    _chatMsgs.push({role:'assistant',content:res.content});
+    _appendAIMsg('assistant',res.content);
+  } else {
+    _chatMsgs.pop();
+    _appendAIMsg('assistant',_aiL('error','오류가 발생했습니다. 다시 시도해주세요.'));
+  }
   _chatBusy=false;if(btn)btn.disabled=false;
   if(inp)inp.focus();
 }

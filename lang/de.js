@@ -224,6 +224,7 @@ asd:{
   greeting:'Hallo! Ich starte jetzt eine detaillierte Analyse Ihrer Ergebnisse 🧠',
   noContext:'Bitte schließen Sie zuerst den IQ- oder ASD-Test ab.',
   rateLimit:'Bitte warten Sie kurz. (Limit: 20 Anfragen pro Stunde)',
-  error:'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.'
+  error:'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.',
+  retryBtn:'🔄 Erneut versuchen'
 }
 };

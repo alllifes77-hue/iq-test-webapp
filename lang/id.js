@@ -224,6 +224,7 @@ asd:{
   greeting:'Halo! Saya akan memulai analisis mendalam hasil Anda sekarang 🧠',
   noContext:'Silakan selesaikan tes IQ atau ASD terlebih dahulu untuk menerima analisis Anda.',
   rateLimit:'Harap tunggu sebentar. (Batas: 20 permintaan per jam)',
-  error:'Terjadi kesalahan. Silakan coba lagi.'
+  error:'Terjadi kesalahan. Silakan coba lagi.',
+  retryBtn:'🔄 Coba lagi'
 }
 };

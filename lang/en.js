@@ -257,6 +257,7 @@ asd:{
   greeting:'Hi! I\'ll start a detailed analysis of your results right away 🧠',
   noContext:'Please complete the IQ or ASD test first to receive your AI analysis.',
   rateLimit:'Please wait a moment. (20 requests per hour limit)',
-  error:'An error occurred. Please try again.'
+  error:'An error occurred. Please try again.',
+  retryBtn:'🔄 Try Again'
 }
 };

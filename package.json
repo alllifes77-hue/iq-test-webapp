@@ -1,0 +1,9 @@
+{
+  "name": "iq-test-webapp",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npx serve . --listen 3000",
+    "deploy": "wrangler pages deploy . --project-name iq-test-webapp --branch main",
+    "push": "git add -A && git commit -m \"update\" && git push"
+  }
+}

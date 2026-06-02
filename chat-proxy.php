@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // ── API Key ──
-define('OPENROUTER_KEY', 'ENV_PLACEHOLDER');
+define('OPENROUTER_KEY', getenv('OPENROUTER_KEY') ?: '');
 
 // Fallback model list — verified available on OpenRouter free tier (2026-05)
 // Ordered: fast/responsive first, large quality models as fallback

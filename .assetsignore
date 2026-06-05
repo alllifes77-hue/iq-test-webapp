@@ -1,0 +1,16 @@
+.git/
+.wrangler/
+.github/
+node_modules/
+*.pem
+*.log
+package.json
+package-lock.json
+wrangler.toml
+worker.js
+translate-*.js
+generate-og*.js
+convert-og.js
+cloudflare-worker.js
+wordpress-plugin.php
+chat-proxy.php

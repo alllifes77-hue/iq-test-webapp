@@ -15,6 +15,22 @@
 //   일본:   A8.net, Rakuten アフィリエイト
 // ═══════════════════════════════════════════════════════════
 
+// ── 쿠팡 파트너스 다이내믹 위젯 (한국어 페이지 전용) ──
+// partners.coupang.com → 링크 생성 → 다이내믹 위젯에서 생성한 위젯 정보.
+// 결과 화면 진입 시점에 lazy 삽입되며, 화면 폭에 맞춰 자동 리사이즈.
+// 끄려면 enabled: false
+window.COUPANG_WIDGET = {
+  enabled: true,
+  id: 996633,
+  trackingCode: 'AF4227535',
+  template: 'carousel',
+  height: 140,
+  maxWidth: 680,
+  minWidth: 300,
+  // 공정위 경제적 이해관계 표시 의무 문구 — 삭제 시 지급중단 위험, 수정하지 말 것
+  disclosure: '이 광고는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.',
+};
+
 window.AFFILIATE_META = {
   ko: { title: '🎁 IQ를 더 키우고 싶다면', disc: '광고 · 구매 시 수수료를 받을 수 있습니다', tag: '광고' },
   en: { title: '🎁 Boost Your Brain Further', disc: 'Ad · We may earn a commission', tag: 'Ad' },

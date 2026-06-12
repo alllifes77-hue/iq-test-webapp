@@ -482,12 +482,34 @@ function renderAffiliates(){
 }
 document.addEventListener('DOMContentLoaded',renderAffiliates);
 
+// ── 쿠팡 파트너스 다이내믹 위젯 (ko 전용, 결과 화면 첫 진입 시 lazy 삽입) ──
+function ensureCoupangWidget(placement){
+  const cfg=window.COUPANG_WIDGET;
+  if(!cfg||!cfg.enabled)return;
+  if((window.IQ_CURRENT_LANG||'ko')!=='ko')return;
+  const sec=document.getElementById(placement==='ext'?'aff-section-ext':'aff-section-iq');
+  if(!sec||sec.querySelector('.coupang-widget'))return;
+  // 카드 오퍼가 없어 숨겨진 상태면 섹션을 열고 헤더 구성
+  if(sec.style.display==='none'){
+    const meta=(window.AFFILIATE_META&&window.AFFILIATE_META.ko)||{};
+    sec.style.display='';
+    sec.innerHTML=`<h3>${meta.title||'🎁 추천'}</h3>`;
+  }
+  const w=Math.max(cfg.minWidth||300,Math.min(cfg.maxWidth||680,(sec.clientWidth||640)-44));
+  const wrap=document.createElement('div');
+  wrap.className='coupang-widget';
+  wrap.innerHTML=`<iframe src="https://ads-partners.coupang.com/widgets.html?id=${cfg.id}&template=${cfg.template}&trackingCode=${cfg.trackingCode}&subId=iqtest_ko_${placement}&width=${w}&height=${cfg.height}" width="${w}" height="${cfg.height}" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" loading="lazy" browsingtopics></iframe><div class="coupang-disc">${cfg.disclosure||''}</div>`;
+  sec.appendChild(wrap);
+}
+
 // ── Navigation ──
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+id).classList.add('active');
   window.scrollTo(0,0);
   setTimeout(sendResize,150);
+  if(id==='results')ensureCoupangWidget('res');
+  else if(id==='ext-results')ensureCoupangWidget('ext');
 }
 function scrollToExt(){showScreen('results');setTimeout(()=>{const el=document.getElementById('ext-grid');if(el)el.scrollIntoView({behavior:'smooth'});},300);}
 function restartAll(){showScreen('home');}

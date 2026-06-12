@@ -600,12 +600,30 @@ async function ensureAliProducts(placement){
   }catch(e){}
 }
 
+// ── AdSense: SPA 화면 전환 시 보이는 광고만 push ──
+// display:none 상태에서 push하면 폭 0으로 실패 → 보이는 유닛만, 한 번에 하나씩 순차 push
+// (연속 push는 구글 스크립트 처리 race로 일부 유닛이 누락됨)
+let _adPushTries=0;
+function pushVisibleAds(){
+  let pending=[];
+  try{
+    pending=Array.from(document.querySelectorAll('ins.adsbygoogle:not([data-adsbygoogle-status])')).filter(i=>i.offsetParent);
+  }catch(e){return;}
+  if(!pending.length||_adPushTries>20)return;
+  _adPushTries++;
+  // push 에러(숨김 유닛 width=0 등)가 나도 재시도 체인은 유지
+  try{(window.adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
+  setTimeout(pushVisibleAds,450);
+}
+document.addEventListener('DOMContentLoaded',()=>{setTimeout(pushVisibleAds,400);});
+
 // ── Navigation ──
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+id).classList.add('active');
   window.scrollTo(0,0);
   setTimeout(sendResize,150);
+  setTimeout(pushVisibleAds,250);
   if(id==='results'){ensureCoupangWidget('res');ensureAliProducts('res');}
   else if(id==='ext-results'){ensureCoupangWidget('ext');ensureAliProducts('ext');}
 }

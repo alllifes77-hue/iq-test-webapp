@@ -25,7 +25,7 @@ questions:[
 {q:'"apple-car-book-moon-river-shoe-bird" — what is the 4th word?',opts:['book','moon','river','shoe']},
 {q:'"ABCDEFG" — combine the 3rd letter and the 2nd-to-last letter.',opts:['CF','CG','DF','DG']},
 {q:'Subtract 7 from 49 repeatedly: 49 → 42 → 35 → ?',opts:['27','28','29','30']},
-{q:'In the sequence 2-4-6-8-1-3-5-7, what is the sum of numbers at even positions (2nd, 4th, 6th, 8th)?',opts:['15','16','17','18']},
+{q:'In the sequence 2-4-6-8-1-3-5-7, what is the sum of numbers at even positions (2nd, 4th, 6th, 8th)?',opts:['21','22','23','24']},
 {q:'"K-A-R-E-N-S" — what is the 3rd letter when spelled backwards?',opts:['E','N','R','A']},
 {q:'1 + 2 + 3 + … + 10 = ?',opts:['45','50','55','60']},
 {q:'"ABCDE" — swap the positions of C and E. What is the result?',opts:['ABCED','ABCDE','ABECD','ABDCE']},

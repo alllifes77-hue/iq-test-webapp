@@ -242,6 +242,9 @@ function calcBrainAge(iq){return Math.max(18,Math.min(65,Math.round(30-(iq-100)/
 function showBrainAgeCard(iq,suffix){
   const age=calcBrainAge(iq);
   const n=document.getElementById('brain-age-num-'+suffix);if(n)n.textContent=age;
+  // 나이 단위 현지화
+  const _units={ko:'세',en:'yrs',de:'J.',fr:'ans',es:'años',pt:'anos',it:'anni',ja:'歳',id:'thn',hi:'वर्ष',ru:'лет',vi:'tuổi',tr:'yaş'};
+  const u=document.getElementById('brain-age-unit-'+suffix);if(u)u.textContent=_units[window.IQ_CURRENT_LANG||'ko']||'yrs';
   const L=window.IQ_LANG&&window.IQ_LANG.brainAge;
   const msgs=L?[
     [25,L.ba_excellent,L.ba_excellent_d],[30,L.ba_great,L.ba_great_d],[38,L.ba_avg,L.ba_avg_d],[99,L.ba_grow,L.ba_grow_d]

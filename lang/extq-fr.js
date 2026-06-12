@@ -25,7 +25,7 @@ questions:[
 {q:'« pomme-voiture-livre-lune-rivière-chaussure-oiseau » — quel est le 4e mot ?',opts:['livre','lune','rivière','chaussure']},
 {q:'« ABCDEFG » — combinez la 3e lettre et l\'avant-dernière lettre.',opts:['CF','CG','DF','DG']},
 {q:'Soustrayez 7 de 49 à répétition : 49 → 42 → 35 → ?',opts:['27','28','29','30']},
-{q:'Dans la suite 2-4-6-8-1-3-5-7, quelle est la somme des chiffres aux positions paires (2e, 4e, 6e, 8e) ?',opts:['15','16','17','18']},
+{q:'Dans la suite 2-4-6-8-1-3-5-7, quelle est la somme des chiffres aux positions paires (2e, 4e, 6e, 8e) ?',opts:['21','22','23','24']},
 {q:'« K-A-R-E-N-S » — quelle est la 3e lettre à l\'envers ?',opts:['E','N','R','A']},
 {q:'1 + 2 + 3 + … + 10 = ?',opts:['45','50','55','60']},
 {q:'« ABCDE » — échangez les positions de C et E. Quel est le résultat ?',opts:['ABCED','ABCDE','ABECD','ABDCE']},

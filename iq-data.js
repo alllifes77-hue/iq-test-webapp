@@ -258,7 +258,7 @@ const extendedTests={
       {q:'"사과-자동차-책-달-강-신발-새" 중 4번째 단어는?',opts:['책','달','강','신발'],correct:1},
       {q:'"가나다라마바사" 앞에서 3번째와 뒤에서 2번째 글자를 합치면?',opts:['다바','다사','라바','라사'],correct:0},
       {q:'49에서 7씩 빼면: 49→42→35→?',opts:['27','28','29','30'],correct:1},
-      {q:'2-4-6-8-1-3-5-7 중 짝수 위치(2,4,6,8번째) 숫자의 합은?',opts:['15','16','17','18'],correct:1},
+      {q:'2-4-6-8-1-3-5-7 중 짝수 위치(2,4,6,8번째) 숫자의 합은?',opts:['21','22','23','24'],correct:1},
       {q:'"K-A-R-E-N-S"를 역순으로 할 때 3번째 문자는?',opts:['E','N','R','A'],correct:0},
       {q:'1+2+3+…+10 = ?',opts:['45','50','55','60'],correct:2},
       {q:'"ABCDE"에서 C와 E의 위치를 바꾸면?',opts:['ABCED','ABCDE','ABECD','ABDCE'],correct:0},
@@ -355,7 +355,7 @@ const extendedTests={
   },
   focus:{id:'focus',title:'집중력 & 주의력',icon:'🎯',color:'#7c3aed',mean:75,sd:8,
     questions:[
-      {q:'"baboon bubble bob blab"에서 알파벳 "b"의 개수는?',opts:['6개','7개','8개','9개'],correct:2},
+      {q:'"baboon bubble bob blab"에서 알파벳 "b"의 개수는?',opts:['6개','7개','8개','9개'],correct:3},
       {q:'100에서 7을 연속 3번 빼면?',opts:['77','79','81','83'],correct:1},
       {q:'"CONCENTRATION"에서 N의 개수는?',opts:['2개','3개','4개','5개'],correct:1},
       {q:'시계 초침이 1분 동안 이동하는 각도는?',opts:['180°','270°','360°','720°'],correct:2},

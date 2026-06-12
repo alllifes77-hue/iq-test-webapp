@@ -25,7 +25,7 @@ questions:[
 {q:'«maçã-carro-livro-lua-rio-sapato-pássaro» — qual é a 4ª palavra?',opts:['livro','lua','rio','sapato']},
 {q:'«ABCDEFG» — combine a 3ª letra e a penúltima letra.',opts:['CF','CG','DF','DG']},
 {q:'Subtraia 7 de 49 repetidamente: 49 → 42 → 35 → ?',opts:['27','28','29','30']},
-{q:'Na sequência 2-4-6-8-1-3-5-7, qual é a soma dos números nas posições pares (2ª, 4ª, 6ª, 8ª)?',opts:['15','16','17','18']},
+{q:'Na sequência 2-4-6-8-1-3-5-7, qual é a soma dos números nas posições pares (2ª, 4ª, 6ª, 8ª)?',opts:['21','22','23','24']},
 {q:'«K-A-R-E-N-S» — qual é a 3ª letra ao contrário?',opts:['E','N','R','A']},
 {q:'1 + 2 + 3 + … + 10 = ?',opts:['45','50','55','60']},
 {q:'«ABCDE» — troque as posições de C e E. Qual é o resultado?',opts:['ABCED','ABCDE','ABECD','ABDCE']},

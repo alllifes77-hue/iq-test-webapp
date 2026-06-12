@@ -25,7 +25,7 @@ questions:[
 {q:'"táo-xe-sách-trăng-sông-giày-chim" — từ thứ 4 là gì?',opts:['sách','trăng','sông','giày']},
 {q:'"ABCDEFG" — ghép chữ cái thứ 3 với chữ cái thứ 2 tính từ cuối.',opts:['CF','CG','DF','DG']},
 {q:'Lấy 49 trừ 7 liên tiếp: 49 → 42 → 35 → ?',opts:['27','28','29','30']},
-{q:'Trong dãy 2-4-6-8-1-3-5-7, tổng các số ở vị trí chẵn (thứ 2, 4, 6, 8) là bao nhiêu?',opts:['15','16','17','18']},
+{q:'Trong dãy 2-4-6-8-1-3-5-7, tổng các số ở vị trí chẵn (thứ 2, 4, 6, 8) là bao nhiêu?',opts:['21','22','23','24']},
 {q:'"K-A-R-E-N-S" — khi đánh vần ngược, chữ cái thứ 3 là gì?',opts:['E','N','R','A']},
 {q:'1 + 2 + 3 + … + 10 = ?',opts:['45','50','55','60']},
 {q:'"ABCDE" — hoán đổi vị trí của C và E. Kết quả là gì?',opts:['ABCED','ABCDE','ABECD','ABDCE']},

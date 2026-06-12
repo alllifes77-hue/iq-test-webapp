@@ -64,7 +64,7 @@ logPool:[
   {premise:'"Bazı hayvanlar uçabilir. Penguen bir hayvandır." O halde?',opts:['Penguenler uçabilir','Penguenler uçamaz','Penguenler uçabilir de uçamayabilir de','Tüm hayvanlar uçabilir']},
   {premise:"A, B ve C'den yalnızca biri yalan söylüyor. A: \"Ben doğru söylüyorum.\" B: \"A yalan söylüyor.\" C: \"B yalan söylüyor.\" Yalancı kim?",opts:['A','B','C','Bilinemez']},
   {premise:'30 öğrenci var. "En az 2 öğrencinin doğum günü aynıdır" her zaman garanti ediliyor. Olası en fazla farklı doğum günü tarihi sayısı?',opts:['29','30','365','Sınırsız']},
-  {premise:'4 dairesel bölgeyi, komşu bölgeler aynı renkte olmayacak şekilde 4 renkle boyayın. Kaç farklı boyama vardır?',opts:['3','6','12','24']},
+  {premise:'Dairesel olarak dizilmiş 4 bölgeyi, komşu bölgeler aynı renkte olmayacak şekilde 4 rengin tümünü kullanarak boyayın. Kaç farklı boyama vardır?',opts:['3','6','12','24']},
   {premise:'"Uzun boyluysa basketbolda iyidir. Alex basketbolda iyi değil." O halde?',opts:['Alex kısadır','Alex uzun boylu değildir','Alex sporda kötüdür','Belirlenemez']}
 ],
 spatPool:[

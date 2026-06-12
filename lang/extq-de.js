@@ -25,7 +25,7 @@ questions:[
 {q:'"Apfel-Auto-Buch-Mond-Fluss-Schuh-Vogel" – was ist das 4. Wort?',opts:['Buch','Mond','Fluss','Schuh']},
 {q:'"ABCDEFG" – kombiniere den 3. und den vorletzten Buchstaben.',opts:['CF','CG','DF','DG']},
 {q:'Subtrahiere 7 von 49 wiederholt: 49 → 42 → 35 → ?',opts:['27','28','29','30']},
-{q:'In der Folge 2-4-6-8-1-3-5-7: Summe der Zahlen an geraden Positionen (2., 4., 6., 8.)?',opts:['15','16','17','18']},
+{q:'In der Folge 2-4-6-8-1-3-5-7: Summe der Zahlen an geraden Positionen (2., 4., 6., 8.)?',opts:['21','22','23','24']},
 {q:'"K-A-R-E-N-S" – was ist der 3. Buchstabe rückwärts?',opts:['E','N','R','A']},
 {q:'1 + 2 + 3 + … + 10 = ?',opts:['45','50','55','60']},
 {q:'"ABCDE" – tausche die Positionen von C und E. Ergebnis?',opts:['ABCED','ABCDE','ABECD','ABDCE']},

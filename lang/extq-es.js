@@ -25,7 +25,7 @@ questions:[
 {q:'«manzana-coche-libro-luna-río-zapato-pájaro» — ¿cuál es la 4ª palabra?',opts:['libro','luna','río','zapato']},
 {q:'«ABCDEFG» — combina la 3ª letra y la penúltima letra.',opts:['CF','CG','DF','DG']},
 {q:'Resta 7 a 49 repetidamente: 49 → 42 → 35 → ?',opts:['27','28','29','30']},
-{q:'En la secuencia 2-4-6-8-1-3-5-7, ¿cuál es la suma de los números en posiciones pares (2ª, 4ª, 6ª, 8ª)?',opts:['15','16','17','18']},
+{q:'En la secuencia 2-4-6-8-1-3-5-7, ¿cuál es la suma de los números en posiciones pares (2ª, 4ª, 6ª, 8ª)?',opts:['21','22','23','24']},
 {q:'«K-A-R-E-N-S» — ¿cuál es la 3ª letra al revés?',opts:['E','N','R','A']},
 {q:'1 + 2 + 3 + … + 10 = ?',opts:['45','50','55','60']},
 {q:'«ABCDE» — intercambia las posiciones de C y E. ¿Cuál es el resultado?',opts:['ABCED','ABCDE','ABECD','ABDCE']},

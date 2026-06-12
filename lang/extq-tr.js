@@ -25,7 +25,7 @@ questions:[
 {q:'"elma-araba-kitap-ay-nehir-ayakkabı-kuş" — 4. kelime hangisidir?',opts:['kitap','ay','nehir','ayakkabı']},
 {q:'"ABCDEFG" — 3. harf ile sondan 2. harfi birleştirin.',opts:['CF','CG','DF','DG']},
 {q:"49'dan art arda 7 çıkarın: 49 → 42 → 35 → ?",opts:['27','28','29','30']},
-{q:'2-4-6-8-1-3-5-7 dizisinde çift konumlardaki (2., 4., 6., 8.) sayıların toplamı kaçtır?',opts:['15','16','17','18']},
+{q:'2-4-6-8-1-3-5-7 dizisinde çift konumlardaki (2., 4., 6., 8.) sayıların toplamı kaçtır?',opts:['21','22','23','24']},
 {q:'"K-A-R-E-N-S" — tersten yazıldığında 3. harf hangisidir?',opts:['E','N','R','A']},
 {q:'1 + 2 + 3 + … + 10 = ?',opts:['45','50','55','60']},
 {q:'"ABCDE" — C ile E\'nin yerlerini değiştirin. Sonuç nedir?',opts:['ABCED','ABCDE','ABECD','ABDCE']},

@@ -25,7 +25,7 @@ questions:[
 {q:'«mela-macchina-libro-luna-fiume-scarpa-uccello» — qual è la 4ª parola?',opts:['libro','luna','fiume','scarpa']},
 {q:'«ABCDEFG» — combina la 3ª lettera e la penultima lettera.',opts:['CF','CG','DF','DG']},
 {q:'Sottrai 7 da 49 ripetutamente: 49 → 42 → 35 → ?',opts:['27','28','29','30']},
-{q:'Nella sequenza 2-4-6-8-1-3-5-7, qual è la somma dei numeri nelle posizioni pari (2ª, 4ª, 6ª, 8ª)?',opts:['15','16','17','18']},
+{q:'Nella sequenza 2-4-6-8-1-3-5-7, qual è la somma dei numeri nelle posizioni pari (2ª, 4ª, 6ª, 8ª)?',opts:['21','22','23','24']},
 {q:'«K-A-R-E-N-S» — qual è la 3ª lettera al contrario?',opts:['E','N','R','A']},
 {q:'1 + 2 + 3 + … + 10 = ?',opts:['45','50','55','60']},
 {q:'«ABCDE» — scambia le posizioni di C ed E. Qual è il risultato?',opts:['ABCED','ABCDE','ABECD','ABDCE']},

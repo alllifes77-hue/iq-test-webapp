@@ -1,0 +1,8 @@
+# 로컬 시크릿 (절대 커밋 금지)
+.dev.vars
+*.pem
+
+# 로컬 도구/캐시
+.wrangler/
+node_modules/
+test-ali.js

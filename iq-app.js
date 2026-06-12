@@ -564,14 +564,50 @@ function ensureCoupangWidget(placement){
   sec.appendChild(wrap);
 }
 
+// ── 알리익스프레스 상품 렌더링 (전 언어, 결과 화면 lazy 로드) ──
+let _aliCache=null;
+async function ensureAliProducts(placement){
+  const cfg=window.ALIEXPRESS;
+  if(!cfg||!cfg.enabled)return;
+  const lang=window.IQ_CURRENT_LANG||'ko';
+  const secId=placement==='ext'?'aff-section-ext':'aff-section-iq';
+  const sec=document.getElementById(secId);
+  if(!sec||sec.querySelector('.ali-grid'))return;
+  try{
+    if(!_aliCache){
+      const resp=await fetch(cfg.endpoint+'?lang='+lang);
+      if(!resp.ok)return;
+      _aliCache=await resp.json();
+    }
+    const items=(_aliCache.products||[]).slice(0,cfg.maxItems||4);
+    if(!items.length)return;
+    // 섹션이 숨겨져 있으면 헤더와 함께 열기
+    const meta=(window.AFFILIATE_META&&(window.AFFILIATE_META[lang]||window.AFFILIATE_META.en))||{};
+    if(sec.style.display==='none'){
+      sec.style.display='';
+      sec.innerHTML=`<h3>${meta.title||'🎁 Picks for You'}</h3><div class="aff-disc">${meta.disc||''}</div>`;
+    }
+    const wrap=document.createElement('div');
+    wrap.className='ali-grid';
+    wrap.innerHTML=items.map(p=>
+      `<a class="ali-card" href="${p.url}" target="_blank" rel="noopener sponsored">
+         <img class="ali-img" src="${p.image}" alt="" loading="lazy">
+         <div class="ali-title">${String(p.title).replace(/[<>]/g,'').slice(0,60)}</div>
+         <div class="ali-price">${p.price} ${p.currency}</div>
+       </a>`).join('');
+    sec.appendChild(wrap);
+    setTimeout(sendResize,300);
+  }catch(e){}
+}
+
 // ── Navigation ──
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+id).classList.add('active');
   window.scrollTo(0,0);
   setTimeout(sendResize,150);
-  if(id==='results')ensureCoupangWidget('res');
-  else if(id==='ext-results')ensureCoupangWidget('ext');
+  if(id==='results'){ensureCoupangWidget('res');ensureAliProducts('res');}
+  else if(id==='ext-results'){ensureCoupangWidget('ext');ensureAliProducts('ext');}
 }
 function scrollToExt(){showScreen('results');setTimeout(()=>{const el=document.getElementById('ext-grid');if(el)el.scrollIntoView({behavior:'smooth'});},300);}
 function restartAll(){showScreen('home');}

@@ -451,6 +451,37 @@ window.addEventListener('beforeunload',e=>{
   if(testing){e.preventDefault();e.returnValue='';}
 });
 
+// ── Affiliate rendering ──
+// affiliate-config.js의 오퍼 중 url이 입력된 것만 표시.
+// Impact subId1 파라미터로 언어·배치별 성과 추적 (대시보드에서 확인 가능)
+function affTrackUrl(o,placement){
+  try{
+    const u=new URL(o.url);
+    if(!u.searchParams.has('subId1'))u.searchParams.set('subId1','iqtest_'+(window.IQ_CURRENT_LANG||'ko')+'_'+placement);
+    return u.toString();
+  }catch(e){return o.url;}
+}
+function renderAffiliates(){
+  const lang=window.IQ_CURRENT_LANG||'ko';
+  const meta=(window.AFFILIATE_META&&(window.AFFILIATE_META[lang]||window.AFFILIATE_META.en))||{};
+  const all=(window.AFFILIATE_OFFERS&&(window.AFFILIATE_OFFERS[lang]||window.AFFILIATE_OFFERS.en))||[];
+  const offers=all.filter(o=>o.url);
+  [['aff-section-iq','res'],['aff-section-ext','ext']].forEach(([cid,placement])=>{
+    const el=document.getElementById(cid);
+    if(!el)return;
+    if(!offers.length){el.style.display='none';return;}
+    el.style.display='';
+    el.innerHTML=`<h3>${meta.title||'🎁 Recommended'}</h3><div class="aff-disc">${meta.disc||''}</div>
+      <div class="aff-cards">${offers.slice(0,2).map(o=>
+        `<a class="aff-card" href="${affTrackUrl(o,placement)}" target="_blank" rel="noopener sponsored">
+           <span class="aff-tag">${meta.tag||'AD'}</span>
+           <div class="aff-icon">${o.icon||'⭐'}</div>
+           <div><div class="aff-title">${o.title}</div><div class="aff-desc">${o.desc}</div><div class="aff-cta">${o.cta}</div></div>
+         </a>`).join('')}</div>`;
+  });
+}
+document.addEventListener('DOMContentLoaded',renderAffiliates);
+
 // ── Navigation ──
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));

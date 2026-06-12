@@ -75,6 +75,19 @@
 @media(max-width:480px){#theme-toggle{bottom:20px;left:14px;width:42px;height:42px;font-size:18px;}}
 .kbd-hint{display:none;}
 @media(min-width:768px){.kbd-hint{display:inline-block;margin-left:8px;font-size:11px;color:var(--text3);border:1px solid var(--border2);border-radius:5px;padding:1px 7px;}}
+
+/* ── Affiliate section ── */
+.aff-section{margin:24px 0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);}
+.aff-section h3{font-size:17px;font-weight:800;margin-bottom:4px;}
+.aff-disc{font-size:11px;color:var(--text3);margin-bottom:14px;}
+.aff-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;}
+.aff-card{display:flex;gap:14px;align-items:flex-start;background:var(--card2);border:1.5px solid var(--border);border-radius:14px;padding:16px;text-decoration:none;color:var(--text);transition:all .2s;position:relative;}
+.aff-card:hover{border-color:var(--primary-light);transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+.aff-icon{font-size:30px;flex-shrink:0;}
+.aff-title{font-size:14px;font-weight:700;margin-bottom:3px;}
+.aff-desc{font-size:12px;color:var(--text2);line-height:1.45;margin-bottom:8px;}
+.aff-cta{font-size:13px;font-weight:700;color:var(--primary-mid);}
+.aff-tag{position:absolute;top:10px;right:12px;font-size:9px;font-weight:700;color:var(--text3);border:1px solid var(--border2);border-radius:4px;padding:1px 6px;letter-spacing:.5px;}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;overflow-x:hidden;}
@@ -877,6 +890,9 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
     <!-- IQ History Chart -->
     <div class="history-card" id="history-card-iq" style="display:none"></div>
 
+    <!-- 어필리에이트 추천 (affiliate-config.js에 링크 입력 시 표시) -->
+    <div class="aff-section" id="aff-section-iq" style="display:none"></div>
+
     <!-- 두뇌 훈련 & 추천 앱 프로모션 -->
     <div class="promo-section" id="promo-iq">
       <div class="promo-header">
@@ -1013,6 +1029,9 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
     </div>
     <!-- IQ History Chart (ext) -->
     <div class="history-card" id="history-card-ext" style="display:none"></div>
+
+    <!-- 어필리에이트 추천 (affiliate-config.js에 링크 입력 시 표시) -->
+    <div class="aff-section" id="aff-section-ext" style="display:none"></div>
 
     <!-- 두뇌 훈련 & 추천 앱 프로모션 -->
     <div class="promo-section" id="promo-ext">
@@ -1286,6 +1305,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="다크 모드 전환" title="다크/라이트 모드">🌙</button>
 
 <script src="iq-data.js"></script>
+<script src="affiliate-config.js"></script>
 <script src="iq-app.js"></script>
 <script>
 if('serviceWorker' in navigator){

@@ -40,9 +40,13 @@
 <link rel="alternate" hreflang="it" href="https://all-lifes.com/it/iq-test/">
 <link rel="alternate" hreflang="ja" href="https://all-lifes.com/ja/iq-test/">
 <link rel="alternate" hreflang="id" href="https://all-lifes.com/id/iq-test/">
+<link rel="alternate" hreflang="hi" href="https://all-lifes.com/iq-test/?lang=hi">
+<link rel="alternate" hreflang="ru" href="https://all-lifes.com/iq-test/?lang=ru">
+<link rel="alternate" hreflang="vi" href="https://all-lifes.com/iq-test/?lang=vi">
+<link rel="alternate" hreflang="tr" href="https://all-lifes.com/iq-test/?lang=tr">
 <link rel="alternate" hreflang="x-default" href="https://all-lifes.com/en/iq-test/">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":"무료 IQ 테스트","item":"https://all-lifes.com/iq-test/"}]},{"@type":"WebApplication","name":"무료 IQ 테스트","url":"https://all-lifes.com/iq-test/","description":"레이븐 행렬과 CHC 이론에 기반한 과학적 온라인 IQ 테스트","applicationCategory":"EducationalApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"inLanguage":"ko","availableLanguage":["ko","en","de","fr","es","pt","it","ja","id"]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"IQ 테스트란 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"IQ(지능지수) 테스트는 개인의 인지 능력을 수치로 측정하는 표준화된 검사입니다. 수열 추론, 행렬 패턴 인식, 공간 추론, 논리적 사고 등을 평가하며 평균 100, 표준편차 15의 정규분포를 따릅니다."}},{"@type":"Question","name":"이 IQ 테스트는 얼마나 정확한가요?","acceptedAnswer":{"@type":"Answer","text":"레이븐 점진적 행렬 검사(RPM)와 CHC 이론에 기반하며 신뢰도(Cronbach's α)는 .85~.92 수준입니다."}},{"@type":"Question","name":"IQ 점수별 의미는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"IQ 145+: 천재 수준(상위 0.1%) / 130–144: 최우수(상위 2%) / 120–129: 우수(상위 10%) / 110–119: 평균 상위 / 90–109: 평균 / 80–89: 평균 하위 / 70–79: 경계선"}},{"@type":"Question","name":"IQ는 훈련으로 높아질 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"작업 기억 훈련, N-back 과제 등이 유동지능을 일시적으로 향상시킬 수 있습니다. 꾸준한 독서, 운동, 충분한 수면이 장기적인 인지 능력 유지에 도움이 됩니다."}}]}]}</script>
-<script>(function(){var l=(new URLSearchParams(location.search).get('lang')||'ko').toLowerCase();if(['ko','en','de','fr','es','pt','it','ja','id'].indexOf(l)===-1)l='ko';window.IQ_CURRENT_LANG=l;if(l!=='ko'){document.write('<script src="lang/'+l+'.js"><\/script>');document.write('<script src="lang/q-'+l+'.js"><\/script>');document.write('<script src="lang/extq-'+l+'.js"><\/script>');}})();</script>
+<script>(function(){var l=(new URLSearchParams(location.search).get('lang')||'ko').toLowerCase();if(['ko','en','de','fr','es','pt','it','ja','id','hi','ru','vi','tr'].indexOf(l)===-1)l='ko';window.IQ_CURRENT_LANG=l;if(l!=='ko'){document.write('<script src="lang/'+l+'.js"><\/script>');document.write('<script src="lang/q-'+l+'.js"><\/script>');document.write('<script src="lang/extq-'+l+'.js"><\/script>');}})();</script>
 <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root{
@@ -97,6 +101,14 @@
 .lang-links a{font-size:12px;font-weight:600;color:var(--text2);text-decoration:none;padding:6px 13px;border:1px solid var(--border2);border-radius:18px;transition:all .2s;}
 .lang-links a:hover{color:var(--primary-mid);border-color:var(--primary-light);background:var(--primary-bg);}
 .lang-links a.active{color:#fff;background:var(--primary-mid);border-color:var(--primary-mid);}
+/* IQ 비교 사다리 */
+.iq-ladder-sub{font-size:11px;color:var(--text3);margin:-4px 0 14px;}
+.ladder-row{display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:10px;margin-bottom:4px;}
+.ladder-row .lr-iq{min-width:44px;font-size:15px;font-weight:800;color:var(--text2);text-align:right;}
+.ladder-row .lr-name{font-size:13px;color:var(--text2);font-weight:600;}
+.ladder-row.me{background:linear-gradient(135deg,var(--primary),var(--primary-light));box-shadow:0 4px 14px rgba(79,70,229,.35);transform:scale(1.02);}
+.ladder-row.me .lr-iq,.ladder-row.me .lr-name{color:#fff;}
+.ladder-row.me .lr-badge{background:rgba(255,255,255,.25);color:#fff;font-size:10px;font-weight:800;padding:2px 9px;border-radius:10px;margin-left:auto;letter-spacing:1px;}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;overflow-x:hidden;}
@@ -803,6 +815,10 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
       <a target="_top" href="https://all-lifes.com/it/iq-test/" data-lang="it" hreflang="it">Italiano</a>
       <a target="_top" href="https://all-lifes.com/ja/iq-test/" data-lang="ja" hreflang="ja">日本語</a>
       <a target="_top" href="https://all-lifes.com/id/iq-test/" data-lang="id" hreflang="id">Bahasa Indonesia</a>
+      <a target="_top" href="https://all-lifes.com/iq-test/?lang=hi" data-lang="hi" hreflang="hi">हिन्दी</a>
+      <a target="_top" href="https://all-lifes.com/iq-test/?lang=ru" data-lang="ru" hreflang="ru">Русский</a>
+      <a target="_top" href="https://all-lifes.com/iq-test/?lang=vi" data-lang="vi" hreflang="vi">Tiếng Việt</a>
+      <a target="_top" href="https://all-lifes.com/iq-test/?lang=tr" data-lang="tr" hreflang="tr">Türkçe</a>
     </nav>
   </div>
 </div>
@@ -894,6 +910,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
 
     <div class="chart-row">
       <div class="chart-card full"><h3>📊 전체 인구 지능 분포에서의 위치</h3><canvas id="bellChart" height="180"></canvas></div>
+      <div class="chart-card full" id="iq-ladder-card" style="display:none"></div>
       <div class="chart-card full hidden" id="radar-wrap"><h3>🔍 영역별 능력 프로파일</h3><canvas id="radarChart" height="260"></canvas></div>
     </div>
     <div class="breakdown-section hidden" id="breakdown-wrap"><h3>영역별 점수</h3><div id="bd-list"></div></div>

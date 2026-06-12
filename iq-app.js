@@ -16,7 +16,9 @@ function applyLang(){
   if(L.docTitle)document.title=L.docTitle;
   // Per-language SEO meta tag updates
   const _l=window.IQ_CURRENT_LANG||'ko';
-  const _url=_l==='ko'?'https://all-lifes.com/iq-test/':'https://all-lifes.com/'+_l+'/iq-test/';
+  // SEO 래퍼 페이지(/xx/iq-test/)가 있는 언어 vs 앱 URL(?lang=)만 있는 신규 언어
+  const _hasWrapper=['en','de','fr','es','pt','it','ja','id'].includes(_l);
+  const _url=_l==='ko'?'https://all-lifes.com/iq-test/':_hasWrapper?'https://all-lifes.com/'+_l+'/iq-test/':'https://all-lifes.com/iq-test/?lang='+_l;
   if(L.metaDesc){const m=document.querySelector('meta[name="description"]');if(m)m.content=L.metaDesc;}
   if(L.metaKeywords){const m=document.querySelector('meta[name="keywords"]');if(m)m.content=L.metaKeywords;}
   if(L.ogLocale){const m=document.querySelector('meta[property="og:locale"]');if(m)m.content=L.ogLocale;}
@@ -24,7 +26,8 @@ function applyLang(){
   {const m=document.querySelector('meta[property="og:description"]');if(m&&L.metaDesc)m.content=L.metaDesc;}
   {const m=document.querySelector('meta[property="og:url"]');if(m)m.content=_url;}
   {const c=document.querySelector('link[rel="canonical"]');if(c)c.href=_url;}
-  {const _img=`https://all-lifes.com/iq-test/og-${_l}.png`;
+  {const _ogLang=(_l==='ko'||_hasWrapper)?_l:'en'; // 신규 언어는 전용 OG 이미지 생성 전까지 en 폴백
+   const _img=`https://all-lifes.com/iq-test/og-${_ogLang}.png`;
    const mi=document.querySelector('meta[property="og:image"]');if(mi)mi.content=_img;
    const mt=document.querySelector('meta[name="twitter:image"]');if(mt)mt.content=_img;}
   {const m=document.querySelector('meta[property="og:image:height"]');if(m)m.content='1200';}
@@ -194,6 +197,13 @@ window.addEventListener('DOMContentLoaded', () => {
   toggleFAQ(null);
   updateDailyBanner();
   checkShareParams();
+  // ?test=eq|memory|speed|creativity|focus|cog_flex 딥링크 → 확장검사 바로 시작
+  try{
+    const _tid=new URLSearchParams(location.search).get('test');
+    if(_tid&&typeof extendedTests!=='undefined'&&extendedTests[_tid]&&!new URLSearchParams(location.search).get('r')){
+      startExtTest(_tid);
+    }
+  }catch(e){}
   // Report initial height to parent (Cloudflare Worker iframe wrapper)
   setTimeout(sendResize, 200);
   setTimeout(sendResize, 800);
@@ -413,6 +423,42 @@ let currentMode='short',questions=[],curQ=0,answers=[],timer=null,timeLeft=0,tes
 let extTest=null,extQuestions=[],extCurQ=0,extAnswers=[],extTimer=null;
 let savedIQ=100,savedTopPct=50;
 let savedResultData=null,isSharedView=false;
+
+// ── IQ 비교 사다리 (결과 공유 유발 장치) ──
+const IQ_LADDER_I18N={
+  ko:{title:'🏆 나의 IQ는 어디쯤일까?',sub:'잘 알려진 추정치 기준 비교 (참고용)',you:'나',einstein:'아인슈타인 (추정)',genius:'천재 기준선',mensa:'멘사 가입 기준',college:'대졸자 평균',avg:'세계 평균'},
+  en:{title:'🏆 Where Does Your IQ Stand?',sub:'Compared to well-known estimates (for reference)',you:'YOU',einstein:'Einstein (est.)',genius:'Genius threshold',mensa:'Mensa minimum',college:'College grad average',avg:'Global average'},
+  de:{title:'🏆 Wo steht dein IQ?',sub:'Im Vergleich zu bekannten Schätzwerten (Richtwerte)',you:'DU',einstein:'Einstein (gesch.)',genius:'Genie-Schwelle',mensa:'Mensa-Minimum',college:'Hochschulabsolventen Ø',avg:'Weltdurchschnitt'},
+  fr:{title:'🏆 Où se situe votre QI ?',sub:'Comparé à des estimations connues (à titre indicatif)',you:'VOUS',einstein:'Einstein (est.)',genius:'Seuil de génie',mensa:'Minimum Mensa',college:'Moyenne diplômés',avg:'Moyenne mondiale'},
+  es:{title:'🏆 ¿Dónde está tu CI?',sub:'Comparado con estimaciones conocidas (referencia)',you:'TÚ',einstein:'Einstein (est.)',genius:'Umbral de genio',mensa:'Mínimo Mensa',college:'Media universitarios',avg:'Media mundial'},
+  pt:{title:'🏆 Onde está o seu QI?',sub:'Comparado a estimativas conhecidas (referência)',you:'VOCÊ',einstein:'Einstein (est.)',genius:'Limiar de gênio',mensa:'Mínimo Mensa',college:'Média universitários',avg:'Média mundial'},
+  it:{title:'🏆 Dove si colloca il tuo QI?',sub:'Rispetto a stime note (indicativo)',you:'TU',einstein:'Einstein (stima)',genius:'Soglia del genio',mensa:'Minimo Mensa',college:'Media laureati',avg:'Media mondiale'},
+  ja:{title:'🏆 あなたのIQはどのあたり？',sub:'よく知られた推定値との比較（参考値）',you:'あなた',einstein:'アインシュタイン（推定）',genius:'天才の基準',mensa:'MENSA入会基準',college:'大卒平均',avg:'世界平均'},
+  id:{title:'🏆 Di Mana Posisi IQ Anda?',sub:'Dibandingkan estimasi terkenal (referensi)',you:'ANDA',einstein:'Einstein (est.)',genius:'Ambang jenius',mensa:'Minimum Mensa',college:'Rata-rata sarjana',avg:'Rata-rata global'},
+  hi:{title:'🏆 आपका IQ कहाँ खड़ा है?',sub:'प्रसिद्ध अनुमानों की तुलना में (संदर्भ हेतु)',you:'आप',einstein:'आइंस्टीन (अनुमानित)',genius:'जीनियस सीमा',mensa:'मेन्सा न्यूनतम',college:'स्नातक औसत',avg:'वैश्विक औसत'},
+  ru:{title:'🏆 Где находится ваш IQ?',sub:'По сравнению с известными оценками (справочно)',you:'ВЫ',einstein:'Эйнштейн (оценка)',genius:'Порог гениальности',mensa:'Минимум Mensa',college:'Среднее выпускников вузов',avg:'Мировое среднее'},
+  vi:{title:'🏆 IQ của bạn đứng ở đâu?',sub:'So với các ước tính nổi tiếng (tham khảo)',you:'BẠN',einstein:'Einstein (ước tính)',genius:'Ngưỡng thiên tài',mensa:'Chuẩn Mensa',college:'TB tốt nghiệp ĐH',avg:'Trung bình thế giới'},
+  tr:{title:'🏆 IQ Puanınız Nerede?',sub:'Bilinen tahminlerle karşılaştırma (referans)',you:'SEN',einstein:'Einstein (tahmini)',genius:'Deha eşiği',mensa:'Mensa alt sınırı',college:'Üniversite mezunu ort.',avg:'Dünya ortalaması'},
+};
+function renderIQLadder(iq){
+  const card=document.getElementById('iq-ladder-card');
+  if(!card)return;
+  const L=IQ_LADDER_I18N[window.IQ_CURRENT_LANG||'ko']||IQ_LADDER_I18N.en;
+  const rows=[
+    {iq:160,name:L.einstein},
+    {iq:145,name:L.genius},
+    {iq:132,name:L.mensa},
+    {iq:115,name:L.college},
+    {iq:100,name:L.avg},
+  ];
+  rows.push({iq,me:true,name:L.you});
+  rows.sort((a,b)=>b.iq-a.iq||(a.me?-1:1));
+  card.style.display='';
+  card.innerHTML=`<h3>${L.title}</h3><div class="iq-ladder-sub">${L.sub}</div>`+rows.map(r=>
+    r.me?`<div class="ladder-row me"><div class="lr-iq">${r.iq}</div><div class="lr-name">${r.name}</div><div class="lr-badge">★</div></div>`
+        :`<div class="ladder-row"><div class="lr-iq">${r.iq}</div><div class="lr-name">${r.name}</div></div>`
+  ).join('');
+}
 
 // ── Theme toggle ──
 function updateThemeBtn(){
@@ -862,6 +908,7 @@ function computeResults(){
   setTimeout(()=>{
     const bellCard=document.querySelector('.chart-card.full h3');if(bellCard)bellCard.textContent=t('bellTitle')||'📊 IQ Distribution in General Population';
     drawBellCurve('bellChart',iq,'#4f46e5');
+    renderIQLadder(iq);
     if(currentMode==='long'){
       const radarWrap=document.getElementById('radar-wrap');const bdWrap=document.getElementById('breakdown-wrap');
       radarWrap.classList.remove('hidden');bdWrap.classList.remove('hidden');
@@ -1243,7 +1290,7 @@ function restoreIQResults(iq,catLabel,topPct,mode){
   document.getElementById('sc-pct').textContent=tp('topPctStr',{n:topPct})||`상위 ${topPct}%`;
   document.getElementById('switch-btn').style.display='none';
   setTimeout(()=>{document.getElementById('pct-fill').style.width=pctile+'%';},300);
-  setTimeout(()=>{drawBellCurve('bellChart',iq,'#4f46e5');},400);
+  setTimeout(()=>{drawBellCurve('bellChart',iq,'#4f46e5');renderIQLadder(iq);},400);
   showScreen('results');
 }
 
@@ -1300,6 +1347,10 @@ const SHARE_PLATFORMS={
   pt:[{id:'whatsapp',label:'WhatsApp'},{id:'twitter',label:'X (Twitter)'},{id:'facebook',label:'Facebook'},{id:'copy'}],
   it:[{id:'whatsapp',label:'WhatsApp'},{id:'facebook',label:'Facebook'},{id:'copy'}],
   id:[{id:'whatsapp',label:'WhatsApp'},{id:'line',label:'LINE'},{id:'facebook',label:'Facebook'},{id:'copy'}],
+  hi:[{id:'whatsapp',label:'WhatsApp'},{id:'facebook',label:'Facebook'},{id:'twitter',label:'X (Twitter)'},{id:'copy'}],
+  ru:[{id:'telegram_share',label:'Telegram'},{id:'whatsapp',label:'WhatsApp'},{id:'twitter',label:'X (Twitter)'},{id:'copy'}],
+  vi:[{id:'facebook',label:'Facebook'},{id:'whatsapp',label:'WhatsApp'},{id:'telegram_share',label:'Telegram'},{id:'copy'}],
+  tr:[{id:'whatsapp',label:'WhatsApp'},{id:'twitter',label:'X (Twitter)'},{id:'facebook',label:'Facebook'},{id:'copy'}],
 };
 
 function buildShareRow(isExt){
@@ -1316,6 +1367,7 @@ function buildShareRow(isExt){
       case 'facebook':return `<button class="share-btn facebook" onclick="shareFacebook(${ex})"><span class="sb-icon">f</span><span>${p.label}</span></button>`;
       case 'whatsapp':return `<button class="share-btn whatsapp" onclick="shareWhatsApp(${ex})"><span class="sb-icon">💬</span><span>${p.label}</span></button>`;
       case 'line':    return `<button class="share-btn line" onclick="shareLine(${ex})"><span class="sb-icon">L</span><span>${p.label}</span></button>`;
+      case 'telegram_share': return `<button class="share-btn telegram" onclick="shareTelegramResult(${ex})" style="background:#229ED9;color:#fff;"><span class="sb-icon">✈️</span><span>${p.label}</span></button>`;
       case 'copy':    return `<button class="share-btn copy" id="copy-btn${suf}" onclick="copyLink(${ex})"><span class="sb-icon">🔗</span><span id="copy-lbl${suf}">${copyLabel}</span></button>`;
       default: return '';
     }
@@ -1396,6 +1448,12 @@ function updateShareRows(){
 
 function shareTelegram(){
   window.open('https://t.me/all_lifes_community','_blank','noopener');
+}
+
+function shareTelegramResult(isExt=false){
+  const text=getShareText(isExt);
+  const url=getResultShareURL(isExt);
+  window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`,'_blank','noopener');
 }
 
 function shareWhatsApp(isExt=false){

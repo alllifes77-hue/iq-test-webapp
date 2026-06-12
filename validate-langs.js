@@ -21,7 +21,7 @@ vm.runInContext(dataSrc + '\n;window.__pools={anaPool,logPool,spatPool};', dataS
 const ko = dataSandbox.window.__pools;
 console.log(`KO 원본: ana=${ko.anaPool.length} log=${ko.logPool.length} spat=${ko.spatPool.length}`);
 
-const langs = ['en','de','fr','es','pt','it','ja','id'];
+const langs = ['en','de','fr','es','pt','it','ja','id','hi','ru','vi','tr'];
 const issues = [];
 
 // 2) q-XX.js 구조 검증

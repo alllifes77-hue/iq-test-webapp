@@ -41,6 +41,10 @@ window.AFFILIATE_META = {
   it: { title: '🎁 Potenzia il tuo cervello', disc: 'Annuncio · Potremmo ricevere una commissione', tag: 'AD' },
   ja: { title: '🎁 脳をさらに鍛えよう', disc: '広告 · 購入時に手数料を受け取る場合があります', tag: '広告' },
   id: { title: '🎁 Tingkatkan Kecerdasanmu', disc: 'Iklan · Kami dapat menerima komisi', tag: 'Iklan' },
+  hi: { title: '🎁 अपने दिमाग को और तेज़ करें', disc: 'विज्ञापन · हमें कमीशन मिल सकता है', tag: 'विज्ञापन' },
+  ru: { title: '🎁 Прокачайте свой мозг', disc: 'Реклама · Мы можем получить комиссию', tag: 'Реклама' },
+  vi: { title: '🎁 Nâng cao trí tuệ của bạn', disc: 'Quảng cáo · Chúng tôi có thể nhận hoa hồng', tag: 'QC' },
+  tr: { title: '🎁 Beynini Daha da Geliştir', disc: 'Reklam · Komisyon alabiliriz', tag: 'Reklam' },
 };
 
 window.AFFILIATE_OFFERS = {
@@ -79,5 +83,21 @@ window.AFFILIATE_OFFERS = {
   id: [
     { id: 'coursera',       icon: '🎓', title: 'Coursera Plus',             desc: 'Akses tanpa batas ke 7.000+ kursus',              cta: 'Jelajahi →',         url: '' },
     { id: 'skillshare',     icon: '🎨', title: 'Skillshare',                desc: 'Ribuan kelas online gratis 1 bulan',              cta: 'Coba Gratis →',      url: '' },
+  ],
+  hi: [
+    { id: 'coursera',       icon: '🎓', title: 'Coursera Plus',             desc: '7,000+ विश्वस्तरीय कोर्स असीमित एक्सेस',           cta: 'कोर्स देखें →',       url: '' },
+    { id: 'skillshare',     icon: '🎨', title: 'Skillshare',                desc: 'हज़ारों ऑनलाइन क्लासेस — 1 महीना मुफ़्त',          cta: 'मुफ़्त आज़माएं →',     url: '' },
+  ],
+  ru: [
+    { id: 'coursera',       icon: '🎓', title: 'Coursera Plus',             desc: 'Безлимитный доступ к 7000+ курсам',               cta: 'Смотреть курсы →',   url: '' },
+    { id: 'skillshare',     icon: '🎨', title: 'Skillshare',                desc: 'Тысячи онлайн-курсов — месяц бесплатно',          cta: 'Попробовать →',      url: '' },
+  ],
+  vi: [
+    { id: 'coursera',       icon: '🎓', title: 'Coursera Plus',             desc: 'Truy cập không giới hạn 7.000+ khóa học',         cta: 'Khám phá →',         url: '' },
+    { id: 'skillshare',     icon: '🎨', title: 'Skillshare',                desc: 'Hàng nghìn lớp học online — 1 tháng miễn phí',    cta: 'Dùng thử →',         url: '' },
+  ],
+  tr: [
+    { id: 'coursera',       icon: '🎓', title: 'Coursera Plus',             desc: "7.000+ dünya standartında kursa sınırsız erişim", cta: 'Kursları Gör →',     url: '' },
+    { id: 'skillshare',     icon: '🎨', title: 'Skillshare',                desc: 'Binlerce online ders — 1 ay ücretsiz',            cta: 'Ücretsiz Dene →',    url: '' },
   ],
 };

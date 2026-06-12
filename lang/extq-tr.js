@@ -28,7 +28,7 @@ questions:[
 {q:'2-4-6-8-1-3-5-7 dizisinde çift konumlardaki (2., 4., 6., 8.) sayıların toplamı kaçtır?',opts:['21','22','23','24']},
 {q:'"K-A-R-E-N-S" — tersten yazıldığında 3. harf hangisidir?',opts:['E','N','R','A']},
 {q:'1 + 2 + 3 + … + 10 = ?',opts:['45','50','55','60']},
-{q:'"ABCDE" — C ile E\'nin yerlerini değiştirin. Sonuç nedir?',opts:['ABCED','ABCDE','ABECD','ABDCE']},
+{q:'"ABCDE" — C ile E\'nin yerlerini değiştirin. Sonuç nedir?',opts:['ABEDC','ABCDE','ABECD','ABDCE']},
 {q:'4×4×4 − 3×3×3 = ?',opts:['31','37','47','91']}
 ],
 tips:{

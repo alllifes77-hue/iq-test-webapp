@@ -28,7 +28,7 @@ questions:[
 {q:'Trong dãy 2-4-6-8-1-3-5-7, tổng các số ở vị trí chẵn (thứ 2, 4, 6, 8) là bao nhiêu?',opts:['21','22','23','24']},
 {q:'"K-A-R-E-N-S" — khi đánh vần ngược, chữ cái thứ 3 là gì?',opts:['E','N','R','A']},
 {q:'1 + 2 + 3 + … + 10 = ?',opts:['45','50','55','60']},
-{q:'"ABCDE" — hoán đổi vị trí của C và E. Kết quả là gì?',opts:['ABCED','ABCDE','ABECD','ABDCE']},
+{q:'"ABCDE" — hoán đổi vị trí của C và E. Kết quả là gì?',opts:['ABEDC','ABCDE','ABECD','ABDCE']},
 {q:'4×4×4 − 3×3×3 = ?',opts:['31','37','47','91']}
 ],
 tips:{

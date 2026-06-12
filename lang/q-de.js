@@ -64,7 +64,7 @@ logPool:[
   {premise:"\"Einige Tiere können fliegen. Ein Pinguin ist ein Tier.\" Daher?",opts:["Pinguine können fliegen","Pinguine können nicht fliegen","Pinguine können fliegen oder auch nicht","Alle Tiere können fliegen"]},
   {premise:"Von A, B, C lügt nur einer. A: \"Ich sage die Wahrheit.\" B: \"A lügt.\" C: \"B lügt.\" Wer ist der Lügner?",opts:["A","B","C","Unbekannt"]},
   {premise:"30 Studenten. \"Mindestens 2 teilen sich einen Geburtstag\" ist immer garantiert. Maximale Anzahl möglicher unterschiedlicher Geburtstagsdaten?",opts:["29","30","365","Unbegrenzt"]},
-  {premise:"Färbe 4 kreisförmige Abschnitte mit 4 Farben, sodass keine benachbarten Abschnitte eine Farbe teilen. Wie viele unterschiedliche Färbungen?",opts:["3","6","12","24"]},
+  {premise:"Färbe 4 kreisförmige Abschnitte mit 4 Farben, sodass keine benachbarten Abschnitte eine Farbe teilen. Wie viele unterschiedliche Färbungen? (Drehungen und Spiegelungen gelten als gleich)",opts:["3","6","12","24"]},
   {premise:"\"Wenn groß, dann gut im Basketball. Felix ist nicht gut im Basketball.\" Daher?",opts:["Felix ist klein","Felix ist nicht groß","Felix ist schlecht im Sport","Kann nicht bestimmt werden"]}
 ],
 spatPool:[

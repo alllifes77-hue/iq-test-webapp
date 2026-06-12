@@ -64,7 +64,7 @@ logPool:[
   {premise:"\"Algunos animales pueden volar. Un pingüino es un animal.\" ¿Por lo tanto?",opts:["Los pingüinos pueden volar","Los pingüinos no pueden volar","Los pingüinos pueden o no pueden volar","Todos los animales pueden volar"]},
   {premise:"De A, B, C, solo uno miente. A: \"Digo la verdad.\" B: \"A miente.\" C: \"B miente.\" ¿Quién es el mentiroso?",opts:["A","B","C","Desconocido"]},
   {premise:"30 estudiantes. \"Al menos 2 comparten un cumpleaños\" siempre está garantizado. ¿Máximo de fechas de cumpleaños distintas posibles?",opts:["29","30","365","Ilimitado"]},
-  {premise:"Colorear 4 secciones circulares con 4 colores para que ninguna sección adyacente comparta un color. ¿Cuántas coloraciones distintas?",opts:["3","6","12","24"]},
+  {premise:"Colorear 4 secciones circulares con 4 colores para que ninguna sección adyacente comparta un color. ¿Cuántas coloraciones distintas? (las rotaciones y reflexiones cuentan como iguales)",opts:["3","6","12","24"]},
   {premise:"\"Si es alto, entonces es bueno en baloncesto. Miguel no es bueno en baloncesto.\" ¿Por lo tanto?",opts:["Miguel es bajo","Miguel no es alto","Miguel es malo en deportes","No se puede determinar"]}
 ],
 spatPool:[

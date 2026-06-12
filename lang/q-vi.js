@@ -64,7 +64,7 @@ logPool:[
   {premise:'"Một số động vật biết bay. Chim cánh cụt là động vật." Vậy thì?',opts:['Chim cánh cụt biết bay','Chim cánh cụt không biết bay','Chim cánh cụt có thể biết bay hoặc không','Mọi động vật đều biết bay']},
   {premise:'Trong A, B, C chỉ có một người nói dối. A: "Tôi nói thật." B: "A nói dối." C: "B nói dối." Ai là kẻ nói dối?',opts:['A','B','C','Không thể biết']},
   {premise:'Có 30 học sinh. "Ít nhất 2 em trùng ngày sinh" luôn được đảm bảo. Số ngày sinh khác nhau tối đa có thể là?',opts:['29','30','365','Không giới hạn']},
-  {premise:'Tô màu 4 phần của một hình tròn bằng 4 màu sao cho hai phần kề nhau không cùng màu. Có bao nhiêu cách tô khác nhau?',opts:['3','6','12','24']},
+  {premise:'Tô màu 4 phần của một hình tròn bằng 4 màu sao cho hai phần kề nhau không cùng màu. Có bao nhiêu cách tô khác nhau? (các cách tô trùng nhau khi xoay hoặc lật được tính là một)',opts:['3','6','12','24']},
   {premise:'"Nếu cao thì chơi bóng rổ giỏi. Alex chơi bóng rổ không giỏi." Vậy thì?',opts:['Alex thấp','Alex không cao','Alex chơi thể thao kém','Không thể xác định']}
 ],
 spatPool:[

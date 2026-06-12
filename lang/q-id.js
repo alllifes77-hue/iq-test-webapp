@@ -64,7 +64,7 @@ logPool:[
   {premise:"\"Beberapa hewan bisa terbang. Seekor penguin adalah hewan.\" Maka?",opts:["Penguin bisa terbang","Penguin tidak bisa terbang","Penguin mungkin bisa atau mungkin tidak bisa terbang","Semua hewan bisa terbang"]},
   {premise:"Dari A, B, C, hanya satu yang berbohong. A: \"Saya berkata jujur.\" B: \"A berbohong.\" C: \"B berbohong.\" Siapa pembohongnya?",opts:["A","B","C","Tidak diketahui"]},
   {premise:"30 siswa. \"Setidaknya 2 berbagi tanggal lahir\" selalu dijamin. Maksimal berapa tanggal lahir yang berbeda yang mungkin?",opts:["29","30","365","Tidak terbatas"]},
-  {premise:"Warnai 4 bagian melingkar dengan 4 warna sehingga tidak ada bagian yang bersebelahan berbagi warna. Berapa banyak pewarnaan berbeda?",opts:["3","6","12","24"]},
+  {premise:"Warnai 4 bagian melingkar dengan 4 warna sehingga tidak ada bagian yang bersebelahan berbagi warna. Berapa banyak pewarnaan berbeda? (rotasi dan pencerminan dianggap sama)",opts:["3","6","12","24"]},
   {premise:"\"Jika tinggi, maka pandai bermain basket. Riko tidak pandai bermain basket.\" Maka?",opts:["Riko pendek","Riko tidak tinggi","Riko buruk dalam olahraga","Tidak dapat ditentukan"]}
 ],
 spatPool:[

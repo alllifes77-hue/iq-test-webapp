@@ -64,7 +64,7 @@ logPool:[
   {premise:'"Some animals can fly. A penguin is an animal." Therefore?',opts:['Penguins can fly','Penguins cannot fly','Penguins may or may not fly','All animals can fly']},
   {premise:'Of A, B, C, only one lies. A: "I tell the truth." B: "A lies." C: "B lies." Who is the liar?',opts:['A','B','C','Unknown']},
   {premise:'30 students. "At least 2 share a birthday" is always guaranteed. Maximum possible distinct birthday dates?',opts:['29','30','365','Unlimited']},
-  {premise:'Color 4 circular sections with 4 colors so no adjacent sections share a color. How many distinct colorings?',opts:['3','6','12','24']},
+  {premise:'Color 4 circular sections with 4 colors so no adjacent sections share a color. How many distinct colorings? (rotations and reflections count as the same)',opts:['3','6','12','24']},
   {premise:'"If tall, then good at basketball. Alex is not good at basketball." Therefore?',opts:['Alex is short','Alex is not tall','Alex is bad at sports','Cannot determine']}
 ],
 spatPool:[

@@ -19,14 +19,14 @@ const seqPool=[
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'1, 7, 25, 79, 241, ?',opts:['721','723','725','727'],correct:3,difficulty:4},
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'2, 5, 14, 41, 122, ?',opts:['361','363','365','367'],correct:2,difficulty:4},
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'0, 1, 3, 7, 15, 31, ?',opts:['47','55','63','71'],correct:2,difficulty:3},
-  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'1, 2, 3, 7, 11, 18, 29, ?',opts:['40','43','47','50'],correct:2,difficulty:4},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'5, 8, 14, 23, 35, ?',opts:['40','43','47','50'],correct:3,difficulty:4},
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'2, 1, 3, 4, 7, 11, 18, ?',opts:['25','27','29','31'],correct:2,difficulty:4},
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'6, 11, 21, 41, 81, ?',opts:['151','159','161','163'],correct:2,difficulty:4},
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'1, 11, 21, 1211, 111221, ?',opts:['211','312211','3122','11121'],correct:1,difficulty:5},
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'1, 2, 4, 7, 11, 16, 22, ?',opts:['27','28','29','30'],correct:2,difficulty:3},
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'1, 1, 2, 4, 7, 13, 24, ?',opts:['40','42','44','46'],correct:2,difficulty:5},
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'2, 6, 18, 54, 162, ?',opts:['324','486','648','972'],correct:1,difficulty:2},
-  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'1, 5, 14, 30, 55, 91, ?',opts:['126','130','140','143'],correct:3,difficulty:5},
+  {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'1, 5, 14, 30, 55, 91, ?',opts:['126','130','140','143'],correct:2,difficulty:5},
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'81, 64, 49, 36, 25, ?',opts:['9','12','16','18'],correct:2,difficulty:2},
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'3, 7, 13, 21, 31, 43, ?',opts:['55','57','59','61'],correct:1,difficulty:4},
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'4, 8, 24, 48, 144, 288, ?',opts:['576','720','864','1024'],correct:2,difficulty:4},
@@ -68,14 +68,14 @@ const matPool=[
   {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['1','2','4'],['3','6','12'],['5','10','?']],opts:['15','18','20','25'],correct:2,difficulty:3},
   {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['○△□','●▲■','○▲□'],['●▲□','○△■','●△□'],['○△■','●▲□','?']],opts:['○▲■','●△■','○△□','●△□'],correct:0,difficulty:5},
   {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['3','6','9'],['5','10','15'],['7','14','?']],opts:['18','19','21','23'],correct:2,difficulty:2},
-  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['1','4','16'],['2','6','18'],['3','8','?']],opts:['18','20','24','32'],correct:2,difficulty:4},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['1','4','16'],['2','6','18'],['3','8','?']],opts:['18','20','24','32'],correct:1,difficulty:4},
   {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['A','B','D'],['B','D','H'],['D','H','?']],opts:['I','J','P','Q'],correct:2,difficulty:5},
   {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['●○','○●','●○'],['○●','●○','○●'],['●○','○●','?']],opts:['●○','○●','●●','○○'],correct:0,difficulty:3},
   {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['2','3','5'],['3','5','8'],['5','8','?']],opts:['10','11','13','15'],correct:2,difficulty:3},
   {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['64','16','4'],['81','27','9'],['100','50','?']],opts:['10','20','25','50'],correct:2,difficulty:5},
   {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['J','K','M'],['K','M','P'],['M','P','?']],opts:['R','S','T','U'],correct:2,difficulty:5},
   {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['4','2','1'],['9','3','1'],['25','5','?']],opts:['0','1','5','25'],correct:1,difficulty:4},
-  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['1','3','9'],['2','8','32'],['3','15','?']],opts:['45','63','75','81'],correct:1,difficulty:5},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['1','3','9'],['2','8','32'],['3','15','?']],opts:['45','63','75','81'],correct:2,difficulty:5},
   {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['1','0','1'],['0','1','0'],['1','0','?']],opts:['0','1','2','3'],correct:1,difficulty:2},
   {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['◐','◑','◒'],['◑','◒','◓'],['◒','◓','?']],opts:['◐','◑','◒','◔'],correct:3,difficulty:4},
   {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['2','4','6'],['8','10','12'],['14','16','?']],opts:['17','18','19','20'],correct:1,difficulty:1},
@@ -106,7 +106,7 @@ const spatPool=[
   {type:'spatial',typeLabel:'공간 추론',q:'정n각형의 한 내각이 162°일 때, n의 값은?',opts:['18','20','22','24'],correct:1,difficulty:5},
   {type:'spatial',typeLabel:'공간 추론',q:'오각형의 내각의 합은?',opts:['360°','450°','540°','630°'],correct:2,difficulty:3},
   {type:'spatial',typeLabel:'공간 추론',q:'정육면체의 꼭짓점 + 모서리 + 면의 합은?',opts:['24','26','28','30'],correct:1,difficulty:3},
-  {type:'spatial',typeLabel:'공간 추론',q:'100개의 점이 원형으로 배열될 때, 대각선의 총 개수는?',opts:['4750','4850','4950','5050'],correct:0,difficulty:5},
+  {type:'spatial',typeLabel:'공간 추론',q:'100개의 점이 원형으로 배열될 때, 대각선의 총 개수는?',opts:['4750','4850','4950','5050'],correct:1,difficulty:5},
   {type:'spatial',typeLabel:'공간 추론',q:'시계가 6시 정각일 때 시침과 분침이 이루는 각도는?',opts:['90°','120°','150°','180°'],correct:3,difficulty:2},
   {type:'spatial',typeLabel:'공간 추론',q:'정이십면체의 꼭짓점 수는?',opts:['8','12','16','20'],correct:1,difficulty:4},
   {type:'spatial',typeLabel:'공간 추론',q:'원뿔을 밑면에 평행하게 자른 단면의 모양은?',opts:['삼각형','직사각형','원','타원'],correct:2,difficulty:2},
@@ -177,7 +177,7 @@ const logPool=[
   {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'갑·을·병·정이 릴레이 순서를 정한다. 갑은 첫 번째가 아니고, 을은 갑 바로 다음이며, 병은 마지막이 아니다. 병이 두 번째라면 첫 번째는?',opts:['갑','을','병','정'],correct:3,difficulty:4},
   {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'100명 중 70%가 A를 좋아하고, 80%가 B를 좋아한다. A·B 모두 좋아하는 최소 인원은?',opts:['40명','50명','60명','70명'],correct:1,difficulty:4},
   {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'어느 마을 이발사는 "스스로 면도하지 않는 사람만 면도해준다". 이발사 본인은?',opts:['스스로 면도한다','이발사가 면도해준다','이 상황은 논리적 모순이다','면도를 하지 않는다'],correct:2,difficulty:5},
-  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'어떤 도시는 오염되어 있다. 오염된 곳은 건강에 해롭다. 오염되지 않은 도시 X가 있다면?',opts:['X는 건강에 해롭다','알 수 없다','X는 건강에 해롭지 않다','X에는 사람이 살 수 없다'],correct:2,difficulty:3},
+  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'어떤 도시는 오염되어 있다. 오염된 곳은 건강에 해롭다. 오염되지 않은 도시 X가 있다면?',opts:['X는 건강에 해롭다','알 수 없다','X는 건강에 해롭지 않다','X에는 사람이 살 수 없다'],correct:1,difficulty:3},
   {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'A, B, C 중 한 명만 진실을 말한다. A:"나는 거짓말쟁이다" B:"A는 거짓말쟁이다" C:"나는 진실을 말한다". 누가 진실을 말하는가?',opts:['A','B','C','알 수 없다'],correct:1,difficulty:5},
   {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'저울로 9개의 공 중 무거운 공 1개를 찾으려면 최소 몇 번 필요한가?',opts:['1번','2번','3번','4번'],correct:1,difficulty:4},
   {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'"이 문장은 거짓이다"라는 문장은?',opts:['참이다','거짓이다','참도 거짓도 아닌 역설이다','의미 없는 문장이다'],correct:2,difficulty:4},
@@ -197,7 +197,7 @@ const logPool=[
   {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'"어떤 동물은 날 수 있다. 펭귄은 동물이다." 따라서?',opts:['펭귄은 날 수 있다','펭귄은 날 수 없다','펭귄은 날 수도 있고 없을 수도 있다','동물은 모두 날 수 있다'],correct:2,difficulty:3},
   {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'갑·을·병 중 한 명만 거짓말을 한다. 갑:"나는 진실을 말한다", 을:"갑이 거짓말쟁이다", 병:"을이 거짓말쟁이다". 거짓말쟁이는?',opts:['갑','을','병','알 수 없다'],correct:1,difficulty:5},
   {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'30명의 학생이 있다. "최소 두 명이 같은 날 생일"이 항상 참이 되려면 생일이 될 수 있는 최대 날 수는?',opts:['29일','30일','365일','무제한'],correct:0,difficulty:5},
-  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'A, B, C, D 네 색깔을 이웃하지 않게 칠해야 한다. 원형으로 나열된 4칸에 4가지 색을 모두 쓸 때 칠할 수 있는 방법은?',opts:['3가지','6가지','12가지','24가지'],correct:0,difficulty:5},
+  {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'A, B, C, D 네 색깔을 이웃하지 않게 칠해야 한다. 원형으로 나열된 4칸에 4가지 색을 모두 쓸 때 칠할 수 있는 방법은? (회전하거나 뒤집어서 같으면 한 가지로 센다)',opts:['3가지','6가지','12가지','24가지'],correct:0,difficulty:5},
   {type:'logic',typeLabel:'논리 추론',q:'다음 논리 문제를 풀어보세요.',premise:'"키가 크면 농구를 잘한다. 민준이는 농구를 잘하지 못한다." 따라서?',opts:['민준이는 키가 작다','민준이는 키가 크지 않다','민준이는 운동을 못한다','판단할 수 없다'],correct:1,difficulty:4}
 ];
 
@@ -209,7 +209,7 @@ const hardPool=[
 
 const veryHardPool=[
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'3, 11, 31, 69, 131, 223, ?',opts:['315','343','349','351'],correct:3,difficulty:5},
-  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['1','2','4'],['2','4','16'],['3','6','?']],opts:['12','18','24','36'],correct:1,difficulty:5},
+  {type:'matrix',typeLabel:'행렬 패턴',q:'3×3 행렬에서 규칙을 찾아 ?에 들어갈 것을 선택하세요.',matrix:[['1','2','4'],['2','4','16'],['3','6','?']],opts:['12','18','24','36'],correct:3,difficulty:5},
   {type:'sequence',typeLabel:'수열 추론',q:'다음 수열의 빈 칸에 들어갈 숫자는?',seq:'1, 3, 13, 63, 313, ?',opts:['1563','1560','1553','1500'],correct:0,difficulty:5}
 ];
 
@@ -261,7 +261,7 @@ const extendedTests={
       {q:'2-4-6-8-1-3-5-7 중 짝수 위치(2,4,6,8번째) 숫자의 합은?',opts:['21','22','23','24'],correct:1},
       {q:'"K-A-R-E-N-S"를 역순으로 할 때 3번째 문자는?',opts:['E','N','R','A'],correct:0},
       {q:'1+2+3+…+10 = ?',opts:['45','50','55','60'],correct:2},
-      {q:'"ABCDE"에서 C와 E의 위치를 바꾸면?',opts:['ABCED','ABCDE','ABECD','ABDCE'],correct:0},
+      {q:'"ABCDE"에서 C와 E의 위치를 바꾸면?',opts:['ABEDC','ABCDE','ABECD','ABDCE'],correct:0},
       {q:'4×4×4 - 3×3×3 = ?',opts:['31','37','47','91'],correct:1}
     ],
     scoreRanges:[

@@ -28,7 +28,7 @@ questions:[
 {q:'Dans la suite 2-4-6-8-1-3-5-7, quelle est la somme des chiffres aux positions paires (2e, 4e, 6e, 8e) ?',opts:['21','22','23','24']},
 {q:'« K-A-R-E-N-S » — quelle est la 3e lettre à l\'envers ?',opts:['E','N','R','A']},
 {q:'1 + 2 + 3 + … + 10 = ?',opts:['45','50','55','60']},
-{q:'« ABCDE » — échangez les positions de C et E. Quel est le résultat ?',opts:['ABCED','ABCDE','ABECD','ABDCE']},
+{q:'« ABCDE » — échangez les positions de C et E. Quel est le résultat ?',opts:['ABEDC','ABCDE','ABECD','ABDCE']},
 {q:'4×4×4 − 3×3×3 = ?',opts:['31','37','47','91']}
 ],
 tips:{

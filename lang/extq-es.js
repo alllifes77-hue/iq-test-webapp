@@ -28,7 +28,7 @@ questions:[
 {q:'En la secuencia 2-4-6-8-1-3-5-7, ¿cuál es la suma de los números en posiciones pares (2ª, 4ª, 6ª, 8ª)?',opts:['21','22','23','24']},
 {q:'«K-A-R-E-N-S» — ¿cuál es la 3ª letra al revés?',opts:['E','N','R','A']},
 {q:'1 + 2 + 3 + … + 10 = ?',opts:['45','50','55','60']},
-{q:'«ABCDE» — intercambia las posiciones de C y E. ¿Cuál es el resultado?',opts:['ABCED','ABCDE','ABECD','ABDCE']},
+{q:'«ABCDE» — intercambia las posiciones de C y E. ¿Cuál es el resultado?',opts:['ABEDC','ABCDE','ABECD','ABDCE']},
 {q:'4×4×4 − 3×3×3 = ?',opts:['31','37','47','91']}
 ],
 tips:{

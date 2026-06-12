@@ -28,7 +28,7 @@ questions:[
 {q:'Nella sequenza 2-4-6-8-1-3-5-7, qual è la somma dei numeri nelle posizioni pari (2ª, 4ª, 6ª, 8ª)?',opts:['21','22','23','24']},
 {q:'«K-A-R-E-N-S» — qual è la 3ª lettera al contrario?',opts:['E','N','R','A']},
 {q:'1 + 2 + 3 + … + 10 = ?',opts:['45','50','55','60']},
-{q:'«ABCDE» — scambia le posizioni di C ed E. Qual è il risultato?',opts:['ABCED','ABCDE','ABECD','ABDCE']},
+{q:'«ABCDE» — scambia le posizioni di C ed E. Qual è il risultato?',opts:['ABEDC','ABCDE','ABECD','ABDCE']},
 {q:'4×4×4 − 3×3×3 = ?',opts:['31','37','47','91']}
 ],
 tips:{

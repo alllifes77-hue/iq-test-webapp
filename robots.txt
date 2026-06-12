@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://all-lifes.com/iq-test/sitemap.xml
+Sitemap: https://all-lifes.com/iq-test-sitemap.xml

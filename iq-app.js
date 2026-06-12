@@ -16,7 +16,7 @@ function applyLang(){
   if(L.docTitle)document.title=L.docTitle;
   // Per-language SEO meta tag updates
   const _l=window.IQ_CURRENT_LANG||'ko';
-  const _url=_l==='ko'?'https://all-lifes.com/iq-test/':'https://all-lifes.com/iq-test/?lang='+_l;
+  const _url=_l==='ko'?'https://all-lifes.com/iq-test/':'https://all-lifes.com/'+_l+'/iq-test/';
   if(L.metaDesc){const m=document.querySelector('meta[name="description"]');if(m)m.content=L.metaDesc;}
   if(L.metaKeywords){const m=document.querySelector('meta[name="keywords"]');if(m)m.content=L.metaKeywords;}
   if(L.ogLocale){const m=document.querySelector('meta[property="og:locale"]');if(m)m.content=L.ogLocale;}
@@ -409,6 +409,48 @@ let extTest=null,extQuestions=[],extCurQ=0,extAnswers=[],extTimer=null;
 let savedIQ=100,savedTopPct=50;
 let savedResultData=null,isSharedView=false;
 
+// ── Theme toggle ──
+function updateThemeBtn(){
+  const b=document.getElementById('theme-toggle');
+  if(b)b.textContent=document.documentElement.getAttribute('data-theme')==='dark'?'☀️':'🌙';
+}
+function toggleTheme(){
+  const r=document.documentElement;
+  const next=r.getAttribute('data-theme')==='dark'?'light':'dark';
+  r.setAttribute('data-theme',next);
+  try{localStorage.setItem('iq_theme',next);}catch(e){}
+  updateThemeBtn();
+}
+document.addEventListener('DOMContentLoaded',updateThemeBtn);
+
+// ── Keyboard shortcuts: 1-4 / A-D answer, S skip ──
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  const tgt=e.target;
+  if(tgt&&(tgt.tagName==='INPUT'||tgt.tagName==='TEXTAREA'||tgt.isContentEditable))return;
+  const iqActive=document.getElementById('screen-test')?.classList.contains('active');
+  const extActive=document.getElementById('screen-extended-test')?.classList.contains('active');
+  if(!iqActive&&!extActive)return;
+  const k=e.key.toLowerCase();
+  let idx=-1;
+  if(k>='1'&&k<='6')idx=parseInt(k)-1;
+  else if(k>='a'&&k<='f'&&k.length===1)idx=k.charCodeAt(0)-97;
+  if(idx>=0){
+    const card=document.getElementById(iqActive?'q-card':'eq-card');
+    const opts=card?card.querySelectorAll('.option'):[];
+    if(opts[idx]&&opts[idx].style.pointerEvents!=='none'){e.preventDefault();opts[idx].click();}
+  }else if(k==='s'&&iqActive){
+    e.preventDefault();skipQ();
+  }
+});
+
+// ── Leave guard during test ──
+window.addEventListener('beforeunload',e=>{
+  const testing=document.getElementById('screen-test')?.classList.contains('active')||
+                document.getElementById('screen-extended-test')?.classList.contains('active');
+  if(testing){e.preventDefault();e.returnValue='';}
+});
+
 // ── Navigation ──
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -661,7 +703,7 @@ function buildQHTML(q,idx){
   else if(tq.type==='logic') html+=`<div class="q-premise">${tq.premise}</div>`;
   html+=`<div class="options-grid">`;
   ['A','B','C','D'].forEach((L,i)=>{html+=`<div class="option" id="opt${i}" onclick="selectAns(${i})"><div class="opt-letter">${L}</div><div class="opt-text">${tq.opts[i]}</div></div>`;});
-  html+=`</div><div class="q-nav"><span class="q-nav-hint">${t('qAutoNext')||'선택 후 자동으로 다음 문항으로 넘어갑니다'}</span><button class="btn btn-secondary btn-sm" onclick="skipQ()">${t('qSkip')||'건너뛰기 →'}</button></div>`;
+  html+=`</div><div class="q-nav"><span class="q-nav-hint">${t('qAutoNext')||'선택 후 자동으로 다음 문항으로 넘어갑니다'}<span class="kbd-hint">⌨ 1–4 · S</span></span><button class="btn btn-secondary btn-sm" onclick="skipQ()">${t('qSkip')||'건너뛰기 →'}</button></div>`;
   return html;
 }
 
@@ -1183,7 +1225,72 @@ function buildShareRow(isExt){
       case 'copy':    return `<button class="share-btn copy" id="copy-btn${suf}" onclick="copyLink(${ex})"><span class="sb-icon">🔗</span><span id="copy-lbl${suf}">${copyLabel}</span></button>`;
       default: return '';
     }
-  }).join('');
+  }).join('')+`<button class="share-btn copy" onclick="downloadResultCard(${ex})"><span class="sb-icon">💾</span><span>${t('saveImage')||(lang==='ko'?'이미지 저장':'Save Image')}</span></button>`;
+}
+
+// ── Result card PNG download ──
+function downloadResultCard(isExt){
+  const W=1080,H=1080;
+  const cv=document.createElement('canvas');cv.width=W;cv.height=H;
+  const x=cv.getContext('2d');
+  // Background gradient
+  const g=x.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,'#1e1b4b');g.addColorStop(.5,'#312e81');g.addColorStop(1,'#1d4ed8');
+  x.fillStyle=g;x.fillRect(0,0,W,H);
+  // Decorative circles
+  x.globalAlpha=.07;x.fillStyle='#ffffff';
+  x.beginPath();x.arc(W*.9,H*.12,220,0,7);x.fill();
+  x.beginPath();x.arc(W*.08,H*.88,260,0,7);x.fill();
+  x.globalAlpha=1;
+  // Content
+  let big,cat,pct,eyebrow;
+  if(isExt){
+    big=(document.getElementById('ext-score')||{}).textContent||'--';
+    cat=(document.getElementById('ext-res-cat')||{}).textContent||'';
+    pct=(document.getElementById('ext-top-pct')||{}).textContent||'--';
+    eyebrow=(document.getElementById('ext-res-label')||{}).textContent||'Cognitive Test';
+  }else{
+    const d=savedResultData||{};
+    big=String(d.iq||savedIQ);cat=d.cat||'';pct=String(d.topPct!=null?d.topPct:savedTopPct);
+    eyebrow='IQ TEST RESULT';
+  }
+  const lang=window.IQ_CURRENT_LANG||'ko';
+  x.textAlign='center';
+  x.fillStyle='#a5b4fc';x.font='700 38px sans-serif';
+  x.fillText(eyebrow.toUpperCase().slice(0,30),W/2,170);
+  x.fillStyle='#ffffff';x.font='900 300px sans-serif';
+  x.fillText(big,W/2,540);
+  x.fillStyle='#93c5fd';x.font='800 64px sans-serif';
+  x.fillText(cat.slice(0,22),W/2,660);
+  // Top % chip
+  const chipTxt=(lang==='ko'?'상위 ':'TOP ')+pct+'%';
+  x.font='700 46px sans-serif';
+  const tw=x.measureText(chipTxt).width;
+  x.fillStyle='rgba(255,255,255,.14)';
+  const cw=tw+80,chx=(W-cw)/2;
+  x.beginPath();if(x.roundRect)x.roundRect(chx,710,cw,90,45);else x.rect(chx,710,cw,90);x.fill();
+  x.fillStyle='#e0e7ff';x.fillText(chipTxt,W/2,772);
+  // Bell curve
+  x.strokeStyle='rgba(165,180,252,.65)';x.lineWidth=5;x.beginPath();
+  for(let i=0;i<=100;i++){
+    const px=140+(W-280)*i/100;
+    const py=960-110*Math.exp(-Math.pow((i-50)/18,2));
+    i===0?x.moveTo(px,py):x.lineTo(px,py);
+  }
+  x.stroke();
+  // Footer URL
+  x.fillStyle='#c7d2fe';x.font='600 36px sans-serif';
+  x.fillText('all-lifes.com/iq-test',W/2,1020);
+  // Download
+  cv.toBlob(b=>{
+    if(!b)return;
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(b);
+    a.download='iq-test-result.png';
+    document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+    if(typeof showToast==='function')showToast(lang==='ko'?'이미지가 저장되었습니다!':'Image saved!');
+  },'image/png');
 }
 
 function updateShareRows(){

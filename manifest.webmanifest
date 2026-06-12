@@ -1,0 +1,21 @@
+{
+  "name": "무료 IQ 테스트 - 과학적 지능 지수 측정",
+  "short_name": "IQ Test",
+  "description": "레이븐 행렬과 CHC 이론에 기반한 과학적 온라인 IQ 테스트. EQ·기억력·창의성까지 무료 측정.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1e1b4b",
+  "theme_color": "#3730a3",
+  "lang": "ko",
+  "categories": ["education", "health"],
+  "icons": [
+    {
+      "src": "IQ TEST.png",
+      "sizes": "451x451",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

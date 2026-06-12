@@ -9,6 +9,7 @@ package-lock.json
 wrangler.toml
 worker.js
 translate-*.js
+validate-langs.js
 generate-og*.js
 convert-og.js
 cloudflare-worker.js

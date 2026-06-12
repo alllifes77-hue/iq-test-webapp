@@ -247,8 +247,13 @@ function showBrainAgeCard(iq,suffix){
 }
 
 // ── IQ HISTORY ──
+// 로컬 기준 날짜 (UTC 자정이 아닌 사용자 자정에 날짜 전환)
+function localDateStr(offsetMs=0){
+  const d=new Date(Date.now()+offsetMs);
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
 function saveIQHistory(iq,mode){
-  try{const h=JSON.parse(localStorage.getItem('iq_hist_v1')||'[]');h.push({date:new Date().toISOString().slice(0,10),iq,mode});if(h.length>10)h.shift();localStorage.setItem('iq_hist_v1',JSON.stringify(h));}catch{}
+  try{const h=JSON.parse(localStorage.getItem('iq_hist_v1')||'[]');h.push({date:localDateStr(),iq,mode});if(h.length>10)h.shift();localStorage.setItem('iq_hist_v1',JSON.stringify(h));}catch{}
 }
 function renderIQHistory(cardId){
   try{
@@ -266,7 +271,7 @@ function renderIQHistory(cardId){
     const metaCount=(L&&L.histCount)||'기록';
     el.innerHTML=`<div class="history-hd">${hd.replace('{n}',hist.length)}</div>
       <div class="history-bars">${hist.map(h=>{const pct=Math.max(15,Math.round((h.iq-minQ+5)/(rng+10)*100));const c=h.iq>=120?'var(--success)':h.iq>=100?'#6366f1':'var(--warning)';return`<div class="h-bar-w"><div class="h-bar-v">${h.iq}</div><div class="h-bar" style="height:${pct}%;background:${c}"></div></div>`;}).join('')}</div>
-      <div class="history-meta"><span>${metaBest}: <strong>${maxQ}</strong></span><span>${metaAvg}: <strong>${avg}</strong></span><span>${metaCount}: <strong>${hist.length}회</strong></span></div>`;
+      <div class="history-meta"><span>${metaBest}: <strong>${maxQ}</strong></span><span>${metaAvg}: <strong>${avg}</strong></span><span>${metaCount}: <strong>${hist.length}${(window.IQ_CURRENT_LANG||'ko')==='ko'?'회':''}</strong></span></div>`;
   }catch{}
 }
 
@@ -277,7 +282,7 @@ function getDSt(){try{return JSON.parse(localStorage.getItem('iq_daily_v1'))||{}
 function setDSt(s){try{localStorage.setItem('iq_daily_v1',JSON.stringify(s));}catch{}}
 
 function getDailyQs(){
-  const today=new Date().toISOString().slice(0,10);
+  const today=localDateStr();
   const rand=_dRand(_dHash(today));
   // Tag with pool name + index so getTranslatedQ can apply localization
   const pool=[...tagPool(seqPool,'seqPool'),...tagPool(anaPool,'anaPool'),...tagPool(logPool,'logPool')];
@@ -286,7 +291,7 @@ function getDailyQs(){
 
 function updateDailyBanner(){
   const st=getDSt();
-  const today=new Date().toISOString().slice(0,10);
+  const today=localDateStr();
   const done=st.lastDate===today&&st.done;
   const streak=st.streak||0;
   const L=window.IQ_LANG;
@@ -308,7 +313,7 @@ function updateDailyBanner(){
 let _dCur=0,_dQs=[],_dRes=[],_dTmr=null,_dSec=30;
 
 function showDailyChallenge(){
-  const today=new Date().toISOString().slice(0,10);
+  const today=localDateStr();
   const st=getDSt();
   const L=window.IQ_LANG;
   // Update hero
@@ -342,7 +347,7 @@ function renderDailyQ(){
   const raw=_dQs[_dCur];
   const q=getTranslatedQ(raw);
   for(let i=0;i<5;i++){const dot=document.getElementById('daily-dot-'+i);if(!dot)continue;dot.className='daily-dot';if(i<_dCur)dot.classList.add(_dRes[i]?'correct':'wrong');else if(i===_dCur)dot.classList.add('active');}
-  document.getElementById('daily-q-type').textContent=q.typeLabel||q.type;
+  document.getElementById('daily-q-type').textContent=tl(q.typeLabel)||q.type;
   document.getElementById('daily-q-text').textContent=q.q;
   const body=document.getElementById('daily-q-body');
   body.textContent=q.seq||q.analogy||q.premise||'';
@@ -369,10 +374,10 @@ function answerDaily(chosen){
 }
 
 function endDailyChallenge(){
-  const today=new Date().toISOString().slice(0,10);
+  const today=localDateStr();
   const score=_dRes.filter(Boolean).length;
   const st=getDSt();
-  const yesterday=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  const yesterday=localDateStr(-86400000);
   let newStreak=1;
   if(st.lastDate===yesterday)newStreak=(st.streak||0)+1;
   else if(st.lastDate===today)newStreak=st.streak||1;
@@ -481,6 +486,14 @@ function renderAffiliates(){
   });
 }
 document.addEventListener('DOMContentLoaded',renderAffiliates);
+
+// ── 언어 푸터: 현재 언어 하이라이트 ──
+document.addEventListener('DOMContentLoaded',()=>{
+  const cur=window.IQ_CURRENT_LANG||'ko';
+  document.querySelectorAll('.lang-links a').forEach(a=>{
+    if(a.dataset.lang===cur)a.classList.add('active');
+  });
+});
 
 // ── 쿠팡 파트너스 다이내믹 위젯 (ko 전용, 결과 화면 첫 진입 시 lazy 삽입) ──
 function ensureCoupangWidget(placement){
@@ -769,11 +782,14 @@ function buildMatrixHTML(matrix){
   return html+`</div></div>`;
 }
 
+let _ansLock=false; // 답변 후 피드백 지연 중 스킵/중복 입력 방지
 function selectAns(idx){
+  if(_ansLock)return;
+  _ansLock=true;
   clearInterval(timer);
   const q=questions[curQ];
   answers[curQ]={selected:idx,correct:q.correct};
-  document.querySelectorAll('.option').forEach((el,i)=>{
+  document.querySelectorAll('#q-card .option').forEach((el,i)=>{
     el.style.pointerEvents='none';
     if(q.correct!==undefined&&i===q.correct)el.classList.add('correct');
     if(i===idx&&idx!==q.correct)el.classList.add('wrong');
@@ -781,9 +797,9 @@ function selectAns(idx){
   });
   setTimeout(advanceQ,950);
 }
-function skipQ(){clearInterval(timer);answers[curQ]={selected:-1,correct:questions[curQ].correct};advanceQ();}
-function autoSkip(){answers[curQ]={selected:-1,correct:questions[curQ].correct};advanceQ();}
-function advanceQ(){curQ++;if(curQ>=questions.length)finishTest();else renderQ();}
+function skipQ(){if(_ansLock)return;_ansLock=true;clearInterval(timer);answers[curQ]={selected:-1,correct:questions[curQ].correct};advanceQ();}
+function autoSkip(){if(_ansLock)return;_ansLock=true;answers[curQ]={selected:-1,correct:questions[curQ].correct};advanceQ();}
+function advanceQ(){curQ++;_ansLock=false;if(curQ>=questions.length)finishTest();else renderQ();}
 
 // ── Finish test ──
 function finishTest(){
@@ -805,6 +821,10 @@ function calcIQ(correct,total){
 function getIQCat(iq){return iqCats.find(c=>iq>=c.min)||iqCats[iqCats.length-1];}
 
 function computeResults(){
+  // 공유 보기 상태 해제 (공유 링크로 본 뒤 직접 응시한 경우)
+  isSharedView=false;
+  const _sb=document.getElementById('shared-banner-iq');if(_sb)_sb.style.display='none';
+  const _swb=document.getElementById('switch-btn');if(_swb)_swb.style.display='';
   const correct=answers.filter(a=>a&&a.selected!==-1&&a.selected===a.correct).length;
   const total=questions.length;
   const iq=calcIQ(correct,total);
@@ -858,8 +878,14 @@ function computeResults(){
 }
 
 // ── Bell Curve ──
+// 같은 캔버스에 재렌더링 시 기존 차트 제거 (Chart.js 'Canvas is already in use' 방지)
+function _destroyChart(canvas){
+  try{if(window.Chart&&Chart.getChart){const p=Chart.getChart(canvas);if(p)p.destroy();}}catch(e){}
+}
 function drawBellCurve(canvasId,score,color='#4f46e5',mean=100,sd=15){
-  const ctx=document.getElementById(canvasId).getContext('2d');
+  const cv=document.getElementById(canvasId);
+  _destroyChart(cv);
+  const ctx=cv.getContext('2d');
   const labels=[],normal=[],filled=[];
   for(let x=mean-3.5*sd;x<=mean+3.5*sd;x+=sd/9){
     labels.push(Math.round(x));
@@ -893,8 +919,10 @@ function drawRadarChart(){
   const areas=getAreaScores();
   const labels=Object.keys(areas).filter(k=>areas[k].total>0);
   const data=labels.map(k=>Math.round(areas[k].correct/areas[k].total*100));
-  const ctx=document.getElementById('radarChart').getContext('2d');
-  new Chart(ctx,{type:'radar',data:{labels,datasets:[{label:t('radarAccLabel')||'Domain Accuracy (%)',data,borderColor:'#4f46e5',backgroundColor:'rgba(79,70,229,.15)',pointBackgroundColor:'#4f46e5',pointBorderColor:'#fff',borderWidth:2}]},options:{responsive:true,scales:{r:{min:0,max:100,ticks:{color:'#94a3b8',backdropColor:'transparent',stepSize:25},grid:{color:'rgba(0,0,0,.07)'},pointLabels:{color:'#475569',font:{size:11}}}},plugins:{legend:{labels:{color:'#475569',font:{size:11}}}}}});
+  const cv=document.getElementById('radarChart');
+  _destroyChart(cv);
+  const ctx=cv.getContext('2d');
+  new Chart(ctx,{type:'radar',data:{labels:labels.map(k=>tl(k)),datasets:[{label:t('radarAccLabel')||'Domain Accuracy (%)',data,borderColor:'#4f46e5',backgroundColor:'rgba(79,70,229,.15)',pointBackgroundColor:'#4f46e5',pointBorderColor:'#fff',borderWidth:2}]},options:{responsive:true,scales:{r:{min:0,max:100,ticks:{color:'#94a3b8',backdropColor:'transparent',stepSize:25},grid:{color:'rgba(0,0,0,.07)'},pointLabels:{color:'#475569',font:{size:11}}}},plugins:{legend:{labels:{color:'#475569',font:{size:11}}}}}});
 }
 function renderBreakdown(){
   const areas=getAreaScores();
@@ -902,7 +930,7 @@ function renderBreakdown(){
   let html='';
   Object.entries(areas).filter(([,v])=>v.total>0).forEach(([name,v],i)=>{
     const pct=Math.round(v.correct/v.total*100);
-    html+=`<div class="bd-item"><div class="bd-name">${name}</div><div class="bd-bar"><div class="bd-fill" style="width:0%;background:${colors[i%colors.length]}" data-w="${pct}"></div></div><div class="bd-score" style="color:${colors[i%colors.length]}">${pct}%</div></div>`;
+    html+=`<div class="bd-item"><div class="bd-name">${tl(name)}</div><div class="bd-bar"><div class="bd-fill" style="width:0%;background:${colors[i%colors.length]}" data-w="${pct}"></div></div><div class="bd-score" style="color:${colors[i%colors.length]}">${pct}%</div></div>`;
   });
   document.getElementById('bd-list').innerHTML=html;
   setTimeout(()=>{document.querySelectorAll('#bd-list .bd-fill').forEach(el=>{el.style.width=el.dataset.w+'%';});},300);
@@ -966,11 +994,14 @@ function renderExtQ(){
   card.style.animation='none';void card.offsetHeight;card.style.animation='slideIn .3s ease';
 }
 
+let _extAnsLock=false;
 function selectExtAns(idx){
+  if(_extAnsLock)return;
+  _extAnsLock=true;
   clearInterval(extTimer);
   const q=extQuestions[extCurQ];
   extAnswers[extCurQ]={selected:idx,weights:q.weights,correct:q.correct};
-  document.querySelectorAll('.option').forEach((el,i)=>{
+  document.querySelectorAll('#eq-card .option').forEach((el,i)=>{
     el.style.pointerEvents='none';
     if(q.correct!==undefined&&i===q.correct)el.classList.add('correct');
     if(i===idx&&idx!==q.correct)el.classList.add('wrong');
@@ -978,9 +1009,10 @@ function selectExtAns(idx){
   });
   setTimeout(extAdvance,850);
 }
-function extSkip(){clearInterval(extTimer);extAnswers[extCurQ]={selected:-1};extAdvance();}
-function extAutoSkip(){extAnswers[extCurQ]={selected:-1};extAdvance();}
-function extAdvance(){extCurQ++;if(extCurQ>=extQuestions.length)finishExt();else renderExtQ();}
+// 스킵도 weights를 저장해 분모에 포함 (스킵이 저점 답변보다 유리해지는 문제 방지)
+function extSkip(){if(_extAnsLock)return;_extAnsLock=true;clearInterval(extTimer);const q=extQuestions[extCurQ];extAnswers[extCurQ]={selected:-1,weights:q.weights,correct:q.correct};extAdvance();}
+function extAutoSkip(){if(_extAnsLock)return;_extAnsLock=true;const q=extQuestions[extCurQ];extAnswers[extCurQ]={selected:-1,weights:q.weights,correct:q.correct};extAdvance();}
+function extAdvance(){extCurQ++;_extAnsLock=false;if(extCurQ>=extQuestions.length)finishExt();else renderExtQ();}
 
 function finishExt(){
   clearInterval(extTimer);
@@ -988,7 +1020,7 @@ function finishExt(){
   if(extTest.id==='eq'){
     let total=0,max=0;
     extAnswers.forEach(a=>{if(a&&a.weights){max+=Math.max(...a.weights);if(a.selected!==-1)total+=a.weights[a.selected];}});
-    result=extTest.scoring(total,max);
+    result=extTest.scoring(total,max||1);
   } else {
     const correct=extAnswers.filter(a=>a&&a.selected!==-1&&a.selected===a.correct).length;
     result=extTest.scoring(correct,extQuestions.length);
@@ -998,6 +1030,8 @@ function finishExt(){
 
 // ── Extended Results Display ──
 function showExtResults(result){
+  isSharedView=false;
+  const _sbe=document.getElementById('shared-banner-ext');if(_sbe)_sbe.style.display='none';
   const score=result.score;
   const pctile=getExtPercentile(score,extTest.mean||76,extTest.sd||8);
   const topPct=100-pctile;
@@ -1098,7 +1132,9 @@ function drawExtRadar(score){
   const cats=langCats||catMap[extTest.id]||['영역1','영역2','영역3','영역4','영역5'];
   const base=(score-62)/38;
   const data=cats.map(()=>Math.max(10,Math.min(100,Math.round((base+(Math.random()*.24-.12))*100))));
-  const ctx=document.getElementById('ext-radar').getContext('2d');
+  const cv=document.getElementById('ext-radar');
+  _destroyChart(cv);
+  const ctx=cv.getContext('2d');
   new Chart(ctx,{type:'radar',data:{labels:cats,datasets:[{label:t('extRadarLabel')||'Domain Scores',data,borderColor:extTest.color,backgroundColor:extTest.color+'22',pointBackgroundColor:extTest.color,pointBorderColor:'#fff',borderWidth:2}]},options:{responsive:true,scales:{r:{min:0,max:100,ticks:{color:'#94a3b8',backdropColor:'transparent',stepSize:25},grid:{color:'rgba(0,0,0,.07)'},pointLabels:{color:'#475569',font:{size:11}}}},plugins:{legend:{labels:{color:'#475569',font:{size:11}}}}}});
 }
 
@@ -1143,19 +1179,21 @@ function getShareText(isExt=false){
 function getShareURL(){return window.location.href.split('?')[0];}
 
 function getResultShareURL(isExt=false){
-  const lang=(new URLSearchParams(window.location.search)).get('lang')||'ko';
-  const base=lang==='ko'?'https://all-lifes.com/iq-test/':`https://all-lifes.com/${lang}/iq-test/`;
+  // 결과 복원 파라미터는 앱(?lang=)에서만 동작 — /xx/iq-test/ 래퍼는 SEO 랜딩이라 사용 불가
+  const lang=window.IQ_CURRENT_LANG||'ko';
+  const base='https://all-lifes.com/iq-test/';
+  const lp=lang==='ko'?'':`lang=${lang}&`;
   if(isExt&&extTest){
     const score=document.getElementById('ext-score').textContent;
     const cat=document.getElementById('ext-res-cat').textContent;
     const top=document.getElementById('ext-top-pct').textContent;
-    return `${base}?r=ext&tid=${extTest.id}&s=${score}&cat=${encodeURIComponent(cat)}&top=${top}`;
+    return `${base}?${lp}r=ext&tid=${extTest.id}&s=${score}&cat=${encodeURIComponent(cat)}&top=${top}`;
   }
   if(savedResultData){
     const d=savedResultData;
-    return `${base}?r=iq&iq=${d.iq}&cat=${encodeURIComponent(d.cat)}&top=${d.topPct}&mode=${d.mode}`;
+    return `${base}?${lp}r=iq&iq=${d.iq}&cat=${encodeURIComponent(d.cat)}&top=${d.topPct}&mode=${d.mode}`;
   }
-  return base;
+  return lang==='ko'?base:`${base}?lang=${lang}`;
 }
 
 // ── URL 공유 결과 복원 ──
@@ -1213,6 +1251,9 @@ function restoreExtResults(tid,score,cat,topPct){
   extTest=extendedTests[tid];
   if(!extTest)return;
   const pctile=100-topPct;
+  // 언어별 등급표 병합 (showExtResults와 동일 로직)
+  const extSRL=window.IQ_LANG&&window.IQ_LANG.extScoreRanges&&window.IQ_LANG.extScoreRanges[extTest.id];
+  const scoreRanges=extSRL?extTest.scoreRanges.map((r,i)=>({...r,...(extSRL[i]||{})})):extTest.scoreRanges;
   document.getElementById('shared-banner-ext').style.display='block';
   document.getElementById('ext-res-label').textContent=tp('extResLabel',{title:extTest.title})||(extTest.title+' Result');
   document.getElementById('ext-score').textContent=score;
@@ -1379,7 +1420,7 @@ function shareKakao(isExt=false){
         content:{
           title:t('shareTitle')||'IQ 테스트 결과',
           description:desc,
-          imageUrl:'https://all-lifes.com/iq-test/og-image-ko.png',
+          imageUrl:'https://all-lifes.com/iq-test/og-ko.png',
           link:{mobileWebUrl:url,webUrl:url}
         }
       });
@@ -1642,7 +1683,7 @@ function _showASDResult(asdScore,adhdScore,catScores,catMax){
     const cn=A&&A.catNames||{sc:'사회적 소통',rb:'반복 행동',ss:'감각 민감도',cg:'인지 스타일'};
     catEl.innerHTML=Object.entries(catScores).map(([cat,score])=>{
       const pct=Math.round((score/catMax[cat])*100);
-      return `<div class="asd-cat-row"><span class="asd-cat-nm">${cn[cat]||cat}</span><div class="asd-bar-wrap"><div class="asd-bar asd-bar-${cat}" style="width:${pct}%"></div></div><span class="asd-cat-sc">${score}/${catMax[cat]}</span></div>`;
+      return `<div class="asd-cat-row"><span class="asd-cat-nm">${cn[cat]||cat}</span><div class="asd-bar-wrap"><div class="asd-bar asd-bar-${cat}" style="width:${pct}%"></div></div><span class="asd-bar-sc">${score}/${catMax[cat]}</span></div>`;
     }).join('');
   }
   // Result disclaimer
@@ -1692,7 +1733,7 @@ function _buildAIContext(){
 
   // IQ context
   const iqNum=document.getElementById('res-iq');
-  if(iqNum&&iqNum.textContent&&iqNum.textContent!=='—'){
+  if(iqNum&&iqNum.textContent&&!['—','--',''].includes(iqNum.textContent.trim())){
     const cat=document.getElementById('res-cat')?.textContent||'';
     const top=document.getElementById('r-top')?.textContent||'';
     const mode=document.getElementById('res-test-label')?.textContent||'';
@@ -1711,7 +1752,7 @@ function _buildAIContext(){
     // Category bars
     const bars=document.querySelectorAll('#asd-cat-bars .asd-cat-row');
     if(bars.length){
-      const cats=[];bars.forEach(r=>{const nm=r.querySelector('.asd-cat-nm')?.textContent||'';const sc=r.querySelector('.asd-cat-sc')?.textContent||'';if(nm)cats.push(`${nm}: ${sc}`);});
+      const cats=[];bars.forEach(r=>{const nm=r.querySelector('.asd-cat-nm')?.textContent||'';const sc=r.querySelector('.asd-bar-sc')?.textContent||'';if(nm)cats.push(`${nm}: ${sc}`);});
       if(cats.length)lines.push(`Domain scores: ${cats.join(', ')}`);
     }
   }

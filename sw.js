@@ -1,5 +1,5 @@
 // Service Worker — network-first with cache fallback (offline support + fast repeat visits)
-const CACHE = 'iq-test-v1';
+const CACHE = 'iq-test-v2';
 
 self.addEventListener('install', e => { self.skipWaiting(); });
 
@@ -23,6 +23,9 @@ self.addEventListener('fetch', e => {
         }
         return res;
       })
-      .catch(() => caches.match(e.request, { ignoreSearch: e.request.mode === 'navigate' }))
+      .catch(() =>
+        caches.match(e.request, { ignoreSearch: e.request.mode === 'navigate' })
+          .then(hit => hit || new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } }))
+      )
   );
 });

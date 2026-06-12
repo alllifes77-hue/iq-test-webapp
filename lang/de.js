@@ -64,6 +64,34 @@ iqCats:[
   {min:70, label:'Grenzwertig',color:'#dc2626',desc:'Unterdurchschnittlich. Unterstützung bei anspruchsvolleren Aufgaben kann hilfreich sein.'},
   {min:0,  label:'Sehr niedrig',color:'#7f1d1d',desc:''}
 ],
+extScoreRanges:{
+  eq:[{min:92,label:'Herausragender EQ',top:3},{min:85,label:'Hoher EQ',top:10},{min:76,label:'Überdurchschnittlicher EQ',top:25},{min:67,label:'Durchschnittlicher EQ',top:50},{min:0,label:'Verbesserungswürdig',top:85}],
+  memory:[{min:92,label:'Herausragend',top:3},{min:85,label:'Hoch',top:10},{min:76,label:'Überdurchschnittlich',top:25},{min:67,label:'Durchschnittlich',top:50},{min:0,label:'Verbesserungswürdig',top:85}],
+  speed:[{min:92,label:'Herausragend',top:3},{min:85,label:'Hoch',top:10},{min:76,label:'Überdurchschnittlich',top:25},{min:67,label:'Durchschnittlich',top:50},{min:0,label:'Verbesserungswürdig',top:85}],
+  creativity:[{min:92,label:'Herausragend',top:3},{min:85,label:'Hoch',top:10},{min:76,label:'Überdurchschnittlich',top:25},{min:67,label:'Durchschnittlich',top:50},{min:0,label:'Verbesserungswürdig',top:85}],
+  focus:[{min:92,label:'Herausragend',top:3},{min:85,label:'Hoch',top:10},{min:76,label:'Überdurchschnittlich',top:25},{min:67,label:'Durchschnittlich',top:50},{min:0,label:'Verbesserungswürdig',top:85}],
+  cog_flex:[{min:92,label:'Herausragend',top:3},{min:85,label:'Hoch',top:10},{min:76,label:'Überdurchschnittlich',top:25},{min:67,label:'Durchschnittlich',top:50},{min:0,label:'Verbesserungswürdig',top:85}]
+},
+extScoreResult:{
+  eq:{hi:{cat:'Herausragende emotionale Intelligenz',desc:'Sie verfügen über ausgezeichnete Empathie und Selbstwahrnehmung, bauen auf natürliche Weise Vertrauen auf und zeigen Führungsstärke in Beziehungen.'},
+      mid:{cat:'Gute emotionale Intelligenz',desc:'Sie haben solide emotionale Fähigkeiten. Setzen Sie auf Achtsamkeit und aktives Zuhören, um Ihren EQ weiterzuentwickeln.'},
+      lo:{cat:'Entwicklungsfähige emotionale Intelligenz',desc:'Emotionale Intelligenz kann erlernt werden. Führen Sie täglich ein Gefühlstagebuch und üben Sie gezielt Empathie.'}},
+  memory:{hi:{cat:'Herausragendes Arbeitsgedächtnis',desc:'Ihr Arbeitsgedächtnis ist außergewöhnlich und ermöglicht mühelos komplexes mehrstufiges Denken.'},
+          mid:{cat:'Gutes Arbeitsgedächtnis',desc:'Ihre Gedächtniskapazität ist solide. Üben Sie Dual-n-Back-Aufgaben, um sie weiter zu schärfen.'},
+          lo:{cat:'Entwicklungsfähiges Arbeitsgedächtnis',desc:'Regelmäßiges Gedächtnistraining mit Rätseln und strukturierten Abrufübungen wird Ihnen helfen.'}},
+  speed:{hi:{cat:'Herausragende Verarbeitungsgeschwindigkeit',desc:'Sie verarbeiten Informationen in Spitzentempo, was Ihnen bei Aufgaben unter Zeitdruck einen Vorteil verschafft.'},
+         mid:{cat:'Gute Verarbeitungsgeschwindigkeit',desc:'Ihre Verarbeitungsgeschwindigkeit ist überdurchschnittlich. Mentale Übungen mit Zeitlimit können sie weiter steigern.'},
+         lo:{cat:'Entwicklungsfähige Verarbeitungsgeschwindigkeit',desc:'Die Verarbeitungsgeschwindigkeit verbessert sich durch beständiges Üben von Schnellreaktionsaufgaben.'}},
+  creativity:{hi:{cat:'Herausragende Kreativität',desc:'Sie zeigen stark divergentes Denken und stellen neuartige Verbindungen her, die andere übersehen.'},
+              mid:{cat:'Gute Kreativität',desc:'Ihr kreatives Denken ist solide. Brainstorming mit Einschränkungen kann es weiter ausbauen.'},
+              lo:{cat:'Entwicklungsfähige Kreativität',desc:'Versuchen Sie Querdenkrätsel und Mindmapping, um Ihre kreative Kapazität zu stärken.'}},
+  focus:{hi:{cat:'Herausragender Fokus',desc:'Ihre Aufmerksamkeit ist messerscharf, und Sie halten die Konzentration mit minimaler Ablenkung aufrecht.'},
+         mid:{cat:'Guter Fokus',desc:'Ihr Fokus ist zuverlässig. Meditation und Single-Tasking-Einheiten werden ihn weiter verbessern.'},
+         lo:{cat:'Entwicklungsfähiger Fokus',desc:'Beginnen Sie mit kurzen 5-Minuten-Fokuseinheiten und verlängern Sie diese schrittweise, um Ihre Aufmerksamkeitsausdauer aufzubauen.'}},
+  cog_flex:{hi:{cat:'Herausragende kognitive Flexibilität',desc:'Sie passen sich neuen Regeln und Perspektiven sofort an und glänzen in dynamischen Umgebungen.'},
+            mid:{cat:'Gute kognitive Flexibilität',desc:'Ihre Flexibilität ist solide. Der Austausch mit vielfältigen Standpunkten wird sie weiter stärken.'},
+            lo:{cat:'Entwicklungsfähige kognitive Flexibilität',desc:'Üben Sie den Wechsel zwischen Aufgaben und setzen Sie sich mit gegensätzlichen Standpunkten auseinander, um Flexibilität aufzubauen.'}}
+},
 radarLabels:{
   eq:['Selbstwahrnehmung','Empathie','Emotionsregulation','Soziale Kompetenz','Motivation'],
   memory:['Sofortiger Abruf','Arbeitsgedächtnis','Sequenzgedächtnis','Umgekehrte Verarbeitung','Fokus-Dauer'],

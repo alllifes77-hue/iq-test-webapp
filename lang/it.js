@@ -64,6 +64,34 @@ iqCats:[
   {min:70, label:'Borderline',color:'#dc2626',desc:'Al di sotto della media. Potrebbe aver bisogno di supporto per compiti intellettuali più impegnativi.'},
   {min:0,  label:'Molto Basso',color:'#7f1d1d',desc:''}
 ],
+extScoreRanges:{
+  eq:[{min:92,label:'EQ Eccezionale',top:3},{min:85,label:'EQ Elevato',top:10},{min:76,label:'EQ Sopra la Media',top:25},{min:67,label:'EQ nella Media',top:50},{min:0,label:'Da Migliorare',top:85}],
+  memory:[{min:92,label:'Eccezionale',top:3},{min:85,label:'Elevato',top:10},{min:76,label:'Sopra la Media',top:25},{min:67,label:'Nella Media',top:50},{min:0,label:'Da Migliorare',top:85}],
+  speed:[{min:92,label:'Eccezionale',top:3},{min:85,label:'Elevato',top:10},{min:76,label:'Sopra la Media',top:25},{min:67,label:'Nella Media',top:50},{min:0,label:'Da Migliorare',top:85}],
+  creativity:[{min:92,label:'Eccezionale',top:3},{min:85,label:'Elevato',top:10},{min:76,label:'Sopra la Media',top:25},{min:67,label:'Nella Media',top:50},{min:0,label:'Da Migliorare',top:85}],
+  focus:[{min:92,label:'Eccezionale',top:3},{min:85,label:'Elevato',top:10},{min:76,label:'Sopra la Media',top:25},{min:67,label:'Nella Media',top:50},{min:0,label:'Da Migliorare',top:85}],
+  cog_flex:[{min:92,label:'Eccezionale',top:3},{min:85,label:'Elevato',top:10},{min:76,label:'Sopra la Media',top:25},{min:67,label:'Nella Media',top:50},{min:0,label:'Da Migliorare',top:85}]
+},
+extScoreResult:{
+  eq:{hi:{cat:'Intelligenza Emotiva Eccezionale',desc:"Possiedi un'eccellente empatia e consapevolezza di te stesso, costruendo naturalmente fiducia e dimostrando leadership nelle relazioni."},
+      mid:{cat:'Buona Intelligenza Emotiva',desc:"Hai solide competenze emotive. Concentrati sulla mindfulness e sull'ascolto attivo per sviluppare ulteriormente il tuo EQ."},
+      lo:{cat:'Intelligenza Emotiva in Sviluppo',desc:"L'intelligenza emotiva si può imparare. Prova a tenere un diario quotidiano delle emozioni e a praticare esercizi di empatia."}},
+  memory:{hi:{cat:'Memoria di Lavoro Eccezionale',desc:'La tua memoria di lavoro è eccezionale e ti consente di affrontare con facilità ragionamenti complessi a più passaggi.'},
+          mid:{cat:'Buona Memoria di Lavoro',desc:'La tua capacità di memoria è solida. Pratica esercizi di dual n-back per affinarla ulteriormente.'},
+          lo:{cat:'Memoria di Lavoro in Sviluppo',desc:'Un allenamento regolare della memoria con puzzle ed esercizi strutturati di richiamo sarà di aiuto.'}},
+  speed:{hi:{cat:'Velocità di Elaborazione Eccezionale',desc:"Elabori le informazioni a un ritmo d'élite, con un vantaggio nei compiti sotto pressione di tempo."},
+         mid:{cat:'Buona Velocità di Elaborazione',desc:'La tua velocità di elaborazione è sopra la media. Esercizi mentali a tempo possono migliorarla ulteriormente.'},
+         lo:{cat:'Velocità di Elaborazione in Sviluppo',desc:'La velocità di elaborazione migliora con la pratica costante su compiti a risposta rapida.'}},
+  creativity:{hi:{cat:'Creatività Eccezionale',desc:'Mostri un pensiero altamente divergente, generando connessioni originali che sfuggono agli altri.'},
+              mid:{cat:'Buona Creatività',desc:'Il tuo pensiero creativo è solido. Il brainstorming con vincoli può espanderlo ulteriormente.'},
+              lo:{cat:'Creatività in Sviluppo',desc:'Prova enigmi di pensiero laterale e mappe mentali per rafforzare la tua capacità creativa.'}},
+  focus:{hi:{cat:'Concentrazione Eccezionale',desc:'La tua attenzione è estremamente acuta e mantieni la concentrazione con distrazioni minime.'},
+         mid:{cat:'Buona Concentrazione',desc:'La tua concentrazione è affidabile. La meditazione e le sessioni di single-tasking la miglioreranno.'},
+         lo:{cat:'Concentrazione in Sviluppo',desc:'Inizia con brevi sessioni di concentrazione di 5 minuti e allungale gradualmente per sviluppare resistenza attentiva.'}},
+  cog_flex:{hi:{cat:'Flessibilità Cognitiva Eccezionale',desc:'Ti adatti istantaneamente a nuove regole e prospettive, eccellendo negli ambienti dinamici.'},
+            mid:{cat:'Buona Flessibilità Cognitiva',desc:'La tua flessibilità è solida. Esporti a punti di vista diversi la rafforzerà.'},
+            lo:{cat:'Flessibilità Cognitiva in Sviluppo',desc:'Esercitati a cambiare compito e a confrontarti con punti di vista opposti per sviluppare flessibilità.'}}
+},
 radarLabels:{
   eq:['Consapevolezza di sé','Empatia','Regolazione emotiva','Abilità sociali','Motivazione'],
   memory:['Richiamo immediato','Memoria di lavoro','Memoria sequenziale','Elaborazione inversa','Durata della concentrazione'],

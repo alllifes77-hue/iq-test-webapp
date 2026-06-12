@@ -64,6 +64,34 @@ iqCats:[
   {min:70, label:'Limítrofe',color:'#dc2626',desc:'Abaixo da média. Pode precisar de suporte em tarefas intelectuais mais exigentes.'},
   {min:0,  label:'Muito Baixo',color:'#7f1d1d',desc:''}
 ],
+extScoreRanges:{
+  eq:[{min:92,label:'IE Excepcional',top:3},{min:85,label:'IE Alta',top:10},{min:76,label:'IE Acima da Média',top:25},{min:67,label:'IE na Média',top:50},{min:0,label:'Precisa Melhorar',top:85}],
+  memory:[{min:92,label:'Excepcional',top:3},{min:85,label:'Alto',top:10},{min:76,label:'Acima da Média',top:25},{min:67,label:'Na Média',top:50},{min:0,label:'Precisa Melhorar',top:85}],
+  speed:[{min:92,label:'Excepcional',top:3},{min:85,label:'Alto',top:10},{min:76,label:'Acima da Média',top:25},{min:67,label:'Na Média',top:50},{min:0,label:'Precisa Melhorar',top:85}],
+  creativity:[{min:92,label:'Excepcional',top:3},{min:85,label:'Alto',top:10},{min:76,label:'Acima da Média',top:25},{min:67,label:'Na Média',top:50},{min:0,label:'Precisa Melhorar',top:85}],
+  focus:[{min:92,label:'Excepcional',top:3},{min:85,label:'Alto',top:10},{min:76,label:'Acima da Média',top:25},{min:67,label:'Na Média',top:50},{min:0,label:'Precisa Melhorar',top:85}],
+  cog_flex:[{min:92,label:'Excepcional',top:3},{min:85,label:'Alto',top:10},{min:76,label:'Acima da Média',top:25},{min:67,label:'Na Média',top:50},{min:0,label:'Precisa Melhorar',top:85}]
+},
+extScoreResult:{
+  eq:{hi:{cat:'Inteligência Emocional Excepcional',desc:'Você possui excelente empatia e autoconsciência, construindo confiança naturalmente e demonstrando liderança nos relacionamentos.'},
+      mid:{cat:'Boa Inteligência Emocional',desc:'Você tem habilidades emocionais sólidas. Foque em mindfulness e escuta ativa para desenvolver ainda mais sua IE.'},
+      lo:{cat:'Inteligência Emocional em Desenvolvimento',desc:'A inteligência emocional pode ser aprendida. Experimente registrar suas emoções diariamente e praticar exercícios de empatia.'}},
+  memory:{hi:{cat:'Memória de Trabalho Excepcional',desc:'Sua memória de trabalho é excepcional, permitindo raciocínios complexos de várias etapas com facilidade.'},
+          mid:{cat:'Boa Memória de Trabalho',desc:'Sua capacidade de memória é sólida. Pratique exercícios dual n-back para aprimorá-la ainda mais.'},
+          lo:{cat:'Memória de Trabalho em Desenvolvimento',desc:'Treinos regulares de memória com quebra-cabeças e exercícios estruturados de recordação vão ajudar.'}},
+  speed:{hi:{cat:'Velocidade de Processamento Excepcional',desc:'Você processa informações em um ritmo de elite, com vantagem em tarefas sob pressão de tempo.'},
+         mid:{cat:'Boa Velocidade de Processamento',desc:'Sua velocidade de processamento está acima da média. Exercícios mentais cronometrados podem elevá-la ainda mais.'},
+         lo:{cat:'Velocidade de Processamento em Desenvolvimento',desc:'A velocidade de processamento melhora com prática constante em tarefas de resposta rápida.'}},
+  creativity:{hi:{cat:'Criatividade Excepcional',desc:'Você exibe pensamento altamente divergente, criando conexões originais que outros não percebem.'},
+              mid:{cat:'Boa Criatividade',desc:'Seu pensamento criativo é sólido. Brainstorming com restrições pode expandi-lo ainda mais.'},
+              lo:{cat:'Criatividade em Desenvolvimento',desc:'Experimente quebra-cabeças de pensamento lateral e mapas mentais para fortalecer sua capacidade criativa.'}},
+  focus:{hi:{cat:'Foco Excepcional',desc:'Sua atenção é extremamente aguçada, mantendo a concentração com mínima distração.'},
+         mid:{cat:'Bom Foco',desc:'Seu foco é confiável. Meditação e sessões de tarefa única vão aprimorá-lo.'},
+         lo:{cat:'Foco em Desenvolvimento',desc:'Comece com sessões curtas de foco de 5 minutos e aumente gradualmente para ganhar resistência de atenção.'}},
+  cog_flex:{hi:{cat:'Flexibilidade Cognitiva Excepcional',desc:'Você se adapta instantaneamente a novas regras e perspectivas, destacando-se em ambientes dinâmicos.'},
+            mid:{cat:'Boa Flexibilidade Cognitiva',desc:'Sua flexibilidade é sólida. Expor-se a pontos de vista diversos vai fortalecê-la.'},
+            lo:{cat:'Flexibilidade Cognitiva em Desenvolvimento',desc:'Pratique alternar entre tarefas e considerar pontos de vista opostos para desenvolver flexibilidade.'}}
+},
 radarLabels:{
   eq:['Autoconsciência','Empatia','Regulação emocional','Habilidades sociais','Motivação'],
   memory:['Recordação imediata','Memória de trabalho','Memória sequencial','Processamento inverso','Duração do foco'],

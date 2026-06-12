@@ -38,6 +38,7 @@ anaPool:[
   {analogy:"Karte : Territorium = Bauplan : ?",opts:["Zeichnung","Gebäude","Fabrik","Design"]}
 ],
 logPool:[
+  {premise:"Alle A sind B. Alle B sind C. Daher?",opts:["Alle A sind C","Alle C sind A","Einige A sind C","A und C sind voneinander unabhängig"]},
   {premise:"Es regnet → die Straße wird nass. Die Straße ist nass. Daher?",opts:["Es hat definitiv geregnet","Es könnte geregnet haben","Es hat nicht geregnet","Kann nicht bestimmt werden"]},
   {premise:"\"Wenn es regnet, benutze einen Regenschirm\" ist wahr. Was muss ebenfalls wahr sein?",opts:["Regenschirm benutzen → es regnet","Kein Regen → kein Regenschirm","Keinen Regenschirm benutzen → kein Regen","Regen und Regenschirme sind voneinander unabhängig"]},
   {premise:"A, B, C, D legen eine Staffelreihenfolge fest. A ist nicht der 1. B ist direkt nach A. C ist nicht der Letzte. Wenn C der 2. ist, wer ist der 1.?",opts:["A","B","C","D"]},

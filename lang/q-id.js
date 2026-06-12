@@ -38,6 +38,7 @@ anaPool:[
   {analogy:"Peta : Wilayah = Cetak Biru : ?",opts:["Gambar","Bangunan","Pabrik","Desain"]}
 ],
 logPool:[
+  {premise:"Semua A adalah B. Semua B adalah C. Maka?",opts:["Semua A adalah C","Semua C adalah A","Beberapa A adalah C","A dan C tidak berhubungan"]},
   {premise:"Hujan turun → jalan menjadi basah. Jalanan basah. Maka?",opts:["Pasti hujan turun","Mungkin hujan turun","Tidak hujan turun","Tidak dapat ditentukan"]},
   {premise:"\"Jika hujan, gunakan payung\" adalah benar. Mana yang juga harus benar?",opts:["Menggunakan payung → hujan turun","Tidak hujan → tidak menggunakan payung","Tidak menggunakan payung → tidak hujan","Hujan dan payung tidak berhubungan"]},
   {premise:"A, B, C, D mengatur urutan estafet. A bukan yang ke-1. B tepat setelah A. C bukan yang terakhir. Jika C adalah yang ke-2, siapa yang ke-1?",opts:["A","B","C","D"]},

@@ -38,6 +38,7 @@ anaPool:[
   {analogy:"Carte : Territoire = Plan : ?",opts:["Dessin","Bâtiment","Usine","Conception"]}
 ],
 logPool:[
+  {premise:"Tous les A sont des B. Tous les B sont des C. Donc ?",opts:["Tous les A sont des C","Tous les C sont des A","Certains A sont des C","A et C sont sans rapport"]},
   {premise:"Il pleut → la route est mouillée. La route est mouillée. Donc ?",opts:["Il a certainement plu","Il a pu pleuvoir","Il n'a pas plu","Impossible de déterminer"]},
   {premise:"\"S'il pleut, utilisez un parapluie\" est vrai. Qu'est-ce qui doit aussi être vrai ?",opts:["Utiliser un parapluie → il pleut","Pas de pluie → pas de parapluie","Ne pas utiliser de parapluie → pas de pluie","La pluie et les parapluies sont sans rapport"]},
   {premise:"A, B, C, D établissent un ordre de relais. A n'est pas 1er. B est juste après A. C n'est pas dernier. Si C est 2ème, qui est 1er ?",opts:["A","B","C","D"]},

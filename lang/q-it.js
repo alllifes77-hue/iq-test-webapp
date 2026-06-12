@@ -38,6 +38,7 @@ anaPool:[
   {analogy:"Mappa : Territorio = Progetto : ?",opts:["Disegno","Edificio","Fabbrica","Design"]}
 ],
 logPool:[
+  {premise:"Tutti gli A sono B. Tutti i B sono C. Quindi?",opts:["Tutti gli A sono C","Tutti i C sono A","Alcuni A sono C","A e C non sono correlati"]},
   {premise:"Piove → la strada si bagna. La strada è bagnata. Quindi?",opts:["Ha piovuto di sicuro","Potrebbe aver piovuto","Non ha piovuto","Non si può determinare"]},
   {premise:"\"Se piove, usa un ombrello\" è vero. Cosa deve essere anche vero?",opts:["Usare l'ombrello → piove","Non piove → non usare l'ombrello","Non usare l'ombrello → non piove","Pioggia e ombrelli non sono correlati"]},
   {premise:"A, B, C, D stabiliscono un ordine di staffetta. A non è il 1°. B è subito dopo A. C non è l'ultimo. Se C è il 2°, chi è il 1°?",opts:["A","B","C","D"]},

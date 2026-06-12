@@ -38,6 +38,7 @@ anaPool:[
   {analogy:"Mapa : Territorio = Plano : ?",opts:["Dibujo","Edificio","Fábrica","Diseño"]}
 ],
 logPool:[
+  {premise:"Todos los A son B. Todos los B son C. ¿Por lo tanto?",opts:["Todos los A son C","Todos los C son A","Algunos A son C","A y C no están relacionados"]},
   {premise:"Llueve → la carretera se moja. La carretera está mojada. ¿Por lo tanto?",opts:["Definitivamente llovió","Pudo haber llovido","No llovió","No se puede determinar"]},
   {premise:"\"Si llueve, usa un paraguas\" es verdadero. ¿Qué también debe ser verdadero?",opts:["Usar paraguas → lloviendo","No llueve → no paraguas","No usar paraguas → no llueve","La lluvia y los paraguas no están relacionados"]},
   {premise:"A, B, C, D establecen un orden de relevos. A no es el 1º. B está justo después de A. C no es el último. Si C es el 2º, ¿quién es el 1º?",opts:["A","B","C","D"]},

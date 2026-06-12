@@ -38,6 +38,7 @@ anaPool:[
   {analogy:"Mapa : Território = Planta Baixa : ?",opts:["Desenho","Edifício","Fábrica","Projeto"]}
 ],
 logPool:[
+  {premise:"Todo A é B. Todo B é C. Portanto?",opts:["Todo A é C","Todo C é A","Alguns A são C","A e C não estão relacionados"]},
   {premise:"Chove → a estrada fica molhada. A estrada está molhada. Portanto?",opts:["Definitivamente choveu","Pode ter chovido","Não choveu","Não é possível determinar"]},
   {premise:"\"Se chover, use um guarda-chuva\" é verdadeiro. O que também deve ser verdadeiro?",opts:["Usar guarda-chuva → chover","Não chover → não usar guarda-chuva","Não usar guarda-chuva → não chover","Chuva e guarda-chuvas não estão relacionados"]},
   {premise:"A, B, C, D definem uma ordem de revezamento. A não é o 1º. B está logo depois de A. C não é o último. Se C é o 2º, quem é o 1º?",opts:["A","B","C","D"]},
@@ -52,7 +53,7 @@ logPool:[
   {premise:"Cartas [E, K, 4, 7]: verificar regra \"carta vogal tem número par no verso.\" Quais virar?",opts:["Apenas E","E e 4","E e 7","E, 4 e 7"]},
   {premise:"6 pessoas apertam as mãos uma vez com todas as outras. Total de apertos de mão?",opts:["12","15","18","30"]},
   {premise:"\"Todos os médicos são graduados universitários. Alex é um graduado universitário.\" O que deve ser verdadeiro?",opts:["Alex é um médico","Alex pode não ser um médico","Alex é definitivamente um médico","Não é possível concluir"]},
-  {premise:"\"Se A então B. Se B então n��o-C.\" C é verdadeiro. O que é A?",opts:["Definitivamente verdadeiro","Definitivamente falso","Desconhecido","Qualquer um"]},
+  {premise:"\"Se A então B. Se B então não-C.\" C é verdadeiro. O que é A?",opts:["Definitivamente verdadeiro","Definitivamente falso","Desconhecido","Qualquer um"]},
   {premise:"Carlos é mais velho que João. Maria é mais velha que João mas mais jovem que Carlos. Do mais velho para o mais jovem?",opts:["Carlos–Maria–João","Maria–Carlos–João","João–Carlos–Maria","Carlos–João–Maria"]},
   {premise:"Todas as maçãs são frutas. Algumas frutas são doces. Portanto?",opts:["Todas as maçãs são doces","Algumas maçãs podem ser doces","Maçãs não são doces","Não é possível determinar"]},
   {premise:"De 15 alunos, 9 gostam de matemática e 8 gostam de ciências. Mínimo de alunos que gostam de ambos?",opts:["1","2","3","4"]},

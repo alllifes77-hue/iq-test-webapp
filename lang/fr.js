@@ -64,6 +64,34 @@ iqCats:[
   {min:70, label:'Limite',color:'#dc2626',desc:'En dessous de la moyenne. Un soutien peut être utile pour les tâches intellectuelles exigeantes.'},
   {min:0,  label:'Très Bas',color:'#7f1d1d',desc:''}
 ],
+extScoreRanges:{
+  eq:[{min:92,label:'QE exceptionnel',top:3},{min:85,label:'QE élevé',top:10},{min:76,label:'QE supérieur à la moyenne',top:25},{min:67,label:'QE moyen',top:50},{min:0,label:'À améliorer',top:85}],
+  memory:[{min:92,label:'Exceptionnel',top:3},{min:85,label:'Élevé',top:10},{min:76,label:'Supérieur à la moyenne',top:25},{min:67,label:'Moyen',top:50},{min:0,label:'À améliorer',top:85}],
+  speed:[{min:92,label:'Exceptionnel',top:3},{min:85,label:'Élevé',top:10},{min:76,label:'Supérieur à la moyenne',top:25},{min:67,label:'Moyen',top:50},{min:0,label:'À améliorer',top:85}],
+  creativity:[{min:92,label:'Exceptionnel',top:3},{min:85,label:'Élevé',top:10},{min:76,label:'Supérieur à la moyenne',top:25},{min:67,label:'Moyen',top:50},{min:0,label:'À améliorer',top:85}],
+  focus:[{min:92,label:'Exceptionnel',top:3},{min:85,label:'Élevé',top:10},{min:76,label:'Supérieur à la moyenne',top:25},{min:67,label:'Moyen',top:50},{min:0,label:'À améliorer',top:85}],
+  cog_flex:[{min:92,label:'Exceptionnel',top:3},{min:85,label:'Élevé',top:10},{min:76,label:'Supérieur à la moyenne',top:25},{min:67,label:'Moyen',top:50},{min:0,label:'À améliorer',top:85}]
+},
+extScoreResult:{
+  eq:{hi:{cat:'Intelligence émotionnelle exceptionnelle',desc:'Vous possédez une excellente empathie et une grande conscience de vous-même, créant naturellement la confiance et faisant preuve de leadership dans vos relations.'},
+      mid:{cat:'Bonne intelligence émotionnelle',desc:'Vous avez de solides compétences émotionnelles. Concentrez-vous sur la pleine conscience et l\'écoute active pour développer davantage votre QE.'},
+      lo:{cat:'Intelligence émotionnelle en développement',desc:'L\'intelligence émotionnelle s\'apprend. Essayez de noter vos émotions chaque jour et de pratiquer des exercices d\'empathie.'}},
+  memory:{hi:{cat:'Mémoire de travail exceptionnelle',desc:'Votre mémoire de travail est exceptionnelle, permettant un raisonnement complexe en plusieurs étapes avec aisance.'},
+          mid:{cat:'Bonne mémoire de travail',desc:'Votre capacité de mémoire est solide. Pratiquez des exercices de dual n-back pour l\'affiner davantage.'},
+          lo:{cat:'Mémoire de travail en développement',desc:'Un entraînement régulier de la mémoire avec des puzzles et des exercices de rappel structurés vous aidera.'}},
+  speed:{hi:{cat:'Vitesse de traitement exceptionnelle',desc:'Vous traitez l\'information à un rythme d\'élite, ce qui vous donne un avantage dans les tâches sous pression temporelle.'},
+         mid:{cat:'Bonne vitesse de traitement',desc:'Votre vitesse de traitement est supérieure à la moyenne. Des exercices mentaux chronométrés peuvent la pousser plus loin.'},
+         lo:{cat:'Vitesse de traitement en développement',desc:'La vitesse de traitement s\'améliore avec une pratique régulière de tâches à réponse rapide.'}},
+  creativity:{hi:{cat:'Créativité exceptionnelle',desc:'Vous faites preuve d\'une pensée très divergente, créant des connexions inédites que d\'autres ne voient pas.'},
+              mid:{cat:'Bonne créativité',desc:'Votre pensée créative est solide. Le brainstorming avec des contraintes peut l\'élargir davantage.'},
+              lo:{cat:'Créativité en développement',desc:'Essayez des énigmes de pensée latérale et le mind mapping pour renforcer votre capacité créative.'}},
+  focus:{hi:{cat:'Concentration exceptionnelle',desc:'Votre attention est d\'une précision remarquable, maintenant la concentration avec un minimum de distraction.'},
+         mid:{cat:'Bonne concentration',desc:'Votre concentration est fiable. La méditation et les sessions monotâches l\'amélioreront.'},
+         lo:{cat:'Concentration en développement',desc:'Commencez par de courtes sessions de concentration de 5 minutes et allongez-les progressivement pour développer votre endurance attentionnelle.'}},
+  cog_flex:{hi:{cat:'Flexibilité cognitive exceptionnelle',desc:'Vous vous adaptez instantanément aux nouvelles règles et perspectives, excellant dans les environnements dynamiques.'},
+            mid:{cat:'Bonne flexibilité cognitive',desc:'Votre flexibilité est solide. Vous exposer à des points de vue variés la renforcera.'},
+            lo:{cat:'Flexibilité cognitive en développement',desc:'Pratiquez le changement de tâches et confrontez-vous à des points de vue opposés pour développer votre flexibilité.'}}
+},
 radarLabels:{
   eq:['Conscience de soi','Empathie','Régulation émotionnelle','Compétences sociales','Motivation'],
   memory:['Rappel immédiat','Mémoire de travail','Mémoire séquentielle','Traitement inversé','Durée de concentration'],

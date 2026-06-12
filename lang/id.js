@@ -64,6 +64,34 @@ iqCats:[
   {min:70, label:'Batas',color:'#dc2626',desc:'Di bawah rata-rata. Mungkin memerlukan dukungan untuk tugas intelektual yang lebih menuntut.'},
   {min:0,  label:'Sangat Rendah',color:'#7f1d1d',desc:''}
 ],
+extScoreRanges:{
+  eq:[{min:92,label:'EQ Luar Biasa',top:3},{min:85,label:'EQ Tinggi',top:10},{min:76,label:'EQ di Atas Rata-rata',top:25},{min:67,label:'EQ Rata-rata',top:50},{min:0,label:'Perlu Peningkatan',top:85}],
+  memory:[{min:92,label:'Luar Biasa',top:3},{min:85,label:'Tinggi',top:10},{min:76,label:'Di Atas Rata-rata',top:25},{min:67,label:'Rata-rata',top:50},{min:0,label:'Perlu Peningkatan',top:85}],
+  speed:[{min:92,label:'Luar Biasa',top:3},{min:85,label:'Tinggi',top:10},{min:76,label:'Di Atas Rata-rata',top:25},{min:67,label:'Rata-rata',top:50},{min:0,label:'Perlu Peningkatan',top:85}],
+  creativity:[{min:92,label:'Luar Biasa',top:3},{min:85,label:'Tinggi',top:10},{min:76,label:'Di Atas Rata-rata',top:25},{min:67,label:'Rata-rata',top:50},{min:0,label:'Perlu Peningkatan',top:85}],
+  focus:[{min:92,label:'Luar Biasa',top:3},{min:85,label:'Tinggi',top:10},{min:76,label:'Di Atas Rata-rata',top:25},{min:67,label:'Rata-rata',top:50},{min:0,label:'Perlu Peningkatan',top:85}],
+  cog_flex:[{min:92,label:'Luar Biasa',top:3},{min:85,label:'Tinggi',top:10},{min:76,label:'Di Atas Rata-rata',top:25},{min:67,label:'Rata-rata',top:50},{min:0,label:'Perlu Peningkatan',top:85}]
+},
+extScoreResult:{
+  eq:{hi:{cat:'Kecerdasan Emosional Luar Biasa',desc:'Anda memiliki empati dan kesadaran diri yang sangat baik, secara alami membangun kepercayaan dan menunjukkan kepemimpinan dalam hubungan.'},
+      mid:{cat:'Kecerdasan Emosional Baik',desc:'Anda memiliki keterampilan emosional yang solid. Fokuslah pada mindfulness dan mendengarkan aktif untuk semakin mengembangkan EQ Anda.'},
+      lo:{cat:'Kecerdasan Emosional Berkembang',desc:'Kecerdasan emosional dapat dipelajari. Cobalah menulis jurnal emosi setiap hari dan berlatih latihan empati.'}},
+  memory:{hi:{cat:'Memori Kerja Luar Biasa',desc:'Memori kerja Anda luar biasa, memungkinkan penalaran multi-langkah yang kompleks dengan mudah.'},
+          mid:{cat:'Memori Kerja Baik',desc:'Kapasitas memori Anda solid. Berlatihlah latihan dual n-back untuk semakin mempertajamnya.'},
+          lo:{cat:'Memori Kerja Berkembang',desc:'Latihan memori rutin melalui teka-teki dan latihan mengingat terstruktur akan membantu.'}},
+  speed:{hi:{cat:'Kecepatan Pemrosesan Luar Biasa',desc:'Anda memproses informasi dengan kecepatan elit, memberi Anda keunggulan dalam tugas dengan tekanan waktu.'},
+         mid:{cat:'Kecepatan Pemrosesan Baik',desc:'Kecepatan pemrosesan Anda di atas rata-rata. Latihan mental berwaktu dapat meningkatkannya lebih jauh.'},
+         lo:{cat:'Kecepatan Pemrosesan Berkembang',desc:'Kecepatan pemrosesan meningkat dengan latihan konsisten pada tugas respons cepat.'}},
+  creativity:{hi:{cat:'Kreativitas Luar Biasa',desc:'Anda menunjukkan pemikiran divergen yang tinggi, menciptakan koneksi baru yang terlewat oleh orang lain.'},
+              mid:{cat:'Kreativitas Baik',desc:'Pemikiran kreatif Anda solid. Brainstorming dengan batasan dapat memperluasnya lebih jauh.'},
+              lo:{cat:'Kreativitas Berkembang',desc:'Cobalah teka-teki pemikiran lateral dan mind mapping untuk memperkuat kapasitas kreatif Anda.'}},
+  focus:{hi:{cat:'Fokus Luar Biasa',desc:'Perhatian Anda sangat tajam, mempertahankan konsentrasi dengan gangguan minimal.'},
+         mid:{cat:'Fokus Baik',desc:'Fokus Anda dapat diandalkan. Meditasi dan sesi single-tasking akan meningkatkannya.'},
+         lo:{cat:'Fokus Berkembang',desc:'Mulailah dengan sesi fokus singkat 5 menit dan perpanjang secara bertahap untuk membangun stamina perhatian.'}},
+  cog_flex:{hi:{cat:'Fleksibilitas Kognitif Luar Biasa',desc:'Anda beradaptasi dengan aturan dan perspektif baru secara instan, unggul dalam lingkungan yang dinamis.'},
+            mid:{cat:'Fleksibilitas Kognitif Baik',desc:'Fleksibilitas Anda solid. Memaparkan diri pada beragam sudut pandang akan memperkuatnya.'},
+            lo:{cat:'Fleksibilitas Kognitif Berkembang',desc:'Berlatihlah berpindah tugas dan menghadapi sudut pandang yang berlawanan untuk membangun fleksibilitas.'}}
+},
 radarLabels:{
   eq:['Kesadaran Diri','Empati','Regulasi Emosi','Keterampilan Sosial','Motivasi'],
   memory:['Ingatan Segera','Memori Kerja','Memori Urutan','Pemrosesan Terbalik','Durasi Fokus'],

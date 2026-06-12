@@ -42,7 +42,7 @@
 <link rel="alternate" hreflang="id" href="https://all-lifes.com/id/iq-test/">
 <link rel="alternate" hreflang="x-default" href="https://all-lifes.com/en/iq-test/">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":"무료 IQ 테스트","item":"https://all-lifes.com/iq-test/"}]},{"@type":"WebApplication","name":"무료 IQ 테스트","url":"https://all-lifes.com/iq-test/","description":"레이븐 행렬과 CHC 이론에 기반한 과학적 온라인 IQ 테스트","applicationCategory":"EducationalApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"inLanguage":"ko","availableLanguage":["ko","en","de","fr","es","pt","it","ja","id"]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"IQ 테스트란 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"IQ(지능지수) 테스트는 개인의 인지 능력을 수치로 측정하는 표준화된 검사입니다. 수열 추론, 행렬 패턴 인식, 공간 추론, 논리적 사고 등을 평가하며 평균 100, 표준편차 15의 정규분포를 따릅니다."}},{"@type":"Question","name":"이 IQ 테스트는 얼마나 정확한가요?","acceptedAnswer":{"@type":"Answer","text":"레이븐 점진적 행렬 검사(RPM)와 CHC 이론에 기반하며 신뢰도(Cronbach's α)는 .85~.92 수준입니다."}},{"@type":"Question","name":"IQ 점수별 의미는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"IQ 145+: 천재 수준(상위 0.1%) / 130–144: 최우수(상위 2%) / 120–129: 우수(상위 10%) / 110–119: 평균 상위 / 90–109: 평균 / 80–89: 평균 하위 / 70–79: 경계선"}},{"@type":"Question","name":"IQ는 훈련으로 높아질 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"작업 기억 훈련, N-back 과제 등이 유동지능을 일시적으로 향상시킬 수 있습니다. 꾸준한 독서, 운동, 충분한 수면이 장기적인 인지 능력 유지에 도움이 됩니다."}}]}]}</script>
-<script>(function(){var l=(new URLSearchParams(location.search).get('lang')||'ko').toLowerCase();if(!/^[a-z]{2}$/.test(l))l='ko';window.IQ_CURRENT_LANG=l;if(l!=='ko'){document.write('<script src="lang/'+l+'.js"><\/script>');document.write('<script src="lang/q-'+l+'.js"><\/script>');document.write('<script src="lang/extq-'+l+'.js"><\/script>');}})();</script>
+<script>(function(){var l=(new URLSearchParams(location.search).get('lang')||'ko').toLowerCase();if(['ko','en','de','fr','es','pt','it','ja','id'].indexOf(l)===-1)l='ko';window.IQ_CURRENT_LANG=l;if(l!=='ko'){document.write('<script src="lang/'+l+'.js"><\/script>');document.write('<script src="lang/q-'+l+'.js"><\/script>');document.write('<script src="lang/extq-'+l+'.js"><\/script>');}})();</script>
 <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root{
@@ -52,7 +52,7 @@
   --danger:#dc2626;--danger-bg:#fee2e2;
   --bg:#f1f5f9;--card:#ffffff;--card2:#f8fafc;
   --text:#0f172a;--text2:#475569;--text3:#94a3b8;
-  --border:#e2e8f0;--border2:#cbd5e1;
+  --border:#e2e8f0;--border2:#cbd5e1;--muted:#64748b;
   --radius:16px;--shadow:0 2px 12px rgba(15,23,42,.08);--shadow-lg:0 8px 32px rgba(55,48,163,.14);
 }
 :root[data-theme="dark"]{
@@ -62,7 +62,7 @@
   --danger:#f87171;--danger-bg:#450a0a;
   --bg:#0b1120;--card:#151c2c;--card2:#1b2436;
   --text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;
-  --border:#283548;--border2:#36465e;
+  --border:#283548;--border2:#36465e;--muted:#94a3b8;
   --shadow:0 2px 12px rgba(0,0,0,.4);--shadow-lg:0 8px 32px rgba(0,0,0,.5);
 }
 :root[data-theme="dark"] body{background:var(--bg);}
@@ -91,6 +91,12 @@
 .coupang-widget{margin-top:14px;text-align:center;}
 .coupang-widget iframe{max-width:100%;border:0;border-radius:10px;display:block;margin:0 auto;}
 .coupang-disc{font-size:10px;color:var(--text3);margin-top:8px;line-height:1.4;text-align:center;}
+.lang-footer{background:var(--card2);border-top:1px solid var(--border);padding:28px 20px 32px;text-align:center;}
+.lang-footer-title{font-size:12px;font-weight:700;color:var(--text3);margin-bottom:12px;letter-spacing:1px;}
+.lang-links{display:flex;flex-wrap:wrap;gap:8px 6px;justify-content:center;max-width:700px;margin:0 auto;}
+.lang-links a{font-size:12px;font-weight:600;color:var(--text2);text-decoration:none;padding:6px 13px;border:1px solid var(--border2);border-radius:18px;transition:all .2s;}
+.lang-links a:hover{color:var(--primary-mid);border-color:var(--primary-light);background:var(--primary-bg);}
+.lang-links a.active{color:#fff;background:var(--primary-mid);border-color:var(--primary-mid);}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;overflow-x:hidden;}
@@ -594,7 +600,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
 .asd-bar-rb{background:linear-gradient(90deg,#a855f7,#c084fc);}
 .asd-bar-ss{background:linear-gradient(90deg,#f97316,#fb923c);}
 .asd-bar-cg{background:linear-gradient(90deg,#22c55e,#4ade80);}
-.asd-cat-sc{font-size:11px;font-weight:700;color:var(--muted);min-width:32px;text-align:right;}
+.asd-bar-sc{font-size:11px;font-weight:700;color:var(--muted);min-width:32px;text-align:right;}
 .asd-disclaimer-card{background:#fffbeb;border:1px solid #fcd34d;border-radius:12px;padding:14px 16px;font-size:12px;color:#78350f;line-height:1.7;margin-bottom:18px;}
 .asd-result-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
 
@@ -782,6 +788,22 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
       <h3>무료 IQ 테스트를 여러 번 봐도 되나요?</h3>
       <p>대규모 문항 풀에서 매회 무작위로 추출하므로 동일 문항이 반복될 가능성이 낮습니다. 학습 효과 방지를 위해 최소 2주 간격 재검사를 권장합니다. 정밀 IQ 테스트(40문항)가 단기 버전보다 더 안정적인 결과를 제공합니다. 최상의 결과를 위해 충분한 수면 후, 방해 없는 조용한 환경에서 응시하세요.</p>
     </div>
+  </div>
+
+  <!-- 언어 선택 푸터 (UX + 검색엔진 내부 링크) -->
+  <div class="lang-footer">
+    <div class="lang-footer-title">🌐 Languages</div>
+    <nav class="lang-links" aria-label="Language selection">
+      <a target="_top" href="https://all-lifes.com/iq-test/" data-lang="ko" hreflang="ko">한국어</a>
+      <a target="_top" href="https://all-lifes.com/en/iq-test/" data-lang="en" hreflang="en">English</a>
+      <a target="_top" href="https://all-lifes.com/de/iq-test/" data-lang="de" hreflang="de">Deutsch</a>
+      <a target="_top" href="https://all-lifes.com/fr/iq-test/" data-lang="fr" hreflang="fr">Français</a>
+      <a target="_top" href="https://all-lifes.com/es/iq-test/" data-lang="es" hreflang="es">Español</a>
+      <a target="_top" href="https://all-lifes.com/pt/iq-test/" data-lang="pt" hreflang="pt">Português</a>
+      <a target="_top" href="https://all-lifes.com/it/iq-test/" data-lang="it" hreflang="it">Italiano</a>
+      <a target="_top" href="https://all-lifes.com/ja/iq-test/" data-lang="ja" hreflang="ja">日本語</a>
+      <a target="_top" href="https://all-lifes.com/id/iq-test/" data-lang="id" hreflang="id">Bahasa Indonesia</a>
+    </nav>
   </div>
 </div>
 

@@ -38,6 +38,7 @@ anaPool:[
   {analogy:'Map : Territory = Blueprint : ?',opts:['Drawing','Building','Factory','Design']}
 ],
 logPool:[
+  {premise:'All A are B. All B are C. Therefore?',opts:['All A are C','All C are A','Some A are C','A and C are unrelated']},
   {premise:'It rains → the road gets wet. The road is wet. Therefore?',opts:['It definitely rained','It may have rained','It did not rain','Cannot determine']},
   {premise:'"If it rains, use an umbrella" is true. Which must also be true?',opts:['Using umbrella → raining','No rain → no umbrella','Not using umbrella → no rain','Rain and umbrellas are unrelated']},
   {premise:'A, B, C, D set a relay order. A is not 1st. B is right after A. C is not last. If C is 2nd, who is 1st?',opts:['A','B','C','D']},

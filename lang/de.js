@@ -1,4 +1,4 @@
-﻿window.IQ_LANG={
+window.IQ_LANG={
 htmlLang:'de',
 docTitle:'Kostenloser IQ-Test – Wissenschaftlich validierte Online-Intelligenzmessung',
 heroEyebrow:'Wissenschaftlich validierte kognitive Bewertungsplattform',
@@ -51,6 +51,20 @@ shareTextExt:'[{title}] Punkte: {score} ({cat}) | Top {top}%\nKostenlos selbst t
 sharedBannerIQ:"👀 Sie sehen das IQ-Testergebnis eines Freundes",
 sharedBannerBtn:'🧠 Selbst kostenlos IQ testen →',
 sharedBannerExt:"👀 Sie sehen das kognitive Testergebnis eines Freundes",
+socialProofLabel:'Menschen weltweit haben den Test gemacht',
+challengeCta:'⚔️ Einen Freund herausfordern',
+challengeShare:"Mein IQ ist {iq}. Glaubst du, du knackst das? Herausforderung angenommen? 🧠",
+challengeBanner:'🔥 Ein Freund erreichte IQ {iq} und fordert dich heraus — knackst du das?',
+resTrustSummary:'Über Methodik & Zuverlässigkeit',
+resTrustBody:"Dieser Test basiert auf den Raven-Matrizen und der CHC-Intelligenztheorie und bewertet auf einer Normalverteilung (Mittelwert 100, Standardabweichung 15). Die Ergebnisse dienen der Bildung und Selbsteinschätzung; sie variieren je nach kulturellem, sprachlichem und schulischem Hintergrund und ersetzen keine klinische Diagnose.",
+cogTypes:{
+  PATTERN:{name:'Der Mustermeister',emoji:'🔢',blurb:'Sie erkennen die verborgene Ordnung in Zahlen und Regeln.',strengths:['Reihenlogik','Mustererkennung','Zahlengespür']},
+  ABSTRACT:{name:'Der Strukturarchitekt',emoji:'🧩',blurb:'Sie destillieren die wesentliche Struktur aus komplexen Informationen.',strengths:['Matrizenanalyse','Abstraktes Denken','Strukturgespür']},
+  SPATIAL:{name:'Der Raumnavigator',emoji:'🧭',blurb:'Sie drehen und fügen Formen mühelos in Ihrem Kopf zusammen.',strengths:['Räumliches Vorstellungsvermögen','3D-Rotation','Visuelle Fantasie']},
+  LOGIC:{name:'Der Logikstratege',emoji:'⚖️',blurb:'Sie schließen lückenlos von der Prämisse zur Folgerung.',strengths:['Deduktives Denken','Widerspruchserkennung','Logische Konsequenz']},
+  VERBAL:{name:'Der Gedankenverknüpfer',emoji:'🔗',blurb:'Sie verbinden Konzepte, die weit auseinanderzuliegen scheinen.',strengths:['Analoges Denken','Begriffsverknüpfung','Sprachliches Gespür']},
+  POLYMATH:{name:'Das Universalgenie',emoji:'🌟',blurb:'Gleichmäßig stark in jedem Bereich — ein wahres Allround-Talent.',strengths:['Ausgewogene Allround-Stärke','Flexibles Denken','Integratives Lösen']}
+},
 contactTitle:'💬 Kontakt & Feedback',
 contactDesc:"Bei Fragen zum Test, Ergebnissen oder Vorschlägen,<br>treten Sie unserer Telegram-Community bei.",
 contactLink:'✈️ Telegram-Community besuchen',

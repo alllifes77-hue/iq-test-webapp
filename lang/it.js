@@ -1,4 +1,4 @@
-﻿window.IQ_LANG={
+window.IQ_LANG={
 htmlLang:'it',
 docTitle:'Test del QI Gratuito – Misurazione dell\'Intelligenza Online Scientificamente Validata',
 heroEyebrow:'Piattaforma di Valutazione Cognitiva Scientificamente Validata',
@@ -51,6 +51,20 @@ shareTextExt:'[{title}] Punteggio: {score} ({cat}) | Top {top}%\nProvalo gratuit
 sharedBannerIQ:'👀 Stai visualizzando il risultato del test QI di un amico',
 sharedBannerBtn:'🧠 Fai il Test QI Gratis Tu Stesso →',
 sharedBannerExt:'👀 Stai visualizzando il risultato cognitivo di un amico',
+socialProofLabel:'persone in tutto il mondo hanno fatto il test',
+challengeCta:'⚔️ Sfida un amico',
+challengeShare:"Il mio QI è {iq}. Pensi di poter fare meglio? Sfida accettata? 🧠",
+challengeBanner:'🔥 Un amico ha ottenuto un QI di {iq} e ti ha sfidato — riesci a superarlo?',
+resTrustSummary:'Informazioni su metodologia e affidabilità',
+resTrustBody:"Questo test si basa sulle Matrici Progressive di Raven e sulla teoria dell'intelligenza CHC, con un punteggio calcolato su una distribuzione normale (media 100, DS 15). I risultati sono un riferimento a scopo educativo e di autoconoscenza; variano in base al contesto culturale, linguistico ed educativo e non sostituiscono una diagnosi clinica.",
+cogTypes:{
+  PATTERN:{name:'Il Maestro degli Schemi',emoji:'🔢',blurb:'Cogli l\'ordine nascosto dentro numeri e regole.',strengths:['Ragionamento sequenziale','Riconoscimento di schemi','Intuito numerico']},
+  ABSTRACT:{name:'L\'Architetto Astratto',emoji:'🧩',blurb:'Estrai la struttura essenziale da informazioni complesse.',strengths:['Analisi di matrici','Pensiero astratto','Visione strutturale']},
+  SPATIAL:{name:'Il Navigatore Spaziale',emoji:'🧭',blurb:'Ruoti e componi le forme nella mente senza sforzo.',strengths:['Percezione spaziale','Rotazione 3D','Immaginazione visiva']},
+  LOGIC:{name:'Lo Stratega della Logica',emoji:'⚖️',blurb:'Ragioni dalla premessa alla conclusione senza un solo salto.',strengths:['Ragionamento deduttivo','Rilevamento di contraddizioni','Coerenza logica']},
+  VERBAL:{name:'Il Tessitore di Idee',emoji:'🔗',blurb:'Colleghi concetti che sembrano lontani tra loro.',strengths:['Ragionamento analogico','Collegamento di concetti','Intuizione verbale']},
+  POLYMATH:{name:'Il Polimata',emoji:'🌟',blurb:'Forte in modo uniforme in ogni ambito — un vero talento completo.',strengths:['Equilibrio a 360°','Pensiero flessibile','Risoluzione integrata']}
+},
 contactTitle:'💬 Contatto & Feedback',
 contactDesc:"Per domande sul test, risultati o suggerimenti,<br>unisciti alla nostra community Telegram.",
 contactLink:'✈️ Unisciti alla community Telegram',

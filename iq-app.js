@@ -196,6 +196,8 @@ window.addEventListener('DOMContentLoaded', () => {
   animateReliabilityBars();
   toggleFAQ(null);
   updateDailyBanner();
+  renderSocialProof();
+  applyResultI18n();
   checkShareParams();
   // ?test=eq|memory|speed|creativity|focus|cog_flex 딥링크 → 확장검사 바로 시작
   try{
@@ -426,6 +428,40 @@ let currentMode='short',questions=[],curQ=0,answers=[],timer=null,timeLeft=0,tes
 let extTest=null,extQuestions=[],extCurQ=0,extAnswers=[],extTimer=null;
 let savedIQ=100,savedTopPct=50;
 let savedResultData=null,isSharedView=false;
+
+// ── 홈 누적 응시자 소셜 프루프 카운터 ──
+function computeSocialProof(){
+  // 전 세계 누적(추정) — 시간에 따라 자연 증가, 과장 없이 보수적 기준값
+  const launch=Date.UTC(2025,0,1);
+  const days=Math.max(0,(Date.now()-launch)/86400000);
+  return Math.round((260000+days*900)/1000)*1000;
+}
+function renderSocialProof(){
+  const numEl=document.getElementById('sp-num');
+  if(!numEl)return;
+  const lang=window.IQ_CURRENT_LANG||'ko';
+  const target=computeSocialProof();
+  let fmt;try{fmt=new Intl.NumberFormat(lang);}catch(e){fmt=new Intl.NumberFormat('en');}
+  const lbl=document.getElementById('sp-label');
+  if(lbl&&t('socialProofLabel'))lbl.textContent=t('socialProofLabel');
+  // 즉시 최종값 표기(폴백) 후 count-up (setInterval은 백그라운드에서도 동작)
+  numEl.textContent=fmt.format(target)+'+';
+  const dur=1100,t0=Date.now();
+  const iv=setInterval(()=>{
+    const p=Math.min(1,(Date.now()-t0)/dur);
+    const eased=1-Math.pow(1-p,3);
+    numEl.textContent=fmt.format(Math.round(target*eased))+'+';
+    if(p>=1){clearInterval(iv);numEl.textContent=fmt.format(target)+'+';}
+  },40);
+}
+
+// ── 결과 화면 신규 텍스트 현지화 ──
+function applyResultI18n(){
+  const set=(id,key)=>{const el=document.getElementById(id);const v=t(key);if(el&&v)el.textContent=v;};
+  set('challenge-btn-iq','challengeCta');
+  set('res-trust-summary','resTrustSummary');
+  set('res-trust-body','resTrustBody');
+}
 
 // ── IQ 비교 사다리 (결과 공유 유발 장치) ──
 const IQ_LADDER_I18N={
@@ -923,6 +959,53 @@ function calcIQ(correct,total){
 }
 function getIQCat(iq){return iqCats.find(c=>iq>=c.min)||iqCats[iqCats.length-1];}
 
+// ── 인지 유형(아키타입) — 도메인 강점으로 기억하기 쉬운 '두뇌 타입' 산출 ──
+const DOMAIN_TO_TYPE={'수열 추론':'PATTERN','행렬 패턴':'ABSTRACT','공간 추론':'SPATIAL','논리 추론':'LOGIC','유추':'VERBAL','언어 유추':'VERBAL'};
+// 기본 언어(한국어) 폴백 — 타 언어는 lang/*.js의 cogTypes에서 로드
+const COGTYPE_FALLBACK={
+  PATTERN:{name:'패턴 마스터',emoji:'🔢',blurb:'숫자와 규칙 속에 숨은 질서를 꿰뚫어 보는 두뇌입니다.',strengths:['수열·규칙 추론','빠른 패턴 인식','수리적 직관']},
+  ABSTRACT:{name:'추상 설계자',emoji:'🧩',blurb:'복잡한 정보에서 본질적 구조를 추출하는 데 탁월합니다.',strengths:['행렬·도식 분석','추상적 사고','구조 파악']},
+  SPATIAL:{name:'공간 항해사',emoji:'🧭',blurb:'머릿속에서 형태를 자유자재로 회전·조립하는 시각형 두뇌입니다.',strengths:['공간 지각','3차원 회전','시각적 상상력']},
+  LOGIC:{name:'논리 전략가',emoji:'⚖️',blurb:'전제에서 결론까지 빈틈없이 추론하는 사고의 설계자입니다.',strengths:['연역 추론','모순 탐지','논리적 일관성']},
+  VERBAL:{name:'통찰의 연결자',emoji:'🔗',blurb:'서로 멀리 떨어진 개념 사이의 관계를 직관적으로 잇습니다.',strengths:['유추·관계 추론','개념 연결','언어적 통찰']},
+  POLYMATH:{name:'균형의 폴리매스',emoji:'🌟',blurb:'특정 영역에 치우치지 않고 전 영역에서 고르게 강한 만능형입니다.',strengths:['전 영역 균형','유연한 사고','종합적 문제해결']},
+};
+function deriveCognitiveType(){
+  const areas=(typeof getAreaScores==='function')?getAreaScores():{};
+  const agg={};
+  Object.entries(areas).forEach(([k,v])=>{
+    if(!v.total)return;
+    const ty=DOMAIN_TO_TYPE[k]||'LOGIC';
+    (agg[ty]=agg[ty]||[]).push(v.correct/v.total);
+  });
+  const ranked=Object.entries(agg).map(([ty,arr])=>({ty,acc:arr.reduce((a,b)=>a+b,0)/arr.length})).sort((a,b)=>b.acc-a.acc);
+  if(!ranked.length)return 'POLYMATH';
+  if(ranked.length>=2&&(ranked[0].acc-ranked[1].acc)<0.10)return 'POLYMATH';
+  return ranked[0].ty;
+}
+function cogType(code){
+  const L=window.IQ_LANG&&window.IQ_LANG.cogTypes;
+  return (L&&L[code])||COGTYPE_FALLBACK[code]||COGTYPE_FALLBACK.POLYMATH;
+}
+function renderCogType(code){
+  const el=document.getElementById('cog-type-block');
+  if(!el)return;
+  const c=cogType(code);
+  el.style.display='';
+  el.innerHTML=`<div class="ct-emoji">${c.emoji}</div><div class="ct-name">${c.name}</div><div class="ct-blurb">${c.blurb}</div>`
+    +`<div class="ct-strengths">${(c.strengths||[]).map(s=>`<span>${s}</span>`).join('')}</div>`;
+}
+
+// ── Wordle식 스포일러-프리 결과 그리드(공유용) ──
+function buildResultGrid(ans){
+  const a=ans||answers;
+  if(!a||!a.length)return '';
+  const cells=a.map(x=>(!x||x.selected===-1)?'⬜':(x.selected===x.correct?'🟩':'🟥'));
+  let out='';
+  for(let i=0;i<cells.length;i+=5){out+=cells.slice(i,i+5).join('')+'\n';}
+  return out.trim();
+}
+
 function computeResults(){
   // 공유 보기 상태 해제 (공유 링크로 본 뒤 직접 응시한 경우)
   isSharedView=false;
@@ -936,7 +1019,9 @@ function computeResults(){
   const cat=getIQCat(iq);
   const elapsed=Math.round((Date.now()-testStart)/1000);
   savedIQ=iq;savedTopPct=topPct;
-  savedResultData={iq,cat:cat.label,topPct,mode:currentMode,correct,total};
+  const typeCode=deriveCognitiveType();
+  savedResultData={iq,cat:cat.label,topPct,mode:currentMode,correct,total,typeCode,grid:buildResultGrid()};
+  renderCogType(typeCode);
 
   document.getElementById('res-test-label').textContent=t(currentMode==='short'?'resTestLabel_short':'resTestLabel_long')||(currentMode==='short'?'Short IQ Test Result':'Full IQ Test Result');
   document.getElementById('res-iq').textContent=iq;
@@ -1277,10 +1362,24 @@ function getShareText(isExt=false){
   const top=document.getElementById('r-top').textContent;
   const cat=catFull.split(' ')[0];
   const tmpl=t('shareTextIQ');
-  return tmpl?tmpl.replace('{iq}',iq).replace('{cat}',cat).replace('{top}',top):`[무료 IQ 테스트] 나의 IQ: ${iq}점 (${cat}) | 상위 ${top}%\n너는 몇 점이야? 바로 테스트해봐!`;
+  let base=tmpl?tmpl.replace('{iq}',iq).replace('{cat}',cat).replace('{top}',top):`[무료 IQ 테스트] 나의 IQ: ${iq}점 (${cat}) | 상위 ${top}%\n너는 몇 점이야? 바로 테스트해봐!`;
+  // 아키타입명 + Wordle식 그리드 삽입 (정체성 + 스포일러-프리 호기심 훅)
+  const d=savedResultData||{};
+  if(d.typeCode){const c=cogType(d.typeCode);base=`${c.emoji} ${c.name}\n`+base;}
+  if(d.grid){base=base+'\n\n'+d.grid;}
+  return base;
 }
 
 function getShareURL(){return window.location.href.split('?')[0];}
+
+// ── '친구에게 도전장' — 지목형 도전 링크 (공유율↑) ──
+function challengeFriend(isExt){
+  const url=getResultShareURL(isExt)+'&c=1';
+  const iq=(savedResultData&&savedResultData.iq)||savedIQ;
+  const txt=(tp('challengeShare',{iq})||(`내 IQ ${iq}, 넘을 수 있어? 도전 받아라! 🧠`))+'\n'+url;
+  if(navigator.share){navigator.share({text:txt}).catch(()=>{});}
+  else if(navigator.clipboard){navigator.clipboard.writeText(txt).then(()=>{const L=window.IQ_LANG;showToast((L&&L.copied)||'클립보드에 복사됨!');}).catch(()=>{});}
+}
 
 function getResultShareURL(isExt=false){
   // 결과 복원 파라미터는 앱(?lang=)에서만 동작 — /xx/iq-test/ 래퍼는 SEO 랜딩이라 사용 불가
@@ -1295,7 +1394,8 @@ function getResultShareURL(isExt=false){
   }
   if(savedResultData){
     const d=savedResultData;
-    return `${base}?${lp}r=iq&iq=${d.iq}&cat=${encodeURIComponent(d.cat)}&top=${d.topPct}&mode=${d.mode}`;
+    const ty=d.typeCode?`&ty=${d.typeCode}`:'';
+    return `${base}?${lp}r=iq&iq=${d.iq}&cat=${encodeURIComponent(d.cat)}&top=${d.topPct}&mode=${d.mode}${ty}`;
   }
   return lang==='ko'?base:`${base}?lang=${lang}`;
 }
@@ -1309,8 +1409,10 @@ function checkShareParams(){
     const catLabel=p.get('cat')||'평균';
     const topPct=parseInt(p.get('top'))||50;
     const mode=p.get('mode')||'short';
+    const ty=p.get('ty')||'';
+    const challenge=p.get('c')==='1';
     isSharedView=true;
-    restoreIQResults(iq,catLabel,topPct,mode);
+    restoreIQResults(iq,catLabel,topPct,mode,ty,challenge);
   } else if(r==='ext'){
     const tid=p.get('tid');
     const score=parseInt(p.get('s'))||70;
@@ -1321,12 +1423,18 @@ function checkShareParams(){
   }
 }
 
-function restoreIQResults(iq,catLabel,topPct,mode){
+function restoreIQResults(iq,catLabel,topPct,mode,typeCode,challenge){
   const pctile=100-topPct;
   savedIQ=iq;savedTopPct=topPct;
   currentMode=mode;
+  if(typeCode)renderCogType(typeCode);else{const ct=document.getElementById('cog-type-block');if(ct)ct.style.display='none';}
   document.getElementById('shared-banner-iq').style.display='block';
-  const bannerP=document.querySelector('#shared-banner-iq p');if(bannerP)bannerP.textContent=t('sharedBannerIQ')||bannerP.textContent;
+  const bannerP=document.querySelector('#shared-banner-iq p');
+  if(bannerP){
+    // 도전장 링크면 도전 배너, 아니면 일반 공유 배너
+    if(challenge){bannerP.textContent=(tp('challengeBanner',{iq})||t('sharedBannerIQ')||bannerP.textContent);}
+    else{bannerP.textContent=t('sharedBannerIQ')||bannerP.textContent;}
+  }
   const bannerBtn=document.querySelector('#shared-banner-iq button');if(bannerBtn)bannerBtn.textContent=t('sharedBannerBtn')||bannerBtn.textContent;
   document.getElementById('res-test-label').textContent=t(mode==='short'?'resTestLabel_short':'resTestLabel_long')||(mode==='short'?'Short IQ Test Result':'Full IQ Test Result');
   document.getElementById('res-iq').textContent=iq;
@@ -1457,6 +1565,9 @@ function downloadResultCard(isExt){
     big=String(d.iq||savedIQ);cat=d.cat||'';pct=String(d.topPct!=null?d.topPct:savedTopPct);
     eyebrow='IQ TEST RESULT';
   }
+  // 아키타입 (정체성 — 카드의 공유 가치 핵심)
+  let archeName='',archeEmoji='';
+  if(!isExt&&savedResultData&&savedResultData.typeCode){const c=cogType(savedResultData.typeCode);archeName=c.name||'';archeEmoji=c.emoji||'';}
   const lang=window.IQ_CURRENT_LANG||'ko';
   x.textAlign='center';
   x.fillStyle='#a5b4fc';x.font='700 38px sans-serif';
@@ -1473,11 +1584,16 @@ function downloadResultCard(isExt){
   const cw=tw+80,chx=(W-cw)/2;
   x.beginPath();if(x.roundRect)x.roundRect(chx,710,cw,90,45);else x.rect(chx,710,cw,90);x.fill();
   x.fillStyle='#e0e7ff';x.fillText(chipTxt,W/2,772);
+  // 아키타입명 + 이모지 (카드 정체성 라인)
+  if(archeName){
+    x.fillStyle='#ffffff';x.font='800 50px sans-serif';
+    x.fillText(archeEmoji+' '+archeName.slice(0,26),W/2,872);
+  }
   // Bell curve
   x.strokeStyle='rgba(165,180,252,.65)';x.lineWidth=5;x.beginPath();
   for(let i=0;i<=100;i++){
     const px=140+(W-280)*i/100;
-    const py=960-110*Math.exp(-Math.pow((i-50)/18,2));
+    const py=980-90*Math.exp(-Math.pow((i-50)/18,2));
     i===0?x.moveTo(px,py):x.lineTo(px,py);
   }
   x.stroke();

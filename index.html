@@ -111,6 +111,26 @@
 /* 애드센스 디스플레이 광고 컨테이너 */
 .ad-box{max-width:900px;margin:26px auto;padding:0 20px;text-align:center;min-height:50px;}
 .ad-box ins.adsbygoogle{display:block;}
+/* 인지 유형(아키타입) 결과 블록 — 다크 히어로용 */
+.cog-type-block{margin:14px auto 6px;max-width:520px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:18px 20px;backdrop-filter:blur(4px);}
+.cog-type-block .ct-emoji{font-size:42px;line-height:1;margin-bottom:6px;}
+.cog-type-block .ct-name{font-size:22px;font-weight:900;color:#fff;letter-spacing:-.3px;margin-bottom:6px;}
+.cog-type-block .ct-blurb{font-size:13px;color:#dbe3ff;line-height:1.55;margin-bottom:12px;}
+.cog-type-block .ct-strengths{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
+.cog-type-block .ct-strengths span{font-size:11px;font-weight:700;color:#e0e7ff;background:rgba(255,255,255,.16);border-radius:20px;padding:5px 12px;}
+/* 결과 신뢰/방법론 블록 */
+.res-trust{max-width:700px;margin:24px auto 0;padding:16px 20px;background:var(--card2);border:1px solid var(--border);border-radius:14px;}
+.res-trust summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--text2);list-style:none;display:flex;align-items:center;gap:8px;}
+.res-trust summary::-webkit-details-marker{display:none;}
+.res-trust summary::before{content:'🔬';}
+.res-trust p{font-size:12px;color:var(--text3);line-height:1.7;margin-top:12px;}
+/* 친구 도전장 버튼 */
+.challenge-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:13px 20px;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;color:#fff;background:linear-gradient(135deg,#f59e0b,#ef4444);box-shadow:0 4px 14px rgba(239,68,68,.32);transition:transform .2s;}
+.challenge-btn:hover{transform:translateY(-2px);}
+/* 홈 소셜 프루프 카운터 */
+.social-proof{text-align:center;margin:0 auto;padding:14px 20px 4px;}
+.social-proof .sp-num{font-size:clamp(26px,5vw,38px);font-weight:900;color:#fff;letter-spacing:-1px;}
+.social-proof .sp-label{font-size:12px;color:#c7d2fe;margin-top:2px;}
 /* IQ 비교 사다리 */
 .iq-ladder-sub{font-size:11px;color:var(--text3);margin:-4px 0 14px;}
 .ladder-row{display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:10px;margin-bottom:4px;}
@@ -682,6 +702,10 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
         <span class="trust-chip">✅ 완전 무료</span>
         <span class="trust-chip">🔒 데이터 비저장</span>
       </div>
+      <div class="social-proof" id="social-proof">
+        <div class="sp-num" id="sp-num">0</div>
+        <div class="sp-label" id="sp-label">지금까지 전 세계에서 응시</div>
+      </div>
     </div>
   </div>
 
@@ -910,6 +934,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
         <div class="iq-number-label">지능 지수 (IQ)</div>
       </div>
       <div class="iq-cat" id="res-cat">평균</div>
+      <div id="cog-type-block" class="cog-type-block" style="display:none"></div>
       <p style="color:#c7d2fe;font-size:13px;max-width:480px;margin:0 auto 18px;" id="res-desc"></p>
       <div class="pct-bar-wrap">
         <div class="pct-bar-labels"><span>하위</span><span id="res-pct-label">상위 50%</span><span>상위</span></div>
@@ -991,7 +1016,14 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
         <div class="src-site">무료 IQ 테스트 · 과학적으로 검증된 지능 지수 측정</div>
       </div>
       <div class="share-row" id="share-row-iq"></div>
+      <button class="challenge-btn" id="challenge-btn-iq" onclick="challengeFriend(false)">⚔️ 친구에게 도전장 보내기</button>
     </div>
+
+    <!-- 신뢰/방법론 블록 -->
+    <details class="res-trust" id="res-trust-iq">
+      <summary id="res-trust-summary">측정 방법과 신뢰도에 대해</summary>
+      <p id="res-trust-body">본 검사는 레이븐 점진적 행렬(RPM)과 CHC 지능 이론을 기반으로 설계되었으며, 평균 100·표준편차 15의 정규분포로 점수를 산출합니다. 본 결과는 교육·자기이해를 위한 참고치이며, 문화·언어·교육 배경에 따라 달라질 수 있고 임상 진단을 대체하지 않습니다.</p>
+    </details>
 
     <div class="contact-box tg-only">
       <a href="https://t.me/all_lifes_community" target="_blank" rel="noopener" id="contact-link-iq">✈️ Telegram 커뮤니티 바로가기</a>

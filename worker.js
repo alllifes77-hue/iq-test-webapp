@@ -55,6 +55,8 @@ function renderSeoWrapper(lang, url){
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="https://all-lifes.com/iq-test/favicon-${lang}.png">
+<link rel="apple-touch-icon" href="https://all-lifes.com/iq-test/favicon-${lang}.png">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1378943893051810" crossorigin="anonymous"></script>
 <title>${esc(ogTitle)}</title>
 <meta name="description" content="${esc(ogDesc)}">
@@ -235,6 +237,7 @@ function renderCountryHub(url){
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="https://all-lifes.com/iq-test/favicon-${lang}.png">
 <title>${esc(L.title)}</title>
 <meta name="description" content="${esc(L.desc)}">
 <meta name="keywords" content="${esc(L.keywords)}">

@@ -14,3 +14,7 @@ routes = [
 [assets]
 directory = "."
 binding = "ASSETS"
+
+[[kv_namespaces]]
+binding = "SUBSCRIBERS"
+id = "97ed79dd4e8b4a7193f9bad2185648a6"

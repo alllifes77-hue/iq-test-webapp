@@ -127,6 +127,14 @@
 /* 친구 도전장 버튼 */
 .challenge-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:13px 20px;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;color:#fff;background:linear-gradient(135deg,#f59e0b,#ef4444);box-shadow:0 4px 14px rgba(239,68,68,.32);transition:transform .2s;}
 .challenge-btn:hover{transform:translateY(-2px);}
+/* 뉴스레터 소프트 캡처 */
+.newsletter-box{max-width:700px;margin:18px auto 0;padding:18px 20px;background:linear-gradient(135deg,var(--primary-bg),var(--secondary-bg));border:1px solid var(--border);border-radius:14px;text-align:center;}
+.newsletter-box .nl-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:12px;}
+.newsletter-box .nl-form{display:flex;gap:8px;max-width:420px;margin:0 auto;}
+.newsletter-box .nl-form input{flex:1;min-width:0;padding:11px 14px;border:1.5px solid var(--border2);border-radius:10px;font-size:14px;background:var(--card);color:var(--text);}
+.newsletter-box .nl-form button{padding:11px 20px;border:none;border-radius:10px;font-size:14px;font-weight:800;color:#fff;background:var(--primary-mid);cursor:pointer;white-space:nowrap;}
+.newsletter-box .nl-consent{font-size:11px;color:var(--text3);margin-top:10px;line-height:1.5;}
+.newsletter-box .nl-done{font-size:14px;font-weight:700;color:var(--success);padding:6px 0;}
 /* 홈 소셜 프루프 카운터 */
 .social-proof{text-align:center;margin:0 auto;padding:14px 20px 4px;}
 .social-proof .sp-num{font-size:clamp(26px,5vw,38px);font-weight:900;color:#fff;letter-spacing:-1px;}
@@ -860,6 +868,9 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
       <a target="_top" href="https://all-lifes.com/vi/iq-test/" data-lang="vi" hreflang="vi">Tiếng Việt</a>
       <a target="_top" href="https://all-lifes.com/tr/iq-test/" data-lang="tr" hreflang="tr">Türkçe</a>
     </nav>
+    <div style="margin-top:16px;">
+      <a id="hub-link" target="_top" href="https://all-lifes.com/iq-test/average-iq-by-country" style="font-size:13px;font-weight:600;color:var(--primary-mid);text-decoration:none;">🌍 국가별 평균 IQ 알아보기 →</a>
+    </div>
   </div>
 </div>
 
@@ -1024,6 +1035,17 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
       <summary id="res-trust-summary">측정 방법과 신뢰도에 대해</summary>
       <p id="res-trust-body">본 검사는 레이븐 점진적 행렬(RPM)과 CHC 지능 이론을 기반으로 설계되었으며, 평균 100·표준편차 15의 정규분포로 점수를 산출합니다. 본 결과는 교육·자기이해를 위한 참고치이며, 문화·언어·교육 배경에 따라 달라질 수 있고 임상 진단을 대체하지 않습니다.</p>
     </details>
+
+    <!-- 뉴스레터 소프트 캡처 (비-게이팅) -->
+    <div class="newsletter-box" id="newsletter-iq">
+      <div class="nl-title" id="nl-title">🧠 주간 두뇌 트레이닝 문제를 이메일로 받아보세요</div>
+      <form class="nl-form" id="nl-form" onsubmit="return submitNewsletter(event)">
+        <input type="email" id="nl-email" required placeholder="your@email.com" autocomplete="email" aria-label="email">
+        <button type="submit" id="nl-btn">구독</button>
+      </form>
+      <div class="nl-consent" id="nl-consent">주 1회 두뇌 트레이닝 콘텐츠를 보내드리며, 언제든 해지할 수 있습니다.</div>
+      <div class="nl-done" id="nl-done" style="display:none">✅ 구독 완료! 곧 첫 트레이닝을 보내드릴게요.</div>
+    </div>
 
     <div class="contact-box tg-only">
       <a href="https://t.me/all_lifes_community" target="_blank" rel="noopener" id="contact-link-iq">✈️ Telegram 커뮤니티 바로가기</a>
@@ -1218,6 +1240,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
     <div class="daily-res-big" id="daily-res-score">5</div>
     <div class="daily-res-sub" id="daily-res-sub">/ 5 정답</div>
     <div class="daily-res-streak" id="daily-res-streak">🔥 1일 연속 달성!</div>
+    <div class="daily-freeze-line" id="daily-freeze-line" style="display:none;font-size:12px;color:var(--text2);margin:-8px 0 14px;"></div>
     <button class="daily-share-btn" onclick="shareDailyResult()" id="daily-share-btn">📤 결과 공유하기</button>
     <button class="daily-back-btn" onclick="showScreen('home')" id="daily-back-btn">← 홈으로 돌아가기</button>
   </div>

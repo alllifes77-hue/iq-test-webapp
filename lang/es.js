@@ -1,4 +1,4 @@
-﻿window.IQ_LANG={
+window.IQ_LANG={
 htmlLang:'es',
 docTitle:'Test de CI Gratuito – Medición de Inteligencia Online Científicamente Validada',
 heroEyebrow:'Plataforma de Evaluación Cognitiva Científicamente Validada',
@@ -57,6 +57,14 @@ challengeShare:'Mi CI es {iq}. ¿Crees que puedes superarlo? ¿Aceptas el reto? 
 challengeBanner:'🔥 Un amigo sacó un CI de {iq} y te ha retado — ¿puedes superarlo?',
 resTrustSummary:'Sobre la metodología y la fiabilidad',
 resTrustBody:'Este test se basa en las Matrices Progresivas de Raven y en la teoría de la inteligencia CHC, con una puntuación según una distribución normal (media 100, DE 15). Los resultados son una referencia con fines educativos y de autoconocimiento; varían según el contexto cultural, lingüístico y educativo, y no sustituyen a un diagnóstico clínico.',
+freezeRemaining:'Te quedan {n} congelaciones de racha',
+freezeUsed:'Congelación de racha usada — ¡tu racha está a salvo!',
+newsletterTitle:'🧠 Recibe cada semana acertijos de entrenamiento mental por correo',
+newsletterCta:'Suscribirme',
+newsletterConsent:'Enviamos contenido de entrenamiento mental una vez por semana. Cancela tu suscripción cuando quieras.',
+newsletterDone:'✅ ¡Suscripción confirmada! Tu primer acertijo está en camino.',
+newsletterInvalid:'Introduce una dirección de correo electrónico válida',
+hubLinkText:'🌍 Ver el CI medio por país →',
 cogTypes:{
   PATTERN:{name:'Maestro de Patrones',emoji:'🔢',blurb:'Percibes el orden oculto dentro de los números y las reglas.',strengths:['Razonamiento de secuencias','Reconocimiento de patrones','Intuición numérica']},
   ABSTRACT:{name:'Arquitecto Abstracto',emoji:'🧩',blurb:'Extraes la estructura esencial de la información más compleja.',strengths:['Análisis de matrices','Pensamiento abstracto','Visión estructural']},

@@ -1,4 +1,4 @@
-﻿window.IQ_LANG={
+window.IQ_LANG={
 htmlLang:'pt',
 docTitle:'Teste de QI Gratuito – Medição de Inteligência Online Cientificamente Validada',
 heroEyebrow:'Plataforma de Avaliação Cognitiva Cientificamente Validada',
@@ -57,6 +57,14 @@ challengeShare:'Meu QI é {iq}. Acha que consegue superar? Desafio aceito? 🧠'
 challengeBanner:'🔥 Um amigo alcançou QI {iq} e desafiou você — consegue superar?',
 resTrustSummary:'Sobre a metodologia e a confiabilidade',
 resTrustBody:'Este teste é baseado nas Matrizes Progressivas de Raven e na teoria da inteligência CHC, com pontuação numa distribuição normal (média 100, desvio-padrão 15). Os resultados são uma referência para fins educativos e de autoconhecimento; variam conforme o contexto cultural, linguístico e educacional e não substituem um diagnóstico clínico.',
+freezeRemaining:'{n} proteção(ões) de sequência restante(s)',
+freezeUsed:'Proteção de sequência usada — sua sequência está a salvo!',
+newsletterTitle:'🧠 Receba desafios semanais de treino cerebral por e-mail',
+newsletterCta:'Inscrever-se',
+newsletterConsent:'Enviamos conteúdo de treino cerebral uma vez por semana. Cancele quando quiser.',
+newsletterDone:'✅ Inscrição feita! Seu primeiro desafio está a caminho.',
+newsletterInvalid:'Insira um endereço de e-mail válido',
+hubLinkText:'🌍 Veja o QI médio por país →',
 cogTypes:{
   PATTERN:{name:'O Mestre dos Padrões',emoji:'🔢',blurb:'Você enxerga a ordem oculta dentro dos números e das regras.',strengths:['Raciocínio sequencial','Reconhecimento de padrões','Intuição numérica']},
   ABSTRACT:{name:'O Arquiteto Abstrato',emoji:'🧩',blurb:'Você extrai a estrutura essencial de informações complexas.',strengths:['Análise de matrizes','Pensamento abstrato','Percepção estrutural']},

@@ -57,6 +57,14 @@ challengeShare:"Mon QI est de {iq}. Tu penses pouvoir faire mieux ? Défi relev�
 challengeBanner:'🔥 Un ami a obtenu un QI de {iq} et te lance un défi — sauras-tu le battre ?',
 resTrustSummary:'À propos de la méthodologie et de la fiabilité',
 resTrustBody:"Ce test repose sur les Matrices Progressives de Raven et la théorie de l'intelligence CHC, avec une notation suivant une distribution normale (moyenne 100, écart-type 15). Les résultats constituent une référence à visée éducative et de connaissance de soi ; ils varient selon le contexte culturel, linguistique et éducatif et ne remplacent en aucun cas un diagnostic clinique.",
+freezeRemaining:'{n} gel(s) de série restant(s)',
+freezeUsed:'Gel de série utilisé — votre série est préservée !',
+newsletterTitle:'🧠 Recevez chaque semaine des énigmes d\'entraînement cérébral par e-mail',
+newsletterCta:'S\'abonner',
+newsletterConsent:'Nous envoyons du contenu d\'entraînement cérébral une fois par semaine. Désabonnement à tout moment.',
+newsletterDone:'✅ Inscription confirmée ! Votre première énigme est en route.',
+newsletterInvalid:'Veuillez saisir une adresse e-mail valide',
+hubLinkText:'🌍 Voir le QI moyen par pays →',
 cogTypes:{
   PATTERN:{name:'Le Maître des Schémas',emoji:'🔢',blurb:'Vous percevez l\'ordre caché au sein des nombres et des règles.',strengths:['Raisonnement séquentiel','Reconnaissance de schémas','Intuition numérique']},
   ABSTRACT:{name:'L\'Architecte de l\'Abstrait',emoji:'🧩',blurb:'Vous extrayez la structure essentielle d\'informations complexes.',strengths:['Analyse matricielle','Pensée abstraite','Vision structurelle']},

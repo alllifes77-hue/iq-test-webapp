@@ -26,9 +26,11 @@ function applyLang(){
   {const m=document.querySelector('meta[property="og:description"]');if(m&&L.metaDesc)m.content=L.metaDesc;}
   {const m=document.querySelector('meta[property="og:url"]');if(m)m.content=_url;}
   {const c=document.querySelector('link[rel="canonical"]');if(c)c.href=_url;}
-  {const _ogPng=['ko','en','de','fr','es','pt','it','ja','id']; // 실제 og-{lang}.png 보유 언어
-   const _ogLang=_ogPng.includes(_l)?_l:'en'; // 신규 언어(hi/ru/vi/tr)는 전용 PNG 생성 전까지 en 폴백
-   const _img=`https://all-lifes.com/iq-test/og-${_ogLang}.png`;
+  {const _ogPng=['ko','en','de','fr','es','pt','it','ja','id']; // og-{lang}.png (1200×1200)
+   const _ogJpg=['hi','ru','vi','tr'];                           // og-{lang}.jpg (1200×630)
+   const _img=_ogPng.includes(_l)?`https://all-lifes.com/iq-test/og-${_l}.png`
+             :_ogJpg.includes(_l)?`https://all-lifes.com/iq-test/og-${_l}.jpg`
+             :'https://all-lifes.com/iq-test/og-en.png';
    const mi=document.querySelector('meta[property="og:image"]');if(mi)mi.content=_img;
    const mt=document.querySelector('meta[name="twitter:image"]');if(mt)mt.content=_img;}
   {const m=document.querySelector('meta[property="og:image:height"]');if(m)m.content='1200';}
@@ -389,17 +391,35 @@ function answerDaily(chosen){
   setTimeout(()=>{_dCur++;if(_dCur>=5)endDailyChallenge();else renderDailyQ();},700);
 }
 
+// 스트릭 프리즈: 매월 2개 자동 지급, 하루 빠진 경우 1개 소비해 연속 유지 (Duolingo식)
+function ensureFreezes(st){
+  const month=localDateStr().slice(0,7); // YYYY-MM
+  if(st.freezeMonth!==month){st.freezeMonth=month;st.freezes=2;}
+  if(typeof st.freezes!=='number')st.freezes=2;
+  return st;
+}
 function endDailyChallenge(){
   const today=localDateStr();
   const score=_dRes.filter(Boolean).length;
-  const st=getDSt();
+  let st=ensureFreezes(getDSt());
   const yesterday=localDateStr(-86400000);
-  let newStreak=1;
-  if(st.lastDate===yesterday)newStreak=(st.streak||0)+1;
-  else if(st.lastDate===today)newStreak=st.streak||1;
+  const dayBefore=localDateStr(-2*86400000);
+  let newStreak=1,usedFreeze=false;
+  if(st.lastDate===today)newStreak=st.streak||1;                 // 오늘 이미 완료
+  else if(st.lastDate===yesterday)newStreak=(st.streak||0)+1;    // 정상 연속
+  else if(st.lastDate===dayBefore&&st.freezes>0){newStreak=(st.streak||0)+1;st.freezes--;usedFreeze=true;} // 하루 빠짐 → 프리즈 소비
+  else newStreak=1;                                              // 연속 끊김(2일+ 결석 또는 프리즈 없음)
   const best=Math.max(newStreak,st.bestStreak||0);
-  setDSt({lastDate:today,done:true,score,streak:newStreak,bestStreak:best});
+  setDSt({lastDate:today,done:true,score,streak:newStreak,bestStreak:best,freezes:st.freezes,freezeMonth:st.freezeMonth});
   updateDailyBanner();
+  // 프리즈 안내 표시
+  const fl=document.getElementById('daily-freeze-line');
+  if(fl){
+    const _L=window.IQ_LANG;
+    if(usedFreeze){fl.style.display='';fl.textContent='🛡️ '+((_L&&_L.freezeUsed)||'스트릭 프리즈 사용 — 연속이 유지됐어요!');}
+    else if(st.freezes>0){fl.style.display='';fl.textContent='🛡️ '+(tp('freezeRemaining',{n:st.freezes})||('스트릭 프리즈 '+st.freezes+'개 남음'));}
+    else{fl.style.display='none';}
+  }
   const L=window.IQ_LANG;
   const sfx=(L&&L.daySuffix)||'일';
   const starsMap=['💪','⭐','⭐⭐','⭐⭐⭐','⭐⭐⭐⭐','⭐⭐⭐⭐⭐'];
@@ -462,6 +482,26 @@ function applyResultI18n(){
   set('challenge-btn-iq','challengeCta');
   set('res-trust-summary','resTrustSummary');
   set('res-trust-body','resTrustBody');
+  set('nl-title','newsletterTitle');
+  set('nl-btn','newsletterCta');
+  set('nl-consent','newsletterConsent');
+  set('nl-done','newsletterDone');
+}
+
+// ── 뉴스레터 소프트 캡처 (비-게이팅, Worker KV 저장) ──
+function submitNewsletter(ev){
+  if(ev&&ev.preventDefault)ev.preventDefault();
+  const inp=document.getElementById('nl-email');
+  const email=((inp&&inp.value)||'').trim();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
+    showToast(t('newsletterInvalid')||'유효한 이메일을 입력해주세요');return false;
+  }
+  const lang=window.IQ_CURRENT_LANG||'ko';
+  try{fetch('api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,lang})}).catch(()=>{});}catch(e){}
+  const form=document.getElementById('nl-form');if(form)form.style.display='none';
+  const consent=document.getElementById('nl-consent');if(consent)consent.style.display='none';
+  const done=document.getElementById('nl-done');if(done)done.style.display='';
+  return false;
 }
 
 // ── IQ 비교 사다리 (결과 공유 유발 장치) ──
@@ -579,6 +619,12 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('.lang-links a').forEach(a=>{
     if(a.dataset.lang===cur)a.classList.add('active');
   });
+  // 국가별 평균 IQ 허브 링크 현지화
+  const hub=document.getElementById('hub-link');
+  if(hub){
+    hub.href=cur==='ko'?'https://all-lifes.com/iq-test/average-iq-by-country':'https://all-lifes.com/iq-test/average-iq-by-country?lang='+cur;
+    const v=t('hubLinkText');if(v)hub.textContent=v;
+  }
 });
 
 // ── 쿠팡 파트너스 다이내믹 위젯 (ko 전용, 결과 화면 첫 진입 시 lazy 삽입) ──

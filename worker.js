@@ -4,6 +4,8 @@
 // /{hi,ru,vi,tr}/iq-test/ → server-rendered localized SEO landing (embeds the app)
 
 import { SEO_LANGS } from './seo-langs.js';
+import { COUNTRY_IQ } from './country-iq.js';
+import { HUB_I18N } from './hub-i18n.js';
 
 const ALI_APP_KEY = '536770';
 const ALI_TRACKING_ID = 'iqtestweb';
@@ -33,7 +35,7 @@ function renderSeoWrapper(lang, url){
     ogImage = `https://all-lifes.com/og-image?iq=${iq}&top=${top}&cat=${encodeURIComponent(cat)}&lang=${lang}`;
   } else {
     ogTitle = L.title; ogDesc = L.desc;
-    ogImage = `https://all-lifes.com/iq-test/og-en.png`; // 신규 언어 전용 OG PNG 추가 전까지 en 폴백
+    ogImage = `https://all-lifes.com/iq-test/og-${lang}.jpg`; // 신규 언어 전용 OG 이미지 (현지화)
   }
 
   const appSrc = `https://all-lifes.com/iq-test/?lang=${lang}` + (isResultShare?`&r=iq&iq=${iq}&cat=${encodeURIComponent(cat)}&top=${top}&mode=${mode}`:'');
@@ -188,6 +190,97 @@ async function handleAliProducts(request, env) {
   return res;
 }
 
+async function handleSubscribe(request, env){
+  const cors = { 'Content-Type':'application/json', 'Access-Control-Allow-Origin':'*' };
+  try{
+    const { email, lang } = await request.json();
+    if(!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
+      return new Response(JSON.stringify({ ok:false, error:'invalid_email' }), { status:400, headers:cors });
+    }
+    if(env.SUBSCRIBERS){
+      const key = email.toLowerCase().slice(0,200);
+      const existing = await env.SUBSCRIBERS.get(key);
+      if(!existing){
+        await env.SUBSCRIBERS.put(key, JSON.stringify({ lang: (lang||'').slice(0,5), ts: Date.now() }));
+      }
+    }
+    return new Response(JSON.stringify({ ok:true }), { headers:cors });
+  }catch(e){
+    return new Response(JSON.stringify({ ok:false, error:'bad_request' }), { status:400, headers:cors });
+  }
+}
+
+// ── 국가별 평균 IQ SEO 허브 (책임 있는 중립 프레이밍) ──
+function renderCountryHub(url){
+  const langParam = (url.searchParams.get('lang')||'ko').toLowerCase();
+  const lang = HUB_I18N[langParam] ? langParam : 'en';
+  const L = HUB_I18N[lang];
+  const base = 'https://all-lifes.com/iq-test/average-iq-by-country';
+  const canonical = lang==='ko' ? base : `${base}?lang=${lang}`;
+  const appUrl = lang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/iq-test/?lang=${lang}`;
+
+  const rows = COUNTRY_IQ.slice().sort((a,b)=>b.iq-a.iq)
+    .map((r,i)=>`<tr><td class="rk">${i+1}</td><td>${esc(r.c)}</td><td class="iq">${r.iq}</td></tr>`).join('');
+
+  const hreflangs = HREFLANG_ALL.map(l=>{
+    const href = l==='ko' ? base : `${base}?lang=${l}`;
+    return `<link rel="alternate" hreflang="${l}" href="${href}">`;
+  }).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${base}?lang=en">`;
+
+  const itemList = { "@context":"https://schema.org","@type":"ItemList","name":L.h1,
+    "itemListElement": COUNTRY_IQ.slice().sort((a,b)=>b.iq-a.iq).map((r,i)=>({"@type":"ListItem","position":i+1,"name":r.c})) };
+
+  const html = `<!DOCTYPE html>
+<html lang="${lang}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>${esc(L.title)}</title>
+<meta name="description" content="${esc(L.desc)}">
+<meta name="keywords" content="${esc(L.keywords)}">
+<link rel="canonical" href="${esc(canonical)}">
+    ${hreflangs}
+<meta property="og:title" content="${esc(L.title)}">
+<meta property="og:description" content="${esc(L.desc)}">
+<meta property="og:url" content="${esc(canonical)}">
+<meta property="og:type" content="article">
+<script type="application/ld+json">${JSON.stringify(itemList)}</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.6;}
+.hero{background:linear-gradient(135deg,#1e1b4b,#312e81,#1d4ed8);color:#fff;padding:34px 20px 26px;text-align:center;}
+.hero h1{font-size:clamp(20px,3.4vw,30px);font-weight:900;max-width:760px;margin:0 auto 10px;}
+.hero p{font-size:14px;color:#c7d2fe;max-width:680px;margin:0 auto;}
+.wrap{max-width:760px;margin:0 auto;padding:22px 18px 50px;}
+.caveat{background:#fef3c7;border:1px solid #f59e0b;border-radius:12px;padding:14px 16px;font-size:13px;color:#7c4a03;margin:18px 0;}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;font-size:14px;}
+thead{background:#1e1b4b;color:#fff;}
+th,td{padding:11px 14px;text-align:left;}
+td.rk{color:#94a3b8;width:42px;font-weight:700;}
+td.iq{text-align:right;font-weight:800;color:#4f46e5;}
+tbody tr:nth-child(even){background:#f8fafc;}
+tbody tr{border-top:1px solid #eef2f7;}
+.how{margin-top:26px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:18px 20px;}
+.how h2{font-size:16px;font-weight:800;margin-bottom:8px;color:#1e1b4b;}
+.how p{font-size:13px;color:#475569;}
+.cta{display:block;text-align:center;margin:24px auto 0;max-width:420px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-weight:800;font-size:16px;padding:14px;border-radius:12px;text-decoration:none;box-shadow:0 6px 20px rgba(79,70,229,.35);}
+.back{display:block;text-align:center;margin-top:14px;color:#64748b;font-size:13px;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="hero"><h1>${esc(L.h1)}</h1><p>${esc(L.intro)}</p></div>
+<div class="wrap">
+  <div class="caveat">${esc(L.caveat)}</div>
+  <table><thead><tr><th>#</th><th>${esc(L.colCountry)}</th><th style="text-align:right">${esc(L.colIQ)}</th></tr></thead><tbody>${rows}</tbody></table>
+  <div class="how"><h2>${esc(L.howTitle)}</h2><p>${esc(L.howBody)}</p></div>
+  <a class="cta" href="${esc(appUrl)}">${esc(L.cta)}</a>
+  <a class="back" href="${esc(appUrl)}">${esc(L.backHome)}</a>
+</div>
+</body>
+</html>`;
+  return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -208,6 +301,16 @@ export default {
     // 알리익스프레스 어필리에이트 상품 API (양쪽 도메인 모두 지원)
     if (path === '/iq-test/api/ali-products' || path === '/api/ali-products') {
       return handleAliProducts(request, env);
+    }
+
+    // 뉴스레터 구독 (KV 저장)
+    if (path === '/iq-test/api/subscribe' && request.method === 'POST') {
+      return handleSubscribe(request, env);
+    }
+
+    // 국가별 평균 IQ SEO 허브
+    if (path === '/iq-test/average-iq-by-country' || path === '/iq-test/average-iq-by-country/') {
+      return renderCountryHub(url);
     }
 
     // 신규 4개 언어 SEO 래퍼 페이지: /{hi,ru,vi,tr}/iq-test[/]

@@ -10,6 +10,8 @@ wrangler.toml
 worker.js
 seo-langs.js
 gen-seo-langs.cjs
+country-iq.js
+hub-i18n.js
 translate-*.js
 validate-langs.js
 generate-og*.js

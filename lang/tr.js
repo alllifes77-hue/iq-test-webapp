@@ -1,6 +1,6 @@
 window.IQ_LANG={
 htmlLang:'tr',
-docTitle:'Ücretsiz IQ Testi – Bilimsel Olarak Doğrulanmış Online Zeka Testi',
+docTitle:"Ücretsiz IQ Testi Online - Anında Sonuç, Üyelik Yok",
 heroEyebrow:'Bilimsel Olarak Doğrulanmış Bilişsel Değerlendirme Platformu',
 heroH1:"<span>IQ</span>'nuzu<br>Doğru Ölçün",
 heroP:'Raven Matrisleri · CHC Teorisi · Normal Dağılım IQ<br>%100 Ücretsiz · Anında Sonuç · 6 Alanda Derin Analiz',
@@ -152,8 +152,8 @@ featItems:[
   {icon:'💛',title:'Duygusal Zeka (EQ)',desc:'MSCEIT modeline dayalı duygusal yetenek ölçümü.'},
   {icon:'⚡',title:'İşlem Hızı ve Bellek',desc:'Çalışma belleği, işlem hızı, odaklanma ve bilişsel esnekliğin kapsamlı değerlendirmesi.'}
 ],
-metaDesc:'Ücretsiz ve bilimsel olarak doğrulanmış online IQ testi. Raven İlerleyen Matrisler ve CHC teorisine dayalı — doğru IQ puanınızı, alan bazlı analizinizi ve 6 bilişsel testi anında alın. Üyelik gerekmez.',
-metaKeywords:'ücretsiz IQ testi, online IQ testi, IQ testi, zeka testi, IQ ölçümü, zeka ölçümü, doğru IQ testi, raven ilerleyen matrisler, IQ kaç, IQ puanı tablosu, bilişsel yetenek testi, üyeliksiz IQ testi',
+metaDesc:"Ücretsiz IQ testini online çözün, üyelik olmadan anında sonuç alın. Raven Matrisleri'ne dayalı bilimsel test ile doğru IQ puanınızı ve 6 bilişsel alan analizinizi dakikalar içinde öğrenin.",
+metaKeywords:"ücretsiz IQ testi, online IQ testi, IQ testi, zeka testi, IQ puanı, doğru IQ testi, IQ ölçümü, raven ilerleyen matrisler, üyeliksiz IQ testi, IQ kaç, bilişsel yetenek testi, ücretsiz zeka testi",
 ogLocale:'tr_TR',
 faqItems:[
   {q:'IQ testi nedir ve zekayı nasıl ölçer?',a:'IQ (Zeka Katsayısı); dizi akıl yürütme, sözel olmayan örüntü tanıma, uzamsal akıl yürütme ve mantıksal düşünme yoluyla genel zekayı (g-faktörü) ölçer. Sonuçlar ortalaması 100, standart sapması 15 olan normal dağılımı izler ve sizi genel nüfusa göre konumlandırır.'},

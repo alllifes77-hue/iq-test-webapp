@@ -1,6 +1,6 @@
 ﻿window.IQ_LANG={
 htmlLang:'id',
-docTitle:'Tes IQ Gratis – Pengukuran Kecerdasan Online yang Tervalidasi Secara Ilmiah',
+docTitle:"Tes IQ Gratis Online - Hasil Instan Tanpa Registrasi",
 heroEyebrow:'Platform Penilaian Kognitif yang Tervalidasi Secara Ilmiah',
 heroH1:'Ukur <span>IQ</span> Anda<br>dengan Tepat',
 heroP:"Matriks Raven · Teori CHC · Distribusi Normal<br>100% Gratis · Hasil Langsung · Analisis Mendalam 6 Domain",
@@ -149,8 +149,8 @@ featItems:[
   {icon:'💛',title:'Kecerdasan Emosional (EQ)',desc:'Pengukuran kemampuan emosional berdasarkan model MSCEIT.'},
   {icon:'⚡',title:'Kecepatan Pemrosesan & Memori',desc:'Penilaian komprehensif memori kerja, kecepatan pemrosesan, konsentrasi, dan fleksibilitas kognitif.'}
 ],
-metaDesc:"Tes IQ gratis dan tervalidasi secara ilmiah online. Berdasarkan Matriks Raven dan teori CHC. Skor IQ instan, analisis domain, dan 6 penilaian kognitif — semuanya gratis, tanpa pendaftaran.",
-metaKeywords:"tes IQ gratis, tes kecerdasan online, mengukur IQ online, matriks Raven gratis, tes kognitif online, berapa IQ saya, tes intelegensi akurat, kecerdasan emosional tes",
+metaDesc:"Tes IQ gratis online dengan hasil instan tanpa registrasi. Berbasis Matriks Raven: dapatkan skor IQ akurat dan analisis 6 domain kognitif dalam hitungan menit. 100% gratis, aman, dan privat.",
+metaKeywords:"tes IQ gratis, tes IQ online, tes kecerdasan gratis, tes IQ akurat, tes IQ terpercaya, matriks Raven, ukur IQ, tes IQ tanpa registrasi, berapa IQ saya, tes kognitif, tes psikometri gratis",
 ogLocale:'id_ID',
 faqItems:[
   {q:'Apa itu tes IQ dan bagaimana cara mengukur kecerdasan?',a:'IQ (Indeks Kecerdasan) mengukur kecerdasan umum (faktor g) melalui penalaran urutan, pengenalan pola non-verbal, penalaran spasial, dan pemikiran logis. Hasilnya mengikuti distribusi normal dengan rata-rata 100 dan standar deviasi 15.'},

@@ -1,6 +1,6 @@
 ﻿window.IQ_LANG={
 htmlLang:'en',
-docTitle:'Free IQ Test – Scientifically Validated Online Intelligence Measurement',
+docTitle:"Free IQ Test Online (2026) - Instant Score, No Signup",
 heroEyebrow:'Scientifically Validated Cognitive Assessment Platform',
 heroH1:'Measure Your <span>IQ</span><br>Accurately',
 heroP:"Raven's Matrices · CHC Theory · Normal Distribution IQ<br>100% Free · Instant Results · 6-Domain Deep Analysis",
@@ -151,8 +151,8 @@ featItems:[
   {icon:'💛',title:'Emotional Quotient (EQ)',desc:'Emotional ability measurement based on the MSCEIT model.'},
   {icon:'⚡',title:'Processing Speed & Memory',desc:'Comprehensive assessment of working memory, processing speed, focus, and cognitive flexibility.'}
 ],
-metaDesc:"Free scientifically validated IQ test online. Based on Raven's Progressive Matrices & CHC theory — get your accurate IQ score, domain breakdown, and 6 cognitive assessments instantly. No signup required.",
-metaKeywords:"free IQ test, online IQ test, accurate IQ test, intelligence test online, IQ score chart, raven's progressive matrices, what is my IQ, cognitive ability test, IQ test no signup",
+metaDesc:"Take a free IQ test online with instant results - no registration, no email. Science-based on Raven's Matrices & CHC theory. Get your accurate IQ score and a 6-domain cognitive analysis in minutes.",
+metaKeywords:"free IQ test, free IQ test online, IQ test no registration, IQ test instant results, online IQ test, accurate IQ test, quick IQ test, intelligence test, what is my IQ, IQ test free, Raven's matrices, scientific IQ test",
 ogLocale:'en_US',
 faqItems:[
   {q:'What is an IQ test and how does it measure intelligence?',a:"IQ (Intelligence Quotient) measures general intelligence (g-factor) through sequence reasoning, non-verbal pattern recognition, spatial reasoning, and logical thinking. Results follow a normal distribution with mean 100 and standard deviation 15, placing you relative to the general population."},

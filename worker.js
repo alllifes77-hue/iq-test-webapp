@@ -43,6 +43,9 @@ function renderSeoWrapper(lang, url){
     + `\n    <link rel="alternate" hreflang="x-default" href="https://all-lifes.com/en/iq-test/">`;
   const appSchema = {"@context":"https://schema.org","@type":"WebApplication","name":L.h1,"description":L.desc,"url":canonical,"applicationCategory":"EducationalApplication","inLanguage":lang,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"operatingSystem":"Web"};
   const faqSchema = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":L.faq.map(f=>({"@type":"Question","name":f.q,"acceptedAnswer":{"@type":"Answer","text":f.a}}))};
+  const breadcrumbSchema = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":L.h1,"item":canonical}]};
+  const orgSchema = {"@context":"https://schema.org","@type":"Organization","name":"All-Lifes","url":"https://all-lifes.com/","logo":"https://all-lifes.com/iq-test/IQ%20TEST.png"};
+  const websiteSchema = {"@context":"https://schema.org","@type":"WebSite","name":L.h1,"url":canonical,"inLanguage":lang,"potentialAction":{"@type":"SearchAction","target":"https://all-lifes.com/iq-test/?q={search_term_string}","query-input":"required name=search_term_string"}};
   const featuresHtml = L.features.map(f=>`<span class="chip">${esc(f)}</span>`).join('');
   const faqHtml = L.faq.map(f=>`<div class="faq-item"><div class="faq-q">${esc(f.q)}</div><div class="faq-a">${esc(f.a)}</div></div>`).join('');
   const langBar = HREFLANG_ALL.map(l=>{
@@ -74,6 +77,9 @@ function renderSeoWrapper(lang, url){
 <meta name="twitter:image" content="${esc(ogImage)}">
 <script type="application/ld+json">${JSON.stringify(appSchema)}</script>
 <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>
+<script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>
+<script type="application/ld+json">${JSON.stringify(orgSchema)}</script>
+<script type="application/ld+json">${JSON.stringify(websiteSchema)}</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;}

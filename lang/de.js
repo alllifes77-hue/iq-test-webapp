@@ -1,6 +1,6 @@
 window.IQ_LANG={
 htmlLang:'de',
-docTitle:'Kostenloser IQ-Test – Wissenschaftlich validierte Online-Intelligenzmessung',
+docTitle:"IQ-Test Kostenlos Online - Sofort Ergebnis, ohne Anmeldung",
 heroEyebrow:'Wissenschaftlich validierte kognitive Bewertungsplattform',
 heroH1:'Messen Sie Ihren <span>IQ</span><br>Präzise',
 heroP:"Raven-Matrizen · CHC-Theorie · Normalverteilung<br>100% kostenlos · Sofortige Ergebnisse · 6-Bereich-Tiefenanalyse",
@@ -149,8 +149,8 @@ featItems:[
   {icon:'💛',title:'Emotionaler Quotient (EQ)',desc:'Messung emotionaler Fähigkeiten auf Basis des MSCEIT-Modells.'},
   {icon:'⚡',title:'Verarbeitungsgeschwindigkeit & Gedächtnis',desc:'Umfassende Bewertung von Arbeitsgedächtnis, Verarbeitungsgeschwindigkeit, Konzentration und kognitiver Flexibilität.'}
 ],
-metaDesc:"Kostenloser IQ-Test online – wissenschaftlich validiert. Basierend auf Raven-Matrizen und CHC-Theorie. Sofortiges IQ-Ergebnis, Bereichsanalyse und 6 kognitive Tests – alles gratis, ohne Anmeldung.",
-metaKeywords:"IQ Test kostenlos, Intelligenztest online, IQ messen, Raven Matrizen Test, kognitiver Test online, IQ Wert bestimmen, Intelligenzquotient Test, wie intelligent bin ich",
+metaDesc:"Kostenloser IQ-Test online mit Sofortergebnis - keine Anmeldung, keine Kosten. Wissenschaftlich fundiert mit Raven-Matrizen & CHC-Theorie. In unter 30 Minuten Ihren IQ-Wert und 6-Bereich-Analyse erhalten.",
+metaKeywords:"IQ-Test kostenlos, kostenloser IQ-Test, Intelligenztest online, IQ-Test ohne Anmeldung, Intelligenztest Deutsch, IQ-Test schnell, IQ Wert berechnen, Raven Test online, Intelligenztest gratis, online IQ-Test, wie hoch ist mein IQ",
 ogLocale:'de_DE',
 faqItems:[
   {q:'Was ist ein IQ-Test und wie misst er Intelligenz?',a:'IQ (Intelligenzquotient) misst allgemeine Intelligenz (g-Faktor) durch Zahlenfolgen, nichtverbale Mustererkennung, räumliches Denken und logisches Schlussfolgern. Ergebnisse folgen einer Normalverteilung mit Mittelwert 100 und Standardabweichung 15, die Ihren Platz relativ zur Bevölkerung anzeigt.'},

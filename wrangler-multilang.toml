@@ -14,5 +14,6 @@ routes = [
   { pattern = "all-lifes.com/pt/iq-test*", zone_name = "all-lifes.com" },
   { pattern = "all-lifes.com/it/iq-test*", zone_name = "all-lifes.com" },
   { pattern = "all-lifes.com/id/iq-test*", zone_name = "all-lifes.com" },
-  { pattern = "all-lifes.com/iq-test-sitemap.xml", zone_name = "all-lifes.com" }
+  { pattern = "all-lifes.com/iq-test-sitemap.xml", zone_name = "all-lifes.com" },
+  { pattern = "all-lifes.com/og-image*", zone_name = "all-lifes.com" }
 ]

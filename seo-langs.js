@@ -3,9 +3,9 @@ export const SEO_LANGS = {
  "hi": {
   "name": "हिन्दी",
   "locale": "hi_IN",
-  "title": "मुफ्त IQ टेस्ट – वैज्ञानिक रूप से मान्य ऑनलाइन बुद्धि परीक्षण | आईक्यू टेस्ट",
-  "desc": "मुफ्त ऑनलाइन IQ टेस्ट — वैज्ञानिक रूप से मान्य बुद्धि परीक्षण। रेवेन प्रोग्रेसिव मैट्रिसेस और CHC सिद्धांत पर आधारित सटीक IQ स्कोर, क्षेत्रवार विश्लेषण और 6 संज्ञानात्मक टेस्ट तुरंत पाएँ। बिना रजिस्ट्रेशन, बिल्कुल फ्री।",
-  "keywords": "IQ टेस्ट, मुफ्त IQ टेस्ट, फ्री आईक्यू टेस्ट, ऑनलाइन IQ टेस्ट, आईक्यू टेस्ट हिंदी, बुद्धि परीक्षण, IQ कैसे मापें, मेरा IQ कितना है, सटीक IQ टेस्ट, बुद्धि लब्धि, IQ स्कोर चार्ट, रेवेन मैट्रिक्स टेस्ट",
+  "title": "मुफ्त IQ टेस्ट ऑनलाइन - तुरंत परिणाम, रजिस्ट्रेशन नहीं",
+  "desc": "मुफ्त IQ टेस्ट ऑनलाइन - रजिस्ट्रेशन के बिना तुरंत परिणाम पाएं। रेवेन मैट्रिक्स आधारित वैज्ञानिक परीक्षण से अपना सटीक IQ स्कोर और 6-क्षेत्रीय विश्लेषण कुछ ही मिनटों में जानें।",
+  "keywords": "मुफ्त IQ टेस्ट, IQ टेस्ट हिंदी में, ऑनलाइन IQ टेस्ट, बुद्धि परीक्षण, मेरा IQ कितना है, आईक्यू स्कोर, सटीक IQ टेस्ट, बुद्धि लब्धि, IQ टेस्ट मुफ्त, तुरंत IQ परिणाम, रेवेन मैट्रिक्स, वैज्ञानिक IQ परीक्षण",
   "h1": "अपना IQ सटीकता से मापें",
   "h2": "वैज्ञानिक रूप से प्रमाणित संज्ञानात्मक मूल्यांकन प्लेटफ़ॉर्म",
   "body": "रेवेन मैट्रिसेस · CHC सिद्धांत · सामान्य वितरण IQ 100% मुफ्त · तुरंत परिणाम · 6-क्षेत्रीय गहन विश्लेषण",
@@ -37,14 +37,14 @@ export const SEO_LANGS = {
   ],
   "faqH2": "अक्सर पूछे जाने वाले प्रश्न (FAQ)",
   "ogResultTitle": "IQ {iq} ({cat}) · Top {top}% 🧠",
-  "ogResultDesc": "मुफ्त ऑनलाइन IQ टेस्ट — वैज्ञानिक रूप से मान्य बुद्धि परीक्षण। रेवेन प्रोग्रेसिव मैट्रिसेस और CHC सिद्धांत पर आधारित सटीक IQ स्कोर, क्षेत्रवार विश्लेषण और 6 संज्ञानात्मक टेस्ट तुरंत पाएँ। बिना रजिस्ट्रेशन, बिल्कुल फ्री।"
+  "ogResultDesc": "मुफ्त IQ टेस्ट ऑनलाइन - रजिस्ट्रेशन के बिना तुरंत परिणाम पाएं। रेवेन मैट्रिक्स आधारित वैज्ञानिक परीक्षण से अपना सटीक IQ स्कोर और 6-क्षेत्रीय विश्लेषण कुछ ही मिनटों में जानें।"
  },
  "ru": {
   "name": "Русский",
   "locale": "ru_RU",
-  "title": "Бесплатный тест на IQ – точное онлайн-измерение интеллекта с научной основой",
-  "desc": "Бесплатный тест на IQ онлайн с научной валидацией. Прогрессивные матрицы Равена и теория CHC: узнайте свой точный уровень IQ, получите анализ по областям и 6 когнитивных тестов мгновенно. Без регистрации.",
-  "keywords": "тест на IQ, айкью тест, IQ тест бесплатно, тест на айкью онлайн, узнать свой IQ, проверить IQ онлайн, тест на интеллект, коэффициент интеллекта, прогрессивные матрицы Равена, IQ тест без регистрации",
+  "title": "Бесплатный IQ тест онлайн - узнай свой IQ за 15 минут",
+  "desc": "Пройдите бесплатный IQ тест онлайн без регистрации и получите результат мгновенно. Научный метод на основе матриц Равена: точный уровень IQ и анализ по 6 когнитивным областям за 15 минут.",
+  "keywords": "бесплатный IQ тест, IQ тест онлайн, тест на айкью, пройти IQ тест, узнать свой IQ, точный тест интеллекта, тест на IQ без регистрации, матрицы Равена онлайн, быстрый тест на IQ, проверить IQ онлайн",
   "h1": "Измерьте свой IQ с научной точностью",
   "h2": "Научно обоснованная платформа когнитивной диагностики",
   "body": "Матрицы Равена · Теория CHC · IQ по нормальному распределению 100% бесплатно · Мгновенный результат · Глубокий анализ по 6 областям",
@@ -76,14 +76,14 @@ export const SEO_LANGS = {
   ],
   "faqH2": "Часто задаваемые вопросы (FAQ)",
   "ogResultTitle": "IQ {iq} ({cat}) · Top {top}% 🧠",
-  "ogResultDesc": "Бесплатный тест на IQ онлайн с научной валидацией. Прогрессивные матрицы Равена и теория CHC: узнайте свой точный уровень IQ, получите анализ по областям и 6 когнитивных тестов мгновенно. Без регистрации."
+  "ogResultDesc": "Пройдите бесплатный IQ тест онлайн без регистрации и получите результат мгновенно. Научный метод на основе матриц Равена: точный уровень IQ и анализ по 6 когнитивным областям за 15 минут."
  },
  "vi": {
   "name": "Tiếng Việt",
   "locale": "vi_VN",
-  "title": "Test IQ Miễn Phí – Đo Chỉ Số IQ Online Chuẩn Khoa Học",
-  "desc": "Test IQ miễn phí online chuẩn khoa học. Dựa trên Ma trận tiến triển Raven và thuyết CHC — nhận ngay điểm IQ chính xác, phân tích theo từng lĩnh vực và 6 bài đánh giá nhận thức. Không cần đăng ký.",
-  "keywords": "test IQ miễn phí, test IQ online, trắc nghiệm IQ, kiểm tra IQ, đo chỉ số IQ, bài test IQ chính xác, ma trận Raven, IQ của tôi là bao nhiêu, test trí thông minh, test IQ không cần đăng ký",
+  "title": "Test IQ Miễn Phí Online - Kết Quả Tức Thì, Chính Xác",
+  "desc": "Làm test IQ miễn phí online với kết quả tức thì, không cần đăng ký. Dựa trên Ma trận Raven chuẩn khoa học: nhận điểm IQ chính xác và phân tích 6 lĩnh vực nhận thức chỉ trong vài phút.",
+  "keywords": "test IQ miễn phí, test IQ online, kiểm tra IQ online, test chỉ số IQ, ma trận Raven, test IQ chính xác, test IQ nhanh, IQ của tôi là bao nhiêu, test trí thông minh online, test IQ không cần đăng ký",
   "h1": "Đo Chỉ Số IQ Một Cách Chính Xác",
   "h2": "Nền tảng đánh giá nhận thức được kiểm chứng khoa học",
   "body": "Ma trận Raven · Thuyết CHC · IQ theo phân phối chuẩn 100% miễn phí · Kết quả tức thì · Phân tích chuyên sâu 6 lĩnh vực",
@@ -115,14 +115,14 @@ export const SEO_LANGS = {
   ],
   "faqH2": "Câu hỏi thường gặp (FAQ)",
   "ogResultTitle": "IQ {iq} ({cat}) · Top {top}% 🧠",
-  "ogResultDesc": "Test IQ miễn phí online chuẩn khoa học. Dựa trên Ma trận tiến triển Raven và thuyết CHC — nhận ngay điểm IQ chính xác, phân tích theo từng lĩnh vực và 6 bài đánh giá nhận thức. Không cần đăng ký."
+  "ogResultDesc": "Làm test IQ miễn phí online với kết quả tức thì, không cần đăng ký. Dựa trên Ma trận Raven chuẩn khoa học: nhận điểm IQ chính xác và phân tích 6 lĩnh vực nhận thức chỉ trong vài phút."
  },
  "tr": {
   "name": "Türkçe",
   "locale": "tr_TR",
-  "title": "Ücretsiz IQ Testi – Bilimsel Olarak Doğrulanmış Online Zeka Testi",
-  "desc": "Ücretsiz ve bilimsel olarak doğrulanmış online IQ testi. Raven İlerleyen Matrisler ve CHC teorisine dayalı — doğru IQ puanınızı, alan bazlı analizinizi ve 6 bilişsel testi anında alın. Üyelik gerekmez.",
-  "keywords": "ücretsiz IQ testi, online IQ testi, IQ testi, zeka testi, IQ ölçümü, zeka ölçümü, doğru IQ testi, raven ilerleyen matrisler, IQ kaç, IQ puanı tablosu, bilişsel yetenek testi, üyeliksiz IQ testi",
+  "title": "Ücretsiz IQ Testi Online - Anında Sonuç, Üyelik Yok",
+  "desc": "Ücretsiz IQ testini online çözün, üyelik olmadan anında sonuç alın. Raven Matrisleri'ne dayalı bilimsel test ile doğru IQ puanınızı ve 6 bilişsel alan analizinizi dakikalar içinde öğrenin.",
+  "keywords": "ücretsiz IQ testi, online IQ testi, IQ testi, zeka testi, IQ puanı, doğru IQ testi, IQ ölçümü, raven ilerleyen matrisler, üyeliksiz IQ testi, IQ kaç, bilişsel yetenek testi, ücretsiz zeka testi",
   "h1": "IQ 'nuzu Doğru Ölçün",
   "h2": "Bilimsel Olarak Doğrulanmış Bilişsel Değerlendirme Platformu",
   "body": "Raven Matrisleri · CHC Teorisi · Normal Dağılım IQ %100 Ücretsiz · Anında Sonuç · 6 Alanda Derin Analiz",
@@ -154,6 +154,6 @@ export const SEO_LANGS = {
   ],
   "faqH2": "Sıkça Sorulan Sorular (SSS)",
   "ogResultTitle": "IQ {iq} ({cat}) · Top {top}% 🧠",
-  "ogResultDesc": "Ücretsiz ve bilimsel olarak doğrulanmış online IQ testi. Raven İlerleyen Matrisler ve CHC teorisine dayalı — doğru IQ puanınızı, alan bazlı analizinizi ve 6 bilişsel testi anında alın. Üyelik gerekmez."
+  "ogResultDesc": "Ücretsiz IQ testini online çözün, üyelik olmadan anında sonuç alın. Raven Matrisleri'ne dayalı bilimsel test ile doğru IQ puanınızı ve 6 bilişsel alan analizinizi dakikalar içinde öğrenin."
  }
 };

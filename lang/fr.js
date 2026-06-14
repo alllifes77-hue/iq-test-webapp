@@ -1,6 +1,6 @@
 window.IQ_LANG={
 htmlLang:'fr',
-docTitle:'Test QI Gratuit – Mesure de l\'Intelligence en Ligne Validée Scientifiquement',
+docTitle:"Test de QI Gratuit en Ligne - Résultat Instantané",
 heroEyebrow:'Plateforme d\'évaluation cognitive validée scientifiquement',
 heroH1:'Mesurez votre <span>QI</span><br>avec Précision',
 heroP:"Matrices de Raven · Théorie CHC · Distribution normale<br>100% Gratuit · Résultats immédiats · Analyse approfondie en 6 domaines",
@@ -149,8 +149,8 @@ featItems:[
   {icon:'💛',title:'Quotient émotionnel (QE)',desc:'Mesure des capacités émotionnelles basée sur le modèle MSCEIT.'},
   {icon:'⚡',title:'Vitesse de traitement & Mémoire',desc:'Évaluation complète de la mémoire de travail, de la vitesse de traitement, de la concentration et de la flexibilité cognitive.'}
 ],
-metaDesc:"Test de QI gratuit et scientifiquement validé en ligne. Basé sur les matrices de Raven et la théorie CHC. Résultat de QI instantané, analyse par domaine et 6 évaluations cognitives — tout gratuit, sans inscription.",
-metaKeywords:"test QI gratuit, test intelligence en ligne, mesurer son QI, matrices de Raven gratuit, test cognitif en ligne, quel est mon QI, coefficient intellectuel test, test de QI précis",
+metaDesc:"Faites un test de QI gratuit en ligne avec résultat instantané, sans inscription. Test scientifique basé sur les matrices de Raven : obtenez votre score de QI et une analyse complète en 6 domaines en quelques minutes.",
+metaKeywords:"test QI gratuit, test de QI en ligne, test intelligence gratuit, mesurer son QI, quel est mon QI, test QI rapide, matrices de Raven, test cognitif gratuit, coefficient intellectuel test, test QI sans inscription",
 ogLocale:'fr_FR',
 faqItems:[
   {q:'Qu\'est-ce qu\'un test de QI et comment mesure-t-il l\'intelligence ?',a:'Le QI (Quotient Intellectuel) mesure l\'intelligence générale (facteur g) à travers le raisonnement séquentiel, la reconnaissance de motifs non verbaux, le raisonnement spatial et la pensée logique. Les résultats suivent une distribution normale avec une moyenne de 100 et un écart-type de 15.'},

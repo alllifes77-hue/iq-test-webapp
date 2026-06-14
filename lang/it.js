@@ -1,6 +1,6 @@
 window.IQ_LANG={
 htmlLang:'it',
-docTitle:'Test del QI Gratuito – Misurazione dell\'Intelligenza Online Scientificamente Validata',
+docTitle:"Test QI Gratuito Online - Risultati Immediati",
 heroEyebrow:'Piattaforma di Valutazione Cognitiva Scientificamente Validata',
 heroH1:'Misura il tuo <span>QI</span><br>con Precisione',
 heroP:"Matrici di Raven · Teoria CHC · Distribuzione Normale<br>100% Gratuito · Risultati Immediati · Analisi Approfondita in 6 Aree",
@@ -149,8 +149,8 @@ featItems:[
   {icon:'💛',title:'Quoziente emotivo (QE)',desc:'Misurazione delle capacità emotive basata sul modello MSCEIT.'},
   {icon:'⚡',title:'Velocità di elaborazione e memoria',desc:'Valutazione completa di memoria di lavoro, velocità di elaborazione, concentrazione e flessibilità cognitiva.'}
 ],
-metaDesc:"Test del QI gratuito e scientificamente validato online. Basato sulle Matrici di Raven e sulla teoria CHC. Punteggio QI istantaneo, analisi per dominio e 6 valutazioni cognitive — tutto gratis, senza registrazione.",
-metaKeywords:"test QI gratuito, test intelligenza online, misurare QI, matrici di Raven gratis, test cognitivo online, qual è il mio QI, test di intelligenza preciso, quoziente intellettivo test",
+metaDesc:"Fai un test del QI gratuito online con risultati immediati e senza registrazione. Basato sulle Matrici di Raven: scopri il tuo quoziente intellettivo e un'analisi scientifica in 6 aree cognitive in pochi minuti.",
+metaKeywords:"test QI gratuito, test del QI online, test intelligenza gratis, test QI veloce, qual è il mio QI, matrici di Raven, test intelligenza veloce, misurare intelligenza online, quoziente intellettivo test, test QI accurato",
 ogLocale:'it_IT',
 faqItems:[
   {q:'Che cos\'è un test del QI e come misura l\'intelligenza?',a:'Il QI (Quoziente Intellettivo) misura l\'intelligenza generale (fattore g) attraverso ragionamento sequenziale, riconoscimento di pattern non verbali, ragionamento spaziale e pensiero logico. I risultati seguono una distribuzione normale con media 100 e deviazione standard 15.'},

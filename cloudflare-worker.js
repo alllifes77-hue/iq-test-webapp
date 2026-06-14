@@ -208,9 +208,9 @@ ${tailFill ? `<path d="${tailFill}" fill="url(#tailG)"/>` : ''}
 const LANGS = {
   en: {
     name:'English', locale:'en_US',
-    title:'Free IQ Test – Scientifically Validated Online Intelligence Measurement',
-    desc:'Take a free, science-based IQ test using Raven\'s Matrices and CHC Theory. Get instant results with a detailed 6-domain cognitive analysis.',
-    keywords:'free IQ test, online IQ test, intelligence test, Raven\'s matrices, CHC theory, cognitive assessment',
+    title:"Free IQ Test Online (2026) - Instant Score, No Signup",
+    desc:"Take a free IQ test online with instant results - no registration, no email. Science-based on Raven's Matrices & CHC theory. Get your accurate IQ score and a 6-domain cognitive analysis in minutes.",
+    keywords:"free IQ test, free IQ test online, IQ test no registration, IQ test instant results, online IQ test, accurate IQ test, quick IQ test, intelligence test, what is my IQ, IQ test free, Raven's matrices, scientific IQ test",
     h1:'Free IQ Test', h2:'Measure your intelligence scientifically',
     body:'Based on Raven\'s Progressive Matrices & CHC Theory · 100% Free · Instant Results · 6-Domain Analysis',
     start:'Start Free IQ Test',
@@ -226,9 +226,9 @@ const LANGS = {
   },
   de: {
     name:'Deutsch', locale:'de_DE',
-    title:'Kostenloser IQ-Test – Wissenschaftlich validierte Intelligenzmessung Online',
-    desc:'Kostenloser, wissenschaftlich fundierter IQ-Test mit Raven-Matrizen und CHC-Theorie. Sofortige Ergebnisse mit detaillierter 6-Bereich-Analyse.',
-    keywords:'kostenloser IQ-Test, Online-IQ-Test, Intelligenztest, Raven-Matrizen, CHC-Theorie, kognitive Bewertung',
+    title:"IQ-Test Kostenlos Online - Sofort Ergebnis, ohne Anmeldung",
+    desc:"Kostenloser IQ-Test online mit Sofortergebnis - keine Anmeldung, keine Kosten. Wissenschaftlich fundiert mit Raven-Matrizen & CHC-Theorie. In unter 30 Minuten Ihren IQ-Wert und 6-Bereich-Analyse erhalten.",
+    keywords:"IQ-Test kostenlos, kostenloser IQ-Test, Intelligenztest online, IQ-Test ohne Anmeldung, Intelligenztest Deutsch, IQ-Test schnell, IQ Wert berechnen, Raven Test online, Intelligenztest gratis, online IQ-Test, wie hoch ist mein IQ",
     h1:'Kostenloser IQ-Test', h2:'Messen Sie Ihre Intelligenz wissenschaftlich',
     body:'Basierend auf Raven\'s Progressiven Matrizen & CHC-Theorie · 100% Kostenlos · Sofortige Ergebnisse · 6-Bereich-Analyse',
     start:'Kostenlosen IQ-Test starten',
@@ -244,9 +244,9 @@ const LANGS = {
   },
   ja: {
     name:'日本語', locale:'ja_JP',
-    title:'無料IQテスト – 科学的に検証されたオンライン知能測定',
-    desc:'レーヴン行列とCHC理論に基づく無料の科学的IQテスト。6領域の詳細認知分析付きで即時結果を提供。',
-    keywords:'無料IQテスト, オンラインIQテスト, 知能テスト, レーヴン行列, CHC理論, 認知評価',
+    title:"IQテスト無料【即時結果・登録不要】オンライン知能診断",
+    desc:"無料IQテストで今すぐ知能指数を測定。レーヴン行列とCHC理論による科学的診断で即時結果を表示。登録不要・完全無料で6領域の認知分析とIQ診断。日本人平均との比較付き。",
+    keywords:"IQテスト無料, 無料IQテスト, IQ診断, IQテスト, オンラインIQテスト, 知能テスト, 知能指数 測定, IQ診断 無料, レーヴン行列, 脳力診断, 自分のIQ, IQテスト 即時結果",
     h1:'無料IQテスト', h2:'科学的に知能を測定しましょう',
     body:'レーヴン漸進行列 & CHC理論 · 完全無料 · 即時結果 · 6領域分析',
     start:'無料IQテストを開始',
@@ -262,9 +262,9 @@ const LANGS = {
   },
   fr: {
     name:'Français', locale:'fr_FR',
-    title:'Test QI Gratuit – Mesure de l\'Intelligence en Ligne Validée Scientifiquement',
-    desc:'Test QI gratuit et scientifique basé sur les Matrices de Raven et la Théorie CHC. Résultats immédiats avec analyse approfondie en 6 domaines.',
-    keywords:'test QI gratuit, test intelligence en ligne, matrices de Raven, théorie CHC, évaluation cognitive',
+    title:"Test de QI Gratuit en Ligne - Résultat Instantané",
+    desc:"Faites un test de QI gratuit en ligne avec résultat instantané, sans inscription. Test scientifique basé sur les matrices de Raven : obtenez votre score de QI et une analyse complète en 6 domaines en quelques minutes.",
+    keywords:"test QI gratuit, test de QI en ligne, test intelligence gratuit, mesurer son QI, quel est mon QI, test QI rapide, matrices de Raven, test cognitif gratuit, coefficient intellectuel test, test QI sans inscription",
     h1:'Test QI Gratuit', h2:'Mesurez votre intelligence scientifiquement',
     body:'Basé sur les Matrices de Raven & la Théorie CHC · 100% Gratuit · Résultats Immédiats · Analyse en 6 Domaines',
     start:'Commencer le test QI gratuit',
@@ -280,9 +280,9 @@ const LANGS = {
   },
   es: {
     name:'Español', locale:'es_ES',
-    title:'Test de CI Gratuito – Medición de Inteligencia Online Científicamente Validada',
-    desc:'Test de CI gratuito y científico basado en las Matrices de Raven y la Teoría CHC. Resultados inmediatos con análisis detallado en 6 áreas.',
-    keywords:'test CI gratuito, test inteligencia online, matrices de Raven, teoría CHC, evaluación cognitiva',
+    title:"Test de CI Gratis Online - Resultados Inmediatos",
+    desc:"Haz un test de inteligencia gratis online con resultados inmediatos y sin registro. Basado en las Matrices de Raven: obtén tu puntuación de CI y un análisis científico de 6 áreas cognitivas en minutos.",
+    keywords:"test CI gratis, test de inteligencia gratis, test inteligencia online, test CI español, matrices de Raven, test coeficiente intelectual, prueba de inteligencia online, test IQ gratis, cuál es mi CI, evaluación CI",
     h1:'Test de CI Gratuito', h2:'Mide tu inteligencia científicamente',
     body:'Basado en las Matrices de Raven & la Teoría CHC · 100% Gratuito · Resultados Inmediatos · Análisis en 6 Áreas',
     start:'Iniciar test de CI gratuito',
@@ -298,9 +298,9 @@ const LANGS = {
   },
   pt: {
     name:'Português', locale:'pt_BR',
-    title:'Teste de QI Gratuito – Medição de Inteligência Online Cientificamente Validada',
-    desc:'Teste de QI gratuito e científico baseado nas Matrizes de Raven e na Teoria CHC. Resultados imediatos com análise detalhada em 6 domínios.',
-    keywords:'teste QI gratuito, teste inteligência online, matrizes de Raven, teoria CHC, avaliação cognitiva',
+    title:"Teste de QI Gratuito Online - Resultado Imediato",
+    desc:"Faça um teste de QI gratuito online com resultado imediato e sem registo. Baseado nas Matrizes de Raven: obtenha a sua pontuação de QI e uma análise científica de 6 domínios cognitivos em minutos.",
+    keywords:"teste de QI gratuito, teste QI grátis, teste de inteligência online, matrizes de Raven, avaliação QI, teste cognitivo grátis, qual é o meu QI, teste de QI online, teste QI rápido, medir QI",
     h1:'Teste de QI Gratuito', h2:'Meça sua inteligência cientificamente',
     body:'Baseado nas Matrizes de Raven & Teoria CHC · 100% Gratuito · Resultados Imediatos · Análise em 6 Domínios',
     start:'Iniciar teste de QI gratuito',
@@ -316,9 +316,9 @@ const LANGS = {
   },
   it: {
     name:'Italiano', locale:'it_IT',
-    title:'Test del QI Gratuito – Misurazione dell\'Intelligenza Online Scientificamente Validata',
-    desc:'Test del QI gratuito e scientifico basato sulle Matrici di Raven e sulla Teoria CHC. Risultati immediati con analisi dettagliata in 6 aree.',
-    keywords:'test QI gratuito, test intelligenza online, matrici di Raven, teoria CHC, valutazione cognitiva',
+    title:"Test QI Gratuito Online - Risultati Immediati",
+    desc:"Fai un test del QI gratuito online con risultati immediati e senza registrazione. Basato sulle Matrici di Raven: scopri il tuo quoziente intellettivo e un'analisi scientifica in 6 aree cognitive in pochi minuti.",
+    keywords:"test QI gratuito, test del QI online, test intelligenza gratis, test QI veloce, qual è il mio QI, matrici di Raven, test intelligenza veloce, misurare intelligenza online, quoziente intellettivo test, test QI accurato",
     h1:'Test del QI Gratuito', h2:'Misura la tua intelligenza scientificamente',
     body:'Basato sulle Matrici di Raven & Teoria CHC · 100% Gratuito · Risultati Immediati · Analisi in 6 Aree',
     start:'Inizia il test del QI gratuito',
@@ -334,9 +334,9 @@ const LANGS = {
   },
   id: {
     name:'Indonesia', locale:'id_ID',
-    title:'Tes IQ Gratis – Pengukuran Kecerdasan Online yang Tervalidasi Secara Ilmiah',
-    desc:'Tes IQ gratis dan ilmiah berdasarkan Matriks Raven dan Teori CHC. Hasil instan dengan analisis mendalam 6 domain.',
-    keywords:'tes IQ gratis, tes kecerdasan online, matriks Raven, teori CHC, penilaian kognitif',
+    title:"Tes IQ Gratis Online - Hasil Instan Tanpa Registrasi",
+    desc:"Tes IQ gratis online dengan hasil instan tanpa registrasi. Berbasis Matriks Raven: dapatkan skor IQ akurat dan analisis 6 domain kognitif dalam hitungan menit. 100% gratis, aman, dan privat.",
+    keywords:"tes IQ gratis, tes IQ online, tes kecerdasan gratis, tes IQ akurat, tes IQ terpercaya, matriks Raven, ukur IQ, tes IQ tanpa registrasi, berapa IQ saya, tes kognitif, tes psikometri gratis",
     h1:'Tes IQ Gratis', h2:'Ukur kecerdasan Anda secara ilmiah',
     body:'Berdasarkan Matriks Progresif Raven & Teori CHC · 100% Gratis · Hasil Langsung · Analisis 6 Domain',
     start:'Mulai tes IQ gratis',
@@ -467,7 +467,7 @@ ${urls}
     } else {
       ogTitle = L.title;
       ogDesc  = L.desc;
-      ogImage = `${APP_URL}/og-${lang}.png`;
+      ogImage = `${SITE_URL}/iq-test/og-${lang}.png`; // 정적 200 직접 서빙 (301 리다이렉트 제거)
     }
 
     // iframe src — pass all query params through to the app
@@ -495,6 +495,26 @@ ${urls}
         "@type":"Question","name":f.q,
         "acceptedAnswer":{"@type":"Answer","text":f.a}
       }))
+    };
+
+    // Schema.org: BreadcrumbList (라이브 리치 결과 + 크롤 효율)
+    const breadcrumbSchema = {
+      "@context":"https://schema.org","@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"All-Lifes","item":SITE_URL+"/"},
+        {"@type":"ListItem","position":2,"name":L.h1,"item":canonical}
+      ]
+    };
+    // Schema.org: Organization + WebSite(SearchAction) — 신뢰/에이전트 검색
+    const orgSchema = {
+      "@context":"https://schema.org","@type":"Organization",
+      "name":"All-Lifes","url":SITE_URL+"/",
+      "logo":SITE_URL+"/iq-test/IQ%20TEST.png"
+    };
+    const websiteSchema = {
+      "@context":"https://schema.org","@type":"WebSite",
+      "name":L.h1,"url":canonical,"inLanguage":lang,
+      "potentialAction":{"@type":"SearchAction","target":SITE_URL+"/iq-test/?q={search_term_string}","query-input":"required name=search_term_string"}
     };
 
     // Result share banner content (shown on shared pages)
@@ -531,6 +551,9 @@ ${hreflangs}
 <meta name="twitter:image"       content="${esc(ogImage)}">
 <script type="application/ld+json">${JSON.stringify(appSchema)}</script>
 <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>
+<script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>
+<script type="application/ld+json">${JSON.stringify(orgSchema)}</script>
+<script type="application/ld+json">${JSON.stringify(websiteSchema)}</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;}

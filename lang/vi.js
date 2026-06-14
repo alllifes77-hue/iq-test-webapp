@@ -1,6 +1,6 @@
 window.IQ_LANG={
 htmlLang:'vi',
-docTitle:'Test IQ Miễn Phí – Đo Chỉ Số IQ Online Chuẩn Khoa Học',
+docTitle:"Test IQ Miễn Phí Online - Kết Quả Tức Thì, Chính Xác",
 heroEyebrow:'Nền tảng đánh giá nhận thức được kiểm chứng khoa học',
 heroH1:'Đo Chỉ Số <span>IQ</span><br>Một Cách Chính Xác',
 heroP:"Ma trận Raven · Thuyết CHC · IQ theo phân phối chuẩn<br>100% miễn phí · Kết quả tức thì · Phân tích chuyên sâu 6 lĩnh vực",
@@ -151,8 +151,8 @@ featItems:[
   {icon:'💛',title:'Chỉ số cảm xúc (EQ)',desc:'Đo lường năng lực cảm xúc dựa trên mô hình MSCEIT.'},
   {icon:'⚡',title:'Tốc độ xử lý & Trí nhớ',desc:'Đánh giá toàn diện trí nhớ làm việc, tốc độ xử lý, khả năng tập trung và linh hoạt nhận thức.'}
 ],
-metaDesc:"Test IQ miễn phí online chuẩn khoa học. Dựa trên Ma trận tiến triển Raven và thuyết CHC — nhận ngay điểm IQ chính xác, phân tích theo từng lĩnh vực và 6 bài đánh giá nhận thức. Không cần đăng ký.",
-metaKeywords:"test IQ miễn phí, test IQ online, trắc nghiệm IQ, kiểm tra IQ, đo chỉ số IQ, bài test IQ chính xác, ma trận Raven, IQ của tôi là bao nhiêu, test trí thông minh, test IQ không cần đăng ký",
+metaDesc:"Làm test IQ miễn phí online với kết quả tức thì, không cần đăng ký. Dựa trên Ma trận Raven chuẩn khoa học: nhận điểm IQ chính xác và phân tích 6 lĩnh vực nhận thức chỉ trong vài phút.",
+metaKeywords:"test IQ miễn phí, test IQ online, kiểm tra IQ online, test chỉ số IQ, ma trận Raven, test IQ chính xác, test IQ nhanh, IQ của tôi là bao nhiêu, test trí thông minh online, test IQ không cần đăng ký",
 ogLocale:'vi_VN',
 faqItems:[
   {q:'Test IQ là gì và nó đo trí thông minh như thế nào?',a:"IQ (chỉ số thông minh) đo trí thông minh tổng quát (yếu tố g) thông qua suy luận dãy số, nhận diện mẫu hình phi ngôn ngữ, suy luận không gian và tư duy logic. Kết quả tuân theo phân phối chuẩn với trung bình 100 và độ lệch chuẩn 15, cho biết vị trí của bạn so với dân số chung."},

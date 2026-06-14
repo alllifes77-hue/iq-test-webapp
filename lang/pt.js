@@ -1,6 +1,6 @@
 window.IQ_LANG={
 htmlLang:'pt',
-docTitle:'Teste de QI Gratuito – Medição de Inteligência Online Cientificamente Validada',
+docTitle:"Teste de QI Gratuito Online - Resultado Imediato",
 heroEyebrow:'Plataforma de Avaliação Cognitiva Cientificamente Validada',
 heroH1:'Meça seu <span>QI</span><br>com Precisão',
 heroP:"Matrizes de Raven · Teoria CHC · Distribuição Normal<br>100% Gratuito · Resultados Imediatos · Análise Profunda em 6 Domínios",
@@ -149,8 +149,8 @@ featItems:[
   {icon:'💛',title:'Quociente emocional (QE)',desc:'Medição de habilidades emocionais baseada no modelo MSCEIT.'},
   {icon:'⚡',title:'Velocidade de processamento e memória',desc:'Avaliação abrangente de memória de trabalho, velocidade de processamento, concentração e flexibilidade cognitiva.'}
 ],
-metaDesc:"Teste de QI gratuito e cientificamente validado online. Baseado nas Matrizes de Raven e na teoria CHC. Resultado de QI instantâneo, análise por domínio e 6 avaliações cognitivas — tudo grátis, sem cadastro.",
-metaKeywords:"teste QI grátis, teste de inteligência online, medir QI online, matrizes de Raven grátis, teste cognitivo online, qual é o meu QI, teste de CI preciso, inteligência emocional teste",
+metaDesc:"Faça um teste de QI gratuito online com resultado imediato e sem registo. Baseado nas Matrizes de Raven: obtenha a sua pontuação de QI e uma análise científica de 6 domínios cognitivos em minutos.",
+metaKeywords:"teste de QI gratuito, teste QI grátis, teste de inteligência online, matrizes de Raven, avaliação QI, teste cognitivo grátis, qual é o meu QI, teste de QI online, teste QI rápido, medir QI",
 ogLocale:'pt_BR',
 faqItems:[
   {q:'O que é um teste de QI e como ele mede a inteligência?',a:'O QI (Quociente de Inteligência) mede a inteligência geral (fator g) por meio de raciocínio sequencial, reconhecimento de padrões não verbais, raciocínio espacial e pensamento lógico. Os resultados seguem uma distribuição normal com média 100 e desvio padrão 15.'},

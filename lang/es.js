@@ -1,6 +1,6 @@
 window.IQ_LANG={
 htmlLang:'es',
-docTitle:'Test de CI Gratuito – Medición de Inteligencia Online Científicamente Validada',
+docTitle:"Test de CI Gratis Online - Resultados Inmediatos",
 heroEyebrow:'Plataforma de Evaluación Cognitiva Científicamente Validada',
 heroH1:'Mide tu <span>CI</span><br>con Precisión',
 heroP:"Matrices de Raven · Teoría CHC · Distribución Normal<br>100% Gratis · Resultados Inmediatos · Análisis Profundo en 6 Áreas",
@@ -149,8 +149,8 @@ featItems:[
   {icon:'💛',title:'Cociente emocional (CE)',desc:'Medición de habilidades emocionales basada en el modelo MSCEIT.'},
   {icon:'⚡',title:'Velocidad de procesamiento y memoria',desc:'Evaluación integral de memoria de trabajo, velocidad de procesamiento, concentración y flexibilidad cognitiva.'}
 ],
-metaDesc:"Test de CI gratuito y científicamente validado online. Basado en las matrices de Raven y la teoría CHC. Resultado de IQ instantáneo, análisis por dominio y 6 pruebas cognitivas — todo gratis, sin registro.",
-metaKeywords:"test IQ gratis, test de inteligencia online, medir cociente intelectual, matrices de Raven gratis, prueba cognitiva online, cuál es mi IQ, test de CI preciso, inteligencia emocional test",
+metaDesc:"Haz un test de inteligencia gratis online con resultados inmediatos y sin registro. Basado en las Matrices de Raven: obtén tu puntuación de CI y un análisis científico de 6 áreas cognitivas en minutos.",
+metaKeywords:"test CI gratis, test de inteligencia gratis, test inteligencia online, test CI español, matrices de Raven, test coeficiente intelectual, prueba de inteligencia online, test IQ gratis, cuál es mi CI, evaluación CI",
 ogLocale:'es_ES',
 faqItems:[
   {q:'¿Qué es un test de CI y cómo mide la inteligencia?',a:'El CI (Cociente Intelectual) mide la inteligencia general (factor g) a través del razonamiento secuencial, el reconocimiento de patrones no verbales, el razonamiento espacial y el pensamiento lógico. Los resultados siguen una distribución normal con media 100 y desviación estándar 15.'},

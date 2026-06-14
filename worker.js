@@ -6,6 +6,7 @@
 import { SEO_LANGS } from './seo-langs.js';
 import { COUNTRY_IQ } from './country-iq.js';
 import { HUB_I18N } from './hub-i18n.js';
+import { SPOKES } from './spokes-i18n.js';
 
 const ALI_APP_KEY = '536770';
 const ALI_TRACKING_ID = 'iqtestweb';
@@ -42,12 +43,17 @@ function renderSeoWrapper(lang, url){
   const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${hreflangHref(l)}">`).join('\n    ')
     + `\n    <link rel="alternate" hreflang="x-default" href="https://all-lifes.com/en/iq-test/">`;
   const appSchema = {"@context":"https://schema.org","@type":"WebApplication","name":L.h1,"description":L.desc,"url":canonical,"applicationCategory":"EducationalApplication","inLanguage":lang,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"operatingSystem":"Web"};
-  const faqSchema = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":L.faq.map(f=>({"@type":"Question","name":f.q,"acceptedAnswer":{"@type":"Answer","text":f.a}}))};
+  const fqs = (SPOKES[lang] && Array.isArray(SPOKES[lang].faq8) && SPOKES[lang].faq8.length) ? SPOKES[lang].faq8 : L.faq;
+  const faqSchema = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":fqs.map(f=>({"@type":"Question","name":f.q,"acceptedAnswer":{"@type":"Answer","text":f.a}}))};
+  const learnLinks = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq'].map(slug=>{
+    const t = (SPOKES[lang] && SPOKES[lang].spokes[slug] && SPOKES[lang].spokes[slug].h1) || slug;
+    return `<li><a href="https://all-lifes.com/iq-test/learn/${lang}/${slug}">${esc(t)}</a></li>`;
+  }).join('') + `<li><a href="${lang==='ko'?'https://all-lifes.com/iq-test/average-iq-by-country':'https://all-lifes.com/iq-test/average-iq-by-country?lang='+lang}">${esc(HUB_I18N[lang]?HUB_I18N[lang].h1:'Average IQ by country')}</a></li>`;
   const breadcrumbSchema = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":L.h1,"item":canonical}]};
   const orgSchema = {"@context":"https://schema.org","@type":"Organization","name":"All-Lifes","url":"https://all-lifes.com/","logo":"https://all-lifes.com/iq-test/IQ%20TEST.png"};
   const websiteSchema = {"@context":"https://schema.org","@type":"WebSite","name":L.h1,"url":canonical,"inLanguage":lang,"potentialAction":{"@type":"SearchAction","target":"https://all-lifes.com/iq-test/?q={search_term_string}","query-input":"required name=search_term_string"}};
   const featuresHtml = L.features.map(f=>`<span class="chip">${esc(f)}</span>`).join('');
-  const faqHtml = L.faq.map(f=>`<div class="faq-item"><div class="faq-q">${esc(f.q)}</div><div class="faq-a">${esc(f.a)}</div></div>`).join('');
+  const faqHtml = fqs.map(f=>`<div class="faq-item"><div class="faq-q">${esc(f.q)}</div><div class="faq-a">${esc(f.a)}</div></div>`).join('');
   const langBar = HREFLANG_ALL.map(l=>{
     const nm = l==='ko'?'한국어':(SEO_LANGS[l]?SEO_LANGS[l].name:l.toUpperCase());
     return `<a href="${hreflangHref(l)}"${l===lang?' class="active"':''}>${nm}</a>`;
@@ -111,7 +117,7 @@ iframe{width:100%;border:none;display:block;min-height:100vh;}
 </div>
 <div class="lang-bar">${langBar}</div>
 <div class="iframe-wrap"><iframe id="iq-frame" src="${esc(appSrc)}" scrolling="no" title="${esc(L.h1)}"></iframe></div>
-<div class="seo-section"><div class="inner"><h2>${esc(L.faqH2)}</h2>${faqHtml}</div></div>
+<div class="seo-section"><div class="inner"><h2>📚 ${esc(HUB_I18N[lang]?HUB_I18N[lang].h1:'Learn more')}</h2><ul style="list-style:none;padding:0;margin:0 0 28px;">${learnLinks.replace(/<li>/g,'<li style="margin:8px 0;"><span style="color:#6366f1">›</span> ').replace(/<a /g,'<a style="color:#4f46e5;text-decoration:none;font-weight:600;font-size:14px;" ')}</ul><h2>${esc(L.faqH2)}</h2>${faqHtml}</div></div>
 <script>window.addEventListener('message',function(e){if(e.data&&e.data.type==='iq-resize'){document.getElementById('iq-frame').style.height=e.data.height+'px';}});</script>
 </body>
 </html>`;
@@ -342,6 +348,119 @@ tbody tr{border-top:1px solid #eef2f7;}
   return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
 }
 
+// ── 허브-스포크 설명 페이지 (토픽 권위 + AI 인용) ──
+const SPOKE_SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq'];
+const SPOKE_TABLE = ['good-iq-score','iq-percentile-chart'];
+const SPOKE_ROWS = [
+  { r:'130+',    p:'98–99.9', pop:'~2%'  },
+  { r:'120–129', p:'91–97',   pop:'~8%'  },
+  { r:'110–119', p:'75–90',   pop:'~16%' },
+  { r:'90–109',  p:'25–73',   pop:'~50%' },
+  { r:'80–89',   p:'9–24',    pop:'~16%' },
+  { r:'70–79',   p:'2–8',     pop:'~7%'  },
+  { r:'<70',     p:'<2',      pop:'~2%'  },
+];
+const spokePillarUrl = (lang) => lang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/${lang}/iq-test/`;
+const spokeUrl = (slug, lang) => `https://all-lifes.com/iq-test/learn/${lang}/${slug}`;
+const countryHubUrl = (lang) => lang==='ko' ? 'https://all-lifes.com/iq-test/average-iq-by-country' : `https://all-lifes.com/iq-test/average-iq-by-country?lang=${lang}`;
+
+function renderSpoke(slug, lang){
+  if(!SPOKE_SLUGS.includes(slug)) return null;
+  const S = SPOKES[lang] && SPOKES[lang].spokes && SPOKES[lang].spokes[slug] ? SPOKES[lang] : (SPOKES.en && SPOKES.en.spokes && SPOKES.en.spokes[slug] ? SPOKES.en : null);
+  const useLang = (SPOKES[lang] && SPOKES[lang].spokes && SPOKES[lang].spokes[slug]) ? lang : 'en';
+  if(!S) return null;
+  const sp = S.spokes[slug];
+  const H = HUB_I18N[useLang] || HUB_I18N.en;
+  const canonical = spokeUrl(slug, useLang);
+  const pillar = spokePillarUrl(useLang);
+  const appUrl = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/iq-test/?lang=${useLang}`;
+
+  const sectionsHtml = sp.sections.map(s=>{
+    const a = String(s.a);
+    const cut = (() => { const m = a.match(/[.!?。？！]\s/); return m ? m.index + 1 : a.length; })();
+    return `<section class="qa"><h2>${esc(s.q)}</h2><p><strong>${esc(a.slice(0,cut))}</strong>${esc(a.slice(cut))}</p></section>`;
+  }).join('');
+
+  let tableHtml = '';
+  if(SPOKE_TABLE.includes(slug) && Array.isArray(S.tableHeaders) && Array.isArray(S.classLabels)){
+    const h = S.tableHeaders, cl = S.classLabels;
+    const rows = SPOKE_ROWS.map((row,i)=>`<tr><td class="rg">${esc(row.r)}</td><td>${esc(cl[i]||'')}</td><td>${esc(row.p)}</td><td>${esc(row.pop)}</td></tr>`).join('');
+    tableHtml = `<table class="cls"><thead><tr><th>${esc(h[0]||'IQ')}</th><th>${esc(h[1]||'Class')}</th><th>${esc(h[2]||'Percentile')}</th><th>${esc(h[3]||'%')}</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+
+  const related = SPOKE_SLUGS.filter(s=>s!==slug).map(s=>{
+    const t = (SPOKES[useLang] && SPOKES[useLang].spokes[s] && SPOKES[useLang].spokes[s].h1) || (SPOKES.en.spokes[s] && SPOKES.en.spokes[s].h1) || s;
+    return `<li><a href="${spokeUrl(s,useLang)}">${esc(t)}</a></li>`;
+  }).join('') + `<li><a href="${countryHubUrl(useLang)}">${esc(HUB_I18N[useLang]?HUB_I18N[useLang].h1:'Average IQ by country')}</a></li>`;
+
+  const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${spokeUrl(slug,l)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${spokeUrl(slug,'en')}">`;
+
+  const faqSchema = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":sp.sections.map(s=>({"@type":"Question","name":s.q,"acceptedAnswer":{"@type":"Answer","text":s.a}}))};
+  const breadcrumb = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":"IQ Test","item":pillar},{"@type":"ListItem","position":3,"name":sp.h1,"item":canonical}]};
+  const article = {"@context":"https://schema.org","@type":"Article","headline":sp.h1,"description":sp.desc,"inLanguage":useLang,"datePublished":"2026-06-14","dateModified":"2026-06-14","author":{"@type":"Organization","name":"All-Lifes"},"publisher":{"@type":"Organization","name":"All-Lifes","logo":{"@type":"ImageObject","url":"https://all-lifes.com/iq-test/IQ%20TEST.png"}},"mainEntityOfPage":canonical};
+
+  const html = `<!DOCTYPE html>
+<html lang="${useLang}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="https://all-lifes.com/iq-test/favicon-${useLang}.png">
+<title>${esc(sp.title)}</title>
+<meta name="description" content="${esc(sp.desc)}">
+<meta name="keywords" content="${esc(sp.keywords||'')}">
+<link rel="canonical" href="${esc(canonical)}">
+    ${hreflangs}
+<meta property="og:title" content="${esc(sp.title)}">
+<meta property="og:description" content="${esc(sp.desc)}">
+<meta property="og:url" content="${esc(canonical)}">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://all-lifes.com/iq-test/og-${useLang==='ko'||['en','de','fr','es','pt','it','ja','id'].includes(useLang)?useLang:useLang}.${['hi','ru','vi','tr'].includes(useLang)?'jpg':'png'}">
+<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>
+<script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
+<script type="application/ld+json">${JSON.stringify(article)}</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.7;}
+.hero{background:linear-gradient(135deg,#1e1b4b,#312e81,#1d4ed8);color:#fff;padding:34px 20px 26px;text-align:center;}
+.hero h1{font-size:clamp(20px,3.4vw,30px);font-weight:900;max-width:780px;margin:0 auto 10px;}
+.hero p{font-size:14px;color:#c7d2fe;max-width:700px;margin:0 auto;}
+.crumb{max-width:760px;margin:0 auto;padding:10px 18px 0;font-size:12px;color:#64748b;}
+.crumb a{color:#4f46e5;text-decoration:none;}
+.wrap{max-width:760px;margin:0 auto;padding:14px 18px 50px;}
+.qa{margin-top:22px;}
+.qa h2{font-size:18px;font-weight:800;color:#1e1b4b;margin-bottom:6px;}
+.qa p{font-size:14px;color:#334155;}
+.qa strong{color:#0f172a;}
+table.cls{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;font-size:13px;margin:18px 0;}
+table.cls thead{background:#1e1b4b;color:#fff;}
+table.cls th,table.cls td{padding:9px 12px;text-align:left;}
+table.cls td.rg{font-weight:800;color:#4f46e5;white-space:nowrap;}
+table.cls tbody tr:nth-child(even){background:#f8fafc;}
+table.cls tbody tr{border-top:1px solid #eef2f7;}
+.cta{display:block;text-align:center;margin:26px auto 0;max-width:420px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-weight:800;font-size:16px;padding:14px;border-radius:12px;text-decoration:none;box-shadow:0 6px 20px rgba(79,70,229,.35);}
+.related{margin-top:30px;padding-top:18px;border-top:1px solid #e2e8f0;}
+.related h2{font-size:15px;font-weight:800;color:#1e1b4b;margin-bottom:10px;}
+.related ul{list-style:none;}
+.related li{margin:7px 0;}
+.related a{color:#4f46e5;text-decoration:none;font-size:14px;font-weight:600;}
+.back{display:block;text-align:center;margin-top:14px;color:#64748b;font-size:13px;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="hero"><h1>${esc(sp.h1)}</h1><p>${esc(sp.intro)}</p></div>
+<div class="crumb"><a href="${pillar}">IQ Test</a> › ${esc(sp.h1)}</div>
+<div class="wrap">
+  ${sectionsHtml}
+  ${tableHtml}
+  <a class="cta" href="${appUrl}">${esc(H.cta || '🧠 Take the free IQ test →')}</a>
+  <div class="related"><h2>🔗 ${esc(H.h1 || 'Learn more')}</h2><ul>${related}</ul></div>
+  <a class="back" href="${pillar}">${esc(H.backHome || '← Back to the IQ Test')}</a>
+</div>
+</body>
+</html>`;
+  return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -372,6 +491,14 @@ export default {
     // 국가별 평균 IQ SEO 허브
     if (path === '/iq-test/average-iq-by-country' || path === '/iq-test/average-iq-by-country/') {
       return renderCountryHub(url);
+    }
+
+    // 허브-스포크 설명 페이지: /iq-test/learn/<lang>/<slug>
+    const spokeM = path.match(/^\/iq-test\/learn\/([a-z]{2})\/([a-z-]+)\/?$/);
+    if (spokeM) {
+      const r = renderSpoke(spokeM[2], spokeM[1]);
+      if (r) return r;
+      return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
     }
 
     // 신규 4개 언어 SEO 래퍼 페이지: /{hi,ru,vi,tr}/iq-test[/]

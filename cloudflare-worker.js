@@ -4,6 +4,7 @@
 //   all-lifes.com/og-image        → dynamic SVG OG image
 //   all-lifes.com/*/iq-test*      → SEO wrapper (except /iq-test/ → WordPress)
 // ═══════════════════════════════════════════════════════════
+import { SPOKES } from './spokes-i18n.js';
 
 // ── IQ category color ────────────────────────────────────────
 function getIQColor(iq) {
@@ -377,28 +378,16 @@ export default {
 
     // ── Route 0: Sitemap (/iq-test-sitemap.xml) ────────────
     if (path === '/iq-test-sitemap.xml') {
-      const lastmod = '2026-04-30';
-      const langs = [
-        { lang: 'ko', loc: `${SITE_URL}/iq-test/` },
-        { lang: 'en', loc: `${SITE_URL}/en/iq-test/` },
-        { lang: 'de', loc: `${SITE_URL}/de/iq-test/` },
-        { lang: 'ja', loc: `${SITE_URL}/ja/iq-test/` },
-        { lang: 'fr', loc: `${SITE_URL}/fr/iq-test/` },
-        { lang: 'es', loc: `${SITE_URL}/es/iq-test/` },
-        { lang: 'pt', loc: `${SITE_URL}/pt/iq-test/` },
-        { lang: 'it', loc: `${SITE_URL}/it/iq-test/` },
-        { lang: 'id', loc: `${SITE_URL}/id/iq-test/` },
-        { lang: 'hi', loc: `${SITE_URL}/hi/iq-test/` },
-        { lang: 'ru', loc: `${SITE_URL}/ru/iq-test/` },
-        { lang: 'vi', loc: `${SITE_URL}/vi/iq-test/` },
-        { lang: 'tr', loc: `${SITE_URL}/tr/iq-test/` },
-      ];
+      const lastmod = '2026-06-14';
+      const LCODES = ['ko','en','de','ja','fr','es','pt','it','id','hi','ru','vi','tr'];
+      const mainLoc = (l) => l === 'ko' ? `${SITE_URL}/iq-test/` : `${SITE_URL}/${l}/iq-test/`;
+      const langs = LCODES.map(l => ({ lang: l, loc: mainLoc(l) }));
       const alternates = langs.map(l =>
         `    <xhtml:link rel="alternate" hreflang="${l.lang}" href="${l.loc}"/>`
       ).join('\n') +
       `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/en/iq-test/"/>`;
 
-      const urls = langs.map((l, i) => `  <url>
+      const mainUrls = langs.map((l, i) => `  <url>
     <loc>${l.loc}</loc>
 ${alternates}
     <changefreq>weekly</changefreq>
@@ -406,10 +395,43 @@ ${alternates}
     <lastmod>${lastmod}</lastmod>
   </url>`).join('\n');
 
+      // Country hub
+      const hubLoc = (l) => l === 'ko'
+        ? `${SITE_URL}/iq-test/average-iq-by-country`
+        : `${SITE_URL}/iq-test/average-iq-by-country?lang=${l}`;
+      const hubAlt = LCODES.map(l =>
+        `    <xhtml:link rel="alternate" hreflang="${l}" href="${hubLoc(l)}"/>`
+      ).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${hubLoc('en')}"/>`;
+      const hubUrl = `  <url>
+    <loc>${hubLoc('ko')}</loc>
+${hubAlt}
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>${lastmod}</lastmod>
+  </url>`;
+
+      // Hub-and-spoke explainer pages (4 slugs × 13 langs)
+      const SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq'];
+      const spokeLoc = (l, s) => `${SITE_URL}/iq-test/learn/${l}/${s}`;
+      const spokeUrls = SLUGS.flatMap(s => {
+        const alt = LCODES.map(l =>
+          `    <xhtml:link rel="alternate" hreflang="${l}" href="${spokeLoc(l, s)}"/>`
+        ).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${spokeLoc('en', s)}"/>`;
+        return LCODES.map(l => `  <url>
+    <loc>${spokeLoc(l, s)}</loc>
+${alt}
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>${lastmod}</lastmod>
+  </url>`);
+      }).join('\n');
+
       const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${urls}
+${mainUrls}
+${hubUrl}
+${spokeUrls}
 </urlset>`;
       return new Response(xml, {
         headers: {
@@ -488,14 +510,20 @@ ${urls}
       "operatingSystem":"Web"
     };
 
-    // Schema.org: FAQPage
+    // Schema.org: FAQPage (스포크 8문항 우선, 없으면 기존 3문항)
+    const fqs = (SPOKES[lang] && Array.isArray(SPOKES[lang].faq8) && SPOKES[lang].faq8.length) ? SPOKES[lang].faq8 : L.faq;
     const faqSchema = {
       "@context":"https://schema.org","@type":"FAQPage",
-      "mainEntity": L.faq.map(f=>({
+      "mainEntity": fqs.map(f=>({
         "@type":"Question","name":f.q,
         "acceptedAnswer":{"@type":"Answer","text":f.a}
       }))
     };
+    // 필러 → 스포크 내부 링크 (토픽 권위)
+    const learnLinks = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq'].map(slug=>{
+      const t = (SPOKES[lang] && SPOKES[lang].spokes[slug] && SPOKES[lang].spokes[slug].h1) || slug;
+      return `<li style="margin:8px 0;"><span style="color:#6366f1">›</span> <a style="color:#4f46e5;text-decoration:none;font-weight:600;font-size:14px;" href="${SITE_URL}/iq-test/learn/${lang}/${slug}">${esc(t)}</a></li>`;
+    }).join('') + `<li style="margin:8px 0;"><span style="color:#6366f1">›</span> <a style="color:#4f46e5;text-decoration:none;font-weight:600;font-size:14px;" href="${SITE_URL}/iq-test/average-iq-by-country?lang=${lang}">${esc('Average IQ by Country')}</a></li>`;
 
     // Schema.org: BreadcrumbList (라이브 리치 결과 + 크롤 효율)
     const breadcrumbSchema = {
@@ -519,7 +547,7 @@ ${urls}
 
     // Result share banner content (shown on shared pages)
     const featuresHtml = L.features.map(f=>`<span class="chip">${f}</span>`).join('');
-    const faqHtml = L.faq.map(f=>
+    const faqHtml = fqs.map(f=>
       `<div class="faq-item"><div class="faq-q">${esc(f.q)}</div><div class="faq-a">${esc(f.a)}</div></div>`
     ).join('');
 
@@ -597,6 +625,8 @@ iframe{width:100%;border:none;display:block;min-height:100vh;}
 </div>
 <div class="seo-section">
   <div class="inner">
+    <h2>📚 ${esc(L.h1)}</h2>
+    <ul style="list-style:none;padding:0;margin:0 0 28px;">${learnLinks}</ul>
     <h2>${esc(L.faqH2)}</h2>
     ${faqHtml}
   </div>

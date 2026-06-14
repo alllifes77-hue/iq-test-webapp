@@ -546,6 +546,34 @@ function renderIQLadder(iq){
   ).join('');
 }
 
+// ── Result-screen contextual links to hub-and-spoke explainer pages (SEO internal linking) ──
+const LEARN_I18N={
+  ko:{title:'📚 더 알아보기',items:[['good-iq-score','좋은 IQ 점수는 몇 점일까?'],['iq-percentile-chart','IQ 백분위 차트로 내 위치 보기'],['online-iq-test-accuracy','온라인 IQ 테스트는 정확할까?'],['improve-iq','IQ를 높일 수 있을까?']]},
+  en:{title:'📚 Learn more',items:[['good-iq-score','What is a good IQ score?'],['iq-percentile-chart','IQ percentile chart — where do you rank?'],['online-iq-test-accuracy','Are online IQ tests accurate?'],['improve-iq','Can you increase your IQ?']]},
+  de:{title:'📚 Mehr erfahren',items:[['good-iq-score','Was ist ein guter IQ-Wert?'],['iq-percentile-chart','IQ-Perzentil-Tabelle — wo stehst du?'],['online-iq-test-accuracy','Sind Online-IQ-Tests genau?'],['improve-iq','Kann man seinen IQ steigern?']]},
+  ja:{title:'📚 もっと知る',items:[['good-iq-score','良いIQスコアとは？'],['iq-percentile-chart','IQパーセンタイル表で自分の位置を確認'],['online-iq-test-accuracy','オンラインIQテストは正確？'],['improve-iq','IQは上げられる？']]},
+  fr:{title:'📚 En savoir plus',items:[['good-iq-score','Qu’est-ce qu’un bon QI ?'],['iq-percentile-chart','Tableau des percentiles de QI'],['online-iq-test-accuracy','Les tests de QI en ligne sont-ils fiables ?'],['improve-iq','Peut-on augmenter son QI ?']]},
+  es:{title:'📚 Más información',items:[['good-iq-score','¿Qué es un buen CI?'],['iq-percentile-chart','Tabla de percentiles de CI'],['online-iq-test-accuracy','¿Son precisos los test de CI online?'],['improve-iq','¿Se puede aumentar el CI?']]},
+  pt:{title:'📚 Saiba mais',items:[['good-iq-score','O que é um bom QI?'],['iq-percentile-chart','Tabela de percentis de QI'],['online-iq-test-accuracy','Os testes de QI online são precisos?'],['improve-iq','É possível aumentar o QI?']]},
+  it:{title:'📚 Scopri di più',items:[['good-iq-score','Cos’è un buon QI?'],['iq-percentile-chart','Tabella dei percentili del QI'],['online-iq-test-accuracy','I test di QI online sono affidabili?'],['improve-iq','Si può aumentare il QI?']]},
+  id:{title:'📚 Pelajari lebih lanjut',items:[['good-iq-score','Berapa skor IQ yang baik?'],['iq-percentile-chart','Tabel persentil IQ'],['online-iq-test-accuracy','Apakah tes IQ online akurat?'],['improve-iq','Bisakah IQ ditingkatkan?']]},
+  hi:{title:'📚 और जानें',items:[['good-iq-score','अच्छा IQ स्कोर क्या है?'],['iq-percentile-chart','IQ पर्सेंटाइल चार्ट'],['online-iq-test-accuracy','क्या ऑनलाइन IQ टेस्ट सटीक हैं?'],['improve-iq','क्या IQ बढ़ाया जा सकता है?']]},
+  ru:{title:'📚 Узнать больше',items:[['good-iq-score','Какой IQ считается хорошим?'],['iq-percentile-chart','Таблица процентилей IQ'],['online-iq-test-accuracy','Точны ли онлайн-тесты IQ?'],['improve-iq','Можно ли повысить IQ?']]},
+  vi:{title:'📚 Tìm hiểu thêm',items:[['good-iq-score','Điểm IQ tốt là bao nhiêu?'],['iq-percentile-chart','Bảng phân vị IQ'],['online-iq-test-accuracy','Bài test IQ online có chính xác?'],['improve-iq','Có thể tăng IQ không?']]},
+  tr:{title:'📚 Daha fazla bilgi',items:[['good-iq-score','İyi bir IQ puanı nedir?'],['iq-percentile-chart','IQ yüzdelik dilim tablosu'],['online-iq-test-accuracy','Online IQ testleri doğru mu?'],['improve-iq','IQ artırılabilir mi?']]},
+};
+function renderLearnLinks(){
+  const card=document.getElementById('learn-links-card');
+  if(!card)return;
+  const lang=window.IQ_CURRENT_LANG||'ko';
+  const L=LEARN_I18N[lang]||LEARN_I18N.en;
+  const base='https://all-lifes.com/iq-test/learn/'+lang+'/';
+  card.style.display='';
+  card.innerHTML='<h3>'+L.title+'</h3><div class="learn-links">'+L.items.map(it=>
+    '<a class="learn-link" href="'+base+it[0]+'">'+it[1]+' <span style="opacity:.5">›</span></a>'
+  ).join('')+'</div>';
+}
+
 // ── Theme toggle ──
 function updateThemeBtn(){
   const b=document.getElementById('theme-toggle');
@@ -1109,6 +1137,7 @@ function computeResults(){
     const bellCard=document.querySelector('.chart-card.full h3');if(bellCard)bellCard.textContent=t('bellTitle')||'📊 IQ Distribution in General Population';
     drawBellCurve('bellChart',iq,'#4f46e5');
     renderIQLadder(iq);
+    renderLearnLinks();
     if(currentMode==='long'){
       const radarWrap=document.getElementById('radar-wrap');const bdWrap=document.getElementById('breakdown-wrap');
       radarWrap.classList.remove('hidden');bdWrap.classList.remove('hidden');
@@ -1528,7 +1557,7 @@ function restoreIQResults(iq,catLabel,topPct,mode,typeCode,challenge){
   document.getElementById('sc-pct').textContent=tp('topPctStr',{n:topPct})||`상위 ${topPct}%`;
   document.getElementById('switch-btn').style.display='none';
   setTimeout(()=>{document.getElementById('pct-fill').style.width=pctile+'%';},300);
-  setTimeout(()=>{drawBellCurve('bellChart',iq,'#4f46e5');renderIQLadder(iq);},400);
+  setTimeout(()=>{drawBellCurve('bellChart',iq,'#4f46e5');renderIQLadder(iq);renderLearnLinks();},400);
   showScreen('results');
 }
 

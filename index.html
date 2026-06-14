@@ -111,6 +111,8 @@
 /* 애드센스 디스플레이 광고 컨테이너 */
 .ad-box{max-width:900px;margin:26px auto;padding:0 20px;text-align:center;min-height:50px;}
 .ad-box ins.adsbygoogle{display:block;}
+/* 결과 화면 광고: 컴팩트하게 공간 확보, 잘 보이는 위치 */
+.ad-result{margin:16px auto;min-height:90px;}
 /* 인지 유형(아키타입) 결과 블록 — 다크 히어로용 */
 .cog-type-block{margin:14px auto 6px;max-width:520px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:18px 20px;backdrop-filter:blur(4px);}
 .cog-type-block .ct-emoji{font-size:42px;line-height:1;margin-bottom:6px;}
@@ -962,6 +964,9 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
       <div class="stat-card"><div class="stat-val gradient-text" id="r-top">50</div><div class="stat-lbl">상위 %</div></div>
     </div>
 
+    <!-- AdSense: 결과 상단 (잘 보이는 위치) -->
+    <div class="ad-box ad-result"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1378943893051810" data-ad-slot="8233374508" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+
     <div class="chart-row">
       <div class="chart-card full"><h3>📊 전체 인구 지능 분포에서의 위치</h3><canvas id="bellChart" height="180"></canvas></div>
       <div class="chart-card full" id="iq-ladder-card" style="display:none"></div>
@@ -1105,6 +1110,9 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
       <div class="stat-card"><div class="stat-val gradient-text" id="ext-stat-level">-</div><div class="stat-lbl">등급</div></div>
     </div>
 
+    <!-- AdSense: 확장검사 결과 상단 -->
+    <div class="ad-box ad-result"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1378943893051810" data-ad-slot="8233374508" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+
     <!-- 분포 차트 -->
     <div class="chart-row" style="margin-bottom:20px;">
       <div class="chart-card full"><h3 id="ext-bell-title">📊 전체 응시자 분포에서의 위치</h3><canvas id="ext-bell-chart" height="160"></canvas></div>
@@ -1243,6 +1251,8 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
     <div class="daily-freeze-line" id="daily-freeze-line" style="display:none;font-size:12px;color:var(--text2);margin:-8px 0 14px;"></div>
     <button class="daily-share-btn" onclick="shareDailyResult()" id="daily-share-btn">📤 결과 공유하기</button>
     <button class="daily-back-btn" onclick="showScreen('home')" id="daily-back-btn">← 홈으로 돌아가기</button>
+    <!-- AdSense: 데일리 결과 -->
+    <div class="ad-box ad-result"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1378943893051810" data-ad-slot="8233374508" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
     <div class="aff-section" id="aff-section-daily" style="display:none"></div>
   </div>
 
@@ -1294,6 +1304,8 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
     <div class="asd-profile-badge" id="asd-profile"></div>
   </div>
   <div class="asd-result-body">
+    <!-- AdSense: ASD 결과 상단 -->
+    <div class="ad-box ad-result"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1378943893051810" data-ad-slot="8233374508" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
     <div class="asd-adhd-card">
       <div class="asd-adhd-title" id="asd-adhd-title">ADHD 동반 경향</div>
       <div style="font-size:14px;font-weight:800;color:#b91c1c;margin-bottom:6px;" id="asd-adhd-level">ADHD 낮음: 0/5</div>

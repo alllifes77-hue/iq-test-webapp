@@ -435,7 +435,9 @@ function endDailyChallenge(){
   const backBtn=document.getElementById('daily-back-btn');if(backBtn&&L&&L.backHome)backBtn.textContent=L.backHome;
   document.getElementById('daily-q-section').style.display='none';
   document.getElementById('daily-result-section').style.display='block';
+  ensureCoupangWidget('daily');
   ensureAliProducts('daily');
+  setTimeout(pushVisibleAds,250); // 데일리 결과 광고 push (showScreen 미경유)
 }
 
 function shareDailyResult(){
@@ -632,11 +634,12 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 
 // ── 쿠팡 파트너스 다이내믹 위젯 (ko 전용, 결과 화면 첫 진입 시 lazy 삽입) ──
+const _AFF_SEC={res:'aff-section-iq',ext:'aff-section-ext',asd:'aff-section-asd',daily:'aff-section-daily',brain:'aff-section-brain'};
 function ensureCoupangWidget(placement){
   const cfg=window.COUPANG_WIDGET;
   if(!cfg||!cfg.enabled)return;
   if((window.IQ_CURRENT_LANG||'ko')!=='ko')return;
-  const sec=document.getElementById(placement==='ext'?'aff-section-ext':'aff-section-iq');
+  const sec=document.getElementById(_AFF_SEC[placement]||'aff-section-iq');
   if(!sec||sec.querySelector('.coupang-widget'))return;
   // 카드 오퍼가 없어 숨겨진 상태면 섹션을 열고 헤더 구성
   if(sec.style.display==='none'){
@@ -692,17 +695,17 @@ async function ensureAliProducts(placement){
 // ── AdSense: SPA 화면 전환 시 보이는 광고만 push ──
 // display:none 상태에서 push하면 폭 0으로 실패 → 보이는 유닛만, 한 번에 하나씩 순차 push
 // (연속 push는 구글 스크립트 처리 race로 일부 유닛이 누락됨)
-let _adPushTries=0;
-function pushVisibleAds(){
+// 화면 전환마다 새 예산으로 재실행 → 결과 화면 등 뒤늦게 보이는 유닛도 확실히 push
+function pushVisibleAds(budget){
+  if(budget===undefined)budget=14;
   let pending=[];
   try{
     pending=Array.from(document.querySelectorAll('ins.adsbygoogle:not([data-adsbygoogle-status])')).filter(i=>i.offsetParent);
   }catch(e){return;}
-  if(!pending.length||_adPushTries>20)return;
-  _adPushTries++;
-  // push 에러(숨김 유닛 width=0 등)가 나도 재시도 체인은 유지
+  if(!pending.length||budget<=0)return;
+  // 한 번에 하나씩 push (연속 push는 구글 스크립트 처리 race로 일부 누락)
   try{(window.adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
-  setTimeout(pushVisibleAds,450);
+  setTimeout(()=>pushVisibleAds(budget-1),450);
 }
 document.addEventListener('DOMContentLoaded',()=>{setTimeout(pushVisibleAds,400);});
 
@@ -715,7 +718,7 @@ function showScreen(id){
   setTimeout(pushVisibleAds,250);
   if(id==='results'){ensureCoupangWidget('res');ensureAliProducts('res');}
   else if(id==='ext-results'){ensureCoupangWidget('ext');ensureAliProducts('ext');}
-  else if(id==='asd-result')ensureAliProducts('asd');
+  else if(id==='asd-result'){ensureCoupangWidget('asd');ensureAliProducts('asd');}
   else if(id==='brain-training')ensureAliProducts('brain');
 }
 function scrollToExt(){showScreen('results');setTimeout(()=>{const el=document.getElementById('ext-grid');if(el)el.scrollIntoView({behavior:'smooth'});},300);}

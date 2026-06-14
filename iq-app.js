@@ -432,6 +432,7 @@ function endDailyChallenge(){
   const backBtn=document.getElementById('daily-back-btn');if(backBtn&&L&&L.backHome)backBtn.textContent=L.backHome;
   document.getElementById('daily-q-section').style.display='none';
   document.getElementById('daily-result-section').style.display='block';
+  ensureAliProducts('daily');
 }
 
 function shareDailyResult(){
@@ -649,11 +650,13 @@ function ensureCoupangWidget(placement){
 
 // ── 알리익스프레스 상품 렌더링 (전 언어, 결과 화면 lazy 로드) ──
 let _aliCache=null;
+// 결과/보조 화면별 알리익스프레스 컨테이너 매핑 (전 화면 노출)
+const ALI_SECTIONS={res:'aff-section-iq',ext:'aff-section-ext',asd:'aff-section-asd',daily:'aff-section-daily',brain:'aff-section-brain'};
 async function ensureAliProducts(placement){
   const cfg=window.ALIEXPRESS;
   if(!cfg||!cfg.enabled)return;
   const lang=window.IQ_CURRENT_LANG||'ko';
-  const secId=placement==='ext'?'aff-section-ext':'aff-section-iq';
+  const secId=ALI_SECTIONS[placement]||'aff-section-iq';
   const sec=document.getElementById(secId);
   if(!sec||sec.querySelector('.ali-grid'))return;
   try{
@@ -662,11 +665,11 @@ async function ensureAliProducts(placement){
       if(!resp.ok)return;
       _aliCache=await resp.json();
     }
-    const items=(_aliCache.products||[]).slice(0,cfg.maxItems||4);
+    const items=(_aliCache.products||[]).slice(0,cfg.maxItems||6);
     if(!items.length)return;
-    // 섹션이 숨겨져 있으면 헤더와 함께 열기
+    // 섹션이 비어있거나 숨겨져 있으면 헤더와 함께 열기
     const meta=(window.AFFILIATE_META&&(window.AFFILIATE_META[lang]||window.AFFILIATE_META.en))||{};
-    if(sec.style.display==='none'){
+    if(sec.style.display==='none'||!sec.innerHTML.trim()){
       sec.style.display='';
       sec.innerHTML=`<h3>${meta.title||'🎁 Picks for You'}</h3><div class="aff-disc">${meta.disc||''}</div>`;
     }
@@ -709,6 +712,8 @@ function showScreen(id){
   setTimeout(pushVisibleAds,250);
   if(id==='results'){ensureCoupangWidget('res');ensureAliProducts('res');}
   else if(id==='ext-results'){ensureCoupangWidget('ext');ensureAliProducts('ext');}
+  else if(id==='asd-result')ensureAliProducts('asd');
+  else if(id==='brain-training')ensureAliProducts('brain');
 }
 function scrollToExt(){showScreen('results');setTimeout(()=>{const el=document.getElementById('ext-grid');if(el)el.scrollIntoView({behavior:'smooth'});},300);}
 function restartAll(){showScreen('home');}

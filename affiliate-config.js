@@ -21,7 +21,7 @@
 window.ALIEXPRESS = {
   enabled: true,
   endpoint: 'api/ali-products',
-  maxItems: 4,
+  maxItems: 6,
 };
 
 // ── 쿠팡 파트너스 다이내믹 위젯 (한국어 페이지 전용) ──

@@ -265,6 +265,15 @@ tbody tr{border-top:1px solid #eef2f7;}
 .how p{font-size:13px;color:#475569;}
 .cta{display:block;text-align:center;margin:24px auto 0;max-width:420px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-weight:800;font-size:16px;padding:14px;border-radius:12px;text-decoration:none;box-shadow:0 6px 20px rgba(79,70,229,.35);}
 .back{display:block;text-align:center;margin-top:14px;color:#64748b;font-size:13px;text-decoration:none;}
+#hub-ali{margin-top:26px;}
+#hub-ali h2{font-size:16px;font-weight:800;color:#1e1b4b;margin-bottom:4px;}
+#hub-ali .disc{font-size:11px;color:#94a3b8;margin-bottom:12px;}
+.ali-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;}
+.ali-card{display:flex;flex-direction:column;background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;text-decoration:none;color:#0f172a;transition:transform .15s;}
+.ali-card:hover{transform:translateY(-2px);}
+.ali-card img{width:100%;aspect-ratio:1;object-fit:cover;background:#fff;}
+.ali-t{font-size:11px;line-height:1.4;color:#475569;padding:7px 9px 2px;height:36px;overflow:hidden;}
+.ali-p{font-size:13px;font-weight:800;color:#4f46e5;padding:0 9px 9px;}
 </style>
 </head>
 <body>
@@ -273,9 +282,29 @@ tbody tr{border-top:1px solid #eef2f7;}
   <div class="caveat">${esc(L.caveat)}</div>
   <table><thead><tr><th>#</th><th>${esc(L.colCountry)}</th><th style="text-align:right">${esc(L.colIQ)}</th></tr></thead><tbody>${rows}</tbody></table>
   <div class="how"><h2>${esc(L.howTitle)}</h2><p>${esc(L.howBody)}</p></div>
+  <div id="hub-ali"></div>
   <a class="cta" href="${esc(appUrl)}">${esc(L.cta)}</a>
   <a class="back" href="${esc(appUrl)}">${esc(L.backHome)}</a>
 </div>
+<script>
+(function(){
+  var lang=${JSON.stringify(lang)};
+  var s=document.createElement('script');
+  s.src='https://all-lifes.com/iq-test/affiliate-config.js';
+  s.onload=function(){
+    var meta=(window.AFFILIATE_META&&(window.AFFILIATE_META[lang]||window.AFFILIATE_META.en))||{};
+    fetch('https://all-lifes.com/iq-test/api/ali-products?lang='+lang).then(function(r){return r.json();}).then(function(d){
+      var items=(d.products||[]).slice(0,6);
+      if(!items.length)return;
+      var html='<h2>'+(meta.title||'🎁')+'</h2><div class="disc">'+(meta.disc||'')+'</div><div class="ali-grid">';
+      html+=items.map(function(p){return '<a class="ali-card" href="'+p.url+'" target="_blank" rel="noopener sponsored"><img src="'+p.image+'" loading="lazy" alt=""><div class="ali-t">'+String(p.title).replace(/[<>]/g,'').slice(0,60)+'</div><div class="ali-p">'+p.price+' '+p.currency+'</div></a>';}).join('');
+      html+='</div>';
+      document.getElementById('hub-ali').innerHTML=html;
+    }).catch(function(){});
+  };
+  document.body.appendChild(s);
+})();
+</script>
 </body>
 </html>`;
   return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});

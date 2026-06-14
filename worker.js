@@ -136,13 +136,20 @@ async function aliSign(params, secret) {
   return Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
 }
 
+// 국가 → 통화 (가격을 방문자 현지 통화로; 미지정 국가는 USD)
+const COUNTRY_CUR = { KR:'KRW', US:'USD', JP:'JPY', CN:'USD', DE:'EUR', FR:'EUR', ES:'EUR', IT:'EUR', PT:'EUR', NL:'EUR', AT:'EUR', BE:'EUR', IE:'EUR', BR:'BRL', RU:'USD', VN:'VND', GB:'GBP', CA:'CAD', AU:'AUD', IN:'USD', ID:'USD', TR:'USD', PH:'USD', TH:'USD', MX:'USD', SG:'USD', MY:'USD', SA:'USD', AE:'USD', PL:'PLN' };
+
 async function handleAliProducts(request, env) {
   const url = new URL(request.url);
   const lang = (url.searchParams.get('lang') || 'en').toLowerCase();
   const loc = ALI_LOCALE[lang] || ALI_LOCALE.en;
+  // ── 방문자 실제 국가 IP 기준 배송지 (Cloudflare geo) ──
+  // 페이지 언어가 아닌 클릭하는 사람의 국가로 필터 → "해당 국가 미배송" 404 방지
+  const country = ((request.cf && request.cf.country) || loc.ship || 'US').toUpperCase();
+  const cur = COUNTRY_CUR[country] || 'USD';
 
-  // 엣지 캐시 (언어별 12시간) — Test 앱 API 한도 보호
-  const cacheKey = new Request('https://cache.iq-test/ali-products?lang=' + lang);
+  // 엣지 캐시: 언어+국가별 12시간
+  const cacheKey = new Request('https://cache.iq-test/ali-products?lang=' + lang + '&c=' + country);
   const cache = caches.default;
   const hit = await cache.match(cacheKey);
   if (hit) return hit;
@@ -151,37 +158,43 @@ async function handleAliProducts(request, env) {
     return new Response(JSON.stringify({ error: 'not_configured' }), { status: 503, headers: { 'Content-Type': 'application/json' } });
   }
 
-  const params = {
-    method: 'aliexpress.affiliate.product.query',
-    app_key: ALI_APP_KEY,
-    timestamp: String(Date.now()),
-    sign_method: 'sha256',
-    keywords: 'brain teaser puzzle',
-    target_currency: loc.cur,
-    target_language: loc.lang,
-    tracking_id: ALI_TRACKING_ID,
-    page_size: '8',
-    ship_to_country: loc.ship,
-    sort: 'LAST_VOLUME_DESC',
-  };
-  params.sign = await aliSign(params, env.ALI_APP_SECRET);
+  async function query(shipTo, curr) {
+    const params = {
+      method: 'aliexpress.affiliate.product.query',
+      app_key: ALI_APP_KEY,
+      timestamp: String(Date.now()),
+      sign_method: 'sha256',
+      keywords: 'brain teaser puzzle',
+      target_currency: curr,
+      target_language: loc.lang,
+      tracking_id: ALI_TRACKING_ID,
+      page_size: '12',
+      ship_to_country: shipTo,
+      sort: 'LAST_VOLUME_DESC',
+    };
+    params.sign = await aliSign(params, env.ALI_APP_SECRET);
+    try {
+      const apiRes = await fetch('https://api-sg.aliexpress.com/sync?' + new URLSearchParams(params).toString());
+      const json = await apiRes.json();
+      return json?.aliexpress_affiliate_product_query_response?.resp_result?.result?.products?.product || [];
+    } catch (e) { return []; }
+  }
 
-  let products = [];
-  try {
-    const apiRes = await fetch('https://api-sg.aliexpress.com/sync?' + new URLSearchParams(params).toString());
-    const json = await apiRes.json();
-    const list = json?.aliexpress_affiliate_product_query_response?.resp_result?.result?.products?.product || [];
-    products = list.slice(0, 8).map(p => ({
-      title: p.product_title || '',
-      image: (p.product_main_image_url || '').replace(/^http:/, 'https:'),
-      price: p.target_sale_price || '',
-      currency: p.target_sale_price_currency || loc.cur,
-      url: p.promotion_link || '',
-      orders: p.lastest_volume || p.latest_volume || 0,
-    })).filter(p => p.url && p.image);
-  } catch (e) { /* 빈 배열 반환 → 클라이언트가 섹션 숨김 */ }
+  // 1차: 방문자 국가 배송. 결과 없으면(일부 국가 API 미지원) US 폴백 — 노출은 유지
+  let usedCur = cur;
+  let list = await query(country, cur);
+  if (!list.length && country !== 'US') { list = await query('US', 'USD'); usedCur = 'USD'; }
 
-  const res = new Response(JSON.stringify({ lang, products }), {
+  const products = list.slice(0, 8).map(p => ({
+    title: p.product_title || '',
+    image: (p.product_main_image_url || '').replace(/^http:/, 'https:'),
+    price: p.target_sale_price || '',
+    currency: p.target_sale_price_currency || usedCur,
+    url: p.promotion_link || '',
+    orders: p.lastest_volume || p.latest_volume || 0,
+  })).filter(p => p.url && p.image);
+
+  const res = new Response(JSON.stringify({ lang, country, products }), {
     headers: {
       'Content-Type': 'application/json',
       'Cache-Control': 'public, max-age=3600, s-maxage=43200',

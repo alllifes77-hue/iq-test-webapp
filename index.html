@@ -752,7 +752,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
   <!-- ASD / Asperger / ADHD Screening -->
   <div class="asd-mode-section">
     <div class="asd-mode-header">
-      <div class="asd-new-badge">🆕 신경다양성 검사</div>
+      <div class="asd-new-badge" id="asd-new-badge">🆕 신경다양성 검사</div>
       <h2 id="asd-section-title">자폐 스펙트럼 · 아스퍼거 · ADHD 스크리닝</h2>
       <p id="asd-section-sub">AQ 기반 25문항 · 사회적 소통 · 반복 행동 · 감각 민감도 · ADHD 동반 평가</p>
     </div>
@@ -762,7 +762,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
         <div class="asd-card-content">
           <h3 id="asd-card-title">자폐 스펙트럼 검사</h3>
           <p id="asd-card-desc">사회적 소통 어려움 · 반복 행동 · 감각 과민 · 인지 스타일 · ADHD 동반 경향까지 종합 평가합니다.</p>
-          <div class="tc-meta"><span class="badge badge-teal">25문항</span><span class="badge badge-sky">약 8분</span><span class="badge badge-purple">AQ 기반</span></div>
+          <div class="tc-meta"><span class="badge badge-teal" id="asd-badge-1">25문항</span><span class="badge badge-sky" id="asd-badge-2">약 8분</span><span class="badge badge-purple" id="asd-badge-3">AQ 기반</span></div>
         </div>
       </div>
       <div class="asd-card" onclick="startASD()">
@@ -770,7 +770,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
         <div class="asd-card-content">
           <h3 id="asd-card2-title">아스퍼거 · ADHD 동반 평가</h3>
           <p id="asd-card2-desc">고기능 자폐(아스퍼거) 특성과 ADHD 공존 여부를 함께 확인하고 맞춤 프로필을 제공합니다.</p>
-          <div class="tc-meta"><span class="badge badge-teal">AuDHD 감지</span><span class="badge badge-sky">즉시 결과</span></div>
+          <div class="tc-meta"><span class="badge badge-teal" id="asd-c2-badge-1">AuDHD 감지</span><span class="badge badge-sky" id="asd-c2-badge-2">즉시 결과</span></div>
         </div>
       </div>
     </div>
@@ -1090,9 +1090,9 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
           <circle class="score-ring-track" cx="75" cy="75" r="60"/>
           <circle class="score-ring-fill" id="ring-fill" cx="75" cy="75" r="60" stroke="#818cf8"/>
         </svg>
-        <div class="score-ring-text"><span class="sr-num" id="ext-score">0</span><span class="sr-lbl">/ 100점</span></div>
+        <div class="score-ring-text"><span class="sr-num" id="ext-score">0</span><span class="sr-lbl" id="ext-sr-lbl">/ 100점</span></div>
       </div>
-      <div class="ext-pct-badge">상위 <strong id="ext-top-pct">--</strong>% <span>전체 응시자 기준</span></div>
+      <div class="ext-pct-badge"><span id="ext-pct-prefix">상위</span> <strong id="ext-top-pct">--</strong><span id="ext-pct-sign">%</span> <span id="ext-pct-suffix">전체 응시자 기준</span></div>
       <div class="ext-cat-name" id="ext-res-cat"></div>
       <p class="ext-desc" id="ext-res-desc"></p>
     </div>
@@ -1117,7 +1117,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
 
     <!-- 점수 해석 테이블 -->
     <div class="interp-card" id="interp-wrap">
-      <h3>📋 점수 해석 기준표</h3>
+      <h3 id="ext-interp-title">📋 점수 해석 기준표</h3>
       <div style="overflow-x:auto;"><table class="interp-table" id="interp-table"></table></div>
     </div>
 
@@ -1176,13 +1176,13 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
 
     <!-- 공유 섹션 -->
     <div class="share-section">
-      <h3>🔗 결과 공유하기</h3>
-      <p>검사 결과를 친구들과 공유하고 비교해보세요!</p>
+      <h3 id="ext-share-title">🔗 결과 공유하기</h3>
+      <p id="ext-share-desc">검사 결과를 친구들과 공유하고 비교해보세요!</p>
       <div class="share-result-card" id="ext-share-card" style="background:linear-gradient(135deg,#1e1b4b,#4f46e5);">
         <div class="src-iq" id="ext-sc-score">--</div>
         <div class="src-cat" id="ext-sc-cat">--</div>
         <div class="src-pct" id="ext-sc-pct">상위 --%</div>
-        <div class="src-site">무료 인지 능력 검사 · 6가지 심층 분석</div>
+        <div class="src-site" id="ext-share-site">무료 인지 능력 검사 · 6가지 심층 분석</div>
       </div>
       <div class="share-row" id="share-row-ext"></div>
     </div>
@@ -1192,8 +1192,8 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
     </div>
 
     <div style="text-align:center;margin-top:20px;margin-bottom:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-      <button class="btn btn-secondary" onclick="showScreen('results')">← IQ 결과로 돌아가기</button>
-      <button class="btn btn-primary" onclick="scrollToExt()">🔬 다른 검사 받기</button>
+      <button class="btn btn-secondary" id="ext-back-iq-btn" onclick="showScreen('results')">← IQ 결과로 돌아가기</button>
+      <button class="btn btn-primary" id="ext-take-another-btn" onclick="scrollToExt()">🔬 다른 검사 받기</button>
     </div>
   </div>
 </div>
@@ -1295,7 +1295,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'맑은 고딕',san
   </div>
   <div class="asd-result-body">
     <div class="asd-adhd-card">
-      <div class="asd-adhd-title">ADHD 동반 경향</div>
+      <div class="asd-adhd-title" id="asd-adhd-title">ADHD 동반 경향</div>
       <div style="font-size:14px;font-weight:800;color:#b91c1c;margin-bottom:6px;" id="asd-adhd-level">ADHD 낮음: 0/5</div>
       <p class="asd-adhd-desc" id="asd-adhd-desc"></p>
     </div>

@@ -1,4 +1,4 @@
-﻿window.IQ_LANG={
+window.IQ_LANG={
 htmlLang:'fr',
 docTitle:'Test QI Gratuit – Mesure de l\'Intelligence en Ligne Validée Scientifiquement',
 heroEyebrow:'Plateforme d\'évaluation cognitive validée scientifiquement',
@@ -126,6 +126,8 @@ interpHeaders:['Plage de Score','Grade','Position dans la Population'],interpCur
 extResLabel:'Résultat {title}',extBellTitle:'📊 Votre Position dans la Distribution {title}',
 extChartTitle:'🔍 Analyse Détaillée {title}',extBDTitle:'Résultats détaillés par domaine',
 tipsTitle:'💡 Guide d\'amélioration {title}',extTopPctSuffix:'de tous les participants',
+extScoreUnit:'/ 100',extTopPrefix:'Top',extInterpTitle:'📋 Interprétation du score',
+extShareSiteLine:'Test cognitif gratuit · Analyse en 6 domaines',backToIQ:'← Retour aux résultats QI',takeAnother:'🔬 Faire un autre test',
 extStatScoreLabel:'Score',extStatPctLabel:'Top %',extStatLevelLabel:'Niveau',
 sciTitle:'🔬 Base Scientifique & Principes de Mesure',sciSub:'Conçu sur des théories de psychologie cognitive validées sur des décennies.',
 featTitle:'Ce qui est inclus',faqTitle:'Foire Aux Questions (FAQ)',seoTitle:'Tout ce que vous devez savoir sur les tests QI',
@@ -251,6 +253,10 @@ asd:{
   cardDesc:'Évaluation complète des difficultés de communication sociale, des comportements répétitifs, de la sensibilité sensorielle, du style cognitif et de la comorbidité TDAH.',
   card2Title:'Asperger · Comorbidité TDAH',
   card2Desc:'Identifiez les traits d\'autisme à haut niveau de fonctionnement et la comorbidité TDAH, et recevez un profil personnalisé.',
+  newBadge:'🆕 Dépistage de la neurodiversité',
+  badge1:'25 questions',badge2:'~8 min',badge3:'Basé sur l\'AQ',
+  c2badge1:'Détection AuDHD',c2badge2:'Résultats instantanés',
+  adhdTitle:'Tendance à la comorbidité TDAH',
   answerLabels:['Absolument non','Plutôt non','Plutôt oui','Absolument oui'],
   catLabels:{sc:'Communication sociale',rb:'Comportements répétitifs',ss:'Sensibilité sensorielle',cg:'Style cognitif',adhd:'Comorbidité TDAH'},
   catNames:{sc:'Communication sociale',rb:'Comportements répétitifs',ss:'Sensibilité sensorielle',cg:'Style cognitif'},

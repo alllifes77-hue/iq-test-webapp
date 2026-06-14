@@ -179,6 +179,9 @@ function applyLang(){
     aupd('asd-card-desc',A.cardDesc);
     aupd('asd-card2-title',A.card2Title);
     aupd('asd-card2-desc',A.card2Desc);
+    aupd('asd-new-badge',A.newBadge);
+    aupd('asd-badge-1',A.badge1);aupd('asd-badge-2',A.badge2);aupd('asd-badge-3',A.badge3);
+    aupd('asd-c2-badge-1',A.c2badge1);aupd('asd-c2-badge-2',A.c2badge2);
     aupd('asd-q-disclaimer',A.qDisclaimer);
     const bb=document.querySelector('.asd-back-btn');if(bb&&L.backHome)bb.textContent=L.backHome;
   }
@@ -1270,9 +1273,24 @@ function finishExt(){
 }
 
 // ── Extended Results Display ──
+// 확장검사 결과 화면 정적 요소 현지화 (점수단위·백분위 접두/접미·공유·버튼)
+function applyExtStaticI18n(){
+  const set=(id,v)=>{const e=document.getElementById(id);if(e&&v!=null)e.textContent=v;};
+  set('ext-sr-lbl',t('extScoreUnit'));
+  set('ext-pct-prefix',t('extTopPrefix'));
+  set('ext-pct-suffix',t('extTopPctSuffix'));
+  set('ext-interp-title',t('extInterpTitle'));
+  set('ext-share-title',t('shareTitle'));
+  set('ext-share-desc',t('shareDesc'));
+  set('ext-share-site',t('extShareSiteLine'));
+  set('ext-back-iq-btn',t('backToIQ'));
+  set('ext-take-another-btn',t('takeAnother'));
+  set('contact-link-ext',t('contactLink'));
+}
 function showExtResults(result){
   isSharedView=false;
   const _sbe=document.getElementById('shared-banner-ext');if(_sbe)_sbe.style.display='none';
+  applyExtStaticI18n();
   const score=result.score;
   const pctile=getExtPercentile(score,extTest.mean||76,extTest.sd||8);
   const topPct=100-pctile;
@@ -1514,6 +1532,7 @@ function restoreIQResults(iq,catLabel,topPct,mode,typeCode,challenge){
 function restoreExtResults(tid,score,cat,topPct){
   extTest=extendedTests[tid];
   if(!extTest)return;
+  applyExtStaticI18n();
   const pctile=100-topPct;
   // 언어별 등급표 병합 (showExtResults와 동일 로직)
   const extSRL=window.IQ_LANG&&window.IQ_LANG.extScoreRanges&&window.IQ_LANG.extScoreRanges[extTest.id];
@@ -1924,6 +1943,9 @@ function _computeASDResult(){
 
 function _showASDResult(asdScore,adhdScore,catScores,catMax){
   showScreen('asd-result');
+  // 결과 화면 정적 제목 현지화
+  {const A=(window.IQ_LANG&&window.IQ_LANG.asd)||{};const setT=(id,v)=>{const e=document.getElementById(id);if(e&&v!=null)e.textContent=v;};
+   setT('asd-result-eyebrow',A.resultEyebrow);setT('asd-breakdown-title',A.breakdownTitle);setT('asd-adhd-title',A.adhdTitle);}
   // Score
   const sEl=document.getElementById('asd-score');if(sEl)sEl.textContent=asdScore;
   // Level

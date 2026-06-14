@@ -352,7 +352,9 @@ const LANGS = {
   }
 };
 
-const ALL_LANGS = ['ko','en','de','ja','fr','es','pt','it','id'];
+const ALL_LANGS = ['ko','en','de','ja','fr','es','pt','it','id','hi','ru','vi','tr'];
+// 신규 4개 언어는 iq-test-webapp Worker가 래핑 — 여기선 hreflang/언어바 표기용 네이티브명만 필요
+const EXTRA_NAMES = { hi:'हिन्दी', ru:'Русский', vi:'Tiếng Việt', tr:'Türkçe' };
 const APP_URL  = 'https://iq-test.all-lifes.com';
 const SITE_URL = 'https://all-lifes.com';
 
@@ -386,6 +388,10 @@ export default {
         { lang: 'pt', loc: `${SITE_URL}/pt/iq-test/` },
         { lang: 'it', loc: `${SITE_URL}/it/iq-test/` },
         { lang: 'id', loc: `${SITE_URL}/id/iq-test/` },
+        { lang: 'hi', loc: `${SITE_URL}/hi/iq-test/` },
+        { lang: 'ru', loc: `${SITE_URL}/ru/iq-test/` },
+        { lang: 'vi', loc: `${SITE_URL}/vi/iq-test/` },
+        { lang: 'tr', loc: `${SITE_URL}/tr/iq-test/` },
       ];
       const alternates = langs.map(l =>
         `    <xhtml:link rel="alternate" hreflang="${l.lang}" href="${l.loc}"/>`
@@ -557,7 +563,7 @@ iframe{width:100%;border:none;display:block;min-height:100vh;}
 <div class="lang-bar">
   ${ALL_LANGS.map(l=>{
     const href=l==='ko'?`${SITE_URL}/iq-test/`:`${SITE_URL}/${l}/iq-test/`;
-    const name=l==='ko'?'한국어':(LANGS[l]?LANGS[l].name:l.toUpperCase());
+    const name=l==='ko'?'한국어':(LANGS[l]?LANGS[l].name:(EXTRA_NAMES[l]||l.toUpperCase()));
     return `<a href="${href}"${l===lang?' class="active"':''}>${name}</a>`;
   }).join('')}
 </div>

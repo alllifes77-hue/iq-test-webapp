@@ -1,0 +1,18 @@
+# iq-multilang Worker — SEO 래퍼(en/de/ja/fr/es/pt/it/id) + 동적 OG + 사이트맵
+# 배포: wrangler deploy -c wrangler-multilang.toml
+# 라우트는 기존 운영 중인 9개를 그대로 보존 (변경 금지)
+name = "iq-multilang"
+main = "cloudflare-worker.js"
+compatibility_date = "2025-01-01"
+
+routes = [
+  { pattern = "all-lifes.com/en/iq-test*", zone_name = "all-lifes.com" },
+  { pattern = "all-lifes.com/de/iq-test*", zone_name = "all-lifes.com" },
+  { pattern = "all-lifes.com/ja/iq-test*", zone_name = "all-lifes.com" },
+  { pattern = "all-lifes.com/fr/iq-test*", zone_name = "all-lifes.com" },
+  { pattern = "all-lifes.com/es/iq-test*", zone_name = "all-lifes.com" },
+  { pattern = "all-lifes.com/pt/iq-test*", zone_name = "all-lifes.com" },
+  { pattern = "all-lifes.com/it/iq-test*", zone_name = "all-lifes.com" },
+  { pattern = "all-lifes.com/id/iq-test*", zone_name = "all-lifes.com" },
+  { pattern = "all-lifes.com/iq-test-sitemap.xml", zone_name = "all-lifes.com" }
+]

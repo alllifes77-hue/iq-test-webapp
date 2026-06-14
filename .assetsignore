@@ -8,6 +8,8 @@ package.json
 package-lock.json
 wrangler.toml
 worker.js
+seo-langs.js
+gen-seo-langs.cjs
 translate-*.js
 validate-langs.js
 generate-og*.js

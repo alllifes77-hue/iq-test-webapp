@@ -16,8 +16,8 @@ function applyLang(){
   if(L.docTitle)document.title=L.docTitle;
   // Per-language SEO meta tag updates
   const _l=window.IQ_CURRENT_LANG||'ko';
-  // SEO 래퍼 페이지(/xx/iq-test/)가 있는 언어 vs 앱 URL(?lang=)만 있는 신규 언어
-  const _hasWrapper=['en','de','fr','es','pt','it','ja','id'].includes(_l);
+  // 모든 13개 언어가 SEO 래퍼 페이지(/xx/iq-test/)를 보유 (en~id: iq-multilang, hi~tr: iq-test-webapp)
+  const _hasWrapper=['en','de','fr','es','pt','it','ja','id','hi','ru','vi','tr'].includes(_l);
   const _url=_l==='ko'?'https://all-lifes.com/iq-test/':_hasWrapper?'https://all-lifes.com/'+_l+'/iq-test/':'https://all-lifes.com/iq-test/?lang='+_l;
   if(L.metaDesc){const m=document.querySelector('meta[name="description"]');if(m)m.content=L.metaDesc;}
   if(L.metaKeywords){const m=document.querySelector('meta[name="keywords"]');if(m)m.content=L.metaKeywords;}
@@ -26,7 +26,8 @@ function applyLang(){
   {const m=document.querySelector('meta[property="og:description"]');if(m&&L.metaDesc)m.content=L.metaDesc;}
   {const m=document.querySelector('meta[property="og:url"]');if(m)m.content=_url;}
   {const c=document.querySelector('link[rel="canonical"]');if(c)c.href=_url;}
-  {const _ogLang=(_l==='ko'||_hasWrapper)?_l:'en'; // 신규 언어는 전용 OG 이미지 생성 전까지 en 폴백
+  {const _ogPng=['ko','en','de','fr','es','pt','it','ja','id']; // 실제 og-{lang}.png 보유 언어
+   const _ogLang=_ogPng.includes(_l)?_l:'en'; // 신규 언어(hi/ru/vi/tr)는 전용 PNG 생성 전까지 en 폴백
    const _img=`https://all-lifes.com/iq-test/og-${_ogLang}.png`;
    const mi=document.querySelector('meta[property="og:image"]');if(mi)mi.content=_img;
    const mt=document.querySelector('meta[name="twitter:image"]');if(mt)mt.content=_img;}

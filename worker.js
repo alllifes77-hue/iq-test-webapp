@@ -136,8 +136,18 @@ async function aliSign(params, secret) {
   return Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
 }
 
-// 국가 → 통화 (가격을 방문자 현지 통화로; 미지정 국가는 USD)
-const COUNTRY_CUR = { KR:'KRW', US:'USD', JP:'JPY', CN:'USD', DE:'EUR', FR:'EUR', ES:'EUR', IT:'EUR', PT:'EUR', NL:'EUR', AT:'EUR', BE:'EUR', IE:'EUR', BR:'BRL', RU:'USD', VN:'VND', GB:'GBP', CA:'CAD', AU:'AUD', IN:'USD', ID:'USD', TR:'USD', PH:'USD', TH:'USD', MX:'USD', SG:'USD', MY:'USD', SA:'USD', AE:'USD', PL:'PLN' };
+// 국가 → 통화: 방문자 현지 통화로 가격 표시 (AliExpress가 지원하는 통화만; 미지정/미지원은 USD)
+// 잘못된/미지원 통화로 0건이 나오면 아래 US/USD 폴백이 자동으로 처리하므로 안전.
+const COUNTRY_CUR = {
+  KR:'KRW', US:'USD', JP:'JPY', CN:'USD',
+  // 유로존
+  DE:'EUR', FR:'EUR', ES:'EUR', IT:'EUR', PT:'EUR', NL:'EUR', AT:'EUR', BE:'EUR', IE:'EUR',
+  FI:'EUR', GR:'EUR', SK:'EUR', SI:'EUR', LT:'EUR', LV:'EUR', EE:'EUR', LU:'EUR', CY:'EUR', MT:'EUR', HR:'EUR',
+  // 기타 현지 통화 (AliExpress 지원)
+  BR:'BRL', RU:'RUB', VN:'VND', GB:'GBP', CA:'CAD', AU:'AUD', IN:'INR', ID:'IDR',
+  TR:'TRY', PH:'PHP', TH:'THB', MX:'MXN', MY:'MYR', SA:'SAR', AE:'AED', PL:'PLN',
+  UA:'UAH', IL:'ILS', SE:'SEK', NO:'NOK', CL:'CLP', CO:'COP', EG:'EGP', NG:'NGN', PK:'PKR'
+};
 
 async function handleAliProducts(request, env) {
   const url = new URL(request.url);

@@ -562,16 +562,30 @@ const LEARN_I18N={
   vi:{title:'📚 Tìm hiểu thêm',items:[['good-iq-score','Điểm IQ tốt là bao nhiêu?'],['iq-percentile-chart','Bảng phân vị IQ'],['online-iq-test-accuracy','Bài test IQ online có chính xác?'],['improve-iq','Có thể tăng IQ không?']]},
   tr:{title:'📚 Daha fazla bilgi',items:[['good-iq-score','İyi bir IQ puanı nedir?'],['iq-percentile-chart','IQ yüzdelik dilim tablosu'],['online-iq-test-accuracy','Online IQ testleri doğru mu?'],['improve-iq','IQ artırılabilir mi?']]},
 };
-function renderLearnLinks(){
+// 결과 화면 → 점수별 의미 계산기 딥링크 (검사 직후 최강 업셀)
+const TOOL_CTA_I18N={
+  ko:'IQ 점수 의미 확인',en:'What does your IQ score mean?',de:'Was bedeutet mein IQ-Wert?',ja:'あなたのIQスコアの意味',
+  fr:'Ce que signifie votre score de QI',es:'¿Qué significa tu puntuación de CI?',pt:'O que significa a sua pontuação de QI',
+  it:'Cosa significa il tuo punteggio di QI',id:'Apa arti skor IQ Anda',hi:'आपके IQ स्कोर का मतलब',
+  ru:'Что означает ваш балл IQ',vi:'Điểm IQ của bạn có ý nghĩa gì',tr:'IQ puanınız ne anlama geliyor?'
+};
+function renderLearnLinks(iq){
   const card=document.getElementById('learn-links-card');
   if(!card)return;
   const lang=window.IQ_CURRENT_LANG||'ko';
   const L=LEARN_I18N[lang]||LEARN_I18N.en;
   const base='https://all-lifes.com/iq-test/learn/'+lang+'/';
-  card.style.display='';
-  card.innerHTML='<h3>'+L.title+'</h3><div class="learn-links">'+L.items.map(it=>
+  const toolBase='https://all-lifes.com/iq-test/tools/'+lang+'/';
+  const ctaLabel=TOOL_CTA_I18N[lang]||TOOL_CTA_I18N.en;
+  let html='<h3>'+L.title+'</h3>';
+  if(iq&&!isNaN(iq)){
+    html+='<a class="learn-link tool-cta" href="'+toolBase+'iq-score-meaning?score='+iq+'">🎯 '+ctaLabel+' <span style="opacity:.6">›</span></a>';
+  }
+  html+='<div class="learn-links">'+L.items.map(it=>
     '<a class="learn-link" href="'+base+it[0]+'">'+it[1]+' <span style="opacity:.5">›</span></a>'
   ).join('')+'</div>';
+  card.style.display='';
+  card.innerHTML=html;
 }
 
 // ── Theme toggle ──
@@ -1137,7 +1151,7 @@ function computeResults(){
     const bellCard=document.querySelector('.chart-card.full h3');if(bellCard)bellCard.textContent=t('bellTitle')||'📊 IQ Distribution in General Population';
     drawBellCurve('bellChart',iq,'#4f46e5');
     renderIQLadder(iq);
-    renderLearnLinks();
+    renderLearnLinks(iq);
     if(currentMode==='long'){
       const radarWrap=document.getElementById('radar-wrap');const bdWrap=document.getElementById('breakdown-wrap');
       radarWrap.classList.remove('hidden');bdWrap.classList.remove('hidden');
@@ -1557,7 +1571,7 @@ function restoreIQResults(iq,catLabel,topPct,mode,typeCode,challenge){
   document.getElementById('sc-pct').textContent=tp('topPctStr',{n:topPct})||`상위 ${topPct}%`;
   document.getElementById('switch-btn').style.display='none';
   setTimeout(()=>{document.getElementById('pct-fill').style.width=pctile+'%';},300);
-  setTimeout(()=>{drawBellCurve('bellChart',iq,'#4f46e5');renderIQLadder(iq);renderLearnLinks();},400);
+  setTimeout(()=>{drawBellCurve('bellChart',iq,'#4f46e5');renderIQLadder(iq);renderLearnLinks(iq);},400);
   showScreen('results');
 }
 

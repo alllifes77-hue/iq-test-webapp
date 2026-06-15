@@ -7,6 +7,8 @@ import { SEO_LANGS } from './seo-langs.js';
 import { COUNTRY_IQ } from './country-iq.js';
 import { HUB_I18N } from './hub-i18n.js';
 import { SPOKES } from './spokes-i18n.js';
+import { SPOKES2 } from './spokes2-i18n.js';
+import { TOOLS_I18N } from './tools-i18n.js';
 
 const ALI_APP_KEY = '536770';
 const ALI_TRACKING_ID = 'iqtestweb';
@@ -349,8 +351,17 @@ tbody tr{border-top:1px solid #eef2f7;}
 }
 
 // ── 허브-스포크 설명 페이지 (토픽 권위 + AI 인용) ──
-const SPOKE_SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq'];
+const SPOKE_SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements'];
 const SPOKE_TABLE = ['good-iq-score','iq-percentile-chart'];
+// 스포크 데이터 병합 조회 (기존 SPOKES + 신규 SPOKES2), 언어 없으면 en 폴백
+function spokeRec(slug, lang){
+  if(SPOKES[lang] && SPOKES[lang].spokes && SPOKES[lang].spokes[slug]) return { sp: SPOKES[lang].spokes[slug], useLang: lang, S: SPOKES[lang] };
+  if(SPOKES2[lang] && SPOKES2[lang][slug]) return { sp: SPOKES2[lang][slug], useLang: lang, S: SPOKES[lang] || SPOKES.en };
+  if(SPOKES.en && SPOKES.en.spokes && SPOKES.en.spokes[slug]) return { sp: SPOKES.en.spokes[slug], useLang: 'en', S: SPOKES.en };
+  if(SPOKES2.en && SPOKES2.en[slug]) return { sp: SPOKES2.en[slug], useLang: 'en', S: SPOKES.en };
+  return null;
+}
+const spokeH1 = (slug, lang) => { const r = spokeRec(slug, lang); return r ? r.sp.h1 : slug; };
 const SPOKE_ROWS = [
   { r:'130+',    p:'98–99.9', pop:'~2%'  },
   { r:'120–129', p:'91–97',   pop:'~8%'  },
@@ -366,10 +377,9 @@ const countryHubUrl = (lang) => lang==='ko' ? 'https://all-lifes.com/iq-test/ave
 
 function renderSpoke(slug, lang){
   if(!SPOKE_SLUGS.includes(slug)) return null;
-  const S = SPOKES[lang] && SPOKES[lang].spokes && SPOKES[lang].spokes[slug] ? SPOKES[lang] : (SPOKES.en && SPOKES.en.spokes && SPOKES.en.spokes[slug] ? SPOKES.en : null);
-  const useLang = (SPOKES[lang] && SPOKES[lang].spokes && SPOKES[lang].spokes[slug]) ? lang : 'en';
-  if(!S) return null;
-  const sp = S.spokes[slug];
+  const rec = spokeRec(slug, lang);
+  if(!rec) return null;
+  const sp = rec.sp, useLang = rec.useLang, S = rec.S;
   const H = HUB_I18N[useLang] || HUB_I18N.en;
   const canonical = spokeUrl(slug, useLang);
   const pillar = spokePillarUrl(useLang);
@@ -386,11 +396,15 @@ function renderSpoke(slug, lang){
     const h = S.tableHeaders, cl = S.classLabels;
     const rows = SPOKE_ROWS.map((row,i)=>`<tr><td class="rg">${esc(row.r)}</td><td>${esc(cl[i]||'')}</td><td>${esc(row.p)}</td><td>${esc(row.pop)}</td></tr>`).join('');
     tableHtml = `<table class="cls"><thead><tr><th>${esc(h[0]||'IQ')}</th><th>${esc(h[1]||'Class')}</th><th>${esc(h[2]||'Percentile')}</th><th>${esc(h[3]||'%')}</th></tr></thead><tbody>${rows}</tbody></table>`;
+  } else if(sp.table && Array.isArray(sp.table.headers) && Array.isArray(sp.table.rows)){
+    // 신규 스포크용 범용 데이터 표 (sp.table = {title, headers[], rows[][]})
+    const th = sp.table.headers.map(x=>`<th>${esc(x)}</th>`).join('');
+    const tr = sp.table.rows.map(row=>`<tr>${row.map((cell,i)=>`<td${i===0?' class="rg"':''}>${esc(cell)}</td>`).join('')}</tr>`).join('');
+    tableHtml = `${sp.table.title?`<h2 class="tbl-cap">${esc(sp.table.title)}</h2>`:''}<table class="cls"><thead><tr>${th}</tr></thead><tbody>${tr}</tbody></table>`;
   }
 
   const related = SPOKE_SLUGS.filter(s=>s!==slug).map(s=>{
-    const t = (SPOKES[useLang] && SPOKES[useLang].spokes[s] && SPOKES[useLang].spokes[s].h1) || (SPOKES.en.spokes[s] && SPOKES.en.spokes[s].h1) || s;
-    return `<li><a href="${spokeUrl(s,useLang)}">${esc(t)}</a></li>`;
+    return `<li><a href="${spokeUrl(s,useLang)}">${esc(spokeH1(s,useLang))}</a></li>`;
   }).join('') + `<li><a href="${countryHubUrl(useLang)}">${esc(HUB_I18N[useLang]?HUB_I18N[useLang].h1:'Average IQ by country')}</a></li>`;
 
   const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${spokeUrl(slug,l)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${spokeUrl(slug,'en')}">`;
@@ -443,6 +457,7 @@ table.cls tbody tr{border-top:1px solid #eef2f7;}
 .related ul{list-style:none;}
 .related li{margin:7px 0;}
 .related a{color:#4f46e5;text-decoration:none;font-size:14px;font-weight:600;}
+.tbl-cap{font-size:15px;font-weight:800;color:#1e1b4b;margin:18px 0 -6px;}
 .back{display:block;text-align:center;margin-top:14px;color:#64748b;font-size:13px;text-decoration:none;}
 </style>
 </head>
@@ -456,6 +471,235 @@ table.cls tbody tr{border-top:1px solid #eef2f7;}
   <div class="related"><h2>🔗 ${esc(H.h1 || 'Learn more')}</h2><ul>${related}</ul></div>
   <a class="back" href="${pillar}">${esc(H.backHome || '← Back to the IQ Test')}</a>
 </div>
+</body>
+</html>`;
+  return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
+}
+
+// ══════════════════════════════════════════════════════════════
+// 인터랙티브 계산기 도구 (서비스 기둥) — /iq-test/tools/<lang>/<slug>
+// 공통 수학: 정규분포 CDF/역CDF. 모든 백분위·희귀도가 여기서 파생.
+// ══════════════════════════════════════════════════════════════
+function sErf(x){ const t=1/(1+0.3275911*Math.abs(x)); const y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x); return x>=0?y:-y; }
+function sNcdf(z){ return 0.5*(1+sErf(z/Math.SQRT2)); }
+function pctOf(iq, sd){ sd=sd||15; return sNcdf((iq-100)/sd)*100; }
+function rarityN(pct){ const p=pct/100; const tail = p>=0.5 ? (1-p) : p; if(tail<=0) return 1e9; return Math.round(1/tail); }
+function clsIdx(iq){ return iq>=130?0:iq>=120?1:iq>=110?2:iq>=90?3:iq>=80?4:iq>=70?5:6; }
+function fmtPct(pct){ const v = pct>=99.9?99.9:(pct<=0.1?0.1:pct); return (v>=10?v.toFixed(1):v.toFixed(1)); }
+
+const TOOL_SLUGS = {
+  'iq-percentile-calculator': 'percentile',
+  'iq-score-meaning': 'scoreMeaning',
+  'parent-child-iq-calculator': 'parentChild',
+  'iq-scale-converter': 'scaleConverter',
+  'iq-by-country': 'country',
+  'average-iq-by-age-calculator': 'byAge',
+};
+const toolUrl = (slug, lang) => `https://all-lifes.com/iq-test/tools/${lang}/${slug}`;
+
+// 방문자 IP 국가코드(ISO2) → COUNTRY_IQ 이름 (주요국 + 13개 언어권)
+const ISO2_NAME = { KR:'South Korea', JP:'Japan', US:'United States', GB:'United Kingdom', DE:'Germany', FR:'France', ES:'Spain', IT:'Italy', PT:'Portugal', BR:'Brazil', ID:'Indonesia', IN:'India', RU:'Russia', VN:'Vietnam', TR:'Turkey', CN:'China', TW:'Taiwan', HK:'Hong Kong', SG:'Singapore', CH:'Switzerland', NL:'Netherlands', FI:'Finland', AT:'Austria', SE:'Sweden', BE:'Belgium', NO:'Norway', DK:'Denmark', CA:'Canada', NZ:'New Zealand', AU:'Australia', PL:'Poland', MX:'Mexico', AR:'Argentina', UA:'Ukraine', GR:'Greece', IE:'Ireland', IL:'Israel', SA:'Saudi Arabia', AE:'United Arab Emirates', EG:'Egypt', TH:'Thailand', PH:'Philippines', MY:'Malaysia' };
+
+function renderTool(slug, lang, cfCountry){
+  const pageKey = TOOL_SLUGS[slug];
+  if(!pageKey) return null;
+  const useLang = (TOOLS_I18N[lang] && TOOLS_I18N[lang].pages && TOOLS_I18N[lang].pages[pageKey]) ? lang : 'en';
+  const T = TOOLS_I18N[useLang] || TOOLS_I18N.en;
+  const P = T.pages[pageKey];
+  const C = T.common;
+  const bandLabels = (SPOKES[useLang] && SPOKES[useLang].classLabels) || (SPOKES.en && SPOKES.en.classLabels) || ['Very Superior','Superior','High Average','Average','Low Average','Borderline','Extremely Low'];
+  const bandMeanings = T.bandMeanings || TOOLS_I18N.en.bandMeanings;
+  const canonical = toolUrl(slug, useLang);
+  const pillar = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/${useLang}/iq-test/`;
+  const appUrl = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/iq-test/?lang=${useLang}`;
+  const H = HUB_I18N[useLang] || HUB_I18N.en;
+
+  // ── 서버 렌더 참조표 (스니펫 미끼 + 크롤 가능 콘텐츠) ──
+  const REF_IQS = [70,80,85,90,100,110,115,120,130,140,145];
+  const refRows = REF_IQS.map(iq=>{
+    const pct = pctOf(iq,15); const r = rarityN(pct); const ci = clsIdx(iq);
+    return `<tr><td class="rg">${iq}</td><td>${esc(bandLabels[ci]||'')}</td><td>${fmtPct(pct)}</td><td>${pct>=50?('1 / '+r):('—')}</td></tr>`;
+  }).join('');
+  const refTable = `<table class="cls"><thead><tr><th>IQ</th><th>${esc(C.classification)}</th><th>${esc(C.percentile)}</th><th>${esc((C.rarity||'').replace('{n}','N').replace(/^[^0-9A-Za-z]*/,'')||'Rarity')}</th></tr></thead><tbody>${refRows}</tbody></table>`;
+
+  // 나이 표 (byAge 전용)
+  const AGE_ROWS = [
+    ['5–12','100'], ['13–17','100'], ['18–29','100'], ['30–49','100'], ['50–69','100'], ['70+','100'],
+  ];
+  const ageTable = `<table class="cls"><thead><tr><th>${esc(P.labels[0]||'Age')}</th><th>${esc(C.classification.replace(C.classification, C.percentile))}</th></tr></thead><tbody>${AGE_ROWS.map(r=>`<tr><td class="rg">${esc(r[0])}</td><td>100 · 50%</td></tr>`).join('')}</tbody></table>`;
+
+  // 척도 비교표 (scaleConverter 전용)
+  const SCALE_ROWS = [100,115,130,145].map(z15=>{
+    const z=(z15-100)/15; const sb=Math.round(100+16*z); const ca=Math.round(100+24*z); const pct=pctOf(z15,15);
+    return `<tr><td class="rg">${z15}</td><td>${sb}</td><td>${ca}</td><td>${fmtPct(pct)}</td></tr>`;
+  }).join('');
+  const scaleTable = `<table class="cls"><thead><tr><th>Wechsler · SD15</th><th>S-Binet · SD16</th><th>Cattell · SD24</th><th>${esc(C.percentile)}</th></tr></thead><tbody>${SCALE_ROWS}</tbody></table>`;
+
+  // 클라이언트로 넘길 데이터 (백분위 등급명·의미·국가데이터)
+  const clientData = {
+    bandLabels, bandMeanings,
+    rarity: C.rarity, smarterThan: C.smarterThan, classification: C.classification, percentile: C.percentile,
+    countries: pageKey==='country' ? COUNTRY_IQ : null,
+    defaultCountry: pageKey==='country' ? (ISO2_NAME[(cfCountry||'').toUpperCase()] || '') : '',
+    L: P.labels,
+  };
+
+  // ── 도구별 위젯 ──
+  let widget = '';
+  if(pageKey==='percentile'){
+    widget = `
+      <div class="tool">
+        <div class="seg"><button class="sg active" data-mode="fwd">${esc(P.labels[2])}</button><button class="sg" data-mode="rev">${esc(P.labels[3])}</button></div>
+        <div id="fwd-box"><label>${esc(P.labels[0])}<input id="iq-in" type="number" value="120" min="40" max="200"></label>
+          <label>${esc(P.labels[1])}<select id="sd-in"><option value="15">15 (Wechsler)</option><option value="16">16 (Stanford-Binet)</option><option value="24">24 (Cattell)</option></select></label></div>
+        <div id="rev-box" style="display:none"><label>${esc(C.percentile)} (%)<input id="pct-in" type="number" value="98" min="0.1" max="99.9" step="0.1"></label></div>
+        <div class="res" id="res"></div>
+      </div>`;
+  } else if(pageKey==='scoreMeaning'){
+    widget = `<div class="tool"><label>${esc(P.labels[1])}<input id="iq-in" type="number" value="120" min="40" max="200"></label><div class="res" id="res"></div></div>`;
+  } else if(pageKey==='parentChild'){
+    widget = `<div class="tool"><label>${esc(P.labels[0])}<input id="f-in" type="number" value="115" min="40" max="200"></label><label>${esc(P.labels[1])}<input id="m-in" type="number" value="110" min="40" max="200"></label><div class="res" id="res"></div><p class="note">${esc(P.labels[3])}</p></div>`;
+  } else if(pageKey==='scaleConverter'){
+    widget = `<div class="tool"><label>${esc(C.yourIQ)}<input id="iq-in" type="number" value="130" min="40" max="240"></label>
+      <label>${esc(P.labels[0])}<select id="from-sd"><option value="15">Wechsler · SD15</option><option value="16">Stanford-Binet · SD16</option><option value="24">Cattell · SD24</option></select></label>
+      <label>${esc(P.labels[1])}<select id="to-sd"><option value="16">Stanford-Binet · SD16</option><option value="15">Wechsler · SD15</option><option value="24">Cattell · SD24</option></select></label>
+      <div class="res" id="res"></div><p class="note">${esc(P.labels[3])}</p></div>`;
+  } else if(pageKey==='country'){
+    widget = `<div class="tool"><label>${esc(P.labels[0])}<input id="iq-in" type="number" value="115" min="40" max="200"></label><label>${esc(P.labels[1])}<select id="cty-in"></select></label><div class="res" id="res"></div></div>`;
+  } else if(pageKey==='byAge'){
+    widget = `<div class="tool"><label>${esc(P.labels[0])}<input id="age-in" type="number" value="30" min="4" max="100"></label><label>${esc(C.yourIQ)}<input id="iq-in" type="number" value="100" min="40" max="200"></label><div class="res" id="res"></div><p class="note">${esc(P.labels[2])}</p></div>`;
+  }
+
+  // ── SSR 보조 콘텐츠 ──
+  let extra = '';
+  if(pageKey==='percentile' || pageKey==='scoreMeaning') extra = refTable;
+  else if(pageKey==='scaleConverter') extra = scaleTable;
+  else if(pageKey==='byAge') extra = ageTable;
+
+  // 관련 도구 + 스포크 링크
+  const otherTools = Object.keys(TOOL_SLUGS).filter(s=>s!==slug).map(s=>{
+    const t = (TOOLS_I18N[useLang]&&TOOLS_I18N[useLang].pages[TOOL_SLUGS[s]]&&TOOLS_I18N[useLang].pages[TOOL_SLUGS[s]].h1) || TOOLS_I18N.en.pages[TOOL_SLUGS[s]].h1;
+    return `<li><a href="${toolUrl(s,useLang)}">${esc(t)}</a></li>`;
+  }).join('');
+  const spokeLinks = SPOKE_SLUGS.map(s=>`<li><a href="${spokeUrl(s,useLang)}">${esc(spokeH1(s,useLang))}</a></li>`).join('');
+
+  const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${toolUrl(slug,l)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${toolUrl(slug,'en')}">`;
+  const appSchema = {"@context":"https://schema.org","@type":"WebApplication","name":P.h1,"description":P.desc,"url":canonical,"applicationCategory":"EducationalApplication","inLanguage":useLang,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"operatingSystem":"Web"};
+  const breadcrumb = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":"IQ Test","item":pillar},{"@type":"ListItem","position":3,"name":P.h1,"item":canonical}]};
+
+  const html = `<!DOCTYPE html>
+<html lang="${useLang}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="https://all-lifes.com/iq-test/favicon-${useLang}.png">
+<title>${esc(P.title)}</title>
+<meta name="description" content="${esc(P.desc)}">
+<meta name="keywords" content="${esc(P.keywords||'')}">
+<link rel="canonical" href="${esc(canonical)}">
+    ${hreflangs}
+<meta property="og:title" content="${esc(P.title)}">
+<meta property="og:description" content="${esc(P.desc)}">
+<meta property="og:url" content="${esc(canonical)}">
+<meta property="og:type" content="website">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1378943893051810" crossorigin="anonymous"></script>
+<script type="application/ld+json">${JSON.stringify(appSchema)}</script>
+<script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.6;}
+.hero{background:linear-gradient(135deg,#1e1b4b,#312e81,#1d4ed8);color:#fff;padding:32px 20px 24px;text-align:center;}
+.hero h1{font-size:clamp(20px,3.4vw,30px);font-weight:900;max-width:760px;margin:0 auto 10px;}
+.hero p{font-size:14px;color:#c7d2fe;max-width:660px;margin:0 auto;}
+.crumb{max-width:720px;margin:0 auto;padding:10px 18px 0;font-size:12px;color:#64748b;}
+.crumb a{color:#4f46e5;text-decoration:none;}
+.wrap{max-width:720px;margin:0 auto;padding:14px 18px 50px;}
+.tool{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:20px;box-shadow:0 4px 20px rgba(15,23,42,.06);margin-bottom:18px;}
+.tool label{display:block;font-size:13px;font-weight:700;color:#475569;margin:0 0 12px;}
+.tool input,.tool select{display:block;width:100%;margin-top:5px;padding:12px 14px;font-size:16px;border:1.5px solid #e2e8f0;border-radius:10px;background:#f8fafc;color:#0f172a;font-weight:700;}
+.tool input:focus,.tool select:focus{outline:none;border-color:#6366f1;background:#fff;}
+.seg{display:flex;gap:6px;margin-bottom:14px;}
+.seg .sg{flex:1;padding:9px;font-size:12.5px;font-weight:700;border:1.5px solid #e2e8f0;background:#f8fafc;color:#64748b;border-radius:10px;cursor:pointer;}
+.seg .sg.active{background:#4f46e5;color:#fff;border-color:#4f46e5;}
+.res{margin-top:6px;min-height:54px;}
+.res .big{font-size:30px;font-weight:900;color:#4f46e5;line-height:1.15;}
+.res .lab{font-size:13px;color:#64748b;font-weight:700;margin-top:2px;}
+.res .row{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid #eef2f7;font-size:14px;}
+.res .row:first-child{border-top:none;}
+.res .row b{color:#1e1b4b;font-weight:800;}
+.note{font-size:11.5px;color:#94a3b8;margin-top:12px;line-height:1.5;}
+table.cls{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;font-size:13px;margin:16px 0;}
+table.cls thead{background:#1e1b4b;color:#fff;}
+table.cls th,table.cls td{padding:9px 11px;text-align:left;}
+table.cls td.rg{font-weight:800;color:#4f46e5;white-space:nowrap;}
+table.cls tbody tr:nth-child(even){background:#f8fafc;}
+table.cls tbody tr{border-top:1px solid #eef2f7;}
+.ad-box{margin:18px 0;text-align:center;min-height:90px;}
+.cta{display:block;text-align:center;margin:22px auto 0;max-width:420px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-weight:800;font-size:16px;padding:14px;border-radius:12px;text-decoration:none;box-shadow:0 6px 20px rgba(79,70,229,.35);}
+.related{margin-top:28px;padding-top:16px;border-top:1px solid #e2e8f0;}
+.related h2{font-size:15px;font-weight:800;color:#1e1b4b;margin-bottom:10px;}
+.related ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;}
+@media(max-width:520px){.related ul{grid-template-columns:1fr;}}
+.related li{margin:5px 0;}
+.related a{color:#4f46e5;text-decoration:none;font-size:13.5px;font-weight:600;}
+.back{display:block;text-align:center;margin-top:14px;color:#64748b;font-size:13px;text-decoration:none;}
+.disc{font-size:11px;color:#94a3b8;margin-top:18px;text-align:center;line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="hero"><h1>${esc(P.h1)}</h1><p>${esc(P.intro)}</p></div>
+<div class="crumb"><a href="${pillar}">IQ Test</a> › ${esc(P.h1)}</div>
+<div class="wrap">
+  ${widget}
+  <div class="ad-box"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1378943893051810" data-ad-slot="8233374508" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+  ${extra}
+  <a class="cta" href="${appUrl}">${esc(H.cta || '🧠 Take the free IQ test →')}</a>
+  <div class="related"><h2>🔗 ${esc(H.h1 || 'Learn more')}</h2><ul>${otherTools}${spokeLinks}</ul></div>
+  <a class="back" href="${pillar}">${esc(H.backHome || '← Back to the IQ Test')}</a>
+  <p class="disc">${esc(C.disclaimer)}</p>
+</div>
+<script>
+(function(){
+  var D=${JSON.stringify(clientData)};
+  var KEY=${JSON.stringify(pageKey)};
+  function erf(x){var t=1/(1+0.3275911*Math.abs(x));var y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x);return x>=0?y:-y;}
+  function ncdf(z){return 0.5*(1+erf(z/Math.SQRT2));}
+  function invncdf(p){if(p<=0)return -4;if(p>=1)return 4;var a=[-39.6968302866538,220.946098424521,-275.928510446969,138.357751867269,-30.6647980661472,2.50662827745924];var b=[-54.4760987982241,161.585836858041,-155.698979859887,66.8013118877197,-13.2806815528857];var c=[-0.00778489400243029,-0.322396458041136,-2.40075827716184,-2.54973253934373,4.37466414146497,2.93816398269878];var d=[0.00778469570904146,0.32246712907004,2.445134137143,3.75440866190742];var pl=0.02425,ph=1-pl,q,r,x;if(p<pl){q=Math.sqrt(-2*Math.log(p));x=(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);}else if(p<=ph){q=p-0.5;r=q*q;x=(((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);}else{q=Math.sqrt(-2*Math.log(1-p));x=-(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);}return x;}
+  function pct(iq,sd){return ncdf((iq-100)/(sd||15))*100;}
+  function fp(v){if(v>99.9)v=99.9;if(v<0.1)v=0.1;return v>=10?v.toFixed(1):v.toFixed(1);}
+  function rar(p){var t=p>=50?(1-p/100):(p/100);if(t<=0)return 1e9;return Math.round(1/t);}
+  function cidx(iq){return iq>=130?0:iq>=120?1:iq>=110?2:iq>=90?3:iq>=80?4:iq>=70?5:6;}
+  function nf(n){return n.toLocaleString();}
+  var R=document.getElementById('res');
+  function band(iq){var i=cidx(iq);return '<div class="row"><span>'+D.classification+'</span><b>'+D.bandLabels[i]+'</b></div><div class="row" style="border:none"><span></span><span style="font-size:12px;color:#64748b">'+D.bandMeanings[i]+'</span></div>';}
+  function pctRow(iq,sd){var p=pct(iq,sd);var smarter=D.smarterThan.replace('{p}',fp(p));var out='<div class="big">'+fp(p)+'<span style="font-size:16px"> %</span></div><div class="lab">'+smarter+'</div>';out+='<div style="margin-top:10px">'+band(iq);if(p>=50){out+='<div class="row"><span>'+D.rarity.replace('{n}','')+'</span><b>1 / '+nf(rar(p))+'</b></div>';}out+='</div>';return out;}
+  function num(id){return parseFloat((document.getElementById(id)||{}).value);}
+  if(KEY==='percentile'){
+    var mode='fwd';
+    function calc(){if(mode==='fwd'){var iq=num('iq-in');var sd=parseFloat(document.getElementById('sd-in').value);if(isNaN(iq))return;R.innerHTML=pctRow(iq,sd);}else{var p=num('pct-in');if(isNaN(p))return;var iq=Math.round(100+15*invncdf(p/100));R.innerHTML='<div class="big">'+iq+'</div><div class="lab">'+D.yourIQ+'</div><div style="margin-top:10px">'+band(iq)+'</div>';}}
+    document.querySelectorAll('.sg').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.sg').forEach(function(x){x.classList.remove('active');});b.classList.add('active');mode=b.getAttribute('data-mode');document.getElementById('fwd-box').style.display=mode==='fwd'?'':'none';document.getElementById('rev-box').style.display=mode==='rev'?'':'none';calc();});});
+    ['iq-in','sd-in','pct-in'].forEach(function(id){var e=document.getElementById(id);if(e)e.addEventListener('input',calc);});calc();
+  } else if(KEY==='scoreMeaning'){
+    function calc(){var iq=num('iq-in');if(isNaN(iq))return;R.innerHTML=pctRow(iq,15);}
+    document.getElementById('iq-in').addEventListener('input',calc);
+    var u=new URL(location.href);var q=u.searchParams.get('score');if(q&&!isNaN(parseFloat(q))){document.getElementById('iq-in').value=parseFloat(q);}calc();
+  } else if(KEY==='parentChild'){
+    function calc(){var f=num('f-in'),m=num('m-in');if(isNaN(f)||isNaN(m))return;var mid=(f+m)/2;var pred=Math.round(100+0.6*(mid-100));var lo=pred-12,hi=pred+12;R.innerHTML='<div class="big">'+pred+'</div><div class="lab">'+D.L[2]+'</div><div class="row" style="margin-top:8px"><span>'+D.L[2]+' (range)</span><b>'+lo+'–'+hi+'</b></div>'+band(pred);}
+    ['f-in','m-in'].forEach(function(id){document.getElementById(id).addEventListener('input',calc);});calc();
+  } else if(KEY==='scaleConverter'){
+    function calc(){var iq=num('iq-in');var fs=parseFloat(document.getElementById('from-sd').value);var ts=parseFloat(document.getElementById('to-sd').value);if(isNaN(iq))return;var z=(iq-100)/fs;var out=Math.round(100+ts*z);var p=ncdf(z)*100;R.innerHTML='<div class="big">'+out+'</div><div class="lab">'+D.L[2]+'</div><div class="row" style="margin-top:8px"><span>'+D.percentile+'</span><b>'+fp(p)+'%</b></div>';}
+    ['iq-in','from-sd','to-sd'].forEach(function(id){document.getElementById(id).addEventListener('input',calc);});calc();
+  } else if(KEY==='country'){
+    var sel=document.getElementById('cty-in');var arr=(D.countries||[]).slice().sort(function(a,b){return a.c<b.c?-1:1;});arr.forEach(function(o){var op=document.createElement('option');op.value=o.c;op.textContent=o.c+' ('+o.iq+')';if(o.c===D.defaultCountry)op.selected=true;sel.appendChild(op);});
+    function calc(){var iq=num('iq-in');var c=sel.value;var o=(D.countries||[]).find(function(x){return x.c===c;});if(isNaN(iq)||!o)return;var diff=iq-o.iq;var localPct=ncdf((iq-o.iq)/15)*100;var sign=diff>=0?'+':'';R.innerHTML='<div class="big">'+sign+diff+'</div><div class="lab">'+D.L[2].replace('{country}',c)+' ('+o.iq+')</div><div class="row" style="margin-top:8px"><span>'+D.L[3]+'</span><b>'+fp(localPct)+'%</b></div>'+band(iq);}
+    document.getElementById('iq-in').addEventListener('input',calc);sel.addEventListener('change',calc);calc();
+  } else if(KEY==='byAge'){
+    function calc(){var age=num('age-in');var iq=num('iq-in');if(isNaN(iq))return;var p=pct(iq,15);R.innerHTML='<div class="big">'+iq+'</div><div class="lab">'+D.percentile+' '+fp(p)+'%</div>'+band(iq);}
+    ['age-in','iq-in'].forEach(function(id){document.getElementById(id).addEventListener('input',calc);});calc();
+  }
+  try{(adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
+})();
+</script>
 </body>
 </html>`;
   return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
@@ -497,6 +741,14 @@ export default {
     const spokeM = path.match(/^\/iq-test\/learn\/([a-z]{2})\/([a-z-]+)\/?$/);
     if (spokeM) {
       const r = renderSpoke(spokeM[2], spokeM[1]);
+      if (r) return r;
+      return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
+    }
+
+    // 인터랙티브 계산기 도구: /iq-test/tools/<lang>/<slug>
+    const toolM = path.match(/^\/iq-test\/tools\/([a-z]{2})\/([a-z-]+)\/?$/);
+    if (toolM) {
+      const r = renderTool(toolM[2], toolM[1], request.cf && request.cf.country);
       if (r) return r;
       return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
     }

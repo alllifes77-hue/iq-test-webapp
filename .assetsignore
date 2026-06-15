@@ -13,6 +13,8 @@ gen-seo-langs.cjs
 country-iq.js
 hub-i18n.js
 spokes-i18n.js
+spokes2-i18n.js
+tools-i18n.js
 translate-*.js
 validate-langs.js
 generate-og*.js
@@ -22,4 +24,6 @@ wordpress-plugin.php
 chat-proxy.php
 offpage-reddit-shortform.md
 *.md
+*.cjs
+_*
 .assetsignore

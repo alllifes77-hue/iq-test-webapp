@@ -410,8 +410,8 @@ ${hubAlt}
     <lastmod>${lastmod}</lastmod>
   </url>`;
 
-      // Hub-and-spoke explainer pages (4 slugs × 13 langs)
-      const SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq'];
+      // Hub-and-spoke explainer pages (8 slugs × 13 langs)
+      const SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements'];
       const spokeLoc = (l, s) => `${SITE_URL}/iq-test/learn/${l}/${s}`;
       const spokeUrls = SLUGS.flatMap(s => {
         const alt = LCODES.map(l =>
@@ -426,12 +426,29 @@ ${alt}
   </url>`);
       }).join('\n');
 
+      // Interactive calculator tools (6 slugs × 13 langs)
+      const TOOLSL = ['iq-percentile-calculator','iq-score-meaning','parent-child-iq-calculator','iq-scale-converter','iq-by-country','average-iq-by-age-calculator'];
+      const toolLoc = (l, s) => `${SITE_URL}/iq-test/tools/${l}/${s}`;
+      const toolUrls = TOOLSL.flatMap(s => {
+        const alt = LCODES.map(l =>
+          `    <xhtml:link rel="alternate" hreflang="${l}" href="${toolLoc(l, s)}"/>`
+        ).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${toolLoc('en', s)}"/>`;
+        return LCODES.map(l => `  <url>
+    <loc>${toolLoc(l, s)}</loc>
+${alt}
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>${lastmod}</lastmod>
+  </url>`);
+      }).join('\n');
+
       const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${mainUrls}
 ${hubUrl}
 ${spokeUrls}
+${toolUrls}
 </urlset>`;
       return new Response(xml, {
         headers: {

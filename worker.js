@@ -24,6 +24,41 @@ function hreflangHref(l){
   return `https://all-lifes.com/${l}/iq-test/`; // 신규 4개도 경로형 canonical
 }
 
+// ── 콘텐츠 하위 페이지 상단 광고 존 (AdSense + 알리익스프레스 + 쿠팡(ko)) ──
+// 홈/랜딩(최상단)에는 넣지 않고 스포크·도구·국가허브에만 상단 배치.
+const ADSENSE_HEAD = `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1378943893051810" crossorigin="anonymous"></script>`;
+const AD_ZONE_STYLE = `<style>
+.top-ads{margin:14px 0 6px;}
+.top-ads .adb{text-align:center;min-height:90px;margin-bottom:12px;overflow:hidden;}
+.aff-sec{display:none;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px 14px;margin-bottom:12px;}
+.aff-sec .aff-h{font-size:14px;font-weight:800;color:#1e1b4b;margin-bottom:2px;}
+.aff-sec .aff-d{font-size:10.5px;color:#94a3b8;margin-bottom:9px;}
+.aff-sec .ali-row{display:flex;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;}
+.aff-sec .ali-it{flex:0 0 118px;text-decoration:none;color:inherit;}
+.aff-sec .ali-it img{width:118px;height:118px;object-fit:cover;border-radius:10px;background:#f1f5f9;}
+.aff-sec .ali-n{font-size:11px;color:#334155;margin-top:5px;line-height:1.3;height:29px;overflow:hidden;}
+.aff-sec .ali-pr{font-size:12.5px;font-weight:800;color:#e11d48;margin-top:3px;}
+.aff-sec .cpng-d{font-size:10px;color:#94a3b8;margin-top:6px;}
+</style>`;
+const AD_ZONE_BODY = `<div class="top-ads">
+  <div class="adb"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1378943893051810" data-ad-slot="8233374508" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+  <div class="aff-sec" id="ali-top"></div>
+  <div class="aff-sec" id="cpng-top"></div>
+</div>`;
+function adZoneScript(lang){
+  return `<script src="https://all-lifes.com/iq-test/affiliate-config.js"></script>
+<script>(function(){var lang=${JSON.stringify(lang)};
+try{(adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
+var meta=(window.AFFILIATE_META&&(window.AFFILIATE_META[lang]||window.AFFILIATE_META.en))||{};
+fetch('https://all-lifes.com/iq-test/api/ali-products?lang='+lang).then(function(r){return r.ok?r.json():null;}).then(function(d){
+ if(!d||!d.products||!d.products.length)return;var items=d.products.slice(0,8);var b=document.getElementById('ali-top');if(!b)return;
+ b.innerHTML='<div class="aff-h">'+(meta.title||'\\uD83C\\uDF81')+'</div><div class="aff-d">'+(meta.disc||'')+'</div><div class="ali-row">'+items.map(function(p){return '<a class="ali-it" href="'+p.url+'" target="_blank" rel="noopener sponsored"><img src="'+p.image+'" alt="" loading="lazy"><div class="ali-n">'+String(p.title).replace(/[<>]/g,'').slice(0,52)+'</div><div class="ali-pr">'+p.price+' '+p.currency+'</div></a>';}).join('')+'</div>';
+ b.style.display='';
+}).catch(function(){});
+if(lang==='ko'&&window.COUPANG_WIDGET&&window.COUPANG_WIDGET.enabled){var cfg=window.COUPANG_WIDGET;var b=document.getElementById('cpng-top');if(b){var w=Math.max(cfg.minWidth||300,Math.min(cfg.maxWidth||680,(b.clientWidth||640)-8));b.innerHTML='<iframe src="https://ads-partners.coupang.com/widgets.html?id='+cfg.id+'&template='+cfg.template+'&trackingCode='+cfg.trackingCode+'&subId=iqtest_ko_page&width='+w+'&height='+cfg.height+'" width="'+w+'" height="'+cfg.height+'" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" loading="lazy" browsingtopics></iframe><div class="cpng-d">'+(cfg.disclosure||'')+'</div>';b.style.display='';}}
+})();</script>`;
+}
+
 function renderSeoWrapper(lang, url){
   const L = SEO_LANGS[lang];
   const p = url.searchParams;
@@ -285,6 +320,8 @@ function renderCountryHub(url){
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:type" content="article">
 <script type="application/ld+json">${JSON.stringify(itemList)}</script>
+${ADSENSE_HEAD}
+${AD_ZONE_STYLE}
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.6;}
@@ -319,32 +356,14 @@ tbody tr{border-top:1px solid #eef2f7;}
 <body>
 <div class="hero"><h1>${esc(L.h1)}</h1><p>${esc(L.intro)}</p></div>
 <div class="wrap">
+  ${AD_ZONE_BODY}
   <div class="caveat">${esc(L.caveat)}</div>
   <table><thead><tr><th>#</th><th>${esc(L.colCountry)}</th><th style="text-align:right">${esc(L.colIQ)}</th></tr></thead><tbody>${rows}</tbody></table>
   <div class="how"><h2>${esc(L.howTitle)}</h2><p>${esc(L.howBody)}</p></div>
-  <div id="hub-ali"></div>
   <a class="cta" href="${esc(appUrl)}">${esc(L.cta)}</a>
   <a class="back" href="${esc(appUrl)}">${esc(L.backHome)}</a>
 </div>
-<script>
-(function(){
-  var lang=${JSON.stringify(lang)};
-  var s=document.createElement('script');
-  s.src='https://all-lifes.com/iq-test/affiliate-config.js';
-  s.onload=function(){
-    var meta=(window.AFFILIATE_META&&(window.AFFILIATE_META[lang]||window.AFFILIATE_META.en))||{};
-    fetch('https://all-lifes.com/iq-test/api/ali-products?lang='+lang).then(function(r){return r.json();}).then(function(d){
-      var items=(d.products||[]).slice(0,6);
-      if(!items.length)return;
-      var html='<h2>'+(meta.title||'🎁')+'</h2><div class="disc">'+(meta.disc||'')+'</div><div class="ali-grid">';
-      html+=items.map(function(p){return '<a class="ali-card" href="'+p.url+'" target="_blank" rel="noopener sponsored"><img src="'+p.image+'" loading="lazy" alt=""><div class="ali-t">'+String(p.title).replace(/[<>]/g,'').slice(0,60)+'</div><div class="ali-p">'+p.price+' '+p.currency+'</div></a>';}).join('');
-      html+='</div>';
-      document.getElementById('hub-ali').innerHTML=html;
-    }).catch(function(){});
-  };
-  document.body.appendChild(s);
-})();
-</script>
+${adZoneScript(lang)}
 </body>
 </html>`;
   return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
@@ -432,6 +451,8 @@ function renderSpoke(slug, lang){
 <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>
 <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
 <script type="application/ld+json">${JSON.stringify(article)}</script>
+${ADSENSE_HEAD}
+${AD_ZONE_STYLE}
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.7;}
@@ -465,12 +486,14 @@ table.cls tbody tr{border-top:1px solid #eef2f7;}
 <div class="hero"><h1>${esc(sp.h1)}</h1><p>${esc(sp.intro)}</p></div>
 <div class="crumb"><a href="${pillar}">IQ Test</a> › ${esc(sp.h1)}</div>
 <div class="wrap">
+  ${AD_ZONE_BODY}
   ${sectionsHtml}
   ${tableHtml}
   <a class="cta" href="${appUrl}">${esc(H.cta || '🧠 Take the free IQ test →')}</a>
   <div class="related"><h2>🔗 ${esc(H.h1 || 'Learn more')}</h2><ul>${related}</ul></div>
   <a class="back" href="${pillar}">${esc(H.backHome || '← Back to the IQ Test')}</a>
 </div>
+${adZoneScript(useLang)}
 </body>
 </html>`;
   return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
@@ -605,6 +628,7 @@ function renderTool(slug, lang, cfCountry){
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1378943893051810" crossorigin="anonymous"></script>
 <script type="application/ld+json">${JSON.stringify(appSchema)}</script>
 <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
+${AD_ZONE_STYLE}
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.6;}
@@ -650,8 +674,8 @@ table.cls tbody tr{border-top:1px solid #eef2f7;}
 <div class="hero"><h1>${esc(P.h1)}</h1><p>${esc(P.intro)}</p></div>
 <div class="crumb"><a href="${pillar}">IQ Test</a> › ${esc(P.h1)}</div>
 <div class="wrap">
+  ${AD_ZONE_BODY}
   ${widget}
-  <div class="ad-box"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1378943893051810" data-ad-slot="8233374508" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
   ${extra}
   <a class="cta" href="${appUrl}">${esc(H.cta || '🧠 Take the free IQ test →')}</a>
   <div class="related"><h2>🔗 ${esc(H.h1 || 'Learn more')}</h2><ul>${otherTools}${spokeLinks}</ul></div>
@@ -697,9 +721,9 @@ table.cls tbody tr{border-top:1px solid #eef2f7;}
     function calc(){var age=num('age-in');var iq=num('iq-in');if(isNaN(iq))return;var p=pct(iq,15);R.innerHTML='<div class="big">'+iq+'</div><div class="lab">'+D.percentile+' '+fp(p)+'%</div>'+band(iq);}
     ['age-in','iq-in'].forEach(function(id){document.getElementById(id).addEventListener('input',calc);});calc();
   }
-  try{(adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
 })();
 </script>
+${adZoneScript(useLang)}
 </body>
 </html>`;
   return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});

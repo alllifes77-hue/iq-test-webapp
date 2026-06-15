@@ -5,6 +5,18 @@
 //   all-lifes.com/*/iq-test*      → SEO wrapper (except /iq-test/ → WordPress)
 // ═══════════════════════════════════════════════════════════
 import { SPOKES } from './spokes-i18n.js';
+import { SPOKES2 } from './spokes2-i18n.js';
+
+// 스포크 h1 병합 조회 (원본 SPOKES + 신규 SPOKES2)
+const ALL_SPOKE_SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements'];
+function spokeH1(slug, lang){
+  if (SPOKES[lang] && SPOKES[lang].spokes && SPOKES[lang].spokes[slug]) return SPOKES[lang].spokes[slug].h1;
+  if (SPOKES2[lang] && SPOKES2[lang][slug]) return SPOKES2[lang][slug].h1;
+  if (SPOKES.en && SPOKES.en.spokes && SPOKES.en.spokes[slug]) return SPOKES.en.spokes[slug].h1;
+  if (SPOKES2.en && SPOKES2.en[slug]) return SPOKES2.en[slug].h1;
+  return slug;
+}
+const TOOLS_HUB_TITLE = { en:'Free IQ Calculators & Tools', de:'Kostenlose IQ-Rechner & Tools', ja:'無料IQ計算ツール', fr:'Calculateurs de QI gratuits', es:'Calculadoras de CI gratis', pt:'Calculadoras de QI grátis', it:'Calcolatori di QI gratuiti', id:'Kalkulator IQ Gratis' };
 
 // ── IQ category color ────────────────────────────────────────
 function getIQColor(iq) {
@@ -426,6 +438,17 @@ ${alt}
   </url>`);
       }).join('\n');
 
+      // Tools & guides hub (1 × 13 langs)
+      const hubToolLoc = (l) => `${SITE_URL}/iq-test/tools/${l}`;
+      const hubToolAlt = LCODES.map(l => `    <xhtml:link rel="alternate" hreflang="${l}" href="${hubToolLoc(l)}"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${hubToolLoc('en')}"/>`;
+      const hubToolUrls = LCODES.map(l => `  <url>
+    <loc>${hubToolLoc(l)}</loc>
+${hubToolAlt}
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>${lastmod}</lastmod>
+  </url>`).join('\n');
+
       // Interactive calculator tools (6 slugs × 13 langs)
       const TOOLSL = ['iq-percentile-calculator','iq-score-meaning','parent-child-iq-calculator','iq-scale-converter','iq-by-country','average-iq-by-age-calculator'];
       const toolLoc = (l, s) => `${SITE_URL}/iq-test/tools/${l}/${s}`;
@@ -447,6 +470,7 @@ ${alt}
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${mainUrls}
 ${hubUrl}
+${hubToolUrls}
 ${spokeUrls}
 ${toolUrls}
 </urlset>`;
@@ -537,10 +561,10 @@ ${toolUrls}
       }))
     };
     // 필러 → 스포크 내부 링크 (토픽 권위)
-    const learnLinks = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq'].map(slug=>{
-      const t = (SPOKES[lang] && SPOKES[lang].spokes[slug] && SPOKES[lang].spokes[slug].h1) || slug;
-      return `<li style="margin:8px 0;"><span style="color:#6366f1">›</span> <a style="color:#4f46e5;text-decoration:none;font-weight:600;font-size:14px;" href="${SITE_URL}/iq-test/learn/${lang}/${slug}">${esc(t)}</a></li>`;
-    }).join('') + `<li style="margin:8px 0;"><span style="color:#6366f1">›</span> <a style="color:#4f46e5;text-decoration:none;font-weight:600;font-size:14px;" href="${SITE_URL}/iq-test/average-iq-by-country?lang=${lang}">${esc('Average IQ by Country')}</a></li>`;
+    const _ll = (href, label, bold) => `<li style="margin:8px 0;"><span style="color:#6366f1">›</span> <a style="color:#4f46e5;text-decoration:none;font-weight:${bold?800:600};font-size:14px;" href="${href}">${esc(label)}</a></li>`;
+    const learnLinks = ALL_SPOKE_SLUGS.map(slug=>_ll(`${SITE_URL}/iq-test/learn/${lang}/${slug}`, spokeH1(slug, lang))).join('')
+      + _ll(`${SITE_URL}/iq-test/tools/${lang}`, TOOLS_HUB_TITLE[lang] || 'IQ Calculators & Tools', true)
+      + _ll(`${SITE_URL}/iq-test/average-iq-by-country?lang=${lang}`, 'Average IQ by Country');
 
     // Schema.org: BreadcrumbList (라이브 리치 결과 + 크롤 효율)
     const breadcrumbSchema = {

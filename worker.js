@@ -82,10 +82,11 @@ function renderSeoWrapper(lang, url){
   const appSchema = {"@context":"https://schema.org","@type":"WebApplication","name":L.h1,"description":L.desc,"url":canonical,"applicationCategory":"EducationalApplication","inLanguage":lang,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"operatingSystem":"Web"};
   const fqs = (SPOKES[lang] && Array.isArray(SPOKES[lang].faq8) && SPOKES[lang].faq8.length) ? SPOKES[lang].faq8 : L.faq;
   const faqSchema = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":fqs.map(f=>({"@type":"Question","name":f.q,"acceptedAnswer":{"@type":"Answer","text":f.a}}))};
-  const learnLinks = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq'].map(slug=>{
-    const t = (SPOKES[lang] && SPOKES[lang].spokes[slug] && SPOKES[lang].spokes[slug].h1) || slug;
-    return `<li><a href="https://all-lifes.com/iq-test/learn/${lang}/${slug}">${esc(t)}</a></li>`;
-  }).join('') + `<li><a href="${lang==='ko'?'https://all-lifes.com/iq-test/average-iq-by-country':'https://all-lifes.com/iq-test/average-iq-by-country?lang='+lang}">${esc(HUB_I18N[lang]?HUB_I18N[lang].h1:'Average IQ by country')}</a></li>`;
+  const learnLinks = SPOKE_SLUGS.map(slug=>{
+    return `<li><a href="https://all-lifes.com/iq-test/learn/${lang}/${slug}">${esc(spokeH1(slug,lang))}</a></li>`;
+  }).join('')
+    + `<li><a href="${toolsHubUrl(lang)}"><strong>${esc(TOOLS_HUB_I18N[lang]?TOOLS_HUB_I18N[lang].title:'IQ Calculators & Tools')}</strong></a></li>`
+    + `<li><a href="${lang==='ko'?'https://all-lifes.com/iq-test/average-iq-by-country':'https://all-lifes.com/iq-test/average-iq-by-country?lang='+lang}">${esc(HUB_I18N[lang]?HUB_I18N[lang].h1:'Average IQ by country')}</a></li>`;
   const breadcrumbSchema = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":L.h1,"item":canonical}]};
   const orgSchema = {"@context":"https://schema.org","@type":"Organization","name":"All-Lifes","url":"https://all-lifes.com/","logo":"https://all-lifes.com/iq-test/IQ%20TEST.png"};
   const websiteSchema = {"@context":"https://schema.org","@type":"WebSite","name":L.h1,"url":canonical,"inLanguage":lang,"potentialAction":{"@type":"SearchAction","target":"https://all-lifes.com/iq-test/?q={search_term_string}","query-input":"required name=search_term_string"}};
@@ -519,6 +520,25 @@ const TOOL_SLUGS = {
   'average-iq-by-age-calculator': 'byAge',
 };
 const toolUrl = (slug, lang) => `https://all-lifes.com/iq-test/tools/${lang}/${slug}`;
+const toolsHubUrl = (lang) => `https://all-lifes.com/iq-test/tools/${lang}`;
+const ogImg = (lang) => ['hi','ru','vi','tr'].includes(lang) ? `https://all-lifes.com/iq-test/og-${lang}.jpg` : `https://all-lifes.com/iq-test/og-${lang}.png`;
+
+// 계산기 허브 페이지 다국어 헤더
+const TOOLS_HUB_I18N = {
+  ko:{title:'IQ 계산기 & 도구',sub:'백분위·희귀도·척도 변환 등 무료 IQ 계산기 모음',calc:'🛠 계산기',learn:'📚 설명 가이드',meta:'무료 IQ 계산기 모음 — 백분위·희귀도·척도 변환·부모자녀 IQ 예측·국가 비교를 한곳에서.'},
+  en:{title:'Free IQ Calculators & Tools',sub:'Percentile, rarity, scale conversion and more — instant and free',calc:'🛠 Calculators',learn:'📚 Guides',meta:'Free IQ calculators in one place: percentile, rarity, scale conversion, parent-child IQ and country comparison.'},
+  de:{title:'Kostenlose IQ-Rechner & Tools',sub:'Perzentil, Seltenheit, Skalenumrechnung und mehr',calc:'🛠 Rechner',learn:'📚 Ratgeber',meta:'Kostenlose IQ-Rechner an einem Ort: Perzentil, Seltenheit, Skalenumrechnung, Eltern-Kind-IQ und Ländervergleich.'},
+  ja:{title:'無料IQ計算ツール',sub:'パーセンタイル・希少度・尺度変換などの無料ツール',calc:'🛠 計算ツール',learn:'📚 解説ガイド',meta:'無料IQ計算ツール集：パーセンタイル・希少度・尺度変換・親子IQ予測・国別比較。'},
+  fr:{title:'Calculateurs de QI gratuits',sub:'Centile, rareté, conversion d’échelle et plus',calc:'🛠 Calculateurs',learn:'📚 Guides',meta:'Calculateurs de QI gratuits : centile, rareté, conversion d’échelle, QI parent-enfant et comparaison par pays.'},
+  es:{title:'Calculadoras de CI gratis',sub:'Percentil, rareza, conversión de escala y más',calc:'🛠 Calculadoras',learn:'📚 Guías',meta:'Calculadoras de CI gratis: percentil, rareza, conversión de escala, CI padres-hijos y comparación por país.'},
+  pt:{title:'Calculadoras de QI grátis',sub:'Percentil, raridade, conversão de escala e mais',calc:'🛠 Calculadoras',learn:'📚 Guias',meta:'Calculadoras de QI grátis: percentil, raridade, conversão de escala, QI pais-filhos e comparação por país.'},
+  it:{title:'Calcolatori di QI gratuiti',sub:'Percentile, rarità, conversione di scala e altro',calc:'🛠 Calcolatori',learn:'📚 Guide',meta:'Calcolatori di QI gratuiti: percentile, rarità, conversione di scala, QI genitori-figli e confronto per paese.'},
+  id:{title:'Kalkulator IQ Gratis',sub:'Persentil, kelangkaan, konversi skala, dan lainnya',calc:'🛠 Kalkulator',learn:'📚 Panduan',meta:'Kalkulator IQ gratis: persentil, kelangkaan, konversi skala, IQ orang tua-anak, dan perbandingan negara.'},
+  hi:{title:'मुफ़्त IQ कैलकुलेटर और टूल',sub:'पर्सेंटाइल, दुर्लभता, स्केल रूपांतरण और अधिक',calc:'🛠 कैलकुलेटर',learn:'📚 गाइड',meta:'मुफ़्त IQ कैलकुलेटर: पर्सेंटाइल, दुर्लभता, स्केल रूपांतरण, माता-पिता-बच्चे का IQ और देश तुलना।'},
+  ru:{title:'Бесплатные IQ-калькуляторы',sub:'Процентиль, редкость, конвертация шкал и другое',calc:'🛠 Калькуляторы',learn:'📚 Гайды',meta:'Бесплатные IQ-калькуляторы: процентиль, редкость, конвертация шкал, IQ родителей и детей, сравнение по странам.'},
+  vi:{title:'Công cụ tính IQ miễn phí',sub:'Phân vị, độ hiếm, chuyển đổi thang đo và hơn thế',calc:'🛠 Công cụ',learn:'📚 Hướng dẫn',meta:'Công cụ tính IQ miễn phí: phân vị, độ hiếm, chuyển đổi thang đo, IQ cha mẹ-con và so sánh quốc gia.'},
+  tr:{title:'Ücretsiz IQ Hesaplayıcılar',sub:'Yüzdelik, nadirlik, ölçek dönüşümü ve daha fazlası',calc:'🛠 Hesaplayıcılar',learn:'📚 Rehberler',meta:'Ücretsiz IQ hesaplayıcılar: yüzdelik, nadirlik, ölçek dönüşümü, ebeveyn-çocuk IQ ve ülke karşılaştırması.'},
+};
 
 // 방문자 IP 국가코드(ISO2) → COUNTRY_IQ 이름 (주요국 + 13개 언어권)
 const ISO2_NAME = { KR:'South Korea', JP:'Japan', US:'United States', GB:'United Kingdom', DE:'Germany', FR:'France', ES:'Spain', IT:'Italy', PT:'Portugal', BR:'Brazil', ID:'Indonesia', IN:'India', RU:'Russia', VN:'Vietnam', TR:'Turkey', CN:'China', TW:'Taiwan', HK:'Hong Kong', SG:'Singapore', CH:'Switzerland', NL:'Netherlands', FI:'Finland', AT:'Austria', SE:'Sweden', BE:'Belgium', NO:'Norway', DK:'Denmark', CA:'Canada', NZ:'New Zealand', AU:'Australia', PL:'Poland', MX:'Mexico', AR:'Argentina', UA:'Ukraine', GR:'Greece', IE:'Ireland', IL:'Israel', SA:'Saudi Arabia', AE:'United Arab Emirates', EG:'Egypt', TH:'Thailand', PH:'Philippines', MY:'Malaysia' };
@@ -625,6 +645,7 @@ function renderTool(slug, lang, cfCountry){
 <meta property="og:description" content="${esc(P.desc)}">
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:type" content="website">
+<meta property="og:image" content="${ogImg(useLang)}">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1378943893051810" crossorigin="anonymous"></script>
 <script type="application/ld+json">${JSON.stringify(appSchema)}</script>
 <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
@@ -729,6 +750,85 @@ ${adZoneScript(useLang)}
   return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
 }
 
+// ── 계산기 & 가이드 허브: /iq-test/tools/<lang> ──
+function renderToolsHub(lang){
+  const useLang = (TOOLS_HUB_I18N[lang] && TOOLS_I18N[lang]) ? lang : 'en';
+  const HB = TOOLS_HUB_I18N[useLang] || TOOLS_HUB_I18N.en;
+  const T = TOOLS_I18N[useLang] || TOOLS_I18N.en;
+  const H = HUB_I18N[useLang] || HUB_I18N.en;
+  const canonical = toolsHubUrl(useLang);
+  const pillar = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/${useLang}/iq-test/`;
+  const appUrl = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/iq-test/?lang=${useLang}`;
+
+  const toolCards = Object.keys(TOOL_SLUGS).map(slug=>{
+    const P = T.pages[TOOL_SLUGS[slug]];
+    return `<a class="card" href="${toolUrl(slug,useLang)}"><div class="ct">${esc(P.h1)}</div><div class="cd">${esc(P.intro)}</div></a>`;
+  }).join('');
+  const spokeCards = SPOKE_SLUGS.map(slug=>`<a class="card sp" href="${spokeUrl(slug,useLang)}"><div class="ct">${esc(spokeH1(slug,useLang))}</div></a>`).join('');
+
+  const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${toolsHubUrl(l)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${toolsHubUrl('en')}">`;
+  const itemList = {"@context":"https://schema.org","@type":"ItemList","name":HB.title,"itemListElement":Object.keys(TOOL_SLUGS).map((slug,i)=>({"@type":"ListItem","position":i+1,"name":T.pages[TOOL_SLUGS[slug]].h1,"url":toolUrl(slug,useLang)}))};
+  const breadcrumb = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":"IQ Test","item":pillar},{"@type":"ListItem","position":3,"name":HB.title,"item":canonical}]};
+
+  const html = `<!DOCTYPE html>
+<html lang="${useLang}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="https://all-lifes.com/iq-test/favicon-${useLang}.png">
+<title>${esc(HB.title)} | All-Lifes</title>
+<meta name="description" content="${esc(HB.meta)}">
+<link rel="canonical" href="${esc(canonical)}">
+    ${hreflangs}
+<meta property="og:title" content="${esc(HB.title)}">
+<meta property="og:description" content="${esc(HB.meta)}">
+<meta property="og:url" content="${esc(canonical)}">
+<meta property="og:type" content="website">
+<meta property="og:image" content="${ogImg(useLang)}">
+${ADSENSE_HEAD}
+${AD_ZONE_STYLE}
+<script type="application/ld+json">${JSON.stringify(itemList)}</script>
+<script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.6;}
+.hero{background:linear-gradient(135deg,#1e1b4b,#312e81,#1d4ed8);color:#fff;padding:34px 20px 26px;text-align:center;}
+.hero h1{font-size:clamp(20px,3.6vw,32px);font-weight:900;max-width:760px;margin:0 auto 10px;}
+.hero p{font-size:14px;color:#c7d2fe;max-width:680px;margin:0 auto;}
+.crumb{max-width:780px;margin:0 auto;padding:10px 18px 0;font-size:12px;color:#64748b;}
+.crumb a{color:#4f46e5;text-decoration:none;}
+.wrap{max-width:780px;margin:0 auto;padding:14px 18px 50px;}
+.sec{font-size:16px;font-weight:800;color:#1e1b4b;margin:24px 0 12px;}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+@media(max-width:560px){.grid{grid-template-columns:1fr;}}
+.card{display:flex;flex-direction:column;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:16px 18px;text-decoration:none;color:#0f172a;transition:all .15s;box-shadow:0 2px 10px rgba(15,23,42,.04);}
+.card:hover{transform:translateY(-2px);border-color:#6366f1;box-shadow:0 8px 22px rgba(79,70,229,.18);}
+.card .ct{font-size:14.5px;font-weight:800;color:#1e1b4b;}
+.card .cd{font-size:12px;color:#64748b;margin-top:5px;line-height:1.45;}
+.card.sp{flex-direction:row;align-items:center;}
+.card.sp .ct{font-size:13.5px;}
+.cta{display:block;text-align:center;margin:26px auto 0;max-width:420px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-weight:800;font-size:16px;padding:14px;border-radius:12px;text-decoration:none;box-shadow:0 6px 20px rgba(79,70,229,.35);}
+.back{display:block;text-align:center;margin-top:14px;color:#64748b;font-size:13px;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="hero"><h1>${esc(HB.title)}</h1><p>${esc(HB.sub)}</p></div>
+<div class="crumb"><a href="${pillar}">IQ Test</a> › ${esc(HB.title)}</div>
+<div class="wrap">
+  ${AD_ZONE_BODY}
+  <div class="sec">${esc(HB.calc)}</div>
+  <div class="grid">${toolCards}</div>
+  <div class="sec">${esc(HB.learn)}</div>
+  <div class="grid">${spokeCards}</div>
+  <a class="cta" href="${appUrl}">${esc(H.cta || '🧠 Take the free IQ test →')}</a>
+  <a class="back" href="${pillar}">${esc(H.backHome || '← Back to the IQ Test')}</a>
+</div>
+${adZoneScript(useLang)}
+</body>
+</html>`;
+  return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -764,15 +864,22 @@ export default {
     // 허브-스포크 설명 페이지: /iq-test/learn/<lang>/<slug>
     const spokeM = path.match(/^\/iq-test\/learn\/([a-z]{2})\/([a-z-]+)\/?$/);
     if (spokeM) {
-      const r = renderSpoke(spokeM[2], spokeM[1]);
+      const r = HREFLANG_ALL.includes(spokeM[1]) ? renderSpoke(spokeM[2], spokeM[1]) : null;
       if (r) return r;
       return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
+    }
+
+    // 계산기 & 가이드 허브: /iq-test/tools/<lang>
+    const hubM = path.match(/^\/iq-test\/tools\/([a-z]{2})\/?$/);
+    if (hubM) {
+      if (!HREFLANG_ALL.includes(hubM[1])) return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
+      return renderToolsHub(hubM[1]);
     }
 
     // 인터랙티브 계산기 도구: /iq-test/tools/<lang>/<slug>
     const toolM = path.match(/^\/iq-test\/tools\/([a-z]{2})\/([a-z-]+)\/?$/);
     if (toolM) {
-      const r = renderTool(toolM[2], toolM[1], request.cf && request.cf.country);
+      const r = HREFLANG_ALL.includes(toolM[1]) ? renderTool(toolM[2], toolM[1], request.cf && request.cf.country) : null;
       if (r) return r;
       return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
     }

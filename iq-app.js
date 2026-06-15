@@ -569,6 +569,24 @@ const TOOL_CTA_I18N={
   it:'Cosa significa il tuo punteggio di QI',id:'Apa arti skor IQ Anda',hi:'आपके IQ स्कोर का मतलब',
   ru:'Что означает ваш балл IQ',vi:'Điểm IQ của bạn có ý nghĩa gì',tr:'IQ puanınız ne anlama geliyor?'
 };
+// 신규 4개 스포크 (네이티브 라벨, spokes2-i18n.js h1에서 추출)
+const NEW_GUIDES_I18N={
+  ko:[["genius-iq","천재 IQ는 몇 점부터일까?"],["average-iq-by-age","나이별 평균 IQ는?"],["child-cognitive-development","나이별 아동 인지발달 이정표 (부모 가이드)"],["mensa-iq-requirements","멘사 IQ 기준은?"]],
+  en:[["genius-iq","Genius IQ Level: What Number Counts as Genius?"],["average-iq-by-age","Average IQ by Age"],["child-cognitive-development","Child Cognitive Development Milestones by Age"],["mensa-iq-requirements","Mensa IQ Requirement"]],
+  de:[["genius-iq","Genie-IQ: Ab welchem Wert beginnt Hochbegabung?"],["average-iq-by-age","Durchschnittlicher IQ nach Alter"],["child-cognitive-development","Kognitive Entwicklung beim Kind"],["mensa-iq-requirements","Mensa-IQ: Voraussetzungen und Aufnahmekriterien"]],
+  ja:[["genius-iq","天才のIQはいくつから?"],["average-iq-by-age","年齢別IQの平均"],["child-cognitive-development","子どもの認知発達"],["mensa-iq-requirements","メンサの入会基準IQ"]],
+  fr:[["genius-iq","QI de génie : à partir de quel score ?"],["average-iq-by-age","QI moyen par âge"],["child-cognitive-development","Développement cognitif de l'enfant"],["mensa-iq-requirements","Quel QI faut-il pour entrer à Mensa ?"]],
+  es:[["genius-iq","CI de genio: ¿qué puntuación se considera de genio?"],["average-iq-by-age","CI promedio por edad: ¿cambia con los años?"],["child-cognitive-development","Desarrollo cognitivo infantil"],["mensa-iq-requirements","Requisito de CI para Mensa: ¿qué necesitas?"]],
+  pt:[["genius-iq","QI de gênio"],["average-iq-by-age","QI médio por idade"],["child-cognitive-development","Desenvolvimento cognitivo infantil"],["mensa-iq-requirements","QI para a Mensa"]],
+  it:[["genius-iq","QI da genio: qual è il punteggio che fa la differenza?"],["average-iq-by-age","QI medio per età"],["child-cognitive-development","Sviluppo cognitivo del bambino"],["mensa-iq-requirements","Requisiti di QI per il Mensa"]],
+  id:[["genius-iq","IQ Jenius Berapa?"],["average-iq-by-age","Rata-rata IQ Berdasarkan Usia"],["child-cognitive-development","Tahap Perkembangan Kognitif Anak Berdasarkan Usia"],["mensa-iq-requirements","Syarat IQ Mensa: Berapa Skor yang Dibutuhkan?"]],
+  hi:[["genius-iq","जीनियस IQ कितना होता है और सबसे ऊँचा IQ क्या है?"],["average-iq-by-age","उम्र के अनुसार औसत IQ कितना होता है?"],["child-cognitive-development","बच्चों का संज्ञानात्मक विकास"],["mensa-iq-requirements","Mensa में शामिल होने के लिए कितना IQ ज़रूरी है?"]],
+  ru:[["genius-iq","Какой IQ считается гениальным"],["average-iq-by-age","Каков средний IQ в зависимости от возраста"],["child-cognitive-development","Этапы когнитивного развития ребёнка по возрасту"],["mensa-iq-requirements","Какой IQ нужен для вступления в Mensa"]],
+  vi:[["genius-iq","IQ thiên tài là bao nhiêu?"],["average-iq-by-age","IQ trung bình theo độ tuổi là bao nhiêu?"],["child-cognitive-development","Các mốc phát triển nhận thức của trẻ theo độ tuổi"],["mensa-iq-requirements","Cần IQ bao nhiêu để gia nhập Mensa?"]],
+  tr:[["genius-iq","Dahi IQ Seviyesi: Kaç Puan Dahi Sayılır?"],["average-iq-by-age","Yaşa Göre Ortalama IQ: Her Yaşta 100 mü?"],["child-cognitive-development","Çocuklarda Bilişsel Gelişim"],["mensa-iq-requirements","Mensa IQ Şartı: Kaç Puanla Üye Olunabilir?"]],
+};
+// 계산기 허브 라벨
+const TOOLS_HUB_LABEL_I18N={ko:'IQ 계산기 & 도구 모음',en:'Free IQ Calculators & Tools',de:'Kostenlose IQ-Rechner & Tools',ja:'無料IQ計算ツール',fr:'Calculateurs de QI gratuits',es:'Calculadoras de CI gratis',pt:'Calculadoras de QI grátis',it:'Calcolatori di QI gratuiti',id:'Kalkulator IQ Gratis',hi:'मुफ़्त IQ कैलकुलेटर और टूल',ru:'Бесплатные IQ-калькуляторы',vi:'Công cụ tính IQ miễn phí',tr:'Ücretsiz IQ Hesaplayıcılar'};
 function renderLearnLinks(iq){
   const card=document.getElementById('learn-links-card');
   if(!card)return;
@@ -577,11 +595,14 @@ function renderLearnLinks(iq){
   const base='https://all-lifes.com/iq-test/learn/'+lang+'/';
   const toolBase='https://all-lifes.com/iq-test/tools/'+lang+'/';
   const ctaLabel=TOOL_CTA_I18N[lang]||TOOL_CTA_I18N.en;
+  const hubLabel=TOOLS_HUB_LABEL_I18N[lang]||TOOLS_HUB_LABEL_I18N.en;
   let html='<h3>'+L.title+'</h3>';
   if(iq&&!isNaN(iq)){
     html+='<a class="learn-link tool-cta" href="'+toolBase+'iq-score-meaning?score='+iq+'">🎯 '+ctaLabel+' <span style="opacity:.6">›</span></a>';
   }
-  html+='<div class="learn-links">'+L.items.map(it=>
+  html+='<a class="learn-link tool-cta secondary" href="https://all-lifes.com/iq-test/tools/'+lang+'">🛠 '+hubLabel+' <span style="opacity:.6">›</span></a>';
+  const items=(L.items||[]).concat(NEW_GUIDES_I18N[lang]||NEW_GUIDES_I18N.en);
+  html+='<div class="learn-links">'+items.map(it=>
     '<a class="learn-link" href="'+base+it[0]+'">'+it[1]+' <span style="opacity:.5">›</span></a>'
   ).join('')+'</div>';
   card.style.display='';

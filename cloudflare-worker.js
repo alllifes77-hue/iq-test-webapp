@@ -8,7 +8,7 @@ import { SPOKES } from './spokes-i18n.js';
 import { SPOKES2 } from './spokes2-i18n.js';
 
 // 스포크 h1 병합 조회 (원본 SPOKES + 신규 SPOKES2)
-const ALL_SPOKE_SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements'];
+const ALL_SPOKE_SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements','fluid-vs-crystallized-intelligence'];
 function spokeH1(slug, lang){
   if (SPOKES[lang] && SPOKES[lang].spokes && SPOKES[lang].spokes[slug]) return SPOKES[lang].spokes[slug].h1;
   if (SPOKES2[lang] && SPOKES2[lang][slug]) return SPOKES2[lang][slug].h1;
@@ -422,8 +422,8 @@ ${hubAlt}
     <lastmod>${lastmod}</lastmod>
   </url>`;
 
-      // Hub-and-spoke explainer pages (8 slugs × 13 langs)
-      const SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements'];
+      // Hub-and-spoke explainer pages (9 slugs × 13 langs)
+      const SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements','fluid-vs-crystallized-intelligence'];
       const spokeLoc = (l, s) => `${SITE_URL}/iq-test/learn/${l}/${s}`;
       const spokeUrls = SLUGS.flatMap(s => {
         const alt = LCODES.map(l =>

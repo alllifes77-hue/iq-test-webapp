@@ -9,6 +9,7 @@ import { HUB_I18N } from './hub-i18n.js';
 import { SPOKES } from './spokes-i18n.js';
 import { SPOKES2 } from './spokes2-i18n.js';
 import { TOOLS_I18N } from './tools-i18n.js';
+import { TOOL_FAQ } from './tool-faq-i18n.js';
 
 const ALI_APP_KEY = '536770';
 const ALI_TRACKING_ID = 'iqtestweb';
@@ -371,7 +372,7 @@ ${adZoneScript(lang)}
 }
 
 // ── 허브-스포크 설명 페이지 (토픽 권위 + AI 인용) ──
-const SPOKE_SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements'];
+const SPOKE_SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements','fluid-vs-crystallized-intelligence'];
 const SPOKE_TABLE = ['good-iq-score','iq-percentile-chart'];
 // 스포크 데이터 병합 조회 (기존 SPOKES + 신규 SPOKES2), 언어 없으면 en 폴백
 function spokeRec(slug, lang){
@@ -626,6 +627,11 @@ function renderTool(slug, lang, cfCountry){
   }).join('');
   const spokeLinks = SPOKE_SLUGS.map(s=>`<li><a href="${spokeUrl(s,useLang)}">${esc(spokeH1(s,useLang))}</a></li>`).join('');
 
+  // 도구별 FAQ (단답 + FAQPage 스키마, AI 인용 강화)
+  const faqArr = (TOOL_FAQ[useLang] && TOOL_FAQ[useLang][pageKey]) || (TOOL_FAQ.en && TOOL_FAQ.en[pageKey]) || [];
+  const faqHtml = faqArr.length ? `<div class="faq"><h2>FAQ</h2>${faqArr.map(f=>`<div class="fq"><div class="fqq">${esc(f.q)}</div><div class="fqa">${esc(f.a)}</div></div>`).join('')}</div>` : '';
+  const faqSchema = faqArr.length ? {"@context":"https://schema.org","@type":"FAQPage","mainEntity":faqArr.map(f=>({"@type":"Question","name":f.q,"acceptedAnswer":{"@type":"Answer","text":f.a}}))} : null;
+
   const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${toolUrl(slug,l)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${toolUrl(slug,'en')}">`;
   const appSchema = {"@context":"https://schema.org","@type":"WebApplication","name":P.h1,"description":P.desc,"url":canonical,"applicationCategory":"EducationalApplication","inLanguage":useLang,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"operatingSystem":"Web"};
   const breadcrumb = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":"IQ Test","item":pillar},{"@type":"ListItem","position":3,"name":P.h1,"item":canonical}]};
@@ -649,11 +655,17 @@ function renderTool(slug, lang, cfCountry){
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1378943893051810" crossorigin="anonymous"></script>
 <script type="application/ld+json">${JSON.stringify(appSchema)}</script>
 <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
+${faqSchema ? `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>` : ''}
 ${AD_ZONE_STYLE}
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.6;}
 .hero{background:linear-gradient(135deg,#1e1b4b,#312e81,#1d4ed8);color:#fff;padding:32px 20px 24px;text-align:center;}
+.faq{margin-top:24px;}
+.faq h2{font-size:17px;font-weight:800;color:#1e1b4b;margin-bottom:10px;}
+.faq .fq{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:13px 16px;margin-bottom:9px;}
+.faq .fqq{font-size:14px;font-weight:800;color:#1e1b4b;margin-bottom:4px;}
+.faq .fqa{font-size:13px;color:#334155;line-height:1.55;}
 .hero h1{font-size:clamp(20px,3.4vw,30px);font-weight:900;max-width:760px;margin:0 auto 10px;}
 .hero p{font-size:14px;color:#c7d2fe;max-width:660px;margin:0 auto;}
 .crumb{max-width:720px;margin:0 auto;padding:10px 18px 0;font-size:12px;color:#64748b;}
@@ -698,6 +710,7 @@ table.cls tbody tr{border-top:1px solid #eef2f7;}
   ${AD_ZONE_BODY}
   ${widget}
   ${extra}
+  ${faqHtml}
   <a class="cta" href="${appUrl}">${esc(H.cta || '🧠 Take the free IQ test →')}</a>
   <div class="related"><h2>🔗 ${esc(H.h1 || 'Learn more')}</h2><ul>${otherTools}${spokeLinks}</ul></div>
   <a class="back" href="${pillar}">${esc(H.backHome || '← Back to the IQ Test')}</a>

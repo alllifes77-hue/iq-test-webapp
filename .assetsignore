@@ -15,6 +15,7 @@ hub-i18n.js
 spokes-i18n.js
 spokes2-i18n.js
 tools-i18n.js
+tool-faq-i18n.js
 translate-*.js
 validate-langs.js
 generate-og*.js

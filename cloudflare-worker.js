@@ -434,6 +434,22 @@ ${aboutAlt}
     <priority>0.7</priority>
     <lastmod>${lastmod}</lastmod>
   </url>`).join('\n');
+      // Glossary + IQ statistics (1 each × 13 langs)
+      const refPages = [
+        { base:'glossary', prio:'0.7' },
+        { base:'iq-statistics', prio:'0.7' },
+      ];
+      const refUrls = refPages.flatMap(pg => {
+        const loc = (l) => `${SITE_URL}/iq-test/${pg.base}/${l}`;
+        const alt = LCODES.map(l => `    <xhtml:link rel="alternate" hreflang="${l}" href="${loc(l)}"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${loc('en')}"/>`;
+        return LCODES.map(l => `  <url>
+    <loc>${loc(l)}</loc>
+${alt}
+    <changefreq>monthly</changefreq>
+    <priority>${pg.prio}</priority>
+    <lastmod>${lastmod}</lastmod>
+  </url>`);
+      }).join('\n');
       const spokeLoc = (l, s) => `${SITE_URL}/iq-test/learn/${l}/${s}`;
       const spokeUrls = SLUGS.flatMap(s => {
         const alt = LCODES.map(l =>
@@ -482,6 +498,7 @@ ${mainUrls}
 ${hubUrl}
 ${hubToolUrls}
 ${aboutUrls}
+${refUrls}
 ${spokeUrls}
 ${toolUrls}
 </urlset>`;

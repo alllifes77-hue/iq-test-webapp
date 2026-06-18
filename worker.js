@@ -10,6 +10,7 @@ import { SPOKES } from './spokes-i18n.js';
 import { SPOKES2 } from './spokes2-i18n.js';
 import { TOOLS_I18N } from './tools-i18n.js';
 import { TOOL_FAQ } from './tool-faq-i18n.js';
+import { ABOUT_I18N } from './about-i18n.js';
 
 const ALI_APP_KEY = '536770';
 const ALI_TRACKING_ID = 'iqtestweb';
@@ -23,6 +24,52 @@ function hreflangHref(l){
   if(l==='ko')return 'https://all-lifes.com/iq-test/';
   if(['en','de','ja','fr','es','pt','it','id'].includes(l))return `https://all-lifes.com/${l}/iq-test/`;
   return `https://all-lifes.com/${l}/iq-test/`; // 신규 4개도 경로형 canonical
+}
+
+// ── 권위/신뢰(E-E-A-T) 공통: 최종 수정일 + 검토자 표기 + 출처 ──
+const LAST_UPDATED = '2026-06-18';
+const AUTH_LABELS = {
+  ko:{updated:'최종 수정',reviewed:'All-Lifes 편집팀 감수',sources:'출처 및 참고자료',about:'소개 · 방법론'},
+  en:{updated:'Last updated',reviewed:'Reviewed by the All-Lifes editorial team',sources:'Sources & references',about:'About · Methodology'},
+  de:{updated:'Zuletzt aktualisiert',reviewed:'Geprüft vom All-Lifes-Redaktionsteam',sources:'Quellen & Referenzen',about:'Über uns · Methodik'},
+  ja:{updated:'最終更新',reviewed:'All-Lifes編集チームが監修',sources:'出典・参考資料',about:'運営者情報・方法論'},
+  fr:{updated:'Dernière mise à jour',reviewed:"Vérifié par l'équipe éditoriale d'All-Lifes",sources:'Sources et références',about:'À propos · Méthodologie'},
+  es:{updated:'Última actualización',reviewed:'Revisado por el equipo editorial de All-Lifes',sources:'Fuentes y referencias',about:'Acerca de · Metodología'},
+  pt:{updated:'Última atualização',reviewed:'Revisado pela equipe editorial da All-Lifes',sources:'Fontes e referências',about:'Sobre · Metodologia'},
+  it:{updated:'Ultimo aggiornamento',reviewed:'Verificato dal team editoriale di All-Lifes',sources:'Fonti e riferimenti',about:'Chi siamo · Metodologia'},
+  id:{updated:'Terakhir diperbarui',reviewed:'Ditinjau oleh tim editorial All-Lifes',sources:'Sumber & referensi',about:'Tentang · Metodologi'},
+  hi:{updated:'अंतिम अपडेट',reviewed:'All-Lifes संपादकीय टीम द्वारा समीक्षित',sources:'स्रोत और संदर्भ',about:'परिचय · पद्धति'},
+  ru:{updated:'Последнее обновление',reviewed:'Проверено редакцией All-Lifes',sources:'Источники и ссылки',about:'О нас · Методология'},
+  vi:{updated:'Cập nhật lần cuối',reviewed:'Được đội ngũ biên tập All-Lifes kiểm duyệt',sources:'Nguồn & tài liệu tham khảo',about:'Giới thiệu · Phương pháp'},
+  tr:{updated:'Son güncelleme',reviewed:'All-Lifes editör ekibi tarafından incelendi',sources:'Kaynaklar ve referanslar',about:'Hakkında · Metodoloji'},
+};
+// 권위 있는 외부 출처 (전 페이지 공통 인용 — Article.citation + 가시 섹션)
+const SOURCES = [
+  { t:'IQ classification — Wikipedia', u:'https://en.wikipedia.org/wiki/IQ_classification' },
+  { t:'Mensa International — What is IQ?', u:'https://www.mensa.org/what-is-iq/' },
+  { t:'APA Dictionary of Psychology — Intelligence', u:'https://dictionary.apa.org/intelligence' },
+  { t:"Raven's Progressive Matrices — Wikipedia", u:'https://en.wikipedia.org/wiki/Raven%27s_Progressive_Matrices' },
+  { t:'Cattell–Horn–Carroll theory — Wikipedia', u:'https://en.wikipedia.org/wiki/Cattell%E2%80%93Horn%E2%80%93Carroll_theory' },
+  { t:'Flynn effect — Wikipedia', u:'https://en.wikipedia.org/wiki/Flynn_effect' },
+];
+const SOURCE_URLS = SOURCES.map(s=>s.u);
+const ABOUT_LANGS = ['ko','en','de','ja','fr','es','pt','it','id','hi','ru','vi','tr'];
+function aboutUrl(lang){ return `https://all-lifes.com/iq-test/about/${ABOUT_LANGS.includes(lang)?lang:'en'}`; }
+// 권위 푸터 (최종 수정 + 검토팀 + About 링크 + 접이식 출처). opts.about=true면 About 링크 포함.
+function authorityFooter(lang, opts){
+  const A = AUTH_LABELS[lang] || AUTH_LABELS.en;
+  const srcs = SOURCES.map(s=>`<li><a href="${s.u}" target="_blank" rel="nofollow noopener">${esc(s.t)}</a></li>`).join('');
+  const aboutLink = (opts&&opts.about) ? ` · <a href="${aboutUrl(lang)}">${esc(A.about)}</a>` : '';
+  return `<style>.auth{margin:22px 0 4px;padding-top:14px;border-top:1px solid #e2e8f0;}
+.auth .am{font-size:11.5px;color:#94a3b8;line-height:1.6;}
+.auth .am a{color:#6366f1;text-decoration:none;font-weight:600;}
+.auth details{margin-top:8px;}
+.auth summary{font-size:12px;font-weight:700;color:#64748b;cursor:pointer;}
+.auth details ul{list-style:none;padding:8px 0 0;margin:0;}
+.auth details li{margin:5px 0;font-size:12px;}
+.auth details a{color:#4f46e5;text-decoration:none;}</style>
+<div class="auth"><div class="am">📅 ${esc(A.updated)}: ${LAST_UPDATED} · ✔ ${esc(A.reviewed)}${aboutLink}</div>
+<details class="auth-src"><summary>📚 ${esc(A.sources)}</summary><ul>${srcs}</ul></details></div>`;
 }
 
 // ── 콘텐츠 하위 페이지 상단 광고 존 (AdSense + 알리익스프레스 + 쿠팡(ko)) ──
@@ -89,7 +136,7 @@ function renderSeoWrapper(lang, url){
     + `<li><a href="${toolsHubUrl(lang)}"><strong>${esc(TOOLS_HUB_I18N[lang]?TOOLS_HUB_I18N[lang].title:'IQ Calculators & Tools')}</strong></a></li>`
     + `<li><a href="${lang==='ko'?'https://all-lifes.com/iq-test/average-iq-by-country':'https://all-lifes.com/iq-test/average-iq-by-country?lang='+lang}">${esc(HUB_I18N[lang]?HUB_I18N[lang].h1:'Average IQ by country')}</a></li>`;
   const breadcrumbSchema = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":L.h1,"item":canonical}]};
-  const orgSchema = {"@context":"https://schema.org","@type":"Organization","name":"All-Lifes","url":"https://all-lifes.com/","logo":"https://all-lifes.com/iq-test/IQ%20TEST.png"};
+  const orgSchema = {"@context":"https://schema.org","@type":"Organization","name":"All-Lifes","url":"https://all-lifes.com/","logo":"https://all-lifes.com/iq-test/IQ%20TEST.png","description":"Free science-based IQ and cognitive testing in 13 languages.","knowsAbout":["IQ","intelligence quotient","intelligence testing","psychometrics","cognitive ability","fluid intelligence","crystallized intelligence"],"mainEntityOfPage":aboutUrl(lang)};
   const websiteSchema = {"@context":"https://schema.org","@type":"WebSite","name":L.h1,"url":canonical,"inLanguage":lang,"potentialAction":{"@type":"SearchAction","target":"https://all-lifes.com/iq-test/?q={search_term_string}","query-input":"required name=search_term_string"}};
   const featuresHtml = L.features.map(f=>`<span class="chip">${esc(f)}</span>`).join('');
   const faqHtml = fqs.map(f=>`<div class="faq-item"><div class="faq-q">${esc(f.q)}</div><div class="faq-a">${esc(f.a)}</div></div>`).join('');
@@ -362,6 +409,7 @@ tbody tr{border-top:1px solid #eef2f7;}
   <div class="caveat">${esc(L.caveat)}</div>
   <table><thead><tr><th>#</th><th>${esc(L.colCountry)}</th><th style="text-align:right">${esc(L.colIQ)}</th></tr></thead><tbody>${rows}</tbody></table>
   <div class="how"><h2>${esc(L.howTitle)}</h2><p>${esc(L.howBody)}</p></div>
+  ${authorityFooter(lang,{about:true})}
   <a class="cta" href="${esc(appUrl)}">${esc(L.cta)}</a>
   <a class="back" href="${esc(appUrl)}">${esc(L.backHome)}</a>
 </div>
@@ -372,7 +420,7 @@ ${adZoneScript(lang)}
 }
 
 // ── 허브-스포크 설명 페이지 (토픽 권위 + AI 인용) ──
-const SPOKE_SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements','fluid-vs-crystallized-intelligence'];
+const SPOKE_SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements','fluid-vs-crystallized-intelligence','reverse-flynn-effect','ai-cognitive-offloading','can-ai-pass-iq-test'];
 const SPOKE_TABLE = ['good-iq-score','iq-percentile-chart'];
 // 스포크 데이터 병합 조회 (기존 SPOKES + 신규 SPOKES2), 언어 없으면 en 폴백
 function spokeRec(slug, lang){
@@ -432,7 +480,7 @@ function renderSpoke(slug, lang){
 
   const faqSchema = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":sp.sections.map(s=>({"@type":"Question","name":s.q,"acceptedAnswer":{"@type":"Answer","text":s.a}}))};
   const breadcrumb = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":"IQ Test","item":pillar},{"@type":"ListItem","position":3,"name":sp.h1,"item":canonical}]};
-  const article = {"@context":"https://schema.org","@type":"Article","headline":sp.h1,"description":sp.desc,"inLanguage":useLang,"datePublished":"2026-06-14","dateModified":"2026-06-14","author":{"@type":"Organization","name":"All-Lifes"},"publisher":{"@type":"Organization","name":"All-Lifes","logo":{"@type":"ImageObject","url":"https://all-lifes.com/iq-test/IQ%20TEST.png"}},"mainEntityOfPage":canonical};
+  const article = {"@context":"https://schema.org","@type":"Article","headline":sp.h1,"description":sp.desc,"inLanguage":useLang,"datePublished":"2026-05-01","dateModified":LAST_UPDATED,"author":{"@type":"Organization","name":"All-Lifes","url":"https://all-lifes.com/","knowsAbout":["IQ","intelligence testing","psychometrics","cognitive ability"]},"publisher":{"@type":"Organization","name":"All-Lifes","logo":{"@type":"ImageObject","url":"https://all-lifes.com/iq-test/IQ%20TEST.png"}},"citation":SOURCE_URLS,"mainEntityOfPage":canonical};
 
   const html = `<!DOCTYPE html>
 <html lang="${useLang}">
@@ -493,6 +541,7 @@ table.cls tbody tr{border-top:1px solid #eef2f7;}
   ${tableHtml}
   <a class="cta" href="${appUrl}">${esc(H.cta || '🧠 Take the free IQ test →')}</a>
   <div class="related"><h2>🔗 ${esc(H.h1 || 'Learn more')}</h2><ul>${related}</ul></div>
+  ${authorityFooter(useLang,{about:true})}
   <a class="back" href="${pillar}">${esc(H.backHome || '← Back to the IQ Test')}</a>
 </div>
 ${adZoneScript(useLang)}
@@ -633,7 +682,7 @@ function renderTool(slug, lang, cfCountry){
   const faqSchema = faqArr.length ? {"@context":"https://schema.org","@type":"FAQPage","mainEntity":faqArr.map(f=>({"@type":"Question","name":f.q,"acceptedAnswer":{"@type":"Answer","text":f.a}}))} : null;
 
   const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${toolUrl(slug,l)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${toolUrl(slug,'en')}">`;
-  const appSchema = {"@context":"https://schema.org","@type":"WebApplication","name":P.h1,"description":P.desc,"url":canonical,"applicationCategory":"EducationalApplication","inLanguage":useLang,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"operatingSystem":"Web"};
+  const appSchema = {"@context":"https://schema.org","@type":"WebApplication","name":P.h1,"description":P.desc,"url":canonical,"applicationCategory":"EducationalApplication","inLanguage":useLang,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"operatingSystem":"Web","dateModified":LAST_UPDATED,"publisher":{"@type":"Organization","name":"All-Lifes","url":"https://all-lifes.com/","knowsAbout":["IQ","intelligence testing","psychometrics"]}};
   const breadcrumb = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":"IQ Test","item":pillar},{"@type":"ListItem","position":3,"name":P.h1,"item":canonical}]};
 
   const html = `<!DOCTYPE html>
@@ -713,6 +762,7 @@ table.cls tbody tr{border-top:1px solid #eef2f7;}
   ${faqHtml}
   <a class="cta" href="${appUrl}">${esc(H.cta || '🧠 Take the free IQ test →')}</a>
   <div class="related"><h2>🔗 ${esc(H.h1 || 'Learn more')}</h2><ul>${otherTools}${spokeLinks}</ul></div>
+  ${authorityFooter(useLang,{about:true})}
   <a class="back" href="${pillar}">${esc(H.backHome || '← Back to the IQ Test')}</a>
   <p class="disc">${esc(C.disclaimer)}</p>
 </div>
@@ -833,6 +883,77 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="grid">${toolCards}</div>
   <div class="sec">${esc(HB.learn)}</div>
   <div class="grid">${spokeCards}</div>
+  ${authorityFooter(useLang,{about:true})}
+  <a class="cta" href="${appUrl}">${esc(H.cta || '🧠 Take the free IQ test →')}</a>
+  <a class="back" href="${pillar}">${esc(H.backHome || '← Back to the IQ Test')}</a>
+</div>
+${adZoneScript(useLang)}
+</body>
+</html>`;
+  return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
+}
+
+// ── About · 방법론 (E-E-A-T 핵심): /iq-test/about/<lang> ──
+function renderAbout(lang){
+  const useLang = ABOUT_I18N[lang] ? lang : 'en';
+  const A = ABOUT_I18N[useLang] || ABOUT_I18N.en;
+  if(!A) return null;
+  const L = AUTH_LABELS[useLang] || AUTH_LABELS.en;
+  const canonical = aboutUrl(useLang);
+  const pillar = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/${useLang}/iq-test/`;
+  const appUrl = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/iq-test/?lang=${useLang}`;
+  const H = HUB_I18N[useLang] || HUB_I18N.en;
+
+  const secs = A.sections.map(s=>`<section class="qa"><h2>${esc(s.h)}</h2><p>${esc(s.p)}</p></section>`).join('');
+  const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${aboutUrl(l)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${aboutUrl('en')}">`;
+  const aboutSchema = {"@context":"https://schema.org","@type":"AboutPage","name":A.h1,"description":A.desc,"url":canonical,"inLanguage":useLang,"dateModified":LAST_UPDATED,"mainEntity":{"@type":"Organization","name":"All-Lifes","url":"https://all-lifes.com/","logo":"https://all-lifes.com/iq-test/IQ%20TEST.png","description":A.intro,"knowsAbout":["IQ","intelligence testing","psychometrics","cognitive ability","Cattell–Horn–Carroll theory","Raven's Progressive Matrices"]}};
+  const breadcrumb = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":"IQ Test","item":pillar},{"@type":"ListItem","position":3,"name":A.h1,"item":canonical}]};
+
+  const html = `<!DOCTYPE html>
+<html lang="${useLang}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="https://all-lifes.com/iq-test/favicon-${useLang}.png">
+<title>${esc(A.title)}</title>
+<meta name="description" content="${esc(A.desc)}">
+<meta name="keywords" content="${esc(A.keywords||'')}">
+<link rel="canonical" href="${esc(canonical)}">
+    ${hreflangs}
+<meta property="og:title" content="${esc(A.title)}">
+<meta property="og:description" content="${esc(A.desc)}">
+<meta property="og:url" content="${esc(canonical)}">
+<meta property="og:type" content="website">
+<meta property="og:image" content="${ogImg(useLang)}">
+${ADSENSE_HEAD}
+${AD_ZONE_STYLE}
+<script type="application/ld+json">${JSON.stringify(aboutSchema)}</script>
+<script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.7;}
+.hero{background:linear-gradient(135deg,#1e1b4b,#312e81,#1d4ed8);color:#fff;padding:34px 20px 26px;text-align:center;}
+.hero h1{font-size:clamp(20px,3.4vw,30px);font-weight:900;max-width:780px;margin:0 auto 10px;}
+.hero p{font-size:14px;color:#c7d2fe;max-width:700px;margin:0 auto;}
+.crumb{max-width:760px;margin:0 auto;padding:10px 18px 0;font-size:12px;color:#64748b;}
+.crumb a{color:#4f46e5;text-decoration:none;}
+.wrap{max-width:760px;margin:0 auto;padding:14px 18px 50px;}
+.qa{margin-top:22px;}
+.qa h2{font-size:18px;font-weight:800;color:#1e1b4b;margin-bottom:6px;}
+.qa p{font-size:14px;color:#334155;}
+.rev{margin-top:20px;background:#eef2ff;border:1px solid #c7d2fe;border-radius:12px;padding:14px 16px;font-size:13px;color:#3730a3;}
+.cta{display:block;text-align:center;margin:26px auto 0;max-width:420px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-weight:800;font-size:16px;padding:14px;border-radius:12px;text-decoration:none;box-shadow:0 6px 20px rgba(79,70,229,.35);}
+.back{display:block;text-align:center;margin-top:14px;color:#64748b;font-size:13px;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="hero"><h1>${esc(A.h1)}</h1><p>${esc(A.intro)}</p></div>
+<div class="crumb"><a href="${pillar}">IQ Test</a> › ${esc(A.h1)}</div>
+<div class="wrap">
+  ${AD_ZONE_BODY}
+  ${secs}
+  <div class="rev">✔ ${esc(A.reviewerNote)}</div>
+  ${authorityFooter(useLang)}
   <a class="cta" href="${appUrl}">${esc(H.cta || '🧠 Take the free IQ test →')}</a>
   <a class="back" href="${pillar}">${esc(H.backHome || '← Back to the IQ Test')}</a>
 </div>
@@ -872,6 +993,15 @@ export default {
     // 국가별 평균 IQ SEO 허브
     if (path === '/iq-test/average-iq-by-country' || path === '/iq-test/average-iq-by-country/') {
       return renderCountryHub(url);
+    }
+
+    // About · 방법론: /iq-test/about/<lang>
+    const aboutM = path.match(/^\/iq-test\/about\/([a-z]{2})\/?$/);
+    if (aboutM) {
+      if (!HREFLANG_ALL.includes(aboutM[1])) return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
+      const r = renderAbout(aboutM[1]);
+      if (r) return r;
+      return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
     }
 
     // 허브-스포크 설명 페이지: /iq-test/learn/<lang>/<slug>

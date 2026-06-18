@@ -8,7 +8,7 @@ import { SPOKES } from './spokes-i18n.js';
 import { SPOKES2 } from './spokes2-i18n.js';
 
 // 스포크 h1 병합 조회 (원본 SPOKES + 신규 SPOKES2)
-const ALL_SPOKE_SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements','fluid-vs-crystallized-intelligence'];
+const ALL_SPOKE_SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements','fluid-vs-crystallized-intelligence','reverse-flynn-effect','ai-cognitive-offloading','can-ai-pass-iq-test'];
 function spokeH1(slug, lang){
   if (SPOKES[lang] && SPOKES[lang].spokes && SPOKES[lang].spokes[slug]) return SPOKES[lang].spokes[slug].h1;
   if (SPOKES2[lang] && SPOKES2[lang][slug]) return SPOKES2[lang][slug].h1;
@@ -390,7 +390,7 @@ export default {
 
     // ── Route 0: Sitemap (/iq-test-sitemap.xml) ────────────
     if (path === '/iq-test-sitemap.xml') {
-      const lastmod = '2026-06-14';
+      const lastmod = '2026-06-18';
       const LCODES = ['ko','en','de','ja','fr','es','pt','it','id','hi','ru','vi','tr'];
       const mainLoc = (l) => l === 'ko' ? `${SITE_URL}/iq-test/` : `${SITE_URL}/${l}/iq-test/`;
       const langs = LCODES.map(l => ({ lang: l, loc: mainLoc(l) }));
@@ -422,8 +422,18 @@ ${hubAlt}
     <lastmod>${lastmod}</lastmod>
   </url>`;
 
-      // Hub-and-spoke explainer pages (9 slugs × 13 langs)
-      const SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements','fluid-vs-crystallized-intelligence'];
+      // Hub-and-spoke explainer pages (12 slugs × 13 langs)
+      const SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements','fluid-vs-crystallized-intelligence','reverse-flynn-effect','ai-cognitive-offloading','can-ai-pass-iq-test'];
+      // About / methodology (1 × 13 langs)
+      const aboutLoc = (l) => `${SITE_URL}/iq-test/about/${l}`;
+      const aboutAlt = LCODES.map(l => `    <xhtml:link rel="alternate" hreflang="${l}" href="${aboutLoc(l)}"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${aboutLoc('en')}"/>`;
+      const aboutUrls = LCODES.map(l => `  <url>
+    <loc>${aboutLoc(l)}</loc>
+${aboutAlt}
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>${lastmod}</lastmod>
+  </url>`).join('\n');
       const spokeLoc = (l, s) => `${SITE_URL}/iq-test/learn/${l}/${s}`;
       const spokeUrls = SLUGS.flatMap(s => {
         const alt = LCODES.map(l =>
@@ -471,6 +481,7 @@ ${alt}
 ${mainUrls}
 ${hubUrl}
 ${hubToolUrls}
+${aboutUrls}
 ${spokeUrls}
 ${toolUrls}
 </urlset>`;
@@ -578,7 +589,10 @@ ${toolUrls}
     const orgSchema = {
       "@context":"https://schema.org","@type":"Organization",
       "name":"All-Lifes","url":SITE_URL+"/",
-      "logo":SITE_URL+"/iq-test/IQ%20TEST.png"
+      "logo":SITE_URL+"/iq-test/IQ%20TEST.png",
+      "description":"Free science-based IQ and cognitive testing in 13 languages.",
+      "knowsAbout":["IQ","intelligence quotient","intelligence testing","psychometrics","cognitive ability","fluid intelligence","crystallized intelligence"],
+      "mainEntityOfPage":SITE_URL+"/iq-test/about/"+lang
     };
     const websiteSchema = {
       "@context":"https://schema.org","@type":"WebSite",

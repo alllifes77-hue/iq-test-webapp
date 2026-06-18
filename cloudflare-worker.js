@@ -450,6 +450,29 @@ ${alt}
     <lastmod>${lastmod}</lastmod>
   </url>`);
       }).join('\n');
+      // 점수 인덱스 허브 (1 × 13) + 점수별 페이지 (70-145 × 13)
+      const scoreHubUrls = LCODES.map(l => `  <url>
+    <loc>${SITE_URL}/iq-test/score/${l}</loc>
+${LCODES.map(x=>`    <xhtml:link rel="alternate" hreflang="${x}" href="${SITE_URL}/iq-test/score/${x}"/>`).join('\n')}
+    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/iq-test/score/en"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>${lastmod}</lastmod>
+  </url>`).join('\n');
+      const SCORE_MIN = 70, SCORE_MAX = 145;
+      let scoreUrls = '';
+      for (let n = SCORE_MIN; n <= SCORE_MAX; n++) {
+        const alt = LCODES.map(l => `    <xhtml:link rel="alternate" hreflang="${l}" href="${SITE_URL}/iq-test/score/${l}/${n}"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/iq-test/score/en/${n}"/>`;
+        for (const l of LCODES) {
+          scoreUrls += `  <url>
+    <loc>${SITE_URL}/iq-test/score/${l}/${n}</loc>
+${alt}
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+    <lastmod>${lastmod}</lastmod>
+  </url>\n`;
+        }
+      }
       const spokeLoc = (l, s) => `${SITE_URL}/iq-test/learn/${l}/${s}`;
       const spokeUrls = SLUGS.flatMap(s => {
         const alt = LCODES.map(l =>
@@ -499,7 +522,8 @@ ${hubUrl}
 ${hubToolUrls}
 ${aboutUrls}
 ${refUrls}
-${spokeUrls}
+${scoreHubUrls}
+${scoreUrls}${spokeUrls}
 ${toolUrls}
 </urlset>`;
       return new Response(xml, {

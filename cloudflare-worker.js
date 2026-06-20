@@ -8,7 +8,7 @@ import { SPOKES } from './spokes-i18n.js';
 import { SPOKES2 } from './spokes2-i18n.js';
 
 // 스포크 h1 병합 조회 (원본 SPOKES + 신규 SPOKES2)
-const ALL_SPOKE_SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements','fluid-vs-crystallized-intelligence','reverse-flynn-effect','ai-cognitive-offloading','can-ai-pass-iq-test'];
+const ALL_SPOKE_SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements','fluid-vs-crystallized-intelligence','reverse-flynn-effect','ai-cognitive-offloading','can-ai-pass-iq-test','iq-vs-eq','iq-test-types','verbal-vs-nonverbal-iq','nature-vs-nurture-intelligence','multiple-intelligences','does-iq-predict-success'];
 function spokeH1(slug, lang){
   if (SPOKES[lang] && SPOKES[lang].spokes && SPOKES[lang].spokes[slug]) return SPOKES[lang].spokes[slug].h1;
   if (SPOKES2[lang] && SPOKES2[lang][slug]) return SPOKES2[lang][slug].h1;
@@ -422,8 +422,8 @@ ${hubAlt}
     <lastmod>${lastmod}</lastmod>
   </url>`;
 
-      // Hub-and-spoke explainer pages (12 slugs × 13 langs)
-      const SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements','fluid-vs-crystallized-intelligence','reverse-flynn-effect','ai-cognitive-offloading','can-ai-pass-iq-test'];
+      // Hub-and-spoke explainer pages (18 slugs × 13 langs)
+      const SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements','fluid-vs-crystallized-intelligence','reverse-flynn-effect','ai-cognitive-offloading','can-ai-pass-iq-test','iq-vs-eq','iq-test-types','verbal-vs-nonverbal-iq','nature-vs-nurture-intelligence','multiple-intelligences','does-iq-predict-success'];
       // About / methodology (1 × 13 langs)
       const aboutLoc = (l) => `${SITE_URL}/iq-test/about/${l}`;
       const aboutAlt = LCODES.map(l => `    <xhtml:link rel="alternate" hreflang="${l}" href="${aboutLoc(l)}"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${aboutLoc('en')}"/>`;

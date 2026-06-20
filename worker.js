@@ -422,7 +422,7 @@ ${adZoneScript(lang)}
 }
 
 // ── 허브-스포크 설명 페이지 (토픽 권위 + AI 인용) ──
-const SPOKE_SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements','fluid-vs-crystallized-intelligence','reverse-flynn-effect','ai-cognitive-offloading','can-ai-pass-iq-test'];
+const SPOKE_SLUGS = ['good-iq-score','iq-percentile-chart','online-iq-test-accuracy','improve-iq','genius-iq','average-iq-by-age','child-cognitive-development','mensa-iq-requirements','fluid-vs-crystallized-intelligence','reverse-flynn-effect','ai-cognitive-offloading','can-ai-pass-iq-test','iq-vs-eq','iq-test-types','verbal-vs-nonverbal-iq','nature-vs-nurture-intelligence','multiple-intelligences','does-iq-predict-success'];
 const SPOKE_TABLE = ['good-iq-score','iq-percentile-chart'];
 // 스포크 데이터 병합 조회 (기존 SPOKES + 신규 SPOKES2), 언어 없으면 en 폴백
 function spokeRec(slug, lang){

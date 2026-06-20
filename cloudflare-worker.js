@@ -434,10 +434,11 @@ ${aboutAlt}
     <priority>0.7</priority>
     <lastmod>${lastmod}</lastmod>
   </url>`).join('\n');
-      // Glossary + IQ statistics (1 each × 13 langs)
+      // Glossary + IQ statistics + Web Story (1 each × 13 langs)
       const refPages = [
         { base:'glossary', prio:'0.7' },
         { base:'iq-statistics', prio:'0.7' },
+        { base:'story', prio:'0.6' },
       ];
       const refUrls = refPages.flatMap(pg => {
         const loc = (l) => `${SITE_URL}/iq-test/${pg.base}/${l}`;

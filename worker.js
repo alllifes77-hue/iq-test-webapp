@@ -13,6 +13,7 @@ import { TOOL_FAQ } from './tool-faq-i18n.js';
 import { ABOUT_I18N } from './about-i18n.js';
 import { GLOSSARY_I18N } from './glossary-i18n.js';
 import { DATA_I18N } from './data-i18n.js';
+import { STORY_I18N } from './story-i18n.js';
 
 const ALI_APP_KEY = '536770';
 const ALI_TRACKING_ID = 'iqtestweb';
@@ -844,6 +845,8 @@ function renderToolsHub(lang){
   const smH1 = (T.pages.scoreMeaning||{}).h1;
   if(smH1) spokeCards += `<a class="card sp" href="${scoreHubUrl(useLang)}"><div class="ct">🔢 ${esc(smH1)}</div></a>`;
   spokeCards += `<a class="card sp" href="${percentileHubUrl(useLang)}"><div class="ct">📈 IQ ${esc(T.common.percentile)}</div></a>`;
+  const story = STORY_I18N[useLang] || STORY_I18N.en;
+  if(story && story.storyTitle) spokeCards += `<a class="card sp" href="${storyUrl(useLang)}"><div class="ct">📱 ${esc(story.storyTitle)}</div></a>`;
 
   const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${toolsHubUrl(l)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${toolsHubUrl('en')}">`;
   const itemList = {"@context":"https://schema.org","@type":"ItemList","name":HB.title,"itemListElement":Object.keys(TOOL_SLUGS).map((slug,i)=>({"@type":"ListItem","position":i+1,"name":T.pages[TOOL_SLUGS[slug]].h1,"url":toolUrl(slug,useLang)}))};
@@ -1555,6 +1558,90 @@ ${adZoneScript(useLang)}
   return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
 }
 
+// ── Google Web Story (AMP, Discover/이미지 검색 유입): /iq-test/story/<lang> ──
+const storyUrl = (lang) => `https://all-lifes.com/iq-test/story/${lang}`;
+const storyPosterUrl = (lang) => `https://all-lifes.com/iq-test/story/${lang}/poster.svg`;
+const STORY_GRADS = ['#1e1b4b,#4338ca','#312e81,#6d28d9','#1d4ed8,#4f46e5','#0f766e,#0ea5e9','#7c3aed,#db2777','#4f46e5,#1e1b4b','#4338ca,#0f766e'];
+function storyGrad(i){ const g=STORY_GRADS[i%STORY_GRADS.length]; return `linear-gradient(160deg,${g})`; }
+
+function storyPosterSVG(lang){
+  const useLang = STORY_I18N[lang] ? lang : 'en';
+  const S = STORY_I18N[useLang] || {};
+  const title = esc(S.storyTitle || 'What your IQ score means');
+  const tag = esc(S.posterTagline || '');
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 960" width="720" height="960">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e1b4b"/><stop offset="1" stop-color="#4f46e5"/></linearGradient></defs>
+<rect width="720" height="960" fill="url(#g)"/>
+<text x="360" y="300" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="190" font-weight="900" fill="#ffffff" opacity="0.13">IQ</text>
+<text x="360" y="470" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="44" font-weight="900" fill="#ffffff"><tspan>${title.length>26?title.slice(0,26):title}</tspan></text>
+<text x="360" y="540" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="26" fill="#c7d2fe">${tag.length>34?tag.slice(0,34):tag}</text>
+<text x="360" y="900" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" fill="#a5b4fc">all-lifes.com</text>
+</svg>`;
+}
+function renderStoryPoster(lang){
+  const useLang = STORY_I18N[lang] ? lang : 'en';
+  return new Response(storyPosterSVG(useLang), { headers:{ 'Content-Type':'image/svg+xml', 'Cache-Control':'public, max-age=86400' }});
+}
+const AMP_BOILERPLATE = `<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>`;
+
+function renderWebStory(lang){
+  const useLang = STORY_I18N[lang] ? lang : 'en';
+  const S = STORY_I18N[useLang];
+  if(!S || !Array.isArray(S.slides) || !S.slides.length) return null;
+  const H = HUB_I18N[useLang] || HUB_I18N.en;
+  const canonical = storyUrl(useLang);
+  const appUrl = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/iq-test/?lang=${useLang}`;
+  const logo = 'https://all-lifes.com/iq-test/IQ%20TEST.png';
+
+  const coverPage = `<amp-story-page id="cover"><amp-story-grid-layer template="fill"><div class="bg b0"></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" class="ct"><div class="kic">IQ</div><h1>${esc(S.storyTitle)}</h1><p class="tag">${esc(S.posterTagline)}</p></amp-story-grid-layer></amp-story-page>`;
+  const slidePages = S.slides.map((sl,i)=>`<amp-story-page id="s${i+1}"><amp-story-grid-layer template="fill"><div class="bg b${i+1}"></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" class="ct"><div class="num">${i+1}</div><h2>${esc(sl.h)}</h2><p>${esc(sl.s)}</p></amp-story-grid-layer></amp-story-page>`).join('');
+  const ctaPage = `<amp-story-page id="cta"><amp-story-grid-layer template="fill"><div class="bg b6"></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" class="ct"><h2>${esc(S.storyTitle)}</h2><a class="btn" href="${appUrl}">${esc(S.cta)}</a></amp-story-grid-layer></amp-story-page>`;
+
+  const article = {"@context":"https://schema.org","@type":"Article","headline":S.storyTitle,"description":S.posterTagline,"inLanguage":useLang,"datePublished":"2026-05-01","dateModified":LAST_UPDATED,"image":[storyPosterUrl(useLang)],"author":{"@type":"Organization","name":"All-Lifes","url":"https://all-lifes.com/"},"publisher":{"@type":"Organization","name":"All-Lifes","logo":{"@type":"ImageObject","url":logo}},"mainEntityOfPage":canonical};
+
+  const html = `<!doctype html>
+<html amp lang="${useLang}">
+<head>
+<meta charset="utf-8">
+<script async src="https://cdn.ampproject.org/v0.js"></script>
+<script async custom-element="amp-story" src="https://cdn.ampproject.org/v0/amp-story-1.0.js"></script>
+<title>${esc(S.storyTitle)}</title>
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="description" content="${esc(S.posterTagline)}">
+<link rel="canonical" href="${esc(canonical)}">
+${AMP_BOILERPLATE}
+<style amp-custom>
+amp-story{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#fff;}
+.bg{width:100%;height:100%;}
+.b0{background:linear-gradient(160deg,#1e1b4b,#4338ca);}
+.b1{background:linear-gradient(160deg,#312e81,#6d28d9);}
+.b2{background:linear-gradient(160deg,#1d4ed8,#4f46e5);}
+.b3{background:linear-gradient(160deg,#0f766e,#0ea5e9);}
+.b4{background:linear-gradient(160deg,#7c3aed,#db2777);}
+.b5{background:linear-gradient(160deg,#4f46e5,#1e1b4b);}
+.b6{background:linear-gradient(160deg,#4338ca,#0f766e);}
+.ct{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 26px;}
+.kic{font-size:120px;font-weight:900;opacity:.16;line-height:1;margin-bottom:6px;}
+.num{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;margin-bottom:20px;}
+h1{font-size:30px;font-weight:900;line-height:1.2;margin:0 0 14px;}
+h2{font-size:27px;font-weight:900;line-height:1.22;margin:0 0 14px;}
+p{font-size:18px;line-height:1.45;color:#e0e7ff;margin:0;max-width:18em;}
+.tag{font-size:17px;color:#c7d2fe;}
+.btn{margin-top:26px;background:#fff;color:#3730a3;font-weight:900;font-size:18px;padding:15px 26px;border-radius:30px;text-decoration:none;}
+</style>
+<script type="application/ld+json">${JSON.stringify(article)}</script>
+</head>
+<body>
+<amp-story standalone title="${esc(S.storyTitle)}" publisher="All-Lifes" publisher-logo-src="${logo}" poster-portrait-src="${storyPosterUrl(useLang)}">
+${coverPage}
+${slidePages}
+${ctaPage}
+</amp-story>
+</body>
+</html>`;
+  return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -1601,6 +1688,15 @@ export default {
     if (glossM) {
       if (!HREFLANG_ALL.includes(glossM[1])) return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
       const r = glossM[2] ? renderGlossaryTerm(glossM[1], glossM[2]) : renderGlossary(glossM[1]);
+      if (r) return r;
+      return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
+    }
+
+    // Web Story (AMP) + 세로 포스터: /iq-test/story/<lang>[/poster.svg]
+    const storyM = path.match(/^\/iq-test\/story\/([a-z]{2})(?:\/poster\.svg)?\/?$/);
+    if (storyM) {
+      if (!HREFLANG_ALL.includes(storyM[1])) return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
+      const r = path.endsWith('/poster.svg') ? renderStoryPoster(storyM[1]) : renderWebStory(storyM[1]);
       if (r) return r;
       return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
     }

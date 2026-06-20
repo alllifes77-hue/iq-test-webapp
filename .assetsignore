@@ -19,6 +19,7 @@ tool-faq-i18n.js
 about-i18n.js
 glossary-i18n.js
 data-i18n.js
+story-i18n.js
 translate-*.js
 validate-langs.js
 generate-og*.js

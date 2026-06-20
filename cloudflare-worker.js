@@ -676,7 +676,7 @@ ${toolUrls}
     const websiteSchema = {
       "@context":"https://schema.org","@type":"WebSite",
       "name":L.h1,"url":canonical,"inLanguage":lang,
-      "potentialAction":{"@type":"SearchAction","target":SITE_URL+"/iq-test/?q={search_term_string}","query-input":"required name=search_term_string"}
+      "potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":SITE_URL+"/iq-test/search/"+lang+"?q={search_term_string}"},"query-input":"required name=search_term_string"}
     };
 
     // Result share banner content (shown on shared pages)

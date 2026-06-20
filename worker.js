@@ -70,8 +70,10 @@ function authorityFooter(lang, opts){
 .auth summary{font-size:12px;font-weight:700;color:#64748b;cursor:pointer;}
 .auth details ul{list-style:none;padding:8px 0 0;margin:0;}
 .auth details li{margin:5px 0;font-size:12px;}
-.auth details a{color:#4f46e5;text-decoration:none;}</style>
+.auth details a{color:#4f46e5;text-decoration:none;}
+.auth-share{margin-top:10px;background:#eef2ff;color:#4338ca;border:1px solid #c7d2fe;border-radius:20px;padding:7px 16px;font-size:12.5px;font-weight:700;cursor:pointer;}</style>
 <div class="auth"><div class="am">📅 ${esc(A.updated)}: ${LAST_UPDATED} · ✔ ${esc(A.reviewed)}${aboutLink}</div>
+<button class="auth-share" onclick="(function(b){var u=location.href;if(navigator.share){navigator.share({title:document.title,url:u}).catch(function(){});}else if(navigator.clipboard){navigator.clipboard.writeText(u);b.textContent='✓ '+b.textContent;}})(this)">🔗 Share</button>
 <details class="auth-src"><summary>📚 ${esc(A.sources)}</summary><ul>${srcs}</ul></details></div>`;
 }
 
@@ -140,7 +142,7 @@ function renderSeoWrapper(lang, url){
     + `<li><a href="${lang==='ko'?'https://all-lifes.com/iq-test/average-iq-by-country':'https://all-lifes.com/iq-test/average-iq-by-country?lang='+lang}">${esc(HUB_I18N[lang]?HUB_I18N[lang].h1:'Average IQ by country')}</a></li>`;
   const breadcrumbSchema = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":L.h1,"item":canonical}]};
   const orgSchema = {"@context":"https://schema.org","@type":"Organization","name":"All-Lifes","url":"https://all-lifes.com/","logo":"https://all-lifes.com/iq-test/IQ%20TEST.png","description":"Free science-based IQ and cognitive testing in 13 languages.","knowsAbout":["IQ","intelligence quotient","intelligence testing","psychometrics","cognitive ability","fluid intelligence","crystallized intelligence"],"mainEntityOfPage":aboutUrl(lang)};
-  const websiteSchema = {"@context":"https://schema.org","@type":"WebSite","name":L.h1,"url":canonical,"inLanguage":lang,"potentialAction":{"@type":"SearchAction","target":"https://all-lifes.com/iq-test/?q={search_term_string}","query-input":"required name=search_term_string"}};
+  const websiteSchema = {"@context":"https://schema.org","@type":"WebSite","name":L.h1,"url":canonical,"inLanguage":lang,"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":`https://all-lifes.com/iq-test/search/${lang}?q={search_term_string}`},"query-input":"required name=search_term_string"}};
   const featuresHtml = L.features.map(f=>`<span class="chip">${esc(f)}</span>`).join('');
   const faqHtml = fqs.map(f=>`<div class="faq-item"><div class="faq-q">${esc(f.q)}</div><div class="faq-a">${esc(f.a)}</div></div>`).join('');
   const langBar = HREFLANG_ALL.map(l=>{
@@ -441,6 +443,15 @@ function spokeRec(slug, lang){
 }
 const spokeH1 = (slug, lang) => { const r = spokeRec(slug, lang); return r ? r.sp.h1 : slug; };
 const PAA_I18N = {ko:'함께 많이 찾는 질문',en:'People also ask',de:'Häufig gestellte Fragen',ja:'よく一緒に検索される質問',fr:'Questions fréquentes',es:'La gente también pregunta',pt:'As pessoas também perguntam',it:'Le persone chiedono anche',id:'Orang juga bertanya',hi:'लोग यह भी पूछते हैं',ru:'Похожие вопросы',vi:'Mọi người cũng hỏi',tr:'İnsanlar bunları da soruyor'};
+const TLDR_I18N = {ko:'핵심 요약',en:'Key takeaways',de:'Das Wichtigste',ja:'要点',fr:'À retenir',es:'Puntos clave',pt:'Resumo',it:'In sintesi',id:'Ringkasan',hi:'मुख्य बातें',ru:'Кратко',vi:'Tóm tắt',tr:'Özet'};
+const PASF_I18N = {ko:'함께 검색한 항목',en:'People also search for',de:'Ebenfalls gesucht',ja:'関連検索',fr:'Recherches associées',es:'También se busca',pt:'Também pesquisam',it:'Ricerche correlate',id:'Pencarian terkait',hi:'संबंधित खोजें',ru:'Также ищут',vi:'Tìm kiếm liên quan',tr:'İlgili aramalar'};
+const TAKE_TEST_I18N = {ko:'무료 검사',en:'Free test',de:'Gratis-Test',ja:'無料テスト',fr:'Test gratuit',es:'Test gratis',pt:'Teste grátis',it:'Test gratis',id:'Tes gratis',hi:'मुफ़्त टेस्ट',ru:'Тест',vi:'Test miễn phí',tr:'Ücretsiz test'};
+// 스티키 플로팅 CTA (다른 분야: CRO) — 콘텐츠 페이지 하단 고정
+function stickyCta(lang, appUrl){
+  return `<a class="sticky-cta" href="${appUrl}">🧠 ${esc(TAKE_TEST_I18N[lang]||TAKE_TEST_I18N.en)}</a><style>.sticky-cta{position:fixed;right:14px;bottom:14px;z-index:50;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-weight:800;font-size:14px;padding:12px 18px;border-radius:30px;text-decoration:none;box-shadow:0 6px 20px rgba(79,70,229,.45);}@media(min-width:1100px){.sticky-cta{right:calc(50% - 520px);}}</style>`;
+}
+// 읽기 진행률 바 (다른 분야: 블로그/미디어 — 인게이지먼트)
+const PROGRESS_BAR = `<div id="rpb" style="position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#6366f1,#4f46e5);z-index:60;transition:width .1s;"></div><script>document.addEventListener('scroll',function(){var h=document.documentElement;var p=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;var b=document.getElementById('rpb');if(b)b.style.width=(p||0)+'%';},{passive:true});</script>`;
 const SPOKE_ROWS = [
   { r:'130+',    p:'98–99.9', pop:'~2%'  },
   { r:'120–129', p:'91–97',   pop:'~8%'  },
@@ -475,6 +486,10 @@ function renderSpoke(slug, lang){
   const paaSlugs = SPOKE_SLUGS.filter(s=>s!==slug).slice(0,5);
   const paaItems = paaSlugs.map(s=>{ const r2 = spokeRec(s, useLang); if(!r2) return ''; return `<details class="pa"><summary>${esc(r2.sp.h1)}</summary><div class="pad"><p>${esc(r2.sp.intro)}</p><a href="${spokeUrl(s,useLang)}">${esc(spokeH1(s,useLang))} →</a></div></details>`; }).join('');
   const paaHtml = paaItems ? `<div class="paa"><h2>❓ ${esc(PAA_I18N[useLang]||PAA_I18N.en)}</h2>${paaItems}</div>` : '';
+  // TL;DR 핵심 요약 (다른 분야: AEO/AI Overviews — 첫 문장 추출, 새 텍스트 없음)
+  const tldrHtml = `<div class="tldr"><div class="tl-h">📌 ${esc(TLDR_I18N[useLang]||TLDR_I18N.en)}</div><ul>${sp.sections.map(s=>{const a=String(s.a);const m=a.match(/[.!?。？！]\s/);return `<li>${esc(m?a.slice(0,m.index+1):a)}</li>`;}).join('')}</ul></div>`;
+  // People also search for (다른 분야: SERP 피처 모방 — 내부링크)
+  const pasfHtml = `<div class="pasf"><span class="pf-h">${esc(PASF_I18N[useLang]||PASF_I18N.en)}:</span>${SPOKE_SLUGS.filter(s=>s!==slug).slice(0,6).map(s=>`<a href="${spokeUrl(s,useLang)}">${esc(spokeH1(s,useLang))}</a>`).join('')}</div>`;
 
   let tableHtml = '';
   if(SPOKE_TABLE.includes(slug) && Array.isArray(S.tableHeaders) && Array.isArray(S.classLabels)){
@@ -542,6 +557,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .paa details[open] summary::after{content:'–';}
 .paa .pad{padding:0 0 12px;font-size:13px;color:#475569;}
 .paa .pad a{color:#4f46e5;text-decoration:none;font-weight:600;display:inline-block;margin-top:6px;}
+.tldr{background:#eef2ff;border:1px solid #c7d2fe;border-radius:12px;padding:14px 18px;margin-top:6px;}
+.tldr .tl-h{font-size:13px;font-weight:800;color:#3730a3;margin-bottom:8px;}
+.tldr ul{margin:0;padding-left:18px;}
+.tldr li{font-size:13px;color:#334155;margin:5px 0;}
+.pasf{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.pasf .pf-h{font-size:12.5px;font-weight:700;color:#64748b;}
+.pasf a{font-size:12.5px;background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:6px 13px;color:#4f46e5;text-decoration:none;font-weight:600;}
+.pasf a:hover{border-color:#6366f1;}
 .qa{margin-top:22px;scroll-margin-top:12px;}
 .qa h2{font-size:18px;font-weight:800;color:#1e1b4b;margin-bottom:6px;}
 .qa p{font-size:14px;color:#334155;}
@@ -563,16 +586,21 @@ table.cls tbody tr{border-top:1px solid #eef2f7;}
 </style>
 </head>
 <body>
+${PROGRESS_BAR}
+${stickyCta(useLang, appUrl)}
+<a href="#main" style="position:absolute;left:-999px;top:0;">Skip to content</a>
 <div class="hero"><h1>${esc(sp.h1)}</h1><p>${esc(sp.intro)}</p></div>
 <div class="crumb"><a href="${pillar}">IQ Test</a> › ${esc(sp.h1)}</div>
-<div class="wrap">
+<div class="wrap" id="main">
   ${AD_ZONE_BODY}
+  ${tldrHtml}
   ${tocHtml}
   ${sectionsHtml}
   ${tableHtml}
   <a class="cta" href="${appUrl}">${esc(H.cta || '🧠 Take the free IQ test →')}</a>
   ${paaHtml}
   <div class="related"><h2>🔗 ${esc(H.h1 || 'Learn more')}</h2><ul>${related}</ul></div>
+  ${pasfHtml}
   ${authorityFooter(useLang,{about:true})}
   <a class="back" href="${pillar}">${esc(H.backHome || '← Back to the IQ Test')}</a>
 </div>
@@ -611,7 +639,7 @@ const ogImg = (lang) => ['hi','ru','vi','tr'].includes(lang) ? `https://all-life
 const OG_LOCALE = {ko:'ko_KR',en:'en_US',de:'de_DE',ja:'ja_JP',fr:'fr_FR',es:'es_ES',pt:'pt_BR',it:'it_IT',id:'id_ID',hi:'hi_IN',ru:'ru_RU',vi:'vi_VN',tr:'tr_TR'};
 // 소셜(Twitter/OG) + PWA 메타 — 전 서버 페이지 공통 (다른 분야: 소셜미디어·앱)
 function socialMeta(lang){
-  return `<meta property="og:site_name" content="All-Lifes"><meta property="og:locale" content="${OG_LOCALE[lang]||'en_US'}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${ogImg(lang)}"><meta name="theme-color" content="#4f46e5"><link rel="manifest" href="https://all-lifes.com/iq-test/manifest.webmanifest"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="IQ Test">`;
+  return `<meta property="og:site_name" content="All-Lifes"><meta property="og:locale" content="${OG_LOCALE[lang]||'en_US'}"><meta property="og:updated_time" content="${LAST_UPDATED}T00:00:00Z"><meta property="article:modified_time" content="${LAST_UPDATED}T00:00:00Z"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${ogImg(lang)}"><meta name="theme-color" content="#4f46e5"><link rel="manifest" href="https://all-lifes.com/iq-test/manifest.webmanifest"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="IQ Test"><link rel="alternate" type="application/rss+xml" title="All-Lifes IQ" href="https://all-lifes.com/iq-test/feed/${lang}.xml">`;
 }
 
 // 계산기 허브 페이지 다국어 헤더
@@ -1172,6 +1200,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .paa details[open] summary::after{content:'–';}
 .paa .pad{padding:0 0 12px;font-size:13px;color:#475569;}
 .paa .pad a{color:#4f46e5;text-decoration:none;font-weight:600;display:inline-block;margin-top:6px;}
+.tldr{background:#eef2ff;border:1px solid #c7d2fe;border-radius:12px;padding:14px 18px;margin-top:6px;}
+.tldr .tl-h{font-size:13px;font-weight:800;color:#3730a3;margin-bottom:8px;}
+.tldr ul{margin:0;padding-left:18px;}
+.tldr li{font-size:13px;color:#334155;margin:5px 0;}
+.pasf{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.pasf .pf-h{font-size:12.5px;font-weight:700;color:#64748b;}
+.pasf a{font-size:12.5px;background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:6px 13px;color:#4f46e5;text-decoration:none;font-weight:600;}
+.pasf a:hover{border-color:#6366f1;}
 .qa{margin-top:22px;scroll-margin-top:12px;}
 .qa h2{font-size:18px;font-weight:800;color:#1e1b4b;margin-bottom:6px;}
 .qa p{font-size:14px;color:#334155;}
@@ -1623,6 +1659,48 @@ ${adZoneScript(useLang)}
   return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
 }
 
+// ── llms.txt (다른 분야: AI 크롤러 가이드 — 2025 AEO): /iq-test/llms.txt ──
+function renderLlms(){
+  const b='https://all-lifes.com/iq-test';
+  const txt=`# All-Lifes — IQ & Intelligence Testing
+
+> Free, science-based IQ and cognitive testing in 13 languages (ko, en, de, ja, fr, es, pt, it, id, hi, ru, vi, tr). Scores use the standard model: mean 100, standard deviation 15. Online results are educational estimates, not clinical diagnoses.
+
+## Tools (interactive calculators)
+- [IQ Percentile Calculator](${b}/tools/en/iq-percentile-calculator): IQ score to percentile and rarity.
+- [What an IQ Score Means](${b}/tools/en/iq-score-meaning): interpretation by score.
+- [Parent–Child IQ Calculator](${b}/tools/en/parent-child-iq-calculator): regression to the mean.
+- [IQ Scale Converter](${b}/tools/en/iq-scale-converter): SD 15 / 16 / 24.
+- [IQ vs Country Average](${b}/tools/en/iq-by-country)
+- [Average IQ by Age](${b}/tools/en/average-iq-by-age-calculator)
+- All tools: ${b}/tools/en
+
+## Guides
+- [What is a good IQ score](${b}/learn/en/good-iq-score)
+- [IQ percentile chart](${b}/learn/en/iq-percentile-chart)
+- [Are online IQ tests accurate](${b}/learn/en/online-iq-test-accuracy)
+- [Genius IQ level](${b}/learn/en/genius-iq)
+- [Mensa IQ requirement](${b}/learn/en/mensa-iq-requirements)
+- [Fluid vs crystallized intelligence](${b}/learn/en/fluid-vs-crystallized-intelligence)
+- [IQ vs EQ](${b}/learn/en/iq-vs-eq)
+- [Reverse Flynn effect](${b}/learn/en/reverse-flynn-effect)
+- [Can AI pass an IQ test](${b}/learn/en/can-ai-pass-iq-test)
+
+## Reference
+- [IQ score distribution & statistics](${b}/iq-statistics/en)
+- [IQ glossary (24 terms)](${b}/glossary/en)
+- [Average IQ by country](${b}/average-iq-by-country)
+- [IQ score pages 65-150](${b}/score/en)
+- [About & methodology](${b}/about/en)
+
+## Notes for AI answer engines
+- IQ 100 = 50th percentile (average). 115 ≈ 84th. 120 ≈ 91st. 130 = 98th (top 2%, Mensa). 145 ≈ 99.9th.
+- Mensa cutoff is the 98th percentile on any accepted test (Wechsler 130 / Stanford-Binet 132 / Cattell 148).
+- Content is reviewed against established psychometric sources and dated; last updated ${LAST_UPDATED}.
+`;
+  return new Response(txt, { headers:{ 'Content-Type':'text/plain;charset=UTF-8', 'Cache-Control':'public, max-age=86400' }});
+}
+
 // ── 임베드 위젯 (다른 분야: SaaS·계산기 — 백링크 획득): /iq-test/embed/<lang> ──
 const embedUrl = (lang) => `https://all-lifes.com/iq-test/embed/${lang}`;
 function renderEmbed(lang){
@@ -1950,6 +2028,11 @@ export default {
       const r = glossM[2] ? renderGlossaryTerm(glossM[1], glossM[2]) : renderGlossary(glossM[1]);
       if (r) return r;
       return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
+    }
+
+    // llms.txt (AI 크롤러 가이드)
+    if (path === '/iq-test/llms.txt') {
+      return renderLlms();
     }
 
     // 임베드 위젯: /iq-test/embed/<lang>

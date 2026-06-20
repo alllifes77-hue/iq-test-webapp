@@ -459,7 +459,7 @@ ${LCODES.map(x=>`    <xhtml:link rel="alternate" hreflang="${x}" href="${SITE_UR
     <priority>0.6</priority>
     <lastmod>${lastmod}</lastmod>
   </url>`).join('\n');
-      const SCORE_MIN = 70, SCORE_MAX = 145;
+      const SCORE_MIN = 65, SCORE_MAX = 150;
       let scoreUrls = '';
       for (let n = SCORE_MIN; n <= SCORE_MAX; n++) {
         const alt = LCODES.map(l => `    <xhtml:link rel="alternate" hreflang="${l}" href="${SITE_URL}/iq-test/score/${l}/${n}"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/iq-test/score/en/${n}"/>`;
@@ -473,6 +473,40 @@ ${alt}
   </url>\n`;
         }
       }
+      // 백분위 인덱스 허브 (1×13) + 백분위 페이지 (1-99 × 13)
+      const pctHubUrls = LCODES.map(l => `  <url>
+    <loc>${SITE_URL}/iq-test/percentile/${l}</loc>
+${LCODES.map(x=>`    <xhtml:link rel="alternate" hreflang="${x}" href="${SITE_URL}/iq-test/percentile/${x}"/>`).join('\n')}
+    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/iq-test/percentile/en"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>${lastmod}</lastmod>
+  </url>`).join('\n');
+      let pctUrls = '';
+      for (let p = 1; p <= 99; p++) {
+        const alt = LCODES.map(l => `    <xhtml:link rel="alternate" hreflang="${l}" href="${SITE_URL}/iq-test/percentile/${l}/${p}"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/iq-test/percentile/en/${p}"/>`;
+        for (const l of LCODES) {
+          pctUrls += `  <url>
+    <loc>${SITE_URL}/iq-test/percentile/${l}/${p}</loc>
+${alt}
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+    <lastmod>${lastmod}</lastmod>
+  </url>\n`;
+        }
+      }
+      // 용어 개별 페이지 (24 keys × 13)
+      const GTERM_KEYS = ['iq','deviation-iq','ratio-iq','g-factor','fluid-intelligence','crystallized-intelligence','percentile','standard-deviation','normal-distribution','mean','standardization','age-norming','reliability','validity','raven-matrices','chc-theory','wechsler','stanford-binet','mensa','flynn-effect','gifted','working-memory','processing-speed','intellectual-disability'];
+      const gtermUrls = GTERM_KEYS.flatMap(k => {
+        const alt = LCODES.map(l => `    <xhtml:link rel="alternate" hreflang="${l}" href="${SITE_URL}/iq-test/glossary/${l}/${k}"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/iq-test/glossary/en/${k}"/>`;
+        return LCODES.map(l => `  <url>
+    <loc>${SITE_URL}/iq-test/glossary/${l}/${k}</loc>
+${alt}
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+    <lastmod>${lastmod}</lastmod>
+  </url>`);
+      }).join('\n');
       const spokeLoc = (l, s) => `${SITE_URL}/iq-test/learn/${l}/${s}`;
       const spokeUrls = SLUGS.flatMap(s => {
         const alt = LCODES.map(l =>
@@ -522,8 +556,10 @@ ${hubUrl}
 ${hubToolUrls}
 ${aboutUrls}
 ${refUrls}
+${gtermUrls}
 ${scoreHubUrls}
-${scoreUrls}${spokeUrls}
+${pctHubUrls}
+${scoreUrls}${pctUrls}${spokeUrls}
 ${toolUrls}
 </urlset>`;
       return new Response(xml, {

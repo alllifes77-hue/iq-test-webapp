@@ -562,6 +562,10 @@ function pctOf(iq, sd){ sd=sd||15; return sNcdf((iq-100)/sd)*100; }
 function rarityN(pct){ const p=pct/100; const tail = p>=0.5 ? (1-p) : p; if(tail<=0) return 1e9; return Math.round(1/tail); }
 function clsIdx(iq){ return iq>=130?0:iq>=120?1:iq>=110?2:iq>=90?3:iq>=80?4:iq>=70?5:6; }
 function fmtPct(pct){ const v = pct>=99.9?99.9:(pct<=0.1?0.1:pct); return (v>=10?v.toFixed(1):v.toFixed(1)); }
+// 역정규분포 CDF (Acklam) — 백분위 → z
+function sInvNcdf(p){ if(p<=0)return -4; if(p>=1)return 4; var a=[-39.6968302866538,220.946098424521,-275.928510446969,138.357751867269,-30.6647980661472,2.50662827745924],b=[-54.4760987982241,161.585836858041,-155.698979859887,66.8013118877197,-13.2806815528857],c=[-0.00778489400243029,-0.322396458041136,-2.40075827716184,-2.54973253934373,4.37466414146497,2.93816398269878],d=[0.00778469570904146,0.32246712907004,2.445134137143,3.75440866190742],pl=0.02425,ph=1-pl,q,r,x; if(p<pl){q=Math.sqrt(-2*Math.log(p));x=(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);}else if(p<=ph){q=p-0.5;r=q*q;x=(((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);}else{q=Math.sqrt(-2*Math.log(1-p));x=-(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);} return x; }
+function iqForPercentile(p){ return Math.round(100 + 15*sInvNcdf(p/100)); }
+function rarityAtPct(p){ const t = p>=50 ? (100-p) : p; if(t<=0) return 1e9; return Math.round(100/t); }
 
 const TOOL_SLUGS = {
   'iq-percentile-calculator': 'percentile',
@@ -839,6 +843,7 @@ function renderToolsHub(lang){
   if(aboutH1) spokeCards += `<a class="card sp" href="${aboutUrl(useLang)}"><div class="ct">ℹ️ ${esc(aboutH1)}</div></a>`;
   const smH1 = (T.pages.scoreMeaning||{}).h1;
   if(smH1) spokeCards += `<a class="card sp" href="${scoreHubUrl(useLang)}"><div class="ct">🔢 ${esc(smH1)}</div></a>`;
+  spokeCards += `<a class="card sp" href="${percentileHubUrl(useLang)}"><div class="ct">📈 IQ ${esc(T.common.percentile)}</div></a>`;
 
   const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${toolsHubUrl(l)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${toolsHubUrl('en')}">`;
   const itemList = {"@context":"https://schema.org","@type":"ItemList","name":HB.title,"itemListElement":Object.keys(TOOL_SLUGS).map((slug,i)=>({"@type":"ListItem","position":i+1,"name":T.pages[TOOL_SLUGS[slug]].h1,"url":toolUrl(slug,useLang)}))};
@@ -918,7 +923,7 @@ function renderGlossary(lang){
   const pillar = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/${useLang}/iq-test/`;
   const appUrl = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/iq-test/?lang=${useLang}`;
 
-  const items = G.terms.map(t=>`<div class="gt" id="${esc(t.key)}"><dt>${esc(t.term)}</dt><dd>${esc(t.def)}</dd></div>`).join('');
+  const items = G.terms.map(t=>`<div class="gt" id="${esc(t.key)}"><dt><a href="${glossaryTermUrl(useLang,t.key)}" style="color:#1e1b4b;text-decoration:none;">${esc(t.term)}</a></dt><dd>${esc(t.def)}</dd></div>`).join('');
   const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${glossaryUrl(l)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${glossaryUrl('en')}">`;
   const dts = {"@context":"https://schema.org","@type":"DefinedTermSet","name":G.title,"url":canonical,"inLanguage":useLang,"hasDefinedTerm":G.terms.map(t=>({"@type":"DefinedTerm","name":t.term,"description":t.def,"url":canonical+"#"+t.key}))};
   const breadcrumb = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":"IQ Test","item":pillar},{"@type":"ListItem","position":3,"name":G.title,"item":canonical}]};
@@ -1134,9 +1139,13 @@ ${adZoneScript(useLang)}
 // 모든 값은 계산 + 기존 13언어 자산(TOOLS_I18N/classLabels/TOOL_FAQ) 재사용.
 // ══════════════════════════════════════════════════════════════
 const YEAR = '2026';
-const SCORE_MIN = 70, SCORE_MAX = 145; // 사이트맵 색인 범위 (검색 수요 집중 구간)
+const SCORE_MIN = 65, SCORE_MAX = 150; // 사이트맵 색인 범위 (검색 수요 집중 구간)
 const scoreUrl = (lang, n) => `https://all-lifes.com/iq-test/score/${lang}/${n}`;
 const scoreHubUrl = (lang) => `https://all-lifes.com/iq-test/score/${lang}`;
+const percentileUrl = (lang, p) => `https://all-lifes.com/iq-test/percentile/${lang}/${p}`;
+const percentileHubUrl = (lang) => `https://all-lifes.com/iq-test/percentile/${lang}`;
+const glossaryTermUrl = (lang, key) => `https://all-lifes.com/iq-test/glossary/${lang}/${key}`;
+const PCT_MIN = 1, PCT_MAX = 99;
 
 // 정규분포 미니 차트 (마커 포함) — 인라인 SVG
 function bellSVG(n){
@@ -1332,6 +1341,220 @@ ${adZoneScript(useLang)}
   return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
 }
 
+// ── 백분위 → IQ 프로그래매틱 페이지: /iq-test/percentile/<lang>/<p> ──
+function renderPercentilePage(lang, pRaw){
+  const p = parseInt(pRaw,10);
+  if(!Number.isFinite(p) || p < 1 || p > 99) return null;
+  const useLang = (TOOLS_I18N[lang] && TOOLS_I18N[lang].common) ? lang : 'en';
+  const T = TOOLS_I18N[useLang] || TOOLS_I18N.en;
+  const C = T.common;
+  const bandLabels = (SPOKES[useLang] && SPOKES[useLang].classLabels) || SPOKES.en.classLabels;
+  const bandMeanings = T.bandMeanings || TOOLS_I18N.en.bandMeanings;
+  const SM = T.pages.scoreMeaning, H = HUB_I18N[useLang] || HUB_I18N.en;
+  const iq = iqForPercentile(p), idx = clsIdx(iq), band = bandLabels[idx]||'', meaning = bandMeanings[idx]||'';
+  const rarity = rarityAtPct(p);
+  const canonical = percentileUrl(useLang, p);
+  const pillar = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/${useLang}/iq-test/`;
+  const appUrl = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/iq-test/?lang=${useLang}`;
+  const h1 = `${C.percentile} ${p} = IQ ${iq}`;
+  const smarter = (C.smarterThan||'Smarter than {p}% of people').replace('{p}', p);
+  const rarityTxt = (C.rarity||'Rarer than 1 in {n}').replace('{n}', rarity.toLocaleString());
+  const title = `${h1} (${YEAR})`;
+  const desc = `${h1}. ${smarter}. ${C.classification||'Classification'}: ${band}.`;
+  const answer = `${h1}. ${smarter}. ${C.classification}: ${band} — ${meaning}. ${rarityTxt}.`;
+  const marks = [[100,bandLabels[3]],[120,bandLabels[1]],[130,bandLabels[0]]];
+  const cmpRows = marks.map(m=>`<tr${m[0]===iq?' class="me"':''}><td class="rg">${m[0]}</td><td>${esc(m[1]||'')}</td><td>${fmtPct(pctOf(m[0],15))}%</td></tr>`).join('');
+  const cmpTable = `<table class="cls"><thead><tr><th>IQ</th><th>${esc(C.classification||'Class')}</th><th>${esc(C.percentile||'Percentile')}</th></tr></thead><tbody>${cmpRows}</tbody></table>`;
+  const prev = p>PCT_MIN ? `<a class="nb" href="${percentileUrl(useLang,p-1)}">← ${esc(C.percentile)} ${p-1}</a>` : '<span></span>';
+  const next = p<PCT_MAX ? `<a class="nb" href="${percentileUrl(useLang,p+1)}">${esc(C.percentile)} ${p+1} →</a>` : '<span></span>';
+  const relTools = ['iq-percentile-calculator','iq-score-meaning'].map(s=>`<li><a href="${toolUrl(s,useLang)}">${esc((TOOLS_I18N[useLang]&&TOOLS_I18N[useLang].pages[TOOL_SLUGS[s]].h1)||TOOLS_I18N.en.pages[TOOL_SLUGS[s]].h1)}</a></li>`).join('');
+  const relSpokes = ['iq-percentile-chart','good-iq-score','mensa-iq-requirements','genius-iq'].map(s=>`<li><a href="${spokeUrl(s,useLang)}">${esc(spokeH1(s,useLang))}</a></li>`).join('');
+  const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${percentileUrl(l,p)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${percentileUrl('en',p)}">`;
+  const article = {"@context":"https://schema.org","@type":"Article","headline":h1,"description":desc,"inLanguage":useLang,"datePublished":"2026-05-01","dateModified":LAST_UPDATED,"author":{"@type":"Organization","name":"All-Lifes","url":"https://all-lifes.com/"},"publisher":{"@type":"Organization","name":"All-Lifes","logo":{"@type":"ImageObject","url":"https://all-lifes.com/iq-test/IQ%20TEST.png"}},"mainEntityOfPage":canonical,"speakable":{"@type":"SpeakableSpecification","cssSelector":[".ans"]}};
+  const breadcrumb = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":"IQ Test","item":pillar},{"@type":"ListItem","position":3,"name":"IQ "+C.percentile,"item":percentileHubUrl(useLang)},{"@type":"ListItem","position":4,"name":h1,"item":canonical}]};
+  const html = `<!DOCTYPE html>
+<html lang="${useLang}">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="https://all-lifes.com/iq-test/favicon-${useLang}.png">
+<title>${esc(title)}</title>
+<meta name="description" content="${esc(desc)}">
+<link rel="canonical" href="${esc(canonical)}">
+    ${hreflangs}
+<meta property="og:title" content="${esc(h1)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${esc(canonical)}"><meta property="og:type" content="article"><meta property="og:image" content="${ogImg(useLang)}">
+${ADSENSE_HEAD}
+${AD_ZONE_STYLE}
+<script type="application/ld+json">${JSON.stringify(article)}</script>
+<script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.65;}
+.hero{background:linear-gradient(135deg,#1e1b4b,#312e81,#1d4ed8);color:#fff;padding:30px 20px 22px;text-align:center;}
+.hero h1{font-size:clamp(19px,3.2vw,28px);font-weight:900;max-width:760px;margin:0 auto;}
+.crumb{max-width:720px;margin:0 auto;padding:10px 18px 0;font-size:12px;color:#64748b;}.crumb a{color:#4f46e5;text-decoration:none;}
+.wrap{max-width:720px;margin:0 auto;padding:14px 18px 46px;}
+.scard{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:20px;box-shadow:0 4px 20px rgba(15,23,42,.06);text-align:center;}
+.scard .big{font-size:40px;font-weight:900;color:#4f46e5;line-height:1;}
+.scard .pl{font-size:13px;color:#64748b;font-weight:700;margin-top:4px;}
+.scard .bd{display:inline-block;margin-top:12px;background:#eef2ff;color:#3730a3;font-weight:800;font-size:14px;padding:6px 14px;border-radius:20px;}
+.scard .mn{font-size:13px;color:#475569;margin-top:8px;}
+.ans{font-size:14px;color:#334155;margin:16px 0;}.ans b{color:#0f172a;}
+.nbrow{display:flex;justify-content:space-between;margin:18px 0 4px;}.nb{color:#4f46e5;text-decoration:none;font-weight:700;font-size:13.5px;}
+table.cls{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;font-size:13px;margin:14px 0;}
+table.cls thead{background:#1e1b4b;color:#fff;}table.cls th,table.cls td{padding:9px 12px;text-align:left;}
+table.cls td.rg{font-weight:800;color:#4f46e5;}table.cls tr.me{background:#eef2ff;}table.cls tr.me td{font-weight:800;}
+.cta{display:block;text-align:center;margin:22px auto 0;max-width:420px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-weight:800;font-size:16px;padding:14px;border-radius:12px;text-decoration:none;box-shadow:0 6px 20px rgba(79,70,229,.35);}
+.related{margin-top:26px;padding-top:16px;border-top:1px solid #e2e8f0;}.related h2{font-size:15px;font-weight:800;color:#1e1b4b;margin-bottom:10px;}
+.related ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;}@media(max-width:520px){.related ul{grid-template-columns:1fr;}}
+.related li{margin:5px 0;}.related a{color:#4f46e5;text-decoration:none;font-size:13.5px;font-weight:600;}
+.back{display:block;text-align:center;margin-top:14px;color:#64748b;font-size:13px;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="hero"><h1>${esc(h1)}</h1></div>
+<div class="crumb"><a href="${pillar}">IQ Test</a> › <a href="${percentileHubUrl(useLang)}">IQ ${esc(C.percentile)}</a> › ${p}</div>
+<div class="wrap">
+  ${AD_ZONE_BODY}
+  <div class="scard">
+    <div class="big">${iq}</div>
+    <div class="pl">${esc(smarter)}</div>
+    ${bellSVG(iq)}
+    <div class="bd">${esc(band)}</div>
+    <div class="mn">${esc(meaning)} · ${esc(rarityTxt)}</div>
+  </div>
+  <p class="ans"><b>${esc(answer)}</b></p>
+  ${cmpTable}
+  <div class="nbrow">${prev}${next}</div>
+  <a class="cta" href="${toolUrl('iq-percentile-calculator',useLang)}">${esc((C.calculate||'Calculate')+' →')}</a>
+  <div class="related"><h2>🔗 ${esc(H.h1||'Learn more')}</h2><ul>${relTools}${relSpokes}</ul></div>
+  ${authorityFooter(useLang,{about:true})}
+  <a class="back" href="${appUrl}">${esc(H.cta||'🧠 Take the free IQ test →')}</a>
+</div>
+${adZoneScript(useLang)}
+</body>
+</html>`;
+  return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
+}
+
+function renderPercentileHub(lang){
+  const useLang = (TOOLS_I18N[lang] && TOOLS_I18N[lang].common) ? lang : 'en';
+  const T = TOOLS_I18N[useLang] || TOOLS_I18N.en, C = T.common, SM = T.pages.scoreMeaning;
+  const H = HUB_I18N[useLang] || HUB_I18N.en;
+  const bandLabels = (SPOKES[useLang] && SPOKES[useLang].classLabels) || SPOKES.en.classLabels;
+  const canonical = percentileHubUrl(useLang);
+  const pillar = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/${useLang}/iq-test/`;
+  const hubTitle = `IQ ${C.percentile}`;
+  const picks=[1,2,5,10,25,50,75,80,84,90,91,95,97,98,99];
+  const cards = picks.map(p=>{const iq=iqForPercentile(p);return `<a class="card" href="${percentileUrl(useLang,p)}"><div class="ct">${esc(C.percentile)} ${p}</div><div class="cd">IQ ${iq} · ${esc(bandLabels[clsIdx(iq)]||'')}</div></a>`;}).join('');
+  const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${percentileHubUrl(l)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${percentileHubUrl('en')}">`;
+  const itemList = {"@context":"https://schema.org","@type":"ItemList","name":hubTitle,"itemListElement":[]};
+  for(let p=PCT_MIN;p<=PCT_MAX;p++) itemList.itemListElement.push({"@type":"ListItem","position":p,"url":percentileUrl(useLang,p)});
+  const breadcrumb = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":"IQ Test","item":pillar},{"@type":"ListItem","position":3,"name":hubTitle,"item":canonical}]};
+  const html = `<!DOCTYPE html>
+<html lang="${useLang}">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="https://all-lifes.com/iq-test/favicon-${useLang}.png">
+<title>${esc(hubTitle)} (${YEAR})</title>
+<meta name="description" content="${esc(SM.desc)}">
+<link rel="canonical" href="${esc(canonical)}">
+    ${hreflangs}
+<meta property="og:title" content="${esc(hubTitle)}"><meta property="og:description" content="${esc(SM.desc)}"><meta property="og:url" content="${esc(canonical)}"><meta property="og:type" content="website"><meta property="og:image" content="${ogImg(useLang)}">
+${ADSENSE_HEAD}
+${AD_ZONE_STYLE}
+<script type="application/ld+json">${JSON.stringify(itemList)}</script>
+<script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.6;}
+.hero{background:linear-gradient(135deg,#1e1b4b,#312e81,#1d4ed8);color:#fff;padding:32px 20px 24px;text-align:center;}
+.hero h1{font-size:clamp(20px,3.4vw,30px);font-weight:900;margin:0 auto 8px;}.hero p{font-size:14px;color:#c7d2fe;max-width:680px;margin:0 auto;}
+.crumb{max-width:780px;margin:0 auto;padding:10px 18px 0;font-size:12px;color:#64748b;}.crumb a{color:#4f46e5;text-decoration:none;}
+.wrap{max-width:780px;margin:0 auto;padding:14px 18px 50px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:6px;}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:13px 15px;text-decoration:none;color:#0f172a;transition:all .15s;}
+.card:hover{transform:translateY(-2px);border-color:#6366f1;box-shadow:0 6px 16px rgba(79,70,229,.18);}
+.card .ct{font-size:15px;font-weight:800;color:#1e1b4b;}.card .cd{font-size:12px;color:#64748b;margin-top:3px;}
+.cta{display:block;text-align:center;margin:24px auto 0;max-width:420px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-weight:800;font-size:16px;padding:14px;border-radius:12px;text-decoration:none;box-shadow:0 6px 20px rgba(79,70,229,.35);}
+.back{display:block;text-align:center;margin-top:14px;color:#64748b;font-size:13px;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="hero"><h1>${esc(hubTitle)}</h1><p>${esc(SM.intro)}</p></div>
+<div class="crumb"><a href="${pillar}">IQ Test</a> › ${esc(hubTitle)}</div>
+<div class="wrap">
+  ${AD_ZONE_BODY}
+  <div class="grid">${cards}</div>
+  ${authorityFooter(useLang,{about:true})}
+  <a class="cta" href="${toolUrl('iq-percentile-calculator',useLang)}">${esc((C.calculate||'Calculate')+' →')}</a>
+  <a class="back" href="${pillar}">${esc(H.backHome||'← Back to the IQ Test')}</a>
+</div>
+${adZoneScript(useLang)}
+</body>
+</html>`;
+  return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
+}
+
+// ── 용어 개별 페이지: /iq-test/glossary/<lang>/<key> (DefinedTerm) ──
+function renderGlossaryTerm(lang, key){
+  const useLang = (GLOSSARY_I18N[lang] && GLOSSARY_I18N[lang].terms) ? lang : 'en';
+  const G = GLOSSARY_I18N[useLang];
+  if(!G || !Array.isArray(G.terms)) return null;
+  const t = G.terms.find(x=>x.key===key);
+  if(!t) return null;
+  const H = HUB_I18N[useLang] || HUB_I18N.en;
+  const canonical = glossaryTermUrl(useLang, key);
+  const pillar = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/${useLang}/iq-test/`;
+  const related = G.terms.filter(x=>x.key!==key).slice(0,8).map(x=>`<li><a href="${glossaryTermUrl(useLang,x.key)}">${esc(x.term)}</a></li>`).join('');
+  const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${glossaryTermUrl(l,key)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${glossaryTermUrl('en',key)}">`;
+  const dt = {"@context":"https://schema.org","@type":"DefinedTerm","name":t.term,"description":t.def,"url":canonical,"inLanguage":useLang,"inDefinedTermSet":glossaryUrl(useLang)};
+  const breadcrumb = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":"IQ Test","item":pillar},{"@type":"ListItem","position":3,"name":G.title,"item":glossaryUrl(useLang)},{"@type":"ListItem","position":4,"name":t.term,"item":canonical}]};
+  const html = `<!DOCTYPE html>
+<html lang="${useLang}">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="https://all-lifes.com/iq-test/favicon-${useLang}.png">
+<title>${esc(t.term)} — ${esc(G.title)}</title>
+<meta name="description" content="${esc(t.def)}">
+<link rel="canonical" href="${esc(canonical)}">
+    ${hreflangs}
+<meta property="og:title" content="${esc(t.term)}"><meta property="og:description" content="${esc(t.def)}"><meta property="og:url" content="${esc(canonical)}"><meta property="og:type" content="article"><meta property="og:image" content="${ogImg(useLang)}">
+${ADSENSE_HEAD}
+${AD_ZONE_STYLE}
+<script type="application/ld+json">${JSON.stringify(dt)}</script>
+<script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.7;}
+.hero{background:linear-gradient(135deg,#1e1b4b,#312e81,#1d4ed8);color:#fff;padding:32px 20px 24px;text-align:center;}
+.hero h1{font-size:clamp(20px,3.4vw,30px);font-weight:900;margin:0 auto;}
+.crumb{max-width:720px;margin:0 auto;padding:10px 18px 0;font-size:12px;color:#64748b;}.crumb a{color:#4f46e5;text-decoration:none;}
+.wrap{max-width:720px;margin:0 auto;padding:14px 18px 46px;}
+.def{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:18px 20px;font-size:15px;color:#334155;}
+.related{margin-top:26px;padding-top:16px;border-top:1px solid #e2e8f0;}.related h2{font-size:15px;font-weight:800;color:#1e1b4b;margin-bottom:10px;}
+.related ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;}@media(max-width:520px){.related ul{grid-template-columns:1fr;}}
+.related li{margin:5px 0;}.related a{color:#4f46e5;text-decoration:none;font-size:13.5px;font-weight:600;}
+.cta{display:block;text-align:center;margin:24px auto 0;max-width:420px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-weight:800;font-size:16px;padding:14px;border-radius:12px;text-decoration:none;box-shadow:0 6px 20px rgba(79,70,229,.35);}
+.back{display:block;text-align:center;margin-top:14px;color:#64748b;font-size:13px;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="hero"><h1>${esc(t.term)}</h1></div>
+<div class="crumb"><a href="${pillar}">IQ Test</a> › <a href="${glossaryUrl(useLang)}">${esc(G.title)}</a> › ${esc(t.term)}</div>
+<div class="wrap">
+  ${AD_ZONE_BODY}
+  <div class="def">${esc(t.def)}</div>
+  <div class="related"><h2>${esc(G.title)}</h2><ul>${related}</ul></div>
+  ${authorityFooter(useLang,{about:true})}
+  <a class="cta" href="${useLang==='ko'?'https://all-lifes.com/iq-test/':'https://all-lifes.com/iq-test/?lang='+useLang}">${esc(H.cta||'🧠 Take the free IQ test →')}</a>
+  <a class="back" href="${glossaryUrl(useLang)}">${esc(G.title)}</a>
+</div>
+${adZoneScript(useLang)}
+</body>
+</html>`;
+  return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -1373,11 +1596,20 @@ export default {
       return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
     }
 
-    // 용어집: /iq-test/glossary/<lang>
-    const glossM = path.match(/^\/iq-test\/glossary\/([a-z]{2})\/?$/);
+    // 용어집 허브 + 개별 용어: /iq-test/glossary/<lang>[/<key>]
+    const glossM = path.match(/^\/iq-test\/glossary\/([a-z]{2})(?:\/([a-z0-9-]+))?\/?$/);
     if (glossM) {
       if (!HREFLANG_ALL.includes(glossM[1])) return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
-      const r = renderGlossary(glossM[1]);
+      const r = glossM[2] ? renderGlossaryTerm(glossM[1], glossM[2]) : renderGlossary(glossM[1]);
+      if (r) return r;
+      return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
+    }
+
+    // 백분위 → IQ: /iq-test/percentile/<lang>[/<p>]
+    const pctM = path.match(/^\/iq-test\/percentile\/([a-z]{2})(?:\/([0-9]{1,3}))?\/?$/);
+    if (pctM) {
+      if (!HREFLANG_ALL.includes(pctM[1])) return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
+      const r = pctM[2] ? renderPercentilePage(pctM[1], pctM[2]) : renderPercentileHub(pctM[1]);
       if (r) return r;
       return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
     }

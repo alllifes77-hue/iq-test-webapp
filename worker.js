@@ -345,8 +345,11 @@ function renderCountryHub(url){
   const canonical = lang==='ko' ? base : `${base}?lang=${lang}`;
   const appUrl = lang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/iq-test/?lang=${lang}`;
 
-  const rows = COUNTRY_IQ.slice().sort((a,b)=>b.iq-a.iq)
-    .map((r,i)=>`<tr><td class="rk">${i+1}</td><td>${esc(r.c)}</td><td class="iq">${r.iq}</td></tr>`).join('');
+  const sorted = COUNTRY_IQ.slice().sort((a,b)=>b.iq-a.iq);
+  const rows = sorted.map((r,i)=>`<tr><td class="rk">${i+1}</td><td>${esc(r.c)}</td><td class="iq">${r.iq}</td></tr>`).join('');
+  // 데이터 시각화 막대 차트 (다른 분야: 데이터 저널리즘) — 상위 12개국
+  const top = sorted.slice(0,12); const maxIQ = top[0].iq, minScale = 85;
+  const barChart = `<svg viewBox="0 0 360 ${top.length*26+8}" width="100%" height="${top.length*26+8}" role="img" aria-label="Top countries by average IQ" style="margin:4px 0 8px;">${top.map((r,i)=>{const w=Math.max(4,(r.iq-minScale)/(maxIQ-minScale)*200);const y=i*26+4;return `<text x="0" y="${y+14}" font-size="11" fill="#475569">${esc(r.c).slice(0,16)}</text><rect x="150" y="${y+3}" width="${w}" height="15" rx="3" fill="#4f46e5"/><text x="${150+w+5}" y="${y+14}" font-size="11" font-weight="700" fill="#1e1b4b">${r.iq}</text>`;}).join('')}</svg>`;
 
   const hreflangs = HREFLANG_ALL.map(l=>{
     const href = l==='ko' ? base : `${base}?lang=${l}`;
@@ -371,6 +374,8 @@ function renderCountryHub(url){
 <meta property="og:description" content="${esc(L.desc)}">
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:type" content="article">
+<meta property="og:image" content="${ogImg(lang)}">
+${socialMeta(lang)}
 <script type="application/ld+json">${JSON.stringify(itemList)}</script>
 ${ADSENSE_HEAD}
 ${AD_ZONE_STYLE}
@@ -410,6 +415,7 @@ tbody tr{border-top:1px solid #eef2f7;}
 <div class="wrap">
   ${AD_ZONE_BODY}
   <div class="caveat">${esc(L.caveat)}</div>
+  <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px 16px;margin-bottom:14px;">${barChart}</div>
   <table><thead><tr><th>#</th><th>${esc(L.colCountry)}</th><th style="text-align:right">${esc(L.colIQ)}</th></tr></thead><tbody>${rows}</tbody></table>
   <div class="how"><h2>${esc(L.howTitle)}</h2><p>${esc(L.howBody)}</p></div>
   ${authorityFooter(lang,{about:true})}
@@ -434,6 +440,7 @@ function spokeRec(slug, lang){
   return null;
 }
 const spokeH1 = (slug, lang) => { const r = spokeRec(slug, lang); return r ? r.sp.h1 : slug; };
+const PAA_I18N = {ko:'함께 많이 찾는 질문',en:'People also ask',de:'Häufig gestellte Fragen',ja:'よく一緒に検索される質問',fr:'Questions fréquentes',es:'La gente también pregunta',pt:'As pessoas também perguntam',it:'Le persone chiedono anche',id:'Orang juga bertanya',hi:'लोग यह भी पूछते हैं',ru:'Похожие вопросы',vi:'Mọi người cũng hỏi',tr:'İnsanlar bunları da soruyor'};
 const SPOKE_ROWS = [
   { r:'130+',    p:'98–99.9', pop:'~2%'  },
   { r:'120–129', p:'91–97',   pop:'~8%'  },
@@ -457,11 +464,17 @@ function renderSpoke(slug, lang){
   const pillar = spokePillarUrl(useLang);
   const appUrl = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/iq-test/?lang=${useLang}`;
 
-  const sectionsHtml = sp.sections.map(s=>{
+  const sectionsHtml = sp.sections.map((s,i)=>{
     const a = String(s.a);
     const cut = (() => { const m = a.match(/[.!?。？！]\s/); return m ? m.index + 1 : a.length; })();
-    return `<section class="qa"><h2>${esc(s.q)}</h2><p><strong>${esc(a.slice(0,cut))}</strong>${esc(a.slice(cut))}</p></section>`;
+    return `<section class="qa" id="q${i}"><h2>${esc(s.q)}</h2><p><strong>${esc(a.slice(0,cut))}</strong>${esc(a.slice(cut))}</p></section>`;
   }).join('');
+  // 위키식 목차 (다른 분야: 백과사전 — 체류시간·사이트링크)
+  const tocHtml = sp.sections.length>=3 ? `<nav class="toc"><ul>${sp.sections.map((s,i)=>`<li><a href="#q${i}">${esc(s.q)}</a></li>`).join('')}</ul></nav>` : '';
+  // PAA 아코디언 (다른 분야: Q&A 플랫폼 — 체류시간·내부링크). 순수 <details>, JS 불필요.
+  const paaSlugs = SPOKE_SLUGS.filter(s=>s!==slug).slice(0,5);
+  const paaItems = paaSlugs.map(s=>{ const r2 = spokeRec(s, useLang); if(!r2) return ''; return `<details class="pa"><summary>${esc(r2.sp.h1)}</summary><div class="pad"><p>${esc(r2.sp.intro)}</p><a href="${spokeUrl(s,useLang)}">${esc(spokeH1(s,useLang))} →</a></div></details>`; }).join('');
+  const paaHtml = paaItems ? `<div class="paa"><h2>❓ ${esc(PAA_I18N[useLang]||PAA_I18N.en)}</h2>${paaItems}</div>` : '';
 
   let tableHtml = '';
   if(SPOKE_TABLE.includes(slug) && Array.isArray(S.tableHeaders) && Array.isArray(S.classLabels)){
@@ -500,7 +513,8 @@ function renderSpoke(slug, lang){
 <meta property="og:description" content="${esc(sp.desc)}">
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:type" content="article">
-<meta property="og:image" content="https://all-lifes.com/iq-test/og-${useLang==='ko'||['en','de','fr','es','pt','it','ja','id'].includes(useLang)?useLang:useLang}.${['hi','ru','vi','tr'].includes(useLang)?'jpg':'png'}">
+<meta property="og:image" content="${ogImg(useLang)}">
+${socialMeta(useLang)}
 <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>
 <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
 <script type="application/ld+json">${JSON.stringify(article)}</script>
@@ -515,7 +529,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .crumb{max-width:760px;margin:0 auto;padding:10px 18px 0;font-size:12px;color:#64748b;}
 .crumb a{color:#4f46e5;text-decoration:none;}
 .wrap{max-width:760px;margin:0 auto;padding:14px 18px 50px;}
-.qa{margin-top:22px;}
+.toc{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px 18px;margin-top:4px;}
+.toc ul{list-style:none;padding:0;margin:0;}
+.toc li{margin:6px 0;font-size:13.5px;}
+.toc a{color:#4f46e5;text-decoration:none;font-weight:600;}
+.paa{margin-top:28px;}
+.paa h2{font-size:17px;font-weight:800;color:#1e1b4b;margin-bottom:10px;}
+.paa .pa{background:#fff;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:8px;padding:0 14px;}
+.paa summary{cursor:pointer;font-weight:700;font-size:14px;color:#1e1b4b;padding:12px 0;list-style:none;}
+.paa summary::-webkit-details-marker{display:none;}
+.paa summary::after{content:'+';float:right;color:#6366f1;font-weight:800;}
+.paa details[open] summary::after{content:'–';}
+.paa .pad{padding:0 0 12px;font-size:13px;color:#475569;}
+.paa .pad a{color:#4f46e5;text-decoration:none;font-weight:600;display:inline-block;margin-top:6px;}
+.qa{margin-top:22px;scroll-margin-top:12px;}
 .qa h2{font-size:18px;font-weight:800;color:#1e1b4b;margin-bottom:6px;}
 .qa p{font-size:14px;color:#334155;}
 .qa strong{color:#0f172a;}
@@ -540,9 +567,11 @@ table.cls tbody tr{border-top:1px solid #eef2f7;}
 <div class="crumb"><a href="${pillar}">IQ Test</a> › ${esc(sp.h1)}</div>
 <div class="wrap">
   ${AD_ZONE_BODY}
+  ${tocHtml}
   ${sectionsHtml}
   ${tableHtml}
   <a class="cta" href="${appUrl}">${esc(H.cta || '🧠 Take the free IQ test →')}</a>
+  ${paaHtml}
   <div class="related"><h2>🔗 ${esc(H.h1 || 'Learn more')}</h2><ul>${related}</ul></div>
   ${authorityFooter(useLang,{about:true})}
   <a class="back" href="${pillar}">${esc(H.backHome || '← Back to the IQ Test')}</a>
@@ -579,6 +608,11 @@ const TOOL_SLUGS = {
 const toolUrl = (slug, lang) => `https://all-lifes.com/iq-test/tools/${lang}/${slug}`;
 const toolsHubUrl = (lang) => `https://all-lifes.com/iq-test/tools/${lang}`;
 const ogImg = (lang) => ['hi','ru','vi','tr'].includes(lang) ? `https://all-lifes.com/iq-test/og-${lang}.jpg` : `https://all-lifes.com/iq-test/og-${lang}.png`;
+const OG_LOCALE = {ko:'ko_KR',en:'en_US',de:'de_DE',ja:'ja_JP',fr:'fr_FR',es:'es_ES',pt:'pt_BR',it:'it_IT',id:'id_ID',hi:'hi_IN',ru:'ru_RU',vi:'vi_VN',tr:'tr_TR'};
+// 소셜(Twitter/OG) + PWA 메타 — 전 서버 페이지 공통 (다른 분야: 소셜미디어·앱)
+function socialMeta(lang){
+  return `<meta property="og:site_name" content="All-Lifes"><meta property="og:locale" content="${OG_LOCALE[lang]||'en_US'}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${ogImg(lang)}"><meta name="theme-color" content="#4f46e5"><link rel="manifest" href="https://all-lifes.com/iq-test/manifest.webmanifest"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="IQ Test">`;
+}
 
 // 계산기 허브 페이지 다국어 헤더
 const TOOLS_HUB_I18N = {
@@ -708,6 +742,7 @@ function renderTool(slug, lang, cfCountry){
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:type" content="website">
 <meta property="og:image" content="${ogImg(useLang)}">
+${socialMeta(useLang)}
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1378943893051810" crossorigin="anonymous"></script>
 <script type="application/ld+json">${JSON.stringify(appSchema)}</script>
 <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
@@ -847,6 +882,10 @@ function renderToolsHub(lang){
   spokeCards += `<a class="card sp" href="${percentileHubUrl(useLang)}"><div class="ct">📈 IQ ${esc(T.common.percentile)}</div></a>`;
   const story = STORY_I18N[useLang] || STORY_I18N.en;
   if(story && story.storyTitle) spokeCards += `<a class="card sp" href="${storyUrl(useLang)}"><div class="ct">📱 ${esc(story.storyTitle)}</div></a>`;
+  spokeCards += `<a class="card sp" href="${popularUrl(useLang)}"><div class="ct">🔥 ${esc(POP_I18N[useLang]||POP_I18N.en)}</div></a>`;
+  spokeCards += `<a class="card sp" href="${searchUrl(useLang)}"><div class="ct">🔎 IQ Search</div></a>`;
+  const embedSnippet = `&lt;iframe src="${embedUrl(useLang)}" width="360" height="230" style="border:0;max-width:100%" title="IQ percentile"&gt;&lt;/iframe&gt;`;
+  const embedBox = `<div class="sec">🔗 Embed</div><div class="embed-box"><code id="emb">${embedSnippet}</code><button onclick="navigator.clipboard&&navigator.clipboard.writeText(document.getElementById('emb').textContent);this.textContent='✓'">Copy</button></div>`;
 
   const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${toolsHubUrl(l)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${toolsHubUrl('en')}">`;
   const itemList = {"@context":"https://schema.org","@type":"ItemList","name":HB.title,"itemListElement":Object.keys(TOOL_SLUGS).map((slug,i)=>({"@type":"ListItem","position":i+1,"name":T.pages[TOOL_SLUGS[slug]].h1,"url":toolUrl(slug,useLang)}))};
@@ -867,6 +906,7 @@ function renderToolsHub(lang){
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:type" content="website">
 <meta property="og:image" content="${ogImg(useLang)}">
+${socialMeta(useLang)}
 ${ADSENSE_HEAD}
 ${AD_ZONE_STYLE}
 <script type="application/ld+json">${JSON.stringify(itemList)}</script>
@@ -889,6 +929,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .card .cd{font-size:12px;color:#64748b;margin-top:5px;line-height:1.45;}
 .card.sp{flex-direction:row;align-items:center;}
 .card.sp .ct{font-size:13.5px;}
+.embed-box{background:#0f172a;border-radius:12px;padding:14px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.embed-box code{flex:1;min-width:200px;color:#a5b4fc;font-size:11.5px;word-break:break-all;font-family:ui-monospace,Menlo,monospace;}
+.embed-box button{background:#4f46e5;color:#fff;border:0;border-radius:8px;padding:8px 16px;font-weight:800;font-size:13px;cursor:pointer;}
 .cta{display:block;text-align:center;margin:26px auto 0;max-width:420px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-weight:800;font-size:16px;padding:14px;border-radius:12px;text-decoration:none;box-shadow:0 6px 20px rgba(79,70,229,.35);}
 .back{display:block;text-align:center;margin-top:14px;color:#64748b;font-size:13px;text-decoration:none;}
 </style>
@@ -902,6 +945,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="grid">${toolCards}</div>
   <div class="sec">${esc(HB.learn)}</div>
   <div class="grid">${spokeCards}</div>
+  ${embedBox}
   ${authorityFooter(useLang,{about:true})}
   <a class="cta" href="${appUrl}">${esc(H.cta || '🧠 Take the free IQ test →')}</a>
   <a class="back" href="${pillar}">${esc(H.backHome || '← Back to the IQ Test')}</a>
@@ -946,6 +990,7 @@ function renderGlossary(lang){
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:type" content="website">
 <meta property="og:image" content="${ogImg(useLang)}">
+${socialMeta(useLang)}
 ${ADSENSE_HEAD}
 ${AD_ZONE_STYLE}
 <script type="application/ld+json">${JSON.stringify(dts)}</script>
@@ -1024,6 +1069,7 @@ function renderDataPage(lang){
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:type" content="website">
 <meta property="og:image" content="${ogImg(useLang)}">
+${socialMeta(useLang)}
 ${ADSENSE_HEAD}
 ${AD_ZONE_STYLE}
 <script type="application/ld+json">${JSON.stringify(dataset)}</script>
@@ -1099,6 +1145,7 @@ function renderAbout(lang){
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:type" content="website">
 <meta property="og:image" content="${ogImg(useLang)}">
+${socialMeta(useLang)}
 ${ADSENSE_HEAD}
 ${AD_ZONE_STYLE}
 <script type="application/ld+json">${JSON.stringify(aboutSchema)}</script>
@@ -1112,7 +1159,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .crumb{max-width:760px;margin:0 auto;padding:10px 18px 0;font-size:12px;color:#64748b;}
 .crumb a{color:#4f46e5;text-decoration:none;}
 .wrap{max-width:760px;margin:0 auto;padding:14px 18px 50px;}
-.qa{margin-top:22px;}
+.toc{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px 18px;margin-top:4px;}
+.toc ul{list-style:none;padding:0;margin:0;}
+.toc li{margin:6px 0;font-size:13.5px;}
+.toc a{color:#4f46e5;text-decoration:none;font-weight:600;}
+.paa{margin-top:28px;}
+.paa h2{font-size:17px;font-weight:800;color:#1e1b4b;margin-bottom:10px;}
+.paa .pa{background:#fff;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:8px;padding:0 14px;}
+.paa summary{cursor:pointer;font-weight:700;font-size:14px;color:#1e1b4b;padding:12px 0;list-style:none;}
+.paa summary::-webkit-details-marker{display:none;}
+.paa summary::after{content:'+';float:right;color:#6366f1;font-weight:800;}
+.paa details[open] summary::after{content:'–';}
+.paa .pad{padding:0 0 12px;font-size:13px;color:#475569;}
+.paa .pad a{color:#4f46e5;text-decoration:none;font-weight:600;display:inline-block;margin-top:6px;}
+.qa{margin-top:22px;scroll-margin-top:12px;}
 .qa h2{font-size:18px;font-weight:800;color:#1e1b4b;margin-bottom:6px;}
 .qa p{font-size:14px;color:#334155;}
 .rev{margin-top:20px;background:#eef2ff;border:1px solid #c7d2fe;border-radius:12px;padding:14px 16px;font-size:13px;color:#3730a3;}
@@ -1219,6 +1279,7 @@ function renderScorePage(lang, nRaw){
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:type" content="article">
 <meta property="og:image" content="${ogImg(useLang)}">
+${socialMeta(useLang)}
 ${ADSENSE_HEAD}
 ${AD_ZONE_STYLE}
 <script type="application/ld+json">${JSON.stringify(article)}</script>
@@ -1307,6 +1368,7 @@ function renderScoreHub(lang){
 <link rel="canonical" href="${esc(canonical)}">
     ${hreflangs}
 <meta property="og:title" content="${esc(SM.h1)}"><meta property="og:description" content="${esc(SM.desc)}"><meta property="og:url" content="${esc(canonical)}"><meta property="og:type" content="website"><meta property="og:image" content="${ogImg(useLang)}">
+${socialMeta(useLang)}
 ${ADSENSE_HEAD}
 ${AD_ZONE_STYLE}
 <script type="application/ld+json">${JSON.stringify(itemList)}</script>
@@ -1385,6 +1447,7 @@ function renderPercentilePage(lang, pRaw){
 <link rel="canonical" href="${esc(canonical)}">
     ${hreflangs}
 <meta property="og:title" content="${esc(h1)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${esc(canonical)}"><meta property="og:type" content="article"><meta property="og:image" content="${ogImg(useLang)}">
+${socialMeta(useLang)}
 ${ADSENSE_HEAD}
 ${AD_ZONE_STYLE}
 <script type="application/ld+json">${JSON.stringify(article)}</script>
@@ -1463,6 +1526,7 @@ function renderPercentileHub(lang){
 <link rel="canonical" href="${esc(canonical)}">
     ${hreflangs}
 <meta property="og:title" content="${esc(hubTitle)}"><meta property="og:description" content="${esc(SM.desc)}"><meta property="og:url" content="${esc(canonical)}"><meta property="og:type" content="website"><meta property="og:image" content="${ogImg(useLang)}">
+${socialMeta(useLang)}
 ${ADSENSE_HEAD}
 ${AD_ZONE_STYLE}
 <script type="application/ld+json">${JSON.stringify(itemList)}</script>
@@ -1522,6 +1586,7 @@ function renderGlossaryTerm(lang, key){
 <link rel="canonical" href="${esc(canonical)}">
     ${hreflangs}
 <meta property="og:title" content="${esc(t.term)}"><meta property="og:description" content="${esc(t.def)}"><meta property="og:url" content="${esc(canonical)}"><meta property="og:type" content="article"><meta property="og:image" content="${ogImg(useLang)}">
+${socialMeta(useLang)}
 ${ADSENSE_HEAD}
 ${AD_ZONE_STYLE}
 <script type="application/ld+json">${JSON.stringify(dt)}</script>
@@ -1556,6 +1621,201 @@ ${adZoneScript(useLang)}
 </body>
 </html>`;
   return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
+}
+
+// ── 임베드 위젯 (다른 분야: SaaS·계산기 — 백링크 획득): /iq-test/embed/<lang> ──
+const embedUrl = (lang) => `https://all-lifes.com/iq-test/embed/${lang}`;
+function renderEmbed(lang){
+  const useLang = (TOOLS_I18N[lang] && TOOLS_I18N[lang].common) ? lang : 'en';
+  const T = TOOLS_I18N[useLang] || TOOLS_I18N.en, C = T.common;
+  const bandLabels = (SPOKES[useLang] && SPOKES[useLang].classLabels) || SPOKES.en.classLabels;
+  const bandMeanings = T.bandMeanings || TOOLS_I18N.en.bandMeanings;
+  const appUrl = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/iq-test/?lang=${useLang}`;
+  const D = JSON.stringify({ bands:bandLabels, means:bandMeanings, pct:C.percentile, sm:C.smarterThan, cl:C.classification });
+  const html = `<!DOCTYPE html>
+<html lang="${useLang}"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>IQ ${esc(C.percentile)}</title>
+<meta name="robots" content="noindex,follow">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:transparent;color:#0f172a;}
+.w{max-width:340px;margin:0 auto;background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:18px;box-shadow:0 4px 18px rgba(15,23,42,.08);}
+label{display:block;font-size:12px;font-weight:700;color:#475569;margin-bottom:6px;}
+input{width:100%;padding:11px 13px;font-size:16px;font-weight:700;border:1.5px solid #e2e8f0;border-radius:10px;background:#f8fafc;}
+input:focus{outline:none;border-color:#6366f1;background:#fff;}
+.r{margin-top:14px;text-align:center;}
+.big{font-size:34px;font-weight:900;color:#4f46e5;line-height:1;}
+.lab{font-size:12.5px;color:#64748b;font-weight:700;margin-top:3px;}
+.bd{display:inline-block;margin-top:10px;background:#eef2ff;color:#3730a3;font-weight:800;font-size:13px;padding:5px 12px;border-radius:16px;}
+.pb{display:block;text-align:center;margin-top:12px;font-size:11px;color:#94a3b8;text-decoration:none;}
+.pb b{color:#4f46e5;}
+</style></head>
+<body>
+<div class="w">
+  <label>${esc(C.yourIQ)}</label>
+  <input id="iq" type="number" value="120" min="40" max="200">
+  <div class="r" id="r"></div>
+  <a class="pb" href="${appUrl}" target="_blank" rel="noopener">Powered by <b>All-Lifes IQ Test</b></a>
+</div>
+<script>
+(function(){var D=${D};
+function erf(x){var t=1/(1+0.3275911*Math.abs(x));var y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x);return x>=0?y:-y;}
+function pct(iq){return 0.5*(1+erf((iq-100)/15/Math.SQRT2))*100;}
+function ci(iq){return iq>=130?0:iq>=120?1:iq>=110?2:iq>=90?3:iq>=80?4:iq>=70?5:6;}
+function fp(v){if(v>99.9)v=99.9;if(v<0.1)v=0.1;return v.toFixed(1);}
+var R=document.getElementById('r');
+function calc(){var iq=parseFloat(document.getElementById('iq').value);if(isNaN(iq))return;var p=pct(iq),i=ci(iq);R.innerHTML='<div class="big">'+fp(p)+'%</div><div class="lab">'+D.sm.replace('{p}',fp(p))+'</div><div class="bd">'+D.bands[i]+'</div>';}
+document.getElementById('iq').addEventListener('input',calc);calc();})();
+</script>
+</body></html>`;
+  // 임베드 허용: X-Frame-Options 미설정(기본 허용)
+  return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400' }});
+}
+
+// ── 온사이트 검색 (다른 분야: 대형 콘텐츠사 — 사이트링크 검색창): /iq-test/search/<lang> ──
+const searchUrl = (lang) => `https://all-lifes.com/iq-test/search/${lang}`;
+function renderSearch(lang, q){
+  const useLang = (TOOLS_I18N[lang] && SPOKES[lang]) ? lang : 'en';
+  const T = TOOLS_I18N[useLang] || TOOLS_I18N.en, C = T.common;
+  const H = HUB_I18N[useLang] || HUB_I18N.en;
+  const canonical = searchUrl(useLang);
+  const pillar = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/${useLang}/iq-test/`;
+  // 검색 인덱스 (스포크 + 도구 + 용어 + 인기 점수/백분위)
+  const idx = [];
+  SPOKE_SLUGS.forEach(s=>idx.push([spokeH1(s,useLang), spokeUrl(s,useLang)]));
+  Object.keys(TOOL_SLUGS).forEach(s=>idx.push([T.pages[TOOL_SLUGS[s]].h1, toolUrl(s,useLang)]));
+  ((GLOSSARY_I18N[useLang]&&GLOSSARY_I18N[useLang].terms)||[]).forEach(t=>idx.push([t.term, glossaryTermUrl(useLang,t.key)]));
+  [100,110,115,120,130,140].forEach(n=>idx.push(['IQ '+n, scoreUrl(useLang,n)]));
+  const IDX = JSON.stringify(idx);
+  const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${searchUrl(l)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${searchUrl('en')}">`;
+  const title = `${esc(C.calculate||'Search')} · IQ`;
+  const html = `<!DOCTYPE html>
+<html lang="${useLang}"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="https://all-lifes.com/iq-test/favicon-${useLang}.png">
+<title>IQ Search — All-Lifes</title>
+<meta name="description" content="Search IQ guides, calculators and terms.">
+<link rel="canonical" href="${esc(canonical)}">
+    ${hreflangs}
+<meta name="robots" content="noindex,follow">
+${socialMeta(useLang)}
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;}
+.hero{background:linear-gradient(135deg,#1e1b4b,#312e81,#1d4ed8);color:#fff;padding:28px 20px;text-align:center;}
+.hero h1{font-size:22px;font-weight:900;}
+.wrap{max-width:640px;margin:0 auto;padding:18px;}
+#sb{width:100%;padding:14px 16px;font-size:16px;border:1.5px solid #e2e8f0;border-radius:12px;background:#fff;}
+#sb:focus{outline:none;border-color:#6366f1;}
+#res{margin-top:14px;}
+.it{display:block;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:13px 15px;margin-bottom:8px;text-decoration:none;color:#1e1b4b;font-weight:600;font-size:14px;}
+.it:hover{border-color:#6366f1;}
+.back{display:block;text-align:center;margin-top:18px;color:#64748b;font-size:13px;text-decoration:none;}
+</style></head>
+<body>
+<div class="hero"><h1>🔎 IQ Search</h1></div>
+<div class="wrap">
+  <input id="sb" type="search" placeholder="IQ 130, percentile, Mensa, EQ…" autocomplete="off">
+  <div id="res"></div>
+  <a class="back" href="${pillar}">${esc(H.backHome||'← Back to the IQ Test')}</a>
+</div>
+<script>
+(function(){var IDX=${IDX};var sb=document.getElementById('sb'),res=document.getElementById('res');
+function render(q){q=(q||'').toLowerCase().trim();var list=q?IDX.filter(function(x){return x[0].toLowerCase().indexOf(q)>=0;}):IDX.slice(0,12);
+res.innerHTML=list.slice(0,40).map(function(x){return '<a class="it" href="'+x[1]+'">'+x[0]+'</a>';}).join('')||'<p style="color:#94a3b8;padding:10px">—</p>';}
+sb.addEventListener('input',function(){render(sb.value);});
+var u=new URL(location.href);var q0=u.searchParams.get('q');if(q0){sb.value=q0;}render(sb.value);})();
+</script>
+</body></html>`;
+  return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=3600' }});
+}
+
+// ── 인기/트렌딩 허브 (뉴스/미디어 패턴): /iq-test/popular/<lang> ──
+const popularUrl = (lang) => `https://all-lifes.com/iq-test/popular/${lang}`;
+const feedUrl = (lang) => `https://all-lifes.com/iq-test/feed/${lang}.xml`;
+const POP_I18N = {ko:'인기 IQ 페이지',en:'Most Popular IQ Pages',de:'Beliebteste IQ-Seiten',ja:'人気のIQページ',fr:'Pages de QI les plus populaires',es:'Páginas de CI más populares',pt:'Páginas de QI mais populares',it:'Pagine sul QI più popolari',id:'Halaman IQ Terpopuler',hi:'लोकप्रिय IQ पेज',ru:'Популярные страницы об IQ',vi:'Trang IQ phổ biến nhất',tr:'En Popüler IQ Sayfaları'};
+function renderPopular(lang){
+  const useLang = (TOOLS_I18N[lang] && SPOKES[lang]) ? lang : 'en';
+  const T = TOOLS_I18N[useLang] || TOOLS_I18N.en, C = T.common;
+  const bandLabels = (SPOKES[useLang] && SPOKES[useLang].classLabels) || SPOKES.en.classLabels;
+  const H = HUB_I18N[useLang] || HUB_I18N.en;
+  const title = POP_I18N[useLang] || POP_I18N.en;
+  const canonical = popularUrl(useLang);
+  const pillar = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/${useLang}/iq-test/`;
+  const scoreLinks = [100,110,115,120,130,140].map(n=>`<a class="card" href="${scoreUrl(useLang,n)}"><div class="ct">IQ ${n}</div><div class="cd">${fmtPct(pctOf(n,15))}% · ${esc(bandLabels[clsIdx(n)]||'')}</div></a>`).join('');
+  const pctLinks = [90,95,98,99].map(p=>`<a class="card" href="${percentileUrl(useLang,p)}"><div class="ct">${esc(C.percentile)} ${p}</div><div class="cd">IQ ${iqForPercentile(p)}</div></a>`).join('');
+  const spokeLinks = ['good-iq-score','genius-iq','mensa-iq-requirements','iq-vs-eq','average-iq-by-age','reverse-flynn-effect'].map(s=>`<a class="card" href="${spokeUrl(s,useLang)}"><div class="ct">${esc(spokeH1(s,useLang))}</div></a>`).join('');
+  const toolLinks = Object.keys(TOOL_SLUGS).slice(0,4).map(s=>`<a class="card" href="${toolUrl(s,useLang)}"><div class="ct">${esc(T.pages[TOOL_SLUGS[s]].h1)}</div></a>`).join('');
+  const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${popularUrl(l)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${popularUrl('en')}">`;
+  const breadcrumb = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"All-Lifes","item":"https://all-lifes.com/"},{"@type":"ListItem","position":2,"name":"IQ Test","item":pillar},{"@type":"ListItem","position":3,"name":title,"item":canonical}]};
+  const sec = (h,inner)=>`<div class="sec">${esc(h)}</div><div class="grid">${inner}</div>`;
+  const html = `<!DOCTYPE html>
+<html lang="${useLang}">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="https://all-lifes.com/iq-test/favicon-${useLang}.png">
+<title>${esc(title)} (${YEAR})</title>
+<meta name="description" content="${esc(title)} — All-Lifes.">
+<link rel="canonical" href="${esc(canonical)}">
+    ${hreflangs}
+<link rel="alternate" type="application/rss+xml" title="All-Lifes IQ" href="${feedUrl(useLang)}">
+<meta property="og:title" content="${esc(title)}"><meta property="og:url" content="${esc(canonical)}"><meta property="og:type" content="website"><meta property="og:image" content="${ogImg(useLang)}">
+${socialMeta(useLang)}
+${ADSENSE_HEAD}
+${AD_ZONE_STYLE}
+<script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.6;}
+.hero{background:linear-gradient(135deg,#1e1b4b,#312e81,#1d4ed8);color:#fff;padding:32px 20px 24px;text-align:center;}
+.hero h1{font-size:clamp(20px,3.4vw,30px);font-weight:900;}
+.crumb{max-width:820px;margin:0 auto;padding:10px 18px 0;font-size:12px;color:#64748b;}.crumb a{color:#4f46e5;text-decoration:none;}
+.wrap{max-width:820px;margin:0 auto;padding:14px 18px 50px;}
+.sec{font-size:16px;font-weight:800;color:#1e1b4b;margin:22px 0 10px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:13px 15px;text-decoration:none;color:#0f172a;transition:all .15s;}
+.card:hover{transform:translateY(-2px);border-color:#6366f1;box-shadow:0 6px 16px rgba(79,70,229,.18);}
+.card .ct{font-size:14px;font-weight:800;color:#1e1b4b;}.card .cd{font-size:12px;color:#64748b;margin-top:3px;}
+.cta{display:block;text-align:center;margin:24px auto 0;max-width:420px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-weight:800;font-size:16px;padding:14px;border-radius:12px;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="hero"><h1>${esc(title)}</h1></div>
+<div class="crumb"><a href="${pillar}">IQ Test</a> › ${esc(title)}</div>
+<div class="wrap">
+  ${AD_ZONE_BODY}
+  ${sec('IQ '+(T.pages.scoreMeaning.h1||'scores'), scoreLinks)}
+  ${sec('IQ '+C.percentile, pctLinks)}
+  ${sec(H.h1||'Guides', spokeLinks)}
+  ${sec(POP_I18N[useLang]||'Tools', toolLinks)}
+  ${authorityFooter(useLang,{about:true})}
+  <a class="cta" href="${useLang==='ko'?'https://all-lifes.com/iq-test/':'https://all-lifes.com/iq-test/?lang='+useLang}">${esc(H.cta||'🧠 Take the free IQ test →')}</a>
+</div>
+${adZoneScript(useLang)}
+</body>
+</html>`;
+  return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400', 'X-Robots-Tag':'index, follow' }});
+}
+
+// ── RSS 피드 (블로그/Discover 신디케이션): /iq-test/feed/<lang>.xml ──
+function renderFeed(lang){
+  const useLang = HREFLANG_ALL.includes(lang) ? lang : 'en';
+  const items = SPOKE_SLUGS.map(slug=>{
+    const r = spokeRec(slug, useLang); if(!r) return '';
+    return `<item><title>${esc(r.sp.h1)}</title><link>${spokeUrl(slug,useLang)}</link><guid>${spokeUrl(slug,useLang)}</guid><description>${esc(r.sp.desc||'')}</description><pubDate>Wed, 18 Jun 2026 00:00:00 GMT</pubDate></item>`;
+  }).join('');
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>All-Lifes — IQ &amp; Intelligence</title>
+<link>${useLang==='ko'?'https://all-lifes.com/iq-test/':'https://all-lifes.com/'+useLang+'/iq-test/'}</link>
+<atom:link href="${feedUrl(useLang)}" rel="self" type="application/rss+xml"/>
+<description>IQ test guides, calculators and intelligence explainers.</description>
+<language>${useLang}</language>
+<lastBuildDate>Wed, 18 Jun 2026 00:00:00 GMT</lastBuildDate>
+${items}
+</channel>
+</rss>`;
+  return new Response(xml, { headers:{ 'Content-Type':'application/rss+xml;charset=UTF-8', 'Cache-Control':'public, max-age=86400' }});
 }
 
 // ── Google Web Story (AMP, Discover/이미지 검색 유입): /iq-test/story/<lang> ──
@@ -1690,6 +1950,32 @@ export default {
       const r = glossM[2] ? renderGlossaryTerm(glossM[1], glossM[2]) : renderGlossary(glossM[1]);
       if (r) return r;
       return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
+    }
+
+    // 임베드 위젯: /iq-test/embed/<lang>
+    const embedM = path.match(/^\/iq-test\/embed\/([a-z]{2})\/?$/);
+    if (embedM) {
+      if (!HREFLANG_ALL.includes(embedM[1])) return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
+      return renderEmbed(embedM[1]);
+    }
+    // 온사이트 검색: /iq-test/search/<lang>
+    const searchM = path.match(/^\/iq-test\/search\/([a-z]{2})\/?$/);
+    if (searchM) {
+      if (!HREFLANG_ALL.includes(searchM[1])) return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
+      return renderSearch(searchM[1], url.searchParams.get('q'));
+    }
+
+    // 인기 허브: /iq-test/popular/<lang>
+    const popM = path.match(/^\/iq-test\/popular\/([a-z]{2})\/?$/);
+    if (popM) {
+      if (!HREFLANG_ALL.includes(popM[1])) return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
+      return renderPopular(popM[1]);
+    }
+    // RSS 피드: /iq-test/feed/<lang>.xml
+    const feedM = path.match(/^\/iq-test\/feed\/([a-z]{2})\.xml$/);
+    if (feedM) {
+      if (!HREFLANG_ALL.includes(feedM[1])) return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
+      return renderFeed(feedM[1]);
     }
 
     // Web Story (AMP) + 세로 포스터: /iq-test/story/<lang>[/poster.svg]

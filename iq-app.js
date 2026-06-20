@@ -596,6 +596,7 @@ function renderLearnLinks(iq){
   const toolBase='https://all-lifes.com/iq-test/tools/'+lang+'/';
   const ctaLabel=TOOL_CTA_I18N[lang]||TOOL_CTA_I18N.en;
   const hubLabel=TOOLS_HUB_LABEL_I18N[lang]||TOOLS_HUB_LABEL_I18N.en;
+  var cb=document.getElementById('cert-btn-iq');if(cb)cb.textContent='📜 '+((CERT_I18N[lang]||CERT_I18N.en).btn);
   let html='<h3>'+L.title+'</h3>';
   if(iq&&!isNaN(iq)){
     html+='<a class="learn-link tool-cta" href="'+toolBase+'iq-score-meaning?score='+iq+'">🎯 '+ctaLabel+' <span style="opacity:.6">›</span></a>';
@@ -607,6 +608,27 @@ function renderLearnLinks(iq){
   ).join('')+'</div>';
   card.style.display='';
   card.innerHTML=html;
+}
+
+// ── 결과 인증서 다운로드 (다른 분야: 에듀테크/게이밍 바이럴) ──
+const CERT_I18N={ko:{btn:'인증서 다운로드',title:'IQ 결과 인증서',sub:'무료 IQ 테스트'},en:{btn:'Download certificate',title:'IQ Result Certificate',sub:'Free IQ Test'},de:{btn:'Zertifikat',title:'IQ-Ergebnis-Zertifikat',sub:'Kostenloser IQ-Test'},ja:{btn:'証明書をダウンロード',title:'IQ結果証明書',sub:'無料IQテスト'},fr:{btn:'Télécharger le certificat',title:'Certificat de résultat de QI',sub:'Test de QI gratuit'},es:{btn:'Descargar certificado',title:'Certificado de resultado de CI',sub:'Test de CI gratis'},pt:{btn:'Baixar certificado',title:'Certificado de resultado de QI',sub:'Teste de QI grátis'},it:{btn:'Scarica il certificato',title:'Certificato del risultato QI',sub:'Test del QI gratuito'},id:{btn:'Unduh sertifikat',title:'Sertifikat Hasil IQ',sub:'Tes IQ Gratis'},hi:{btn:'प्रमाणपत्र डाउनलोड करें',title:'IQ परिणाम प्रमाणपत्र',sub:'मुफ्त IQ टेस्ट'},ru:{btn:'Скачать сертификат',title:'Сертификат результата IQ',sub:'Бесплатный IQ-тест'},vi:{btn:'Tải chứng nhận',title:'Chứng nhận kết quả IQ',sub:'Bài test IQ miễn phí'},tr:{btn:'Sertifikayı indir',title:'IQ Sonuç Sertifikası',sub:'Ücretsiz IQ Testi'}};
+function downloadCertificate(){
+  var lang=window.IQ_CURRENT_LANG||'ko';var L=CERT_I18N[lang]||CERT_I18N.en;
+  var iq=(document.getElementById('sc-iq')||{}).textContent||'--';
+  var cat=(document.getElementById('sc-cat')||{}).textContent||'';
+  var pct=(document.getElementById('sc-pct')||{}).textContent||'';
+  var d=new Date();var ds=d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);
+  function e(s){return String(s).replace(/[<>&]/g,function(c){return{'<':'&lt;','>':'&gt;','&':'&amp;'}[c];});}
+  var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560" width="800" height="560">'
+   +'<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e1b4b"/><stop offset="1" stop-color="#4f46e5"/></linearGradient></defs>'
+   +'<rect width="800" height="560" fill="#ffffff"/><rect x="16" y="16" width="768" height="528" rx="18" fill="none" stroke="url(#g)" stroke-width="4"/>'
+   +'<text x="400" y="110" text-anchor="middle" font-family="Georgia,serif" font-size="34" font-weight="bold" fill="#1e1b4b">'+e(L.title)+'</text>'
+   +'<text x="400" y="150" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#64748b">'+e(L.sub)+' · all-lifes.com</text>'
+   +'<text x="400" y="300" text-anchor="middle" font-family="Arial,sans-serif" font-size="150" font-weight="900" fill="url(#g)">'+e(iq)+'</text>'
+   +'<text x="400" y="360" text-anchor="middle" font-family="Arial,sans-serif" font-size="26" font-weight="700" fill="#4338ca">'+e(cat)+'</text>'
+   +'<text x="400" y="400" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#475569">'+e(pct)+'</text>'
+   +'<text x="400" y="500" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#94a3b8">'+ds+'</text></svg>';
+  try{var blob=new Blob([svg],{type:'image/svg+xml'});var u=URL.createObjectURL(blob);var a=document.createElement('a');a.href=u;a.download='iq-certificate-'+iq+'.svg';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(u);},1500);}catch(err){}
 }
 
 // ── Theme toggle ──

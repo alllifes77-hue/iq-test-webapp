@@ -439,6 +439,7 @@ ${aboutAlt}
         { base:'glossary', prio:'0.7' },
         { base:'iq-statistics', prio:'0.7' },
         { base:'story', prio:'0.6' },
+        { base:'popular', prio:'0.6' },
       ];
       const refUrls = refPages.flatMap(pg => {
         const loc = (l) => `${SITE_URL}/iq-test/${pg.base}/${l}`;

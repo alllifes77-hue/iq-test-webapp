@@ -79,6 +79,11 @@ function authorityFooter(lang, opts){
 
 // ── 콘텐츠 하위 페이지 상단 광고 존 (AdSense + 알리익스프레스 + 쿠팡(ko)) ──
 // 홈/랜딩(최상단)에는 넣지 않고 스포크·도구·국가허브에만 상단 배치.
+// ★ 광고 자동화 규약 (미래 페이지): 새 콘텐츠 페이지 렌더 함수는 반드시
+//   head: ${ADSENSE_HEAD}${AD_ZONE_STYLE}, body 상단: ${AD_ZONE_BODY},
+//   </body> 직전: ${adZoneScript(useLang)} 를 포함할 것.
+//   → 신규 스포크는 SPOKES2에 추가만 하면 renderSpoke가 자동 광고 적용(별도 작업 불필요).
+//   예외: 임베드 위젯(renderEmbed, 제3자 사이트용)은 광고 제외, Web Story(AMP)는 amp-story-auto-ads 사용.
 const ADSENSE_HEAD = `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1378943893051810" crossorigin="anonymous"></script>`;
 const AD_ZONE_STYLE = `<style>
 .top-ads{margin:14px 0 6px;}
@@ -1778,9 +1783,11 @@ function renderSearch(lang, q){
     ${hreflangs}
 <meta name="robots" content="noindex,follow">
 ${socialMeta(useLang)}
+${ADSENSE_HEAD}
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;}
 .hero{background:linear-gradient(135deg,#1e1b4b,#312e81,#1d4ed8);color:#fff;padding:28px 20px;text-align:center;}
+.ad-box{margin:16px 0;text-align:center;min-height:90px;}
 .hero h1{font-size:22px;font-weight:900;}
 .wrap{max-width:640px;margin:0 auto;padding:18px;}
 #sb{width:100%;padding:14px 16px;font-size:16px;border:1.5px solid #e2e8f0;border-radius:12px;background:#fff;}
@@ -1795,8 +1802,10 @@ ${socialMeta(useLang)}
 <div class="wrap">
   <input id="sb" type="search" placeholder="IQ 130, percentile, Mensa, EQ…" autocomplete="off">
   <div id="res"></div>
+  <div class="ad-box"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1378943893051810" data-ad-slot="8233374508" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
   <a class="back" href="${pillar}">${esc(H.backHome||'← Back to the IQ Test')}</a>
 </div>
+<script>try{(adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}</script>
 <script>
 (function(){var IDX=${IDX};var sb=document.getElementById('sb'),res=document.getElementById('res');
 function render(q){q=(q||'').toLowerCase().trim();var list=q?IDX.filter(function(x){return x[0].toLowerCase().indexOf(q)>=0;}):IDX.slice(0,12);
@@ -1943,6 +1952,8 @@ function renderWebStory(lang){
 <meta charset="utf-8">
 <script async src="https://cdn.ampproject.org/v0.js"></script>
 <script async custom-element="amp-story" src="https://cdn.ampproject.org/v0/amp-story-1.0.js"></script>
+<script async custom-element="amp-story-auto-ads" src="https://cdn.ampproject.org/v0/amp-story-auto-ads-0.1.js"></script>
+<script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
 <title>${esc(S.storyTitle)}</title>
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="description" content="${esc(S.posterTagline)}">
@@ -1971,6 +1982,7 @@ p{font-size:18px;line-height:1.45;color:#e0e7ff;margin:0;max-width:18em;}
 </head>
 <body>
 <amp-story standalone title="${esc(S.storyTitle)}" publisher="All-Lifes" publisher-logo-src="${logo}" poster-portrait-src="${storyPosterUrl(useLang)}">
+<amp-story-auto-ads><script type="application/json">{"ad-attributes":{"type":"adsense","data-ad-client":"ca-pub-1378943893051810","data-ad-slot":"8233374508"}}</script></amp-story-auto-ads>
 ${coverPage}
 ${slidePages}
 ${ctaPage}

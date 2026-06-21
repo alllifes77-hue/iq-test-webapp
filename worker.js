@@ -190,7 +190,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .lang-bar a{color:#a5b4fc;text-decoration:none;margin:0 5px;}
 .lang-bar a.active{color:#fff;font-weight:700;}
 .iframe-wrap{width:100%;background:#f1f5f9;}
-iframe{width:100%;border:none;display:block;min-height:100vh;}
+iframe{width:100%;border:none;display:block;height:100vh;}
 .seo-section{background:#fff;border-top:1px solid #e2e8f0;padding:36px 20px;}
 .seo-section .inner{max-width:760px;margin:0 auto;}
 .seo-section h2{font-size:17px;font-weight:800;color:#1e1b4b;margin-bottom:20px;}

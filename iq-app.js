@@ -187,8 +187,16 @@ function applyLang(){
   }
 }
 
+// 임베드(iframe) 여부 — 래퍼 안에서는 100vh가 iframe 뷰포트에 고정돼 높이가 줄지 않으므로 실제 콘텐츠 높이로 보고
+const IS_EMBEDDED=(function(){try{return window.self!==window.top;}catch(e){return true;}})();
 function sendResize(){
-  const h=document.body.scrollHeight;
+  let h=document.body.scrollHeight;
+  try{
+    // 실제 콘텐츠 최하단(보이는 비-고정 요소) — min-height:100vh 인플레이션 무시
+    let max=0,kids=document.body.children;
+    for(let i=0;i<kids.length;i++){const el=kids[i];const cs=getComputedStyle(el);if(cs.display==='none'||cs.visibility==='hidden'||cs.position==='fixed')continue;const b=el.getBoundingClientRect().bottom+window.scrollY;if(b>max)max=b;}
+    if(max>10)h=Math.min(h,Math.ceil(max)+8);
+  }catch(e){}
   window.parent.postMessage({type:'iq-resize',height:h},'*');
 }
 
@@ -212,6 +220,11 @@ window.addEventListener('DOMContentLoaded', () => {
       startExtTest(_tid);
     }
   }catch(e){}
+  // 임베드 시 100vh 고정 해제 → 콘텐츠 높이에 딱 맞게(빈 흰 공간 방지)
+  if(IS_EMBEDDED){
+    document.body.style.minHeight='0';
+    var _sh=document.getElementById('screen-home');if(_sh)_sh.style.minHeight='0';
+  }
   // Report initial height to parent (Cloudflare Worker iframe wrapper)
   setTimeout(sendResize, 200);
   setTimeout(sendResize, 800);

@@ -817,7 +817,10 @@ function showScreen(id){
   if(id==='results'){ensureCoupangWidget('res');ensureAliProducts('res');}
   else if(id==='ext-results'){ensureCoupangWidget('ext');ensureAliProducts('ext');}
   else if(id==='asd-result'){ensureCoupangWidget('asd');ensureAliProducts('asd');}
-  else if(id==='brain-training')ensureAliProducts('brain');
+  else if(id==='daily'){ensureCoupangWidget('daily');ensureAliProducts('daily');}
+  else if(id==='brain-training'){ensureCoupangWidget('brain');ensureAliProducts('brain');}
+  // 광고가 늦게 보일 수 있으므로 한 번 더 재시도 (각 결과 화면 확실히 노출)
+  setTimeout(pushVisibleAds,900);
 }
 function scrollToExt(){showScreen('results');setTimeout(()=>{const el=document.getElementById('ext-grid');if(el)el.scrollIntoView({behavior:'smooth'});},300);}
 function restartAll(){showScreen('home');}

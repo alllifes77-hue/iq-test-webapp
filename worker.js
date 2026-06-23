@@ -1756,23 +1756,40 @@ document.getElementById('iq').addEventListener('input',calc);calc();})();
   return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=86400' }});
 }
 
-// ── 온사이트 검색 (다른 분야: 대형 콘텐츠사 — 사이트링크 검색창): /iq-test/search/<lang> ──
+// ── 온사이트 검색 (카테고리 필터 + 사이트링크 검색창): /iq-test/search/<lang> ──
 const searchUrl = (lang) => `https://all-lifes.com/iq-test/search/${lang}`;
+const CAT_I18N = {
+  ko:{all:'전체',guide:'가이드',tool:'계산기',term:'용어',score:'점수'},
+  en:{all:'All',guide:'Guides',tool:'Calculators',term:'Terms',score:'Scores'},
+  de:{all:'Alle',guide:'Ratgeber',tool:'Rechner',term:'Begriffe',score:'Werte'},
+  ja:{all:'すべて',guide:'ガイド',tool:'計算ツール',term:'用語',score:'スコア'},
+  fr:{all:'Tout',guide:'Guides',tool:'Calculateurs',term:'Termes',score:'Scores'},
+  es:{all:'Todo',guide:'Guías',tool:'Calculadoras',term:'Términos',score:'Puntuaciones'},
+  pt:{all:'Tudo',guide:'Guias',tool:'Calculadoras',term:'Termos',score:'Pontuações'},
+  it:{all:'Tutto',guide:'Guide',tool:'Calcolatori',term:'Termini',score:'Punteggi'},
+  id:{all:'Semua',guide:'Panduan',tool:'Kalkulator',term:'Istilah',score:'Skor'},
+  hi:{all:'सभी',guide:'गाइड',tool:'कैलकुलेटर',term:'शब्द',score:'स्कोर'},
+  ru:{all:'Все',guide:'Гайды',tool:'Калькуляторы',term:'Термины',score:'Баллы'},
+  vi:{all:'Tất cả',guide:'Hướng dẫn',tool:'Công cụ',term:'Thuật ngữ',score:'Điểm'},
+  tr:{all:'Tümü',guide:'Rehberler',tool:'Hesaplayıcılar',term:'Terimler',score:'Puanlar'},
+};
 function renderSearch(lang, q){
   const useLang = (TOOLS_I18N[lang] && SPOKES[lang]) ? lang : 'en';
   const T = TOOLS_I18N[useLang] || TOOLS_I18N.en, C = T.common;
   const H = HUB_I18N[useLang] || HUB_I18N.en;
+  const CT = CAT_I18N[useLang] || CAT_I18N.en;
   const canonical = searchUrl(useLang);
   const pillar = useLang==='ko' ? 'https://all-lifes.com/iq-test/' : `https://all-lifes.com/${useLang}/iq-test/`;
-  // 검색 인덱스 (스포크 + 도구 + 용어 + 인기 점수/백분위)
+  // 검색 인덱스 [제목, URL, 카테고리]
   const idx = [];
-  SPOKE_SLUGS.forEach(s=>idx.push([spokeH1(s,useLang), spokeUrl(s,useLang)]));
-  Object.keys(TOOL_SLUGS).forEach(s=>idx.push([T.pages[TOOL_SLUGS[s]].h1, toolUrl(s,useLang)]));
-  ((GLOSSARY_I18N[useLang]&&GLOSSARY_I18N[useLang].terms)||[]).forEach(t=>idx.push([t.term, glossaryTermUrl(useLang,t.key)]));
-  [100,110,115,120,130,140].forEach(n=>idx.push(['IQ '+n, scoreUrl(useLang,n)]));
+  SPOKE_SLUGS.forEach(s=>idx.push([spokeH1(s,useLang), spokeUrl(s,useLang), 'guide']));
+  Object.keys(TOOL_SLUGS).forEach(s=>idx.push([T.pages[TOOL_SLUGS[s]].h1, toolUrl(s,useLang), 'tool']));
+  ((GLOSSARY_I18N[useLang]&&GLOSSARY_I18N[useLang].terms)||[]).forEach(t=>idx.push([t.term, glossaryTermUrl(useLang,t.key), 'term']));
+  [80,90,100,110,115,120,130,140,145].forEach(n=>idx.push(['IQ '+n, scoreUrl(useLang,n), 'score']));
+  [90,95,98,99].forEach(p=>idx.push([C.percentile+' '+p, percentileUrl(useLang,p), 'score']));
   const IDX = JSON.stringify(idx);
+  const CATS = JSON.stringify({all:CT.all,guide:CT.guide,tool:CT.tool,term:CT.term,score:CT.score});
   const hreflangs = HREFLANG_ALL.map(l=>`<link rel="alternate" hreflang="${l}" href="${searchUrl(l)}">`).join('\n    ') + `\n    <link rel="alternate" hreflang="x-default" href="${searchUrl('en')}">`;
-  const title = `${esc(C.calculate||'Search')} · IQ`;
   const html = `<!DOCTYPE html>
 <html lang="${useLang}"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -1784,35 +1801,69 @@ function renderSearch(lang, q){
 <meta name="robots" content="noindex,follow">
 ${socialMeta(useLang)}
 ${ADSENSE_HEAD}
+${AD_ZONE_STYLE}
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;}
 .hero{background:linear-gradient(135deg,#1e1b4b,#312e81,#1d4ed8);color:#fff;padding:28px 20px;text-align:center;}
-.ad-box{margin:16px 0;text-align:center;min-height:90px;}
 .hero h1{font-size:22px;font-weight:900;}
-.wrap{max-width:640px;margin:0 auto;padding:18px;}
+.wrap{max-width:660px;margin:0 auto;padding:18px;}
 #sb{width:100%;padding:14px 16px;font-size:16px;border:1.5px solid #e2e8f0;border-radius:12px;background:#fff;}
 #sb:focus{outline:none;border-color:#6366f1;}
-#res{margin-top:14px;}
-.it{display:block;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:13px 15px;margin-bottom:8px;text-decoration:none;color:#1e1b4b;font-weight:600;font-size:14px;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px;}
+.chip{padding:7px 15px;font-size:13px;font-weight:700;border:1.5px solid #e2e8f0;background:#fff;color:#64748b;border-radius:20px;cursor:pointer;}
+.chip.on{background:#4f46e5;color:#fff;border-color:#4f46e5;}
+#res{margin-top:12px;}
+.gh{font-size:12px;font-weight:800;color:#94a3b8;margin:14px 0 6px;text-transform:uppercase;letter-spacing:.5px;}
+.it{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:12px 15px;margin-bottom:8px;text-decoration:none;color:#1e1b4b;font-weight:600;font-size:14px;}
 .it:hover{border-color:#6366f1;}
+.it .tag{font-size:10.5px;font-weight:700;color:#6366f1;background:#eef2ff;padding:3px 9px;border-radius:10px;white-space:nowrap;}
 .back{display:block;text-align:center;margin-top:18px;color:#64748b;font-size:13px;text-decoration:none;}
 </style></head>
 <body>
 <div class="hero"><h1>🔎 IQ Search</h1></div>
 <div class="wrap">
   <input id="sb" type="search" placeholder="IQ 130, percentile, Mensa, EQ…" autocomplete="off">
+  <div class="chips" id="chips"></div>
   <div id="res"></div>
-  <div class="ad-box"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1378943893051810" data-ad-slot="8233374508" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+  ${AD_ZONE_BODY}
   <a class="back" href="${pillar}">${esc(H.backHome||'← Back to the IQ Test')}</a>
 </div>
-<script>try{(adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}</script>
 <script>
-(function(){var IDX=${IDX};var sb=document.getElementById('sb'),res=document.getElementById('res');
-function render(q){q=(q||'').toLowerCase().trim();var list=q?IDX.filter(function(x){return x[0].toLowerCase().indexOf(q)>=0;}):IDX.slice(0,12);
-res.innerHTML=list.slice(0,40).map(function(x){return '<a class="it" href="'+x[1]+'">'+x[0]+'</a>';}).join('')||'<p style="color:#94a3b8;padding:10px">—</p>';}
-sb.addEventListener('input',function(){render(sb.value);});
-var u=new URL(location.href);var q0=u.searchParams.get('q');if(q0){sb.value=q0;}render(sb.value);})();
+(function(){var IDX=${IDX},CATS=${CATS};var ORDER=['guide','tool','term','score'];
+var sb=document.getElementById('sb'),res=document.getElementById('res'),chips=document.getElementById('chips');
+var active='all';
+// 카테고리 칩 (원하는 카테고리만 보기 + 다른 카테고리로 전환)
+var cl=['all'].concat(ORDER);
+chips.innerHTML=cl.map(function(c){return '<button class="chip'+(c==='all'?' on':'')+'" data-c="'+c+'">'+CATS[c]+'</button>';}).join('');
+function esc(s){return String(s).replace(/[<>&]/g,function(c){return{'<':'&lt;','>':'&gt;','&':'&amp;'}[c];});}
+function item(x){return '<a class="it" href="'+x[1]+'"><span>'+esc(x[0])+'</span><span class="tag">'+CATS[x[2]]+'</span></a>';}
+function render(){
+  var q=(sb.value||'').toLowerCase().trim();
+  var list=IDX.filter(function(x){
+    if(active!=='all' && x[2]!==active) return false;       // 선택한 카테고리만
+    if(q && x[0].toLowerCase().indexOf(q)<0) return false;  // 검색어
+    return true;
+  });
+  if(!list.length){res.innerHTML='<p style="color:#94a3b8;padding:10px">—</p>';return;}
+  if(active==='all'){
+    // 전체: 카테고리별 그룹 헤더로 정리(섞이지 않게)
+    var html='';
+    ORDER.forEach(function(c){
+      var g=list.filter(function(x){return x[2]===c;});
+      if(!g.length)return;
+      html+='<div class="gh">'+CATS[c]+'</div>'+g.slice(0,q?40:6).map(item).join('');
+    });
+    res.innerHTML=html;
+  } else {
+    res.innerHTML=list.slice(0,60).map(item).join('');
+  }
+}
+chips.addEventListener('click',function(e){var b=e.target.closest('.chip');if(!b)return;active=b.getAttribute('data-c');
+  [].forEach.call(chips.children,function(c){c.classList.toggle('on',c===b);});render();});
+sb.addEventListener('input',render);
+var u=new URL(location.href);var q0=u.searchParams.get('q');if(q0)sb.value=q0;render();})();
 </script>
+${adZoneScript(useLang)}
 </body></html>`;
   return new Response(html, { headers:{ 'Content-Type':'text/html;charset=UTF-8', 'Cache-Control':'public, max-age=3600' }});
 }
